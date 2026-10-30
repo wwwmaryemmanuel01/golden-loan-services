@@ -1,0 +1,171 @@
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Staff &amp; Officer Performance Reports</h2><p>Output, collection rates and overdue portfolios by officer</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c8count">8 reports</span></div>
+      </div>
+      <div class="strip" id="strip8"></div>
+      <div class="rgrid" id="grid8"></div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Risk &amp; Credit Performance Reports</h2><p>PAR, default, restructures and expected credit losses</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c9count">8 reports</span></div>
+      </div>
+      <div class="strip" id="strip9"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Portfolio at Risk</div>
+            <div class="panel-sub">PAR 30 / 60 / 90 · % of book</div></div></div>
+          <div id="parBars" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Credit Risk Trends</div>
+            <div class="panel-sub">NPL ratio and write-offs · 6 months</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chRisk" viewBox="0 0 640 210"></svg></div>
+          <div class="legend" id="chRiskLegend"></div>
+        </div>
+      </div>
+      <div class="rgrid" id="grid9"></div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Audit, Compliance &amp; Statements</h2><p>Trails, statements, schedules and registers</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c10count">12 reports</span></div>
+      </div>
+      <div class="strip" id="strip10"></div>
+      <div class="rgrid" id="grid10"></div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Report Console</h2><p>Date ranges, filters, totals, records, exports, print and history</p></div>
+        <div class="sec-tools">
+          <span class="badge b-appr" id="accessBadge">Full access</span>
+          <select id="viewRole" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option>Super Admin</option><option>Administrator</option><option>Auditor / Compliance Officer</option>
+            <option>Loan Officer</option><option>Collections Officer</option><option>Accountant / Finance Officer</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="console">
+        <div class="chead">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span class="chip st-proc" id="repCat">Executive</span>
+              <b id="repTitle" style="font-size:13.5px">Financial Performance Summary</b>
+              <span class="badge b-gray" id="repId">EXE-02</span>
+            </div>
+            <div class="tiny muted" id="repDesc" style="margin-top:3px">Revenue, cost and profit for the selected period</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" data-act="exp-pdf">Export PDF</button>
+            <button class="btn btn-ghost btn-sm" data-act="exp-xls">Excel</button>
+            <button class="btn btn-ghost btn-sm" data-act="exp-csv">CSV</button>
+            <button class="btn btn-dark btn-sm" data-act="do-print">Print report</button>
+          </div>
+        </div>
+
+        <div class="cbody">
+          <div class="cifelds">
+            <div>
+              <div class="tiny muted" style="font-weight:800;margin-bottom:4px">DATE RANGE</div>
+              <div class="datepresets" id="datePresets">
+                <button data-p="today">Today</button>
+                <button data-p="7d">Last 7 days</button>
+                <button class="on" data-p="30d">Last 30 days</button>
+                <button data-p="mtd">This month</button>
+                <button data-p="qtd">This quarter</button>
+                <button data-p="ytd">Year to date</button>
+                <button data-p="custom">Custom</button>
+              </div>
+            </div>
+            <div class="fld"><label style="font-size:9px;font-weight:800;color:var(--muted)">FROM</label>
+              <input type="date" id="dtFrom" value="2026-10-01" /></div>
+            <div class="fld"><label style="font-size:9px;font-weight:800;color:var(--muted)">TO</label>
+              <input type="date" id="dtTo" value="2026-10-30" /></div>
+            <div class="fld search">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="repSearch" placeholder="Search within this report…" />
+            </div>
+          </div>
+
+          <div class="cifelds" style="margin-top:9px">
+            <div class="fld"><select id="fldOfficer"><option value="">All officers</option></select></div>
+            <div class="fld"><select id="fldBranch"><option value="">All branches</option></select></div>
+            <div class="fld"><select id="fldProduct"><option value="">All products</option></select></div>
+            <div class="fld"><select id="fldStatus"><option value="">All statuses</option></select></div>
+            <button class="btn btn-ghost btn-sm" id="advToggle">Advanced filters</button>
+            <button class="btn btn-gold btn-sm" id="applyBtn">Apply filters</button>
+            <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          </div>
+
+          <div id="advPanel" style="display:none;margin-top:9px">
+            <div class="flds" style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="fld"><input id="advMin" type="number" placeholder="Min amount" style="width:130px" /></div>
+              <div class="fld"><input id="advMax" type="number" placeholder="Max amount" style="width:130px" /></div>
+              <div class="fld"><select id="advDpd"><option value="">Any DPD</option><option value="0">Current (0 DPD)</option>
+                <option value="30">30+ DPD</option><option value="60">60+ DPD</option><option value="90">90+ DPD</option></select></div>
+              <div class="fld"><select id="advSort"><option value="">Default order</option>
+                <option value="amt-desc">Largest amount first</option><option value="amt-asc">Smallest amount first</option></select></div>
+              <div class="fld"><input id="advRef" placeholder="Record / receipt reference" style="width:180px" /></div>
+            </div>
+          </div>
+
+          <div class="totals" id="repTotals"></div>
+
+          <div class="tblwrap" style="max-height:460px">
+            <table class="tbl2"><thead id="repHead"></thead><tbody id="repBody"></tbody></table>
+          </div>
+          <div class="pager" id="repPager"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Report Generation History</div>
+            <div class="panel-sub">Who ran what, when and in which format</div></div>
+            <button class="btn btn-ghost btn-sm" id="histExport">Export log</button></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Report</th><th>User</th>
+              <th class="num">Rows</th><th>Format</th></tr></thead><tbody id="histBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role-Based Access</div>
+            <div class="panel-sub">Which role may run each report category</div></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Category</th><th>Access</th><th>Roles</th></tr></thead>
+              <tbody id="accessBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Every report filters, totals, paginates and exports for real; the numbers update when you
+        change the date range, officer, branch, product or status.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

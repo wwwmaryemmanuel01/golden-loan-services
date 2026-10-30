@@ -1,0 +1,144 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Reports</div>
+      <div class="page-sub">Executive · portfolio · collections · risk · compliance · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search reports, officers, customers, receipts…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Report history" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H3v-6h18v6h-3"/><rect x="6" y="14" width="12" height="7" rx="1.5"/></svg>
+      Print
+    </button>
+    <button class="btn btn-gold" id="quickRun">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Run a report
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Executive</a>
+    <a class="snav" href="#s2">2 · Loan Portfolio</a>
+    <a class="snav" href="#s3">3 · Repayments</a>
+    <a class="snav" href="#s4">4 · Arrears</a>
+    <a class="snav" href="#s5">5 · Financial</a>
+    <a class="snav" href="#s6">6 · Customers</a>
+    <a class="snav" href="#s7">7 · Applications</a>
+    <a class="snav" href="#s8">8 · Staff Performance</a>
+    <a class="snav" href="#s9">9 · Risk &amp; Credit</a>
+    <a class="snav" href="#s10">10 · Audit &amp; Statements</a>
+    <a class="snav" href="#s11">11 · Report Console</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Reports &amp; Analytics</h1>
+        <p>Every report runs against live portfolio data with filters, totals and exports</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandReports">89</b><span>Reports</span></div>
+        <div class="band-stat"><b id="bandToday">6</b><span>Generated today</span></div>
+        <div class="band-stat"><b id="bandRows">0</b><span>Rows in view</span></div>
+        <div class="band-stat"><b id="bandRole">Super Admin</b><span>Access level</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="histBtn">Generation history</button>
+        <button class="btn btn-gold btn-sm" id="consoleBtn">Open report console</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Executive Summary Reports</h2><p>Business performance at a glance · period 1–30 October 2026</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c1count">7 reports</span></div>
+      </div>
+      <div class="grid g4" id="execTiles" style="margin-bottom:13px"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Monthly Performance Trends</div>
+            <div class="panel-sub">Disbursed, collected and overdue · MK millions</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chTrend" viewBox="0 0 640 220"></svg></div>
+          <div class="legend" id="chTrendLegend"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Efficiency</div>
+            <div class="panel-sub">Collected vs due · last 8 weeks</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chCollect" viewBox="0 0 640 220"></svg></div>
+          <div class="legend" id="chCollectLegend"></div>
+        </div>
+      </div>
+      <div class="strip" id="strip1"></div>
+      <div class="rgrid" id="grid1"></div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Loan Portfolio Reports</h2><p>Book composition, maturity and balances</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c2count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip2"></div>
+      <div class="rgrid" id="grid2"></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Repayment Reports</h2><p>Collections, allocations and payment integrity</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c3count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip3"></div>
+      <div class="rgrid" id="grid3"></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Arrears &amp; Delinquency Reports</h2><p>Ageing, DPD, default and recovery performance</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c4count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip4"></div>
+      <div class="rgrid" id="grid4"></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Financial Reports</h2><p>Income, expenditure, cash position and reconciliation</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c5count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip5"></div>
+      <div class="rgrid" id="grid5"></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Customer Reports</h2><p>Registrations, borrowing behaviour and balances</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c6count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip6"></div>
+      <div class="rgrid" id="grid6"></div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Loan Applications &amp; Disbursement Reports</h2><p>Pipeline, turnaround and release history</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c7count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip7"></div>
+      <div class="rgrid" id="grid7"></div>
+    </section>

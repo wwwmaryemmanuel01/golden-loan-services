@@ -4,6 +4,16 @@ A single-page-per-module administration system for a loan services business.
 Plain HTML + CSS + vanilla JS — no build step, no dependencies, no external requests
 (fonts, icons and charts are inline SVG, so it works fully offline).
 
+## Reports module
+
+`reports.html` holds 89 individual reports in 10 categories (Executive 7, Portfolio 9,
+Repayments 9, Arrears 9, Financial 9, Customers 9, Applications 9, Staff 8, Risk 8,
+Audit & Statements 12) plus a report console: date presets and range, officer / branch /
+product / status filters, advanced filters, in-report search, summary totals, paginated
+records table, CSV / Excel / PDF export, print, generation history and a role-based
+access matrix. Nothing is a static screenshot — every figure is recomputed from the
+sample dataset when a filter changes.
+
 ## Modules
 
 | Module | File | Sections |
@@ -12,6 +22,7 @@ Plain HTML + CSS + vanilla JS — no build step, no dependencies, no external re
 | Disbursements | `disbursements.html` | 18 |
 | Notifications | `notifications.html` | 18 |
 | Staff Management | `staff.html` | 18 |
+| Reports & Analytics | `reports.html` | 11 · 89 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -23,19 +34,23 @@ index.html              Dashboard (master source of the shared <style> + sidebar
 disbursements.html      Module 2  (built)
 notifications.html      Module 3  (built)
 staff.html              Module 4  (built)
+reports.html            Module 5  (built · 89 reports in 10 categories + console)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
 _staff.css              page CSS for Staff Management
+_reports.css            page CSS for Reports
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
 build-notifications.sh  rebuilds notifications.html from its partials
 build-staff.sh          rebuilds staff.html from its partials
+build-reports.sh        rebuilds reports.html from its partials
 
 _bodyA/B/C.html  _jsA/B/C*.js          disbursements partials
 _nbodyA/B/C.html _njsA/B/C*.js         notifications partials
 _sbodyA/B/C.html _sjsA/B/C*/D.js       staff partials
+_rbodyA/B.html   _rjsA/B/C*/D*.js      reports partials
 
 preview-*.png           full-page screenshots at 1280px
 ```

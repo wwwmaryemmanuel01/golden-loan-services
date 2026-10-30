@@ -1,0 +1,70 @@
+  /* ===================== REPORTS MODULE ===================== */
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+  .strip .cell{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff}
+  .strip .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800}
+  .strip .v{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-top:3px;white-space:nowrap}
+  .strip .s{font-size:10px;color:var(--muted);margin-top:2px}
+
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+  .repcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;
+    cursor:pointer;display:flex;flex-direction:column;gap:6px}
+  .repcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .repcard.locked{opacity:.55;cursor:not-allowed;background:#FAFBFC}
+  .repcard.locked:hover{border-color:var(--line);background:#FAFBFC;transform:none}
+  .repcard .rh{display:flex;align-items:flex-start;gap:8px}
+  .repcard .ric{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 26px;
+    background:#F1F3F8;color:#4A5160;font-size:11px;font-weight:800}
+  .repcard .rn{font-size:11.8px;font-weight:700;line-height:1.3}
+  .repcard .rd{font-size:10px;color:var(--muted);line-height:1.4;flex:1}
+  .repcard .rf{display:flex;justify-content:space-between;align-items:center;font-size:9.5px;color:var(--muted-2);
+    border-top:1px dashed #EDEFF4;padding-top:6px;margin-top:auto}
+  .repcard.active{border-color:var(--gold-dark);box-shadow:0 0 0 2px rgba(201,162,39,.25)}
+
+  .console{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+  .console .chead{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#FFFDF6,#fff)}
+  .console .cbody{padding:12px 14px}
+  .console .cifelds{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+  .datepresets{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .datepresets button{border:0;background:transparent;font-family:inherit;font-size:10.5px;font-weight:700;
+    color:var(--muted);padding:5px 9px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .datepresets button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin:11px 0}
+  .totals .t{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#FAFBFC}
+  .totals .t .k{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800}
+  .totals .t .v{font-size:14px;font-weight:800;margin-top:2px;letter-spacing:-.3px}
+  .totals .t .s{font-size:9.5px;color:var(--muted-2);margin-top:1px}
+
+  #repBody td{white-space:nowrap}
+  #repBody td.wrap{white-space:normal;max-width:210px}
+  .neg{color:#B32C2C}
+  .pos{color:#157A50}
+
+  .perm-tag{font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    border-radius:20px;padding:2px 7px;background:#EEF1F6;color:#4A5160}
+  .perm-tag.full{background:#E8F6EF;color:#157A50}
+  .perm-tag.read{background:#EAF1FE;color:#2456C4}
+  .perm-tag.none{background:#FDEDED;color:#B32C2C}
+
+  @media print{
+    .sidebar,.topbar,.subnav,.modband,.sec-tools,.toasts,.modal,.note{display:none !important}
+    .main{margin-left:0 !important}
+    .content{padding:0 !important}
+    .sec{display:none !important}
+    .sec.print-target{display:block !important;break-inside:avoid}
+    .card,.console,.tblwrap{box-shadow:none !important;border-color:#ccc !important}
+    body{background:#fff !important}
+  }
+
+  /* ---------- narrow screens ---------- */
+  @media(max-width:640px){
+    .modband{flex-wrap:wrap;gap:10px}
+    .band-stats{flex-wrap:wrap;row-gap:8px;margin-left:0}
+    .band-stat{padding-left:12px}
+    .modband .mb-actions{margin-left:0;width:100%}
+    .console .chead{flex-wrap:wrap}
+    .datepresets{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+    .totals,.strip{grid-template-columns:1fr 1fr}
+    .rgrid{grid-template-columns:1fr}
+    #repBody td{white-space:normal}
+  }

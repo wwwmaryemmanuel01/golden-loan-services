@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<title>Reports — GOLDEN FINANCIAL SERVICES</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+
+  /* ===================== MODULE PAGE ADDITIONS ===================== */
+  .modband{background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);color:#fff;
+    border-radius:16px;padding:16px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:center;
+    flex-wrap:wrap;box-shadow:0 10px 30px rgba(16,18,24,.18)}
+  .modband h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .modband p{font-size:11.5px;color:#B9BFCB;margin-top:3px}
+  .modband .mb-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .modband > div:first-child{flex:0 1 auto;min-width:0}
+  .band-stats{display:flex;gap:0;align-items:center;flex-wrap:nowrap;flex:0 0 auto;margin-left:4px}
+  .band-stat{display:flex;flex-direction:column;gap:2px;padding-left:16px;border-left:1px solid #2E3340;white-space:nowrap;flex:0 0 auto}
+  .band-stat b{font-size:15px;font-variant-numeric:tabular-nums}
+  .band-stat span{font-size:10px;color:#9AA0AC;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .fld{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:9px;padding:7px 10px;font-size:12px;min-width:0}
+  .fld:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fld input,.fld select{border:0;outline:none;background:transparent;font-family:inherit;
+    font-size:12px;color:var(--ink);min-width:0}
+  .fld input::placeholder{color:#9AA0AC}
+  .fld.search{flex:1 1 240px;max-width:340px}
+  .fld.search input{width:100%}
+  .fld select{cursor:pointer}
+  .count-pill{font-size:10.5px;font-weight:800;color:var(--gold-dark);background:var(--gold-soft);
+    border-radius:20px;padding:3px 8px;white-space:nowrap}
+
+  /* dense table */
+  .tbl2{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl2 thead th{position:sticky;top:0;background:#fff;text-align:left;font-size:9.5px;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--muted-2);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line);
+    white-space:nowrap;z-index:2}
+  .tbl2 td{padding:8px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  .tbl2 tbody tr:hover{background:#FCFAF2}
+  .tbl2 tr.sel{background:var(--gold-soft)}
+  .tbl2 .mono{font-variant-numeric:tabular-nums;font-weight:700}
+  .tbl2 th.num,.tbl2 td.num{text-align:right}
+  .tblwrap{max-height:560px;overflow:auto;margin-top:8px;border-radius:10px;border:1px solid var(--line-2)}
+
+  /* status chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .st-draft{background:#F1F2F6;color:#5A6172}
+  .st-await{background:var(--amber-soft);color:#9A6A0D}
+  .st-auth{background:var(--blue-soft);color:#2456C4}
+  .st-proc{background:var(--purple-soft);color:#5A3FCB}
+  .st-conf{background:#E6F1FE;color:#1E5FBF}
+  .st-ok{background:var(--green-soft);color:#157A50}
+  .st-fail{background:var(--red-soft);color:#B32C2C}
+  .st-rej{background:#FBE7E7;color:#962626}
+  .st-canc{background:#EEF0F4;color:#616B7C}
+  .st-rev{background:#F6E7EA;color:#8E2F45}
+
+  /* forms */
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:10px}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .form-grid.one{grid-template-columns:1fr}
+  .fg{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fg label{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#5A6172}
+  .fg input,.fg select,.fg textarea{border:1px solid var(--line);border-radius:9px;padding:8px 10px;
+    font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fg input[readonly]{background:#F7F8FA;color:#4A5160}
+  .fg .hint{font-size:10px;color:var(--muted);margin-top:1px}
+  .form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:#1B1F27}
+  .btn-red{background:#FDECEC;color:#B32C2C;border-color:#F6D5D5}
+  .btn-red:hover{background:#FBDCDC}
+  .btn-green{background:#E7F6EF;color:#157A50;border-color:#CFECE0}
+  .btn-green:hover{background:#D9F1E6}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* checklist */
+  .check{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed #EDEFF4;font-size:12px}
+  .check:last-child{border-bottom:0}
+  .check .ck{width:16px;height:16px;flex:0 0 16px;border-radius:5px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;margin-top:1px}
+  .check .ck.y{background:var(--green-soft);color:#157A50}
+  .check .ck.n{background:var(--red-soft);color:#B32C2C}
+  .check .ck.w{background:var(--amber-soft);color:#9A6A0D}
+  .check b{font-weight:600}
+  .check span.s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* method cards */
+  .methodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:10px}
+  .method{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s}
+  .method:hover{border-color:var(--gold)}
+  .method-top{display:flex;align-items:center;gap:8px}
+  .method .mi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:12px}
+  .method-top > div:nth-child(2){flex:1;min-width:0}
+  .method b{font-size:12px;line-height:1.25;display:block}
+  .method .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .method .mv{display:flex;justify-content:space-between;margin-top:9px;font-size:11px}
+  .method .mv b{font-variant-numeric:tabular-nums}
+
+  /* toggle */
+  .toggle{position:relative;width:36px;height:20px;border-radius:20px;background:#D8DCE4;cursor:pointer;
+    border:0;transition:.18s;flex:0 0 36px}
+  .toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+    background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .toggle.on{background:var(--gold)}
+  .toggle.on::after{transform:translateX(16px)}
+
+  /* settings rows */
+  .setrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed #EDEFF4}
+  .setrow:last-child{border-bottom:0}
+  .setrow .sk{font-size:12px;font-weight:600;color:#2B303B}
+  .setrow .ss{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .setrow .sv{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .setrow input[type=number],.setrow input[type=text],.setrow select{border:1px solid var(--line);
+    border-radius:8px;padding:5px 8px;font-size:11.5px;font-family:inherit;width:110px;text-align:right}
+
+  /* timeline */
+  .tl{position:relative;margin-top:10px;padding-left:16px}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 12px 0}
+  .tl-item::before{content:"";position:absolute;left:-15px;top:3px;width:7px;height:7px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px #fff}
+  .tl-item b{font-size:11.5px;font-weight:700}
+  .tl-item span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* documents */
+  .doc{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .doc:last-child{border-bottom:0}
+  .doc .di{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-dark);
+    display:grid;place-items:center;flex:0 0 28px}
+  .doc .dn{font-size:11.5px;font-weight:600}
+  .doc .ds{font-size:10px;color:var(--muted);margin-top:1px}
+  .doc .da{margin-left:auto;display:flex;gap:5px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,17,21,.5);backdrop-filter:blur(3px);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .modal.on{display:flex}
+  .modal-card{background:#fff;border-radius:16px;width:100%;max-width:720px;box-shadow:0 24px 60px rgba(0,0,0,.3);
+    animation:pop .16s ease}
+  @keyframes pop{from{transform:translateY(8px);opacity:.6}to{transform:none;opacity:1}}
+  .modal-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .modal-head h3{font-size:14.5px;font-weight:800}
+  .modal-head p{font-size:11px;color:var(--muted);margin-top:2px}
+  .modal-body{padding:16px 18px}
+  .modal-foot{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;
+    flex-wrap:wrap;background:#FCFCFD;border-radius:0 0 16px 16px}
+  .x{border:0;background:#F1F2F6;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;
+    color:#4A5160;margin-left:auto;display:grid;place-items:center}
+
+  /* toast */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px}
+  .toast{background:var(--ink);color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:center;
+    animation:slide .2s ease;max-width:340px}
+  .toast.ok{border-left:3px solid var(--green)}
+  .toast.err{border-left:3px solid var(--red)}
+  .toast.info{border-left:3px solid var(--gold)}
+  @keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+  /* misc */
+  .split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:13px;align-items:start}
+  .split > *{min-width:0}
+  .grid > *{min-width:0}
+  .split.even{grid-template-columns:1fr 1fr}
+  .split.rev{grid-template-columns:1fr 1.5fr}
+  .note{display:flex;gap:9px;align-items:flex-start;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160;line-height:1.5}
+  .note.gold{background:#FFF9E8;border-color:#F2E3B0;color:#7A5C08}
+  .note.red{background:#FDF0F0;border-color:#F6D5D5;color:#8E2F2F}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:7px 0;
+    border-bottom:1px dashed #EDEFF4}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--muted);font-weight:600}
+  .kv .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .kv .v.big{font-size:13.5px}
+  .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .mini-stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .mini-stat b{display:block;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+  .mini-stat span{font-size:10.5px;color:var(--muted);font-weight:600}
+  .pager{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:10px;font-size:11.5px;color:var(--muted)}
+  .pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;cursor:pointer;
+    font-size:11.5px;font-family:inherit;color:#3A3F4A}
+  .pager button:hover{border-color:var(--gold)}
+  .pager button:disabled{opacity:.45;cursor:not-allowed}
+  .empty{padding:26px 10px;text-align:center;font-size:12px;color:var(--muted)}
+  .sec{margin-bottom:22px}
+  @media(max-width:1120px){
+    .split,.split.even,.split.rev{grid-template-columns:1fr}
+    .form-grid,.form-grid.three{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .modband{padding:14px}
+  }
+
+  /* ===================== REPORTS MODULE ===================== */
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+  .strip .cell{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff}
+  .strip .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800}
+  .strip .v{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-top:3px;white-space:nowrap}
+  .strip .s{font-size:10px;color:var(--muted);margin-top:2px}
+
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+  .repcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;
+    cursor:pointer;display:flex;flex-direction:column;gap:6px}
+  .repcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .repcard.locked{opacity:.55;cursor:not-allowed;background:#FAFBFC}
+  .repcard.locked:hover{border-color:var(--line);background:#FAFBFC;transform:none}
+  .repcard .rh{display:flex;align-items:flex-start;gap:8px}
+  .repcard .ric{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 26px;
+    background:#F1F3F8;color:#4A5160;font-size:11px;font-weight:800}
+  .repcard .rn{font-size:11.8px;font-weight:700;line-height:1.3}
+  .repcard .rd{font-size:10px;color:var(--muted);line-height:1.4;flex:1}
+  .repcard .rf{display:flex;justify-content:space-between;align-items:center;font-size:9.5px;color:var(--muted-2);
+    border-top:1px dashed #EDEFF4;padding-top:6px;margin-top:auto}
+  .repcard.active{border-color:var(--gold-dark);box-shadow:0 0 0 2px rgba(201,162,39,.25)}
+
+  .console{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+  .console .chead{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#FFFDF6,#fff)}
+  .console .cbody{padding:12px 14px}
+  .console .cifelds{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+  .datepresets{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .datepresets button{border:0;background:transparent;font-family:inherit;font-size:10.5px;font-weight:700;
+    color:var(--muted);padding:5px 9px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .datepresets button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin:11px 0}
+  .totals .t{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#FAFBFC}
+  .totals .t .k{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800}
+  .totals .t .v{font-size:14px;font-weight:800;margin-top:2px;letter-spacing:-.3px}
+  .totals .t .s{font-size:9.5px;color:var(--muted-2);margin-top:1px}
+
+  #repBody td{white-space:nowrap}
+  #repBody td.wrap{white-space:normal;max-width:210px}
+  .neg{color:#B32C2C}
+  .pos{color:#157A50}
+
+  .perm-tag{font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    border-radius:20px;padding:2px 7px;background:#EEF1F6;color:#4A5160}
+  .perm-tag.full{background:#E8F6EF;color:#157A50}
+  .perm-tag.read{background:#EAF1FE;color:#2456C4}
+  .perm-tag.none{background:#FDEDED;color:#B32C2C}
+
+  @media print{
+    .sidebar,.topbar,.subnav,.modband,.sec-tools,.toasts,.modal,.note{display:none !important}
+    .main{margin-left:0 !important}
+    .content{padding:0 !important}
+    .sec{display:none !important}
+    .sec.print-target{display:block !important;break-inside:avoid}
+    .card,.console,.tblwrap{box-shadow:none !important;border-color:#ccc !important}
+    body{background:#fff !important}
+  }
+
+  /* ---------- narrow screens ---------- */
+  @media(max-width:640px){
+    .modband{flex-wrap:wrap;gap:10px}
+    .band-stats{flex-wrap:wrap;row-gap:8px;margin-left:0}
+    .band-stat{padding-left:12px}
+    .modband .mb-actions{margin-left:0;width:100%}
+    .console .chead{flex-wrap:wrap}
+    .datepresets{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+    .totals,.strip{grid-template-columns:1fr 1fr}
+    .rgrid{grid-template-columns:1fr}
+    #repBody td{white-space:normal}
+  }
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">GF</div>
+    <div>
+      <div class="brand-name">GOLDEN FINANCIAL<br>SERVICES</div>
+      <div class="brand-sub">ADMIN PORTAL</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item" data-page="dashboard" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Lending</div>
+    <a class="nav-item" data-page="applications" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
+      Loan Applications <span class="pill gold">18</span>
+    </a>
+    <a class="nav-item" data-page="loans" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
+      Loan Portfolio
+    </a>
+    <a class="nav-item" data-page="repayments" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+      Repayments
+    </a>
+    <a class="nav-item" data-page="collections" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
+      Collections &amp; Arrears <span class="pill red">142</span>
+    </a>
+    <div class="nav-label">Customers</div>
+    <a class="nav-item" data-page="clients" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
+      Clients (KYC)
+    </a>
+    <a class="nav-item" data-page="guarantors" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      Guarantors &amp; Collateral
+    </a>
+    <div class="nav-label">Finance</div>
+    <a class="nav-item" data-page="disbursements" href="disbursements.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+      Disbursements
+    </a>
+    <a class="nav-item" data-page="transactions" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+      Transactions
+    </a>
+    <a class="nav-item active" data-page="reports" href="reports.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Reports &amp; Analytics
+    </a>
+    <div class="nav-label">Communication</div>
+    <a class="nav-item" data-page="notifications" href="notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      Notifications
+    </a>
+    <div class="nav-label">System</div>
+    <a class="nav-item" data-page="staff" href="staff.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+      Staff &amp; Users
+    </a>
+    <a class="nav-item" data-page="settings" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1.2Z"/></svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="avatar">CM</div>
+    <div>
+      <div class="sf-name">Chikondi Mwale</div>
+      <div class="sf-role">System Administrator</div>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Reports</div>
+      <div class="page-sub">Executive · portfolio · collections · risk · compliance · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search reports, officers, customers, receipts…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Report history" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H3v-6h18v6h-3"/><rect x="6" y="14" width="12" height="7" rx="1.5"/></svg>
+      Print
+    </button>
+    <button class="btn btn-gold" id="quickRun">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Run a report
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Executive</a>
+    <a class="snav" href="#s2">2 · Loan Portfolio</a>
+    <a class="snav" href="#s3">3 · Repayments</a>
+    <a class="snav" href="#s4">4 · Arrears</a>
+    <a class="snav" href="#s5">5 · Financial</a>
+    <a class="snav" href="#s6">6 · Customers</a>
+    <a class="snav" href="#s7">7 · Applications</a>
+    <a class="snav" href="#s8">8 · Staff Performance</a>
+    <a class="snav" href="#s9">9 · Risk &amp; Credit</a>
+    <a class="snav" href="#s10">10 · Audit &amp; Statements</a>
+    <a class="snav" href="#s11">11 · Report Console</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Reports &amp; Analytics</h1>
+        <p>Every report runs against live portfolio data with filters, totals and exports</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandReports">89</b><span>Reports</span></div>
+        <div class="band-stat"><b id="bandToday">6</b><span>Generated today</span></div>
+        <div class="band-stat"><b id="bandRows">0</b><span>Rows in view</span></div>
+        <div class="band-stat"><b id="bandRole">Super Admin</b><span>Access level</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="histBtn">Generation history</button>
+        <button class="btn btn-gold btn-sm" id="consoleBtn">Open report console</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Executive Summary Reports</h2><p>Business performance at a glance · period 1–30 October 2026</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c1count">7 reports</span></div>
+      </div>
+      <div class="grid g4" id="execTiles" style="margin-bottom:13px"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Monthly Performance Trends</div>
+            <div class="panel-sub">Disbursed, collected and overdue · MK millions</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chTrend" viewBox="0 0 640 220"></svg></div>
+          <div class="legend" id="chTrendLegend"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Efficiency</div>
+            <div class="panel-sub">Collected vs due · last 8 weeks</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chCollect" viewBox="0 0 640 220"></svg></div>
+          <div class="legend" id="chCollectLegend"></div>
+        </div>
+      </div>
+      <div class="strip" id="strip1"></div>
+      <div class="rgrid" id="grid1"></div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Loan Portfolio Reports</h2><p>Book composition, maturity and balances</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c2count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip2"></div>
+      <div class="rgrid" id="grid2"></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Repayment Reports</h2><p>Collections, allocations and payment integrity</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c3count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip3"></div>
+      <div class="rgrid" id="grid3"></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Arrears &amp; Delinquency Reports</h2><p>Ageing, DPD, default and recovery performance</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c4count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip4"></div>
+      <div class="rgrid" id="grid4"></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Financial Reports</h2><p>Income, expenditure, cash position and reconciliation</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c5count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip5"></div>
+      <div class="rgrid" id="grid5"></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Customer Reports</h2><p>Registrations, borrowing behaviour and balances</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c6count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip6"></div>
+      <div class="rgrid" id="grid6"></div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Loan Applications &amp; Disbursement Reports</h2><p>Pipeline, turnaround and release history</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c7count">9 reports</span></div>
+      </div>
+      <div class="strip" id="strip7"></div>
+      <div class="rgrid" id="grid7"></div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Staff &amp; Officer Performance Reports</h2><p>Output, collection rates and overdue portfolios by officer</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c8count">8 reports</span></div>
+      </div>
+      <div class="strip" id="strip8"></div>
+      <div class="rgrid" id="grid8"></div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Risk &amp; Credit Performance Reports</h2><p>PAR, default, restructures and expected credit losses</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c9count">8 reports</span></div>
+      </div>
+      <div class="strip" id="strip9"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Portfolio at Risk</div>
+            <div class="panel-sub">PAR 30 / 60 / 90 · % of book</div></div></div>
+          <div id="parBars" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Credit Risk Trends</div>
+            <div class="panel-sub">NPL ratio and write-offs · 6 months</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chRisk" viewBox="0 0 640 210"></svg></div>
+          <div class="legend" id="chRiskLegend"></div>
+        </div>
+      </div>
+      <div class="rgrid" id="grid9"></div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Audit, Compliance &amp; Statements</h2><p>Trails, statements, schedules and registers</p></div>
+        <div class="sec-tools"><span class="count-pill" id="c10count">12 reports</span></div>
+      </div>
+      <div class="strip" id="strip10"></div>
+      <div class="rgrid" id="grid10"></div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Report Console</h2><p>Date ranges, filters, totals, records, exports, print and history</p></div>
+        <div class="sec-tools">
+          <span class="badge b-appr" id="accessBadge">Full access</span>
+          <select id="viewRole" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option>Super Admin</option><option>Administrator</option><option>Auditor / Compliance Officer</option>
+            <option>Loan Officer</option><option>Collections Officer</option><option>Accountant / Finance Officer</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="console">
+        <div class="chead">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span class="chip st-proc" id="repCat">Executive</span>
+              <b id="repTitle" style="font-size:13.5px">Financial Performance Summary</b>
+              <span class="badge b-gray" id="repId">EXE-02</span>
+            </div>
+            <div class="tiny muted" id="repDesc" style="margin-top:3px">Revenue, cost and profit for the selected period</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" data-act="exp-pdf">Export PDF</button>
+            <button class="btn btn-ghost btn-sm" data-act="exp-xls">Excel</button>
+            <button class="btn btn-ghost btn-sm" data-act="exp-csv">CSV</button>
+            <button class="btn btn-dark btn-sm" data-act="do-print">Print report</button>
+          </div>
+        </div>
+
+        <div class="cbody">
+          <div class="cifelds">
+            <div>
+              <div class="tiny muted" style="font-weight:800;margin-bottom:4px">DATE RANGE</div>
+              <div class="datepresets" id="datePresets">
+                <button data-p="today">Today</button>
+                <button data-p="7d">Last 7 days</button>
+                <button class="on" data-p="30d">Last 30 days</button>
+                <button data-p="mtd">This month</button>
+                <button data-p="qtd">This quarter</button>
+                <button data-p="ytd">Year to date</button>
+                <button data-p="custom">Custom</button>
+              </div>
+            </div>
+            <div class="fld"><label style="font-size:9px;font-weight:800;color:var(--muted)">FROM</label>
+              <input type="date" id="dtFrom" value="2026-10-01" /></div>
+            <div class="fld"><label style="font-size:9px;font-weight:800;color:var(--muted)">TO</label>
+              <input type="date" id="dtTo" value="2026-10-30" /></div>
+            <div class="fld search">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="repSearch" placeholder="Search within this report…" />
+            </div>
+          </div>
+
+          <div class="cifelds" style="margin-top:9px">
+            <div class="fld"><select id="fldOfficer"><option value="">All officers</option></select></div>
+            <div class="fld"><select id="fldBranch"><option value="">All branches</option></select></div>
+            <div class="fld"><select id="fldProduct"><option value="">All products</option></select></div>
+            <div class="fld"><select id="fldStatus"><option value="">All statuses</option></select></div>
+            <button class="btn btn-ghost btn-sm" id="advToggle">Advanced filters</button>
+            <button class="btn btn-gold btn-sm" id="applyBtn">Apply filters</button>
+            <button class="btn btn-ghost btn-sm" id="resetBtn">Reset</button>
+          </div>
+
+          <div id="advPanel" style="display:none;margin-top:9px">
+            <div class="flds" style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="fld"><input id="advMin" type="number" placeholder="Min amount" style="width:130px" /></div>
+              <div class="fld"><input id="advMax" type="number" placeholder="Max amount" style="width:130px" /></div>
+              <div class="fld"><select id="advDpd"><option value="">Any DPD</option><option value="0">Current (0 DPD)</option>
+                <option value="30">30+ DPD</option><option value="60">60+ DPD</option><option value="90">90+ DPD</option></select></div>
+              <div class="fld"><select id="advSort"><option value="">Default order</option>
+                <option value="amt-desc">Largest amount first</option><option value="amt-asc">Smallest amount first</option></select></div>
+              <div class="fld"><input id="advRef" placeholder="Record / receipt reference" style="width:180px" /></div>
+            </div>
+          </div>
+
+          <div class="totals" id="repTotals"></div>
+
+          <div class="tblwrap" style="max-height:460px">
+            <table class="tbl2"><thead id="repHead"></thead><tbody id="repBody"></tbody></table>
+          </div>
+          <div class="pager" id="repPager"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Report Generation History</div>
+            <div class="panel-sub">Who ran what, when and in which format</div></div>
+            <button class="btn btn-ghost btn-sm" id="histExport">Export log</button></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Report</th><th>User</th>
+              <th class="num">Rows</th><th>Format</th></tr></thead><tbody id="histBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role-Based Access</div>
+            <div class="panel-sub">Which role may run each report category</div></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Category</th><th>Access</th><th>Roles</th></tr></thead>
+              <tbody id="accessBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Every report filters, totals, paginates and exports for real; the numbers update when you
+        change the date range, officer, branch, product or status.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   GOLDEN FINANCIAL SERVICES · REPORTS MODULE
+   ============================================================ */
+const el = id => document.getElementById(id);
+const nf = n => Math.round(n).toLocaleString('en-US');
+const mk = n => 'MK ' + nf(n);
+const mkm = n => 'MK ' + (n/1000000).toFixed(1) + 'M';
+const pct = (a,b) => b ? (a/b*100).toFixed(1) + '%' : '—';
+const stamp = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+const TODAY = '30 Oct 2026';
+
+function toast(msg, type='ok'){
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<span>${type==='err'?'⚠':type==='info'?'ℹ':'✓'}</span><div>${msg}</div>`;
+  el('toasts').appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(16px)';t.style.transition='.25s';},2600);
+  setTimeout(()=>t.remove(),3000);
+}
+
+/* ---------- charts ---------- */
+function niceMax(v){
+  if(v<=0) return 10;
+  const p=Math.pow(10,Math.floor(Math.log10(v)));
+  for(const s of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(v<=s*p) return s*p;
+  return 10*p;
+}
+function mkChart(host,o){
+  if(!host) return;
+  const type=o.type||'line', labels=o.labels||[], series=o.series||[];
+  const W=640,H=o.height||210,L=o.suffix?48:38,R=12,T=12,B=26, iw=W-L-R, ih=H-T-B;
+  const yMax=o.yMax||niceMax(Math.max(0,...series.flatMap(s=>s.data)));
+  const step=iw/Math.max(labels.length,1);
+  let g='';
+  for(let i=0;i<=4;i++){
+    const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
+    const t=Number.isInteger(v)?v:v.toFixed(1);
+    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}${o.suffix||''}</text>`;
+  }
+  labels.forEach((lb,i)=>{
+    if(labels.length>12 && i%2) return;
+    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+  });
+  if(type==='bar'){
+    const n=series.length, groupW=step*0.6, bw=Math.max(3,groupW/n-(n>1?2:0));
+    labels.forEach((lb,i)=>{
+      const gx=L+step*i+(step-groupW)/2;
+      series.forEach((s,j)=>{
+        const v=s.data[i]||0, h=(v/yMax)*ih;
+        if(h<0.6) return;
+        const x=gx+j*(bw+2), y=T+ih-h, r=Math.min(3,bw/2,h/2);
+        g+=`<path d="M${x.toFixed(1)} ${(y+r).toFixed(1)} q0 ${-r} ${r} ${-r} h${(bw-2*r).toFixed(1)} q${r} 0 ${r} ${r} v${(h-r).toFixed(1)} h${-bw.toFixed(1)} Z" fill="${s.color}"><title>${lb} · ${s.name}: ${v}</title></path>`;
+      });
+    });
+  } else {
+    series.forEach(s=>{
+      const pts=s.data.map((v,i)=>[L+step*i+step/2,T+ih-(v/yMax)*ih]);
+      const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+      const gid='g'+Math.random().toString(36).slice(2,8);
+      g+=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${s.color}" stop-opacity=".2"/><stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient></defs>
+        <path d="${d} L${pts[pts.length-1][0].toFixed(1)} ${T+ih} L${pts[0][0].toFixed(1)} ${T+ih} Z" fill="url(#${gid})"/>
+        <path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.1" stroke-linejoin="round"/>`;
+      pts.forEach((q,i)=>{g+=`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.3" fill="#fff" stroke="${s.color}" stroke-width="1.7"><title>${labels[i]}: ${s.data[i]}</title></circle>`;});
+    });
+  }
+  host.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  host.innerHTML=g;
+}
+function mkHBars(host, rows, opt={}){
+  if(!host) return;
+  const max=opt.max || Math.max(...rows.map(r=>r.value))||1;
+  host.innerHTML=rows.map(r=>`<div class="hbar-row">
+    <div class="hbar-l">${r.label}</div>
+    <div class="hbar-t"><i style="width:${Math.max(2,(r.value/max)*100)}%;background:${r.color||'#C9A227'}"></i></div>
+    <div class="hbar-v">${r.display||nf(r.value)}</div></div>`).join('');
+}
+function legend(host, series){
+  if(!host) return;
+  host.innerHTML = series.map(s=>`<span class="lg-item"><i style="background:${s.color}"></i>${s.name}</span>`).join('');
+}
+
+/* ============================================================
+   DATASET
+   ============================================================ */
+function rng(seed){ let s=seed; return ()=>{ s=(s*1664525+1013904223)%4294967296; return s/4294967296; }; }
+const R = rng(20261030);
+const pick = a => a[Math.floor(R()*a.length)];
+const FIRST=['Thokozani','Grace','Peter','Memory','Yamikani','Esther','Isaac','Fatima','Rose','Kondwani',
+  'Blessings','Chimwemwe','Mercy','Alfred','Sarah','Tadala','Daniel','Tabitha','Henry','Chisomo',
+  'Ephraim','Loveness','Mphatso','Ruth','Stevenson','Lydia'];
+const LAST=['Banda','Mvula','Kachale','Nkhoma','Gondwe','Kamanga','Mponda','Salimu','Chikopa','Msiska',
+  'Tembo','Zulu','Chatsika','Jimu','Kaunda','Phiri','Mwale','Nyirenda','Chirwa','Mbewe'];
+const PRODUCTS=['Business Growth','Salary Loan','Agri Loan','Emergency Loan','Asset Finance'];
+const OFFICERS=['Tadala Nkhoma','Blessings Tembo','Memory Nkhoma','Joseph Mwale','Yamikani Gondwe','Rose Chikopa'];
+const BRANCHES=['Lilongwe City','Lilongwe Area 47','Blantyre','Mzuzu','Zomba','Kasungu'];
+const METHODS=['Airtel Money','TNM Mpamba','Bank transfer','Cash','Cheque'];
+const DSTATUS=['Active','Active','Active','Active','Active','Fully Paid','Fully Paid','Pending',
+  'Approved','Rejected','Cancelled','Active','Active','Active','Fully Paid','Active'];
+
+let CUSTOMERS = [], LOANS = [], REPAYS = [], APPS = [], STAFFAGG = [];
+const seen = new Set();
+function person(){
+  let n;
+  do { n = pick(FIRST)+' '+pick(LAST); } while(seen.has(n));
+  seen.add(n); return n;
+}
+
+/* customers */
+for(let i=0;i<40;i++){
+  const name = person();
+  CUSTOMERS.push({
+    id:'CUS-'+(3500+i), name, phone:'+265 99'+(1+i%9)+' '+(200+i)+' '+(100+i*3%900+100),
+    branch: pick(BRANCHES), joined: '2025-0'+(1+i%9)+'-'+(10+i%18),
+    status: i%13===0 ? 'Inactive' : i%17===0 ? 'Blocked' : 'Active',
+    loans: 1 + (i%4), balance: 0, dpd: 0, behaviour: 60 + (i%32)
+  });
+}
+
+/* loans */
+const PRINCIPALS=[1800000,2500000,3500000,4800000,6200000,8500000,12000000];
+for(let i=0;i<60;i++){
+  const cust = CUSTOMERS[i % CUSTOMERS.length];
+  const principal = PRINCIPALS[Math.floor(R()*PRINCIPALS.length)];
+  const term = pick([6,12,18,24]);
+  const status = DSTATUS[i % DSTATUS.length];
+  const dpd = status==='Active' ? pick([0,0,0,0,0,0,12,34,48,66,92]) : 0;
+  const balanceFactor = status==='Fully Paid'||status==='Pending'||status==='Rejected'||status==='Cancelled' ? 0
+    : 0.18 + R()*0.75;
+  const disbMonth = 1 + (i % 10);
+  LOANS.push({
+    ref:'LN-2026-'+(1801+i), customer:cust.name, custId:cust.id,
+    product: PRODUCTS[i % PRODUCTS.length], officer: OFFICERS[i % OFFICERS.length],
+    branch: cust.branch, principal, term,
+    balance: Math.round(principal*balanceFactor/10000)*10000,
+    disbursed: `2026-${String(disbMonth).padStart(2,'0')}-${String(3+i%24).padStart(2,'0')}`,
+    maturity: `2027-${String(((disbMonth+term/12)|0)%12+1).padStart(2,'0')}-15`,
+    instalment: Math.round(principal/term*1.32/1000)*1000,
+    paid: Math.round(principal*(status==='Fully Paid'?1.32:0.15+balanceFactor*0.5)/1000)*1000,
+    dpd, status,
+    lastPayment: dpd ? `2026-09-${String(5+i%20).padStart(2,'0')}` : `2026-10-${String(20+i%9).padStart(2,'0')}`,
+    nextDue: `2026-11-${String(2+i%26).padStart(2,'0')}`,
+    arrears: dpd ? Math.round(principal*0.06/1000)*1000 : 0
+  });
+}
+/* scale balances so the book matches the programme totals used across the portal */
+(function(){
+  const target = 318400000;
+  const sum = LOANS.reduce((a,l)=>a+l.balance,0);
+  const f = sum ? target/sum : 1;
+  LOANS.forEach(l=>{ l.balance = Math.round(l.balance*f/10000)*10000; });
+})();
+
+/* repayments */
+const RSTATUS=['Posted','Posted','Posted','Posted','Posted','Posted','Posted','Posted','Partial','Posted','Reversed','Disputed'];
+for(let i=0;i<72;i++){
+  const loan = LOANS[Math.floor(R()*LOANS.length)];
+  const amount = Math.round((loan.instalment*(0.6+R()*0.6))/1000)*1000;
+  const interest = Math.round(amount*0.28/1000)*1000;
+  const fees = Math.round(amount*0.02/1000)*1000;
+  const day = 1 + (i % 29);
+  REPAYS.push({
+    ref:'RCP-'+(99300+i), date:`2026-10-${String(day).padStart(2,'0')}`,
+    customer:loan.customer, loan:loan.ref, officer:loan.officer, branch:loan.branch,
+    amount, principal: amount-interest-fees, interest, fees,
+    method: METHODS[i % METHODS.length], status: RSTATUS[i % RSTATUS.length]
+  });
+}
+/* applications = pending + approved + rejected loans plus fresh submissions */
+APPS = LOANS.filter(l=>['Pending','Approved','Rejected','Cancelled'].includes(l.status)).map((l,i)=>({
+  ref:'APP-2026-'+(4400+i), customer:l.customer, product:l.product, officer:l.officer,
+  amount:l.principal, submitted:`2026-10-${String(1+(i*3)%28).padStart(2,'0')}`,
+  days: 1+(i*3)%9, status:l.status
+}));
+for(let i=0;i<8;i++){
+  const c = CUSTOMERS[(i*5+3)%CUSTOMERS.length];
+  APPS.push({ref:'APP-2026-'+(4500+i), customer:c.name, product:PRODUCTS[i%PRODUCTS.length],
+    officer:OFFICERS[i%OFFICERS.length], amount:PRINCIPALS[i%PRINCIPALS.length],
+    submitted:`2026-10-${String(20+i).padStart(2,'0')}`, days:1+i%5, status:'Pending'});
+}
+
+/* officer aggregates */
+STAFFAGG = OFFICERS.map(o=>{
+  const mine = LOANS.filter(l=>l.officer===o);
+  const reps = REPAYS.filter(r=>r.officer===o && r.status==='Posted');
+  const collected = reps.reduce((a,r)=>a+r.amount,0);
+  const due = mine.reduce((a,l)=>a+l.instalment,0);
+  return {
+    officer:o, branch: mine[0] ? mine[0].branch : '—', role:'Loan Officer',
+    loans: mine.length,
+    approved: mine.filter(l=>l.status!=='Rejected'&&l.status!=='Pending'&&l.status!=='Cancelled').length,
+    rejected: mine.filter(l=>l.status==='Rejected').length,
+    disbursed: mine.filter(l=>l.status==='Active'||l.status==='Fully Paid').length,
+    collected, due, rate: due ? Math.min(99.5, collected/due*100) : 0,
+    overdue: mine.filter(l=>l.dpd>0).reduce((a,l)=>a+l.balance,0)
+  };
+});
+
+/* headline figures shared with the rest of the portal */
+const BOOK = (()=>{
+  const active = LOANS.filter(l=>l.status==='Active');
+  const outstanding = LOANS.reduce((a,l)=>a+l.balance,0);
+  const overdue = LOANS.filter(l=>l.dpd>0).reduce((a,l)=>a+l.balance,0);
+  const collected = REPAYS.filter(r=>r.status==='Posted'||r.status==='Partial').reduce((a,r)=>a+r.amount,0);
+  const principal = LOANS.reduce((a,l)=>a+l.principal,0);
+  const par = d => active.filter(l=>l.dpd>=d).reduce((a,l)=>a+l.balance,0)/ (outstanding||1) *100;
+  const avgDays = APPS.reduce((a,x)=>a+x.days,0)/(APPS.length||1);
+  return {
+    loans: LOANS.length, active: active.length,
+    repaid: LOANS.filter(l=>l.status==='Fully Paid').length,
+    pending: LOANS.filter(l=>l.status==='Pending').length,
+    approved: LOANS.filter(l=>l.status==='Approved').length,
+    rejected: LOANS.filter(l=>l.status==='Rejected').length,
+    cancelled: LOANS.filter(l=>l.status==='Cancelled').length,
+    principal, outstanding, overdue, collected,
+    interest: REPAYS.reduce((a,r)=>a+r.interest,0),
+    fees: REPAYS.reduce((a,r)=>a+r.fees,0),
+    par30: par(30), par60: par(60), par90: par(90),
+    avgDays, receipts: REPAYS.length,
+    customers: CUSTOMERS.length,
+    activeBorrowers: new Set(active.map(l=>l.customer)).size
+  };
+})();
+
+/* ============================================================
+   SHARED REPORT PLUMBING
+   ============================================================ */
+const CATS = [
+  {key:'Executive',  n:1, name:'Executive Summary'},
+  {key:'Portfolio',  n:2, name:'Loan Portfolio'},
+  {key:'Repayments', n:3, name:'Repayments'},
+  {key:'Arrears',    n:4, name:'Arrears & Delinquency'},
+  {key:'Financial',  n:5, name:'Financial'},
+  {key:'Customers',  n:6, name:'Customers'},
+  {key:'Applications', n:7, name:'Applications & Disbursement'},
+  {key:'Staff',      n:8, name:'Staff & Officer Performance'},
+  {key:'Risk',       n:9, name:'Risk & Credit'},
+  {key:'Audit',      n:10, name:'Audit, Compliance & Statements'}
+];
+
+const COLS = {
+  loans: ['Loan','Customer','Product','Officer','Branch','Principal','Balance','DPD','Status'],
+  reps:  ['Receipt','Date','Customer','Loan','Principal','Interest','Fees','Total','Method','Status'],
+  custs: ['Customer','Phone','Branch','Joined','Loans','Outstanding','DPD','Status'],
+  apps:  ['Application','Customer','Product','Officer','Submitted','Days','Amount','Status'],
+  staff: ['Officer','Branch','Loans','Approved','Rejected','Disbursed','Collected','Rate','Overdue']
+};
+
+const chip = s => {
+  const m = {Active:'st-ok','Fully Paid':'st-ok','Fully Repaid':'st-ok',Approved:'st-ok',Posted:'st-ok',
+    Pending:'st-await','In Progress':'st-proc',Rejected:'st-fail',Cancelled:'st-canc',Reversed:'st-fail',
+    Disputed:'st-rev',Partial:'st-await',Inactive:'st-canc',Blocked:'st-fail',Overdue:'st-fail',
+    'Non-Performing':'st-fail','Restructured':'st-await',Current:'st-ok'};
+  return `<span class="chip ${m[s]||'st-canc'}">${s}</span>`;
+};
+const dpdChip = d => d>=90 ? `<span class="chip st-fail">${d}</span>`
+  : d>=30 ? `<span class="chip st-await">${d}</span>`
+  : d>0 ? `<span class="chip st-proc">${d}</span>` : '<span class="muted">—</span>';
+
+const ROW = {
+  loans: l => [l.ref, l.customer, l.product, l.officer, l.branch, mk(l.principal), mk(l.balance), dpdChip(l.dpd), chip(l.status)],
+  reps:  r => [r.ref, r.date, r.customer, r.loan, mk(r.principal), mk(r.interest), mk(r.fees), mk(r.amount), r.method, chip(r.status)],
+  custs: c => [c.name, c.phone, c.branch, c.joined, c.loans, mk(c.balance), dpdChip(c.dpd), chip(c.status)],
+  apps:  a => [a.ref, a.customer, a.product, a.officer, a.submitted, a.days + ' d', mk(a.amount), chip(a.status)],
+  staff: s => [s.officer, s.branch, s.loans, s.approved, s.rejected, s.disbursed, mk(s.collected), s.rate.toFixed(1)+'%', mk(s.overdue)]
+};
+
+/* date range semantics: repayments/applications are transactional (between),
+   loans and customers are "as at" reports (up to the end date) */
+function baseFilter(x, f, src){
+  const d = src==='reps' ? x.date : src==='apps' ? x.submitted : src==='loans' ? x.disbursed : x.joined;
+  if(f.to && d > f.to) return false;
+  if(src==='reps' || src==='apps'){ if(f.from && d < f.from) return false; }
+  if(f.officer && x.officer !== f.officer) return false;
+  if(f.branch && (x.branch||'') !== f.branch) return false;
+  if(f.product && x.product !== f.product) return false;
+  return true;
+}
+function matchQ(rowArr, q){
+  if(!q) return true;
+  return rowArr.join(' ').toLowerCase().includes(q.toLowerCase());
+}
+function applyAdv(rows, f, amountIdx){
+  if(f.min != null && amountIdx!=null) rows = rows.filter(r=>numOf(r[amountIdx]) >= f.min);
+  if(f.max != null && amountIdx!=null) rows = rows.filter(r=>numOf(r[amountIdx]) <= f.max);
+  if(f.ref) rows = rows.filter(r=>r.join(' ').toLowerCase().includes(f.ref.toLowerCase()));
+  if(f.sort==='amt-desc' && amountIdx!=null) rows = rows.slice().sort((a,b)=>numOf(b[amountIdx])-numOf(a[amountIdx]));
+  if(f.sort==='amt-asc' && amountIdx!=null) rows = rows.slice().sort((a,b)=>numOf(a[amountIdx])-numOf(b[amountIdx]));
+  return rows;
+}
+const numOf = v => typeof v==='number' ? v : Number(String(v).replace(/[^0-9.-]/g,'')) || 0;
+
+function groupSum(arr, keyFn){ const m=new Map(); arr.forEach(x=>{const k=keyFn(x); m.set(k,(m.get(k)||0)+1);}); return m; }
+
+/* ---------- per-source statistics shown above the table ---------- */
+const STATS = {
+  loans: set => [
+    {k:'Records', v:set.length, s:'loans in this view'},
+    {k:'Principal', v:mkm(set.reduce((a,l)=>a+l.principal,0)), s:'original amounts'},
+    {k:'Outstanding', v:mkm(set.reduce((a,l)=>a+l.balance,0)), s:'closing balances'},
+    {k:'Overdue', v:mkm(set.filter(l=>l.dpd>0).reduce((a,l)=>a+l.balance,0)), s:'past due'}
+  ],
+  reps: set => [
+    {k:'Receipts', v:set.length, s:'payment records'},
+    {k:'Collected', v:mkm(set.reduce((a,r)=>a+r.amount,0)), s:'cash received'},
+    {k:'Principal', v:mkm(set.reduce((a,r)=>a+r.principal,0)), s:'capital recovered'},
+    {k:'Interest & fees', v:mkm(set.reduce((a,r)=>a+r.interest+r.fees,0)), s:'income portion'}
+  ],
+  custs: set => [
+    {k:'Customers', v:set.length, s:'in this view'},
+    {k:'Borrowing', v:set.filter(c=>c.loans>0).length, s:'have credit history'},
+    {k:'Outstanding', v:mkm(set.reduce((a,c)=>a+c.balance,0)), s:'total balances'},
+    {k:'In arrears', v:set.filter(c=>c.dpd>0).length, s:'accounts past due'}
+  ],
+  apps: set => [
+    {k:'Applications', v:set.length, s:'submitted'},
+    {k:'Requested', v:mkm(set.reduce((a,x)=>a+x.amount,0)), s:'total asked'},
+    {k:'Avg processing', v:(set.reduce((a,x)=>a+x.days,0)/(set.length||1)).toFixed(1)+' d', s:'submission to decision'},
+    {k:'Approved', v:set.filter(x=>x.status==='Approved'||x.status==='Active').length, s:'favourable decisions'}
+  ],
+  staff: set => [
+    {k:'Officers', v:set.length, s:'in this view'},
+    {k:'Loans', v:set.reduce((a,s)=>a+s.loans,0), s:'processed'},
+    {k:'Collected', v:mkm(set.reduce((a,s)=>a+s.collected,0)), s:'repayments'},
+    {k:'Avg rate', v:pct(set.reduce((a,s)=>a+s.collected,0), set.reduce((a,s)=>a+s.due,0)), s:'collection efficiency'}
+  ]
+};
+
+/* ============================================================
+   CATEGORY 1 · EXECUTIVE SUMMARY
+   ============================================================ */
+const MONTHS = ['May','Jun','Jul','Aug','Sep','Oct'];
+function monthlyRow(m, i){
+  const disb = 11.2 + i*0.9, coll = 14.6 + i*1.1, over = 5.4 - i*0.22;
+  return [m, mk(disb*1e6), mk(coll*1e6), mk(over*1e6),
+    pct(coll, disb*1.32), (240+i*12) + ' loans'];
+}
+const R_EXE = [
+  {id:'EXE-01', n:'Overall Business Performance', d:'Headline loans, collections, portfolio and arrears for the period',
+   src:'custom', cols:['Metric','Value','Benchmark','Variance','Status'],
+   rows: f => [
+     ['Loans disbursed', mk(BOOK.principal*0.32), 'MK 148.0M', '+12.4%', chip('Active')],
+     ['Repayments collected', mk(BOOK.collected), 'MK 92.0M', '+4.8%', chip('Active')],
+     ['Portfolio outstanding', mkm(BOOK.outstanding), 'MK 300.0M', '+6.1%', chip('Active')],
+     ['Portfolio at risk (30+)', BOOK.par30.toFixed(1)+'%', '≤ 8.0%', '+1.1 pp', chip('Restructured')],
+     ['Active borrowers', nf(BOOK.activeBorrowers), '820', '+2.7%', chip('Active')],
+     ['New applications', nf(APPS.length), '58', '+9.0%', chip('Pending')]
+   ]},
+  {id:'EXE-02', n:'Financial Performance Summary', d:'Revenue, cost and profit for the selected period',
+   src:'custom', cols:['Line','Amount','Share','Change','Comment'],
+   rows: f => {
+     const interest = BOOK.interest, fees = BOOK.fees, cost = BOOK.interest*0.34;
+     const rev = interest+fees;
+     return [
+       ['Interest income', mk(interest), pct(interest,rev), '+6.2%', 'Core lending margin'],
+       ['Fees and penalties', mk(fees), pct(fees,rev), '+2.1%', 'Processing and late fees'],
+       ['Operating costs', '(' + mk(cost) + ')', pct(cost,rev), '+3.4%', 'Staff, rent, providers'],
+       ['Net profit', mk(rev-cost), pct(rev-cost,rev), '+9.8%', 'Before tax'],
+       ['Cost-to-income', pct(cost,rev), '—', '−0.8 pp', 'Efficiency improving']
+     ];
+   }},
+  {id:'EXE-03', n:'Loan Portfolio Summary', d:'Book by product with balances and arrears',
+   src:'custom', cols:['Product','Loans','Principal','Outstanding','Overdue','% of book'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = LOANS.filter(l=>l.product===p);
+     const out = set.reduce((a,l)=>a+l.balance,0);
+     return [p, set.length, mkm(set.reduce((a,l)=>a+l.principal,0)), mkm(out),
+       mkm(set.filter(l=>l.dpd>0).reduce((a,l)=>a+l.balance,0)), pct(out, BOOK.outstanding)];
+   })},
+  {id:'EXE-04', n:'Repayment Collection Summary', d:'Collections by channel and payment status',
+   src:'custom', cols:['Channel','Receipts','Collected','Principal','Interest & fees','Share'],
+   rows: f => METHODS.map(m=>{
+     const set = REPAYS.filter(r=>r.method===m);
+     const amt = set.reduce((a,r)=>a+r.amount,0);
+     return [m, set.length, mk(amt), mk(set.reduce((a,r)=>a+r.principal,0)),
+       mk(set.reduce((a,r)=>a+r.interest+r.fees,0)), pct(amt, BOOK.collected)];
+   })},
+  {id:'EXE-05', n:'Outstanding Loan Balances', d:'Largest balances with ageing and officer',
+   src:'loans', filter:(l,f)=>l.balance>0, cols:COLS.loans, row:ROW.loans,
+   sort:(a,b)=>b.balance-a.balance},
+  {id:'EXE-06', n:'Overdue Loans Summary', d:'Arrears by bucket with balances',
+   src:'custom', cols:['Bucket','Loans','Balance','% of arrears','Provision'],
+   rows: f => {
+     const buckets=[['Current',0,0],['1–30 days',1,30],['31–60 days',31,60],['61–90 days',61,90],['90+ days',91,9999]];
+     return buckets.map(([label,lo,hi])=>{
+       const set = LOANS.filter(l=>l.dpd>=lo && l.dpd<=hi);
+       const bal = set.reduce((a,l)=>a+l.balance,0);
+       return [label, set.length, mk(bal), pct(bal, BOOK.outstanding), mk(bal*(hi>90?0.45:hi>60?0.2:hi>30?0.1:0.02))];
+     });
+   }},
+  {id:'EXE-07', n:'Monthly Performance Trends', d:'Six month trend of disbursements, collections and arrears',
+   src:'custom', cols:['Month','Disbursed','Collected','Overdue','Coverage','Volume'],
+   rows: f => MONTHS.map(monthlyRow)}
+];
+
+/* ============================================================
+   CATEGORY 2 · LOAN PORTFOLIO
+   ============================================================ */
+const R_PORT = [
+  {id:'PORT-01', n:'All Loans', d:'Every loan on the books with balance and status', src:'loans', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-02', n:'Active Loans', d:'Loans currently being serviced', src:'loans',
+   filter:l=>l.status==='Active', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-03', n:'Fully Repaid Loans', d:'Closed in full with zero balance', src:'loans',
+   filter:l=>l.status==='Fully Paid', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-04', n:'Pending Loan Applications', d:'Submitted and awaiting a decision', src:'loans',
+   filter:l=>l.status==='Pending', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-05', n:'Approved Loans Awaiting Disbursement', d:'Approved but not yet released', src:'loans',
+   filter:l=>l.status==='Approved', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-06', n:'Rejected and Cancelled Loans', d:'Declined or withdrawn applications', src:'loans',
+   filter:l=>l.status==='Rejected'||l.status==='Cancelled', cols:COLS.loans, row:ROW.loans},
+  {id:'PORT-07', n:'Loan Maturity Report', d:'Maturity dates with balances outstanding', src:'custom',
+   cols:['Loan','Customer','Maturity','Balance','Instalment','Officer'],
+   rows: f => LOANS.filter(l=>l.balance>0).slice().sort((a,b)=>a.maturity.localeCompare(b.maturity))
+     .map(l=>[l.ref, l.customer, l.maturity, mk(l.balance), mk(l.instalment), l.officer])},
+  {id:'PORT-08', n:'Loan Balances by Customer', d:'Aggregated exposure per customer', src:'custom',
+   cols:['Customer','Loans','Principal','Outstanding','Overdue','Status'],
+   rows: f => CUSTOMERS.map(c=>{
+     const set = LOANS.filter(l=>l.customer===c.name);
+     if(!set.length) return null;
+     const out = set.reduce((a,l)=>a+l.balance,0);
+     return [c.name, set.length, mk(set.reduce((a,l)=>a+l.principal,0)), mk(out),
+       mk(set.reduce((a,l)=>a+l.arrears,0)), chip(out>0?'Active':'Fully Paid')];
+   }).filter(Boolean).sort((a,b)=>numOf(b[3])-numOf(a[3]))},
+  {id:'PORT-09', n:'Loans by Product and Loan Officer', d:'Two-way split of the book', src:'custom',
+   cols:['Product','Officer','Loans','Principal','Outstanding','Arrears %'],
+   rows: f => {
+     const out=[];
+     PRODUCTS.forEach(p=>OFFICERS.forEach(o=>{
+       const set = LOANS.filter(l=>l.product===p && l.officer===o);
+       if(!set.length) return;
+       const bal = set.reduce((a,l)=>a+l.balance,0);
+       out.push([p,o,set.length,mk(set.reduce((a,l)=>a+l.principal,0)),mk(bal),
+         pct(set.reduce((a,l)=>a+l.arrears,0), bal||1)]);
+     }));
+     return out.sort((a,b)=>numOf(b[4])-numOf(a[4]));
+   }}
+];
+
+/* ============================================================
+   CATEGORY 3 · REPAYMENTS
+   ============================================================ */
+const R_REP = [
+  {id:'REP-01', n:'All Repayments', d:'Every receipt recorded in the period', src:'reps', cols:COLS.reps, row:ROW.reps},
+  {id:'REP-02', n:'Daily Collection Report', d:'Cash collected each day', src:'custom',
+   cols:['Date','Receipts','Collected','Principal','Interest & fees','Avg receipt'],
+   rows: f => [...new Set(REPAYS.map(r=>r.date))].sort().reverse().map(d=>{
+     const set = REPAYS.filter(r=>r.date===d);
+     const amt = set.reduce((a,r)=>a+r.amount,0);
+     return [d, set.length, mk(amt), mk(set.reduce((a,r)=>a+r.principal,0)),
+       mk(set.reduce((a,r)=>a+r.interest+r.fees,0)), mk(amt/(set.length||1))];
+   })},
+  {id:'REP-03', n:'Weekly and Monthly Collections', d:'Collections grouped by week and month', src:'custom',
+   cols:['Period','Type','Receipts','Collected','Principal','Growth'],
+   rows: f => {
+     const rows=[];
+     for(let w=1;w<=5;w++){
+       const set = REPAYS.filter(r=>{ const d=+r.date.slice(8); return d >= (w-1)*6+1 && d <= w*6; });
+       if(!set.length) continue;
+       rows.push(['Week '+w+' (Oct)', 'Weekly', set.length, mk(set.reduce((a,r)=>a+r.amount,0)),
+         mk(set.reduce((a,r)=>a+r.principal,0)), (w>1? '+'+ (2.1*w).toFixed(1)+'%' : '—')]);
+     }
+     rows.push(['October 2026','Monthly', REPAYS.length, mk(BOOK.collected),
+       mk(REPAYS.reduce((a,r)=>a+r.principal,0)), '+8.4%']);
+     rows.push(['September 2026','Monthly', 64, mkm(88.9e6), mkm(63.2e6), '—']);
+     return rows;
+   }},
+  {id:'REP-04', n:'Repayment History by Customer', d:'Every receipt per borrower', src:'reps', cols:COLS.reps, row:ROW.reps,
+   sort:(a,b)=>a.customer.localeCompare(b.customer)},
+  {id:'REP-05', n:'Principal and Interest Collections', d:'Allocation split of every payment', src:'reps',
+   cols:COLS.reps, row:ROW.reps},
+  {id:'REP-06', n:'Repayment Schedule vs Actual Payments', d:'Due against received per loan', src:'custom',
+   cols:['Loan','Customer','Instalment','Paid to date','Scheduled','Variance','Status'],
+   rows: f => LOANS.filter(l=>l.status==='Active').map(l=>{
+     const sched = l.instalment * Math.max(1, Math.round(l.term*0.5));
+     const variance = l.paid - sched;
+     return [l.ref, l.customer, mk(l.instalment), mk(l.paid), mk(sched),
+       (variance>=0?'+':'−')+mk(Math.abs(variance)).replace('MK ','') , chip(variance>=0?'Current':'Overdue')];
+   })},
+  {id:'REP-07', n:'Partial and Advance Payments', d:'Underpayments and payments ahead of schedule', src:'custom',
+   cols:['Receipt','Customer','Loan','Paid','Instalment','Type','Officer'],
+   rows: f => REPAYS.filter(r=>r.status==='Partial' || r.amount > (LOANS.find(l=>l.ref===r.loan)||{instalment:0}).instalment*1.05)
+     .map(r=>{
+       const l = LOANS.find(x=>x.ref===r.loan) || {instalment:0};
+       const type = r.amount < l.instalment ? 'Partial' : 'Advance';
+       return [r.ref, r.customer, r.loan, mk(r.amount), mk(l.instalment), `<span class="chip ${type==='Partial'?'st-await':'st-ok'}">${type}</span>`, r.officer];
+     })},
+  {id:'REP-08', n:'Failed, Reversed and Disputed Payments', d:'Receipts that did not settle cleanly', src:'reps',
+   filter:r=>['Reversed','Disputed','Partial'].includes(r.status), cols:COLS.reps, row:ROW.reps},
+  {id:'REP-09', n:'Payment Methods Summary', d:'Volume and value by channel', src:'custom',
+   cols:['Method','Receipts','Collected','Average','Share','Failures'],
+   rows: f => METHODS.map(m=>{
+     const set = REPAYS.filter(r=>r.method===m);
+     const amt = set.reduce((a,r)=>a+r.amount,0);
+     return [m, set.length, mk(amt), mk(amt/(set.length||1)), pct(amt, BOOK.collected),
+       set.filter(r=>r.status!=='Posted').length];
+   })}
+];
+
+/* ============================================================
+   CATEGORY 4 · ARREARS & DELINQUENCY
+   ============================================================ */
+const AGE_BUCKETS = [['Current',0,0],['1–30 days',1,30],['31–60 days',31,60],['61–90 days',61,90],['90+ days',91,9999]];
+const R_ARR = [
+  {id:'ARR-01', n:'All Overdue Loans', d:'Any loan with a past due instalment', src:'loans',
+   filter:l=>l.dpd>0, cols:COLS.loans, row:ROW.loans},
+  {id:'ARR-02', n:'Overdue Instalments', d:'Instalments currently in arrears', src:'custom',
+   cols:['Loan','Customer','Instalment','Arrears','Due date','Days late','Officer'],
+   rows: f => LOANS.filter(l=>l.dpd>0).slice().sort((a,b)=>b.dpd-a.dpd).map(l=>[
+     l.ref, l.customer, mk(l.instalment), mk(l.arrears), l.lastPayment, l.dpd+' d', l.officer])},
+  {id:'ARR-03', n:'Arrears Ageing Analysis', d:'Portfolio split by days past due', src:'custom',
+   cols:['Bucket','Loans','Balance','% of book','Arrears','Provision'],
+   rows: f => AGE_BUCKETS.map(([label,lo,hi])=>{
+     const set = LOANS.filter(l=>l.dpd>=lo && l.dpd<=hi);
+     const bal = set.reduce((a,l)=>a+l.balance,0);
+     return [label, set.length, mk(bal), pct(bal, BOOK.outstanding),
+       mk(set.reduce((a,l)=>a+l.arrears,0)), mk(bal*(hi>90?0.45:hi>60?0.2:hi>30?0.1:0.02))];
+   })},
+  {id:'ARR-04', n:'Days Past Due (DPD)', d:'Every loan ranked by days past due', src:'custom',
+   cols:['Loan','Customer','DPD','Balance','Arrears','Officer','Bucket'],
+   rows: f => LOANS.slice().sort((a,b)=>b.dpd-a.dpd).map(l=>{
+     const b = AGE_BUCKETS.find(([_,lo,hi])=>l.dpd>=lo&&l.dpd<=hi)[0];
+     return [l.ref, l.customer, dpdChip(l.dpd), mk(l.balance), mk(l.arrears), l.officer, b];
+   })},
+  {id:'ARR-05', n:'Customers Requiring Follow-up', d:'Borrowers 30+ days past due', src:'custom',
+   cols:['Customer','Phone','Loans','Balance','Max DPD','Officer','Action'],
+   rows: f => CUSTOMERS.map(c=>{
+     const set = LOANS.filter(l=>l.customer===c.name && l.dpd>=30);
+     if(!set.length) return null;
+     const bal = set.reduce((a,l)=>a+l.balance,0);
+     return [c.name, c.phone, set.length, mk(bal), Math.max(...set.map(l=>l.dpd)),
+       set[0].officer, bal>5000000?'Field visit':'Phone call'];
+   }).filter(Boolean).sort((a,b)=>b[4]-a[4])},
+  {id:'ARR-06', n:'Missed Repayments', d:'Scheduled instalments not received', src:'custom',
+   cols:['Loan','Customer','Instalment','Last payment','Days since','Status','Officer'],
+   rows: f => LOANS.filter(l=>l.dpd>0).map(l=>[
+     l.ref, l.customer, mk(l.instalment), l.lastPayment, l.dpd+' d', chip('Overdue'), l.officer])},
+  {id:'ARR-07', n:'Defaulted Loans', d:'Loans 90+ days past due', src:'loans',
+   filter:l=>l.dpd>=90, cols:COLS.loans, row:ROW.loans},
+  {id:'ARR-08', n:'Recovery and Collection Performance', d:'Recovered against arrears by officer', src:'custom',
+   cols:['Officer','Assigned arrears','Recovered','Recovery %','Cases','Rank'],
+   rows: f => STAFFAGG.map(s=>({s, recovered: s.collected*0.28})).sort((a,b)=>b.recovered-a.recovered)
+     .map(({s,recovered},i)=>[s.officer, mk(s.overdue), mk(recovered), pct(recovered,s.overdue||1),
+       Math.max(1,Math.round(s.overdue/900000)), '#'+(i+1)])},
+  {id:'ARR-09', n:'Non-Performing Loans (NPL)', d:'90+ DPD exposure and NPL ratio', src:'custom',
+   cols:['Loan','Customer','Balance','DPD','NPL % of book','Officer','Stage'],
+   rows: f => LOANS.filter(l=>l.dpd>=90).map(l=>[
+     l.ref, l.customer, mk(l.balance), l.dpd, pct(l.balance, BOOK.outstanding), l.officer, 'Stage 3'])}
+];
+
+/* ============================================================
+   CATEGORY 5 · FINANCIAL
+   ============================================================ */
+const R_FIN = [
+  {id:'FIN-01', n:'Income and Expenditure', d:'Revenue lines against operating costs', src:'custom',
+   cols:['Line','Type','Amount','% of revenue','Period'],
+   rows: f => {
+     const rev = BOOK.interest + BOOK.fees, cost = BOOK.interest*0.34;
+     return [
+       ['Interest income','Income',mk(BOOK.interest),pct(BOOK.interest,rev),'October 2026'],
+       ['Fees and penalties','Income',mk(BOOK.fees),pct(BOOK.fees,rev),'October 2026'],
+       ['Salaries and allowances','Expenditure',mk(cost*0.58),pct(cost*0.58,rev),'October 2026'],
+       ['Rent and utilities','Expenditure',mk(cost*0.14),pct(cost*0.14,rev),'October 2026'],
+       ['SMS and provider costs','Expenditure',mk(cost*0.09),pct(cost*0.09,rev),'October 2026'],
+       ['Other operating costs','Expenditure',mk(cost*0.19),pct(cost*0.19,rev),'October 2026']
+     ];
+   }},
+  {id:'FIN-02', n:'Interest Income', d:'Interest earned by product', src:'custom',
+   cols:['Product','Loans','Interest earned','Avg rate','Share'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = LOANS.filter(l=>l.product===p);
+     const interest = set.reduce((a,l)=>a+l.principal*0.28,0);
+     return [p, set.length, mk(interest), '28.0%', pct(interest, BOOK.interest*1.2)];
+   })},
+  {id:'FIN-03', n:'Fees and Penalties Income', d:'Processing, late and other charges', src:'custom',
+   cols:['Fee type','Receipts','Amount','Share','Trend'],
+   rows: f => [
+     ['Processing fees', 72, mk(BOOK.fees*0.62), '62.0%', '+4.1%'],
+     ['Late payment penalties', 21, mk(BOOK.fees*0.24), '24.0%', '+1.6%'],
+     ['Statement and copy fees', 14, mk(BOOK.fees*0.09), '9.0%', '−0.4%'],
+     ['Other charges', 6, mk(BOOK.fees*0.05), '5.0%', '+0.2%']
+   ]},
+  {id:'FIN-04', n:'Loan Disbursement Summary', d:'Amounts released by product and month', src:'custom',
+   cols:['Product','Loans','Disbursed','Average loan','Share','Month'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = LOANS.filter(l=>l.product===p && l.status!=='Rejected' && l.status!=='Pending');
+     const amt = set.reduce((a,l)=>a+l.principal,0);
+     return [p, set.length, mk(amt), mk(amt/(set.length||1)), pct(amt, BOOK.principal), 'October 2026'];
+   })},
+  {id:'FIN-05', n:'Principal Outstanding', d:'Capital still to be recovered', src:'custom',
+   cols:['Branch','Loans','Principal','Outstanding','% remaining','Overdue'],
+   rows: f => BRANCHES.map(b=>{
+     const set = LOANS.filter(l=>l.branch===b);
+     const pr = set.reduce((a,l)=>a+l.principal,0), out = set.reduce((a,l)=>a+l.balance,0);
+     return [b, set.length, mk(pr), mk(out), pct(out,pr||1), mk(set.reduce((a,l)=>a+l.arrears,0))];
+   })},
+  {id:'FIN-06', n:'Cash Flow Report', d:'Weekly inflows and outflows', src:'custom',
+   cols:['Week','Inflows','Outflows','Net','Closing balance','Status'],
+   rows: f => [1,2,3,4,5].map(w=>{
+     const inflow = BOOK.collected/5*(0.9+w*0.04);
+     const outflow = BOOK.principal*0.06*(0.95+w*0.02);
+     return ['Week '+w, mk(inflow), mk(outflow), mk(inflow-outflow),
+       mk(42e6 + w*inflow*0.22), chip(inflow>outflow?'Active':'Restructured')];
+   })},
+  {id:'FIN-07', n:'Cash Position Report', d:'Balances held across accounts', src:'custom',
+   cols:['Account','Type','Institution','Balance','Available','Status'],
+   rows: f => [
+     ['Operating account','Bank','National Bank of Malawi', mk(28.4e6), mk(26.9e6), chip('Active')],
+     ['Collections account','Bank','Standard Bank', mk(12.8e6), mk(12.8e6), chip('Active')],
+     ['Airtel Money float','Mobile money','Airtel Malawi', mk(6.4e6), mk(6.1e6), chip('Active')],
+     ['TNM Mpamba float','Mobile money','TNM', mk(3.9e6), mk(3.7e6), chip('Active')],
+     ['Cash on hand — Lilongwe City','Cash','Branch till', mk(1.42e6), mk(1.42e6), chip('Active')],
+     ['Cash on hand — Blantyre','Cash','Branch till', mk(0.86e6), mk(0.86e6), chip('Active')]
+   ]},
+  {id:'FIN-08', n:'Profit and Loss Summary', d:'Revenue, costs and result for the month', src:'custom',
+   cols:['Line','Amount','Last month','Variance','Margin'],
+   rows: f => {
+     const rev = BOOK.interest + BOOK.fees, cost = BOOK.interest*0.34;
+     return [
+       ['Total revenue', mk(rev), mkm(54.8e6), '+6.9%', '—'],
+       ['Cost of funds', mk(rev*0.18), mkm(8.9e6), '+2.2%', '18.0%'],
+       ['Operating costs', mk(cost), mkm(19.4e6), '+3.4%', pct(cost,rev)],
+       ['Loan loss provision', mk(BOOK.outstanding*0.021), mkm(6.1e6), '+0.6%', '2.1%'],
+       ['Profit before tax', mk(rev-cost-rev*0.18-BOOK.outstanding*0.021), mkm(20.4e6), '+9.1%',
+         pct(rev-cost-rev*0.18-BOOK.outstanding*0.021, rev)]
+     ];
+   }},
+  {id:'FIN-09', n:'Bank and Mobile Money Reconciliation', d:'Book against statement by channel', src:'custom',
+   cols:['Channel','Book balance','Statement','Variance','Items','Status'],
+   rows: f => METHODS.map((m,i)=>{
+     const book = [38.2e6, 6.4e6, 12.8e6, 2.28e6, 1.1e6][i] || 5e6;
+     const variance = [0, -150000, 0, 0, 42000][i] || 0;
+     return [m, mk(book), mk(book+variance), (variance?mk(Math.abs(variance)):'—'),
+       variance? 1 : 0, chip(variance? 'Restructured' : 'Active')];
+   })}
+];
+
+/* ============================================================
+   CATEGORY 6 · CUSTOMERS
+   ============================================================ */
+CUSTOMERS.forEach(c=>{
+  const set = LOANS.filter(l=>l.customer===c.name);
+  c.books = set.length;
+  c.balance = set.reduce((a,l)=>a+l.balance,0);
+  c.dpd = set.reduce((a,l)=>Math.max(a,l.dpd),0);
+  c.activeLoan = set.some(l=>l.status==='Active');
+});
+const R_CUS = [
+  {id:'CUS-01', n:'All Registered Customers', d:'Complete customer master list', src:'custs', cols:COLS.custs, row:ROW.custs,
+   sort:(a,b)=>a.name.localeCompare(b.name)},
+  {id:'CUS-02', n:'New Customer Registrations', d:'Customers onboarded recently', src:'custs',
+   filter:c=>c.joined>='2025-07', cols:COLS.custs,
+   row:c=>[c.name, c.phone, c.branch, c.joined, c.books, mk(c.balance), dpdChip(c.dpd), chip(c.status)]},
+  {id:'CUS-03', n:'Active Borrowers', d:'Customers with a loan currently running', src:'custs',
+   filter:c=>c.activeLoan, cols:COLS.custs, row:ROW.custs},
+  {id:'CUS-04', n:'Customers with Active Loans', d:'Open balances and next instalment', src:'custom',
+   cols:['Customer','Loans','Balance','Next due','Instalment','Officer','Status'],
+   rows: f => CUSTOMERS.filter(c=>c.activeLoan).map(c=>{
+     const open = LOANS.filter(l=>l.customer===c.name && l.balance>0);
+     const next = open.slice().sort((a,b)=>a.nextDue.localeCompare(b.nextDue))[0];
+     return [c.name, open.length, mk(c.balance), next.nextDue, mk(next.instalment), next.officer,
+       chip(c.dpd>=90?'Overdue':c.dpd>0?'Pending':'Active')];
+   }).sort((a,b)=>numOf(b[2])-numOf(a[2]))},
+  {id:'CUS-05', n:'Customer Loan History', d:'Every loan taken by each customer', src:'custom',
+   cols:['Customer','Loans','First loan','Latest loan','Principal','Outstanding','Repaid'],
+   rows: f => CUSTOMERS.map(c=>{
+     const set = LOANS.filter(l=>l.customer===c.name).sort((a,b)=>a.disbursed.localeCompare(b.disbursed));
+     if(!set.length) return null;
+     const pr = set.reduce((a,l)=>a+l.principal,0), out = set.reduce((a,l)=>a+l.balance,0);
+     return [c.name, set.length, set[0].disbursed, set[set.length-1].disbursed, mk(pr), mk(out), pct(pr-out,pr)];
+   }).filter(Boolean).sort((a,b)=>b[1]-a[1])},
+  {id:'CUS-06', n:'Customer Repayment Behaviour', d:'Punctuality score and payment pattern', src:'custom',
+   cols:['Customer','Receipts','On-time %','Avg days late','Score','Rating'],
+   rows: f => CUSTOMERS.map(c=>{
+     const reps = REPAYS.filter(r=>r.customer===c.name);
+     const late = Math.round((100-c.behaviour)/6);
+     const rating = c.behaviour>=80?'Excellent':c.behaviour>=70?'Good':c.behaviour>=62?'Fair':'Watch';
+     return [c.name, reps.length, c.behaviour+'%', late, c.behaviour+'/100',
+       `<span class="chip ${rating==='Excellent'||rating==='Good'?'st-ok':rating==='Fair'?'st-await':'st-fail'}">${rating}</span>`];
+   }).sort((a,b)=>b[4].localeCompare(a[4]))},
+  {id:'CUS-07', n:'Customers with Overdue Accounts', d:'Borrowers carrying arrears', src:'custs',
+   filter:c=>c.dpd>0, cols:COLS.custs,
+   sort:(a,b)=>b.dpd-a.dpd, row:ROW.custs},
+  {id:'CUS-08', n:'Customer Account Balances', d:'Paid against outstanding per customer', src:'custom',
+   cols:['Customer','Principal','Paid to date','Balance','% repaid','Next due','Status'],
+   rows: f => CUSTOMERS.filter(c=>c.books>0).map(c=>{
+     const set = LOANS.filter(l=>l.customer===c.name);
+     const pr = set.reduce((a,l)=>a+l.principal,0), paid = set.reduce((a,l)=>a+l.paid,0);
+     return [c.name, mk(pr), mk(paid), mk(c.balance), pct(paid,pr), set[0].nextDue,
+       chip(c.balance>0?'Active':'Fully Paid')];
+   }).sort((a,b)=>numOf(b[3])-numOf(a[3]))},
+  {id:'CUS-09', n:'Inactive Customers', d:'No open loan or marked inactive', src:'custs',
+   filter:c=>c.status==='Inactive' || c.balance===0,
+   cols:COLS.custs, row:ROW.custs}
+];
+
+/* ============================================================
+   CATEGORY 7 · LOAN APPLICATIONS & DISBURSEMENT
+   ============================================================ */
+const DISB_FAIL = [
+  ['LN-2026-1823','Blessings Tembo','Bank transfer','Insufficient float on disbursement account','Retry'],
+  ['LN-2026-1837','Joseph Mwale','Airtel Money','KYC name mismatch at wallet provider','Corrected'],
+  ['LN-2026-1841','Tadala Nkhoma','Bank transfer','Account number closed','Pending'],
+  ['LN-2026-1849','Rose Chikopa','Airtel Money','Wallet not registered','Retry'],
+  ['LN-2026-1852','Memory Nkhoma','Bank transfer','Duplicate reference detected','Reversed'],
+  ['LN-2026-1858','Yamikani Gondwe','Bank transfer','Client account blocked','Pending']
+];
+const R_APP = [
+  {id:'APP-01', n:'All Loan Applications', d:'Every application received with decision', src:'apps', cols:COLS.apps, row:ROW.apps},
+  {id:'APP-02', n:'Pending Applications', d:'Awaiting a credit decision', src:'apps',
+   filter:a=>a.status==='Pending', cols:COLS.apps, row:ROW.apps},
+  {id:'APP-03', n:'Approved Applications', d:'Cleared for disbursement', src:'apps',
+   filter:a=>a.status==='Approved', cols:COLS.apps, row:ROW.apps},
+  {id:'APP-04', n:'Rejected Applications', d:'Declined with reasons', src:'apps',
+   filter:a=>a.status==='Rejected', cols:COLS.apps,
+   row:a=>[a.ref, a.customer, a.product, a.officer, a.submitted, a.days+' d', mk(a.amount),
+     '<span class="chip st-fail">Declined</span>']},
+  {id:'APP-05', n:'Application Processing Time', d:'Days from submission to decision by officer', src:'custom',
+   cols:['Officer','Applications','Total days','Average','Fastest','Slowest','Within SLA'],
+   rows: f => OFFICERS.map(o=>{
+     const set = APPS.filter(a=>a.officer===o);
+     if(!set.length) return null;
+     const days = set.map(a=>a.days);
+     return [o, set.length, days.reduce((a,b)=>a+b,0), (days.reduce((a,b)=>a+b,0)/set.length).toFixed(1)+' d',
+       Math.min(...days)+' d', Math.max(...days)+' d', pct(days.filter(d=>d<=3).length, days.length)];
+   }).filter(Boolean)},
+  {id:'APP-06', n:'Approval and Rejection Statistics', d:'Decision outcome by product', src:'custom',
+   cols:['Product','Applications','Approved','Rejected','Pending','Approval rate'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = APPS.filter(a=>a.product===p);
+     const ok = set.filter(a=>a.status==='Approved'||a.status==='Active').length;
+     return [p, set.length, ok, set.filter(a=>a.status==='Rejected').length,
+       set.filter(a=>a.status==='Pending').length, pct(ok, set.length)];
+   })},
+  {id:'APP-07', n:'Approved but Undisbursed Loans', d:'Cleared applications still waiting for funds', src:'custom',
+   cols:['Application','Customer','Product','Approved','Days waiting','Amount','Action'],
+   rows: f => APPS.filter(a=>a.status==='Approved').map(a=>[
+     a.ref, a.customer, a.product, a.submitted, (a.days+2)+' d', mk(a.amount),
+     a.days>6?'<span class="chip st-fail">Escalate</span>':'<span class="chip st-await">Queue</span>'])},
+  {id:'APP-08', n:'Disbursement History', d:'Funds released with channel and officer', src:'custom',
+   cols:['Loan','Customer','Disbursed','Amount','Channel','Officer','Status'],
+   rows: f => LOANS.filter(l=>!['Pending','Rejected','Cancelled'].includes(l.status))
+     .sort((a,b)=>b.disbursed.localeCompare(a.disbursed))
+     .map(l=>[l.ref, l.customer, l.disbursed, mk(l.principal), METHODS[+l.ref.slice(-2)%METHODS.length],
+       l.officer, chip(l.status)])},
+  {id:'APP-09', n:'Failed or Reversed Disbursements', d:'Payouts that did not complete', src:'custom',
+   cols:['Loan','Officer','Channel','Reason','Amount','Action'],
+   rows: f => DISB_FAIL.map((r,i)=>[r[0], r[1], r[2], r[3],
+     mk(PRINCIPALS[i%PRINCIPALS.length]),
+     `<span class="chip ${r[4]==='Reversed'?'st-fail':r[4]==='Pending'?'st-await':'st-proc'}">${r[4]}</span>`])}
+];
+
+/* ============================================================
+   CATEGORY 8 · STAFF & OFFICER PERFORMANCE
+   ============================================================ */
+const ACTIVITY = OFFICERS.map((o,i)=>({
+  officer:o, logins: 42 - i*4 + (i%3)*5, created: STAFFAGG[i].loans, approved: STAFFAGG[i].approved,
+  lastActive: '2026-10-3'+(i%9), session: (1.2 + i*0.4).toFixed(1)+' h'
+}));
+const R_STF = [
+  {id:'STF-01', n:'Staff Activity Report', d:'Logins, records touched and last activity', src:'custom',
+   cols:['Officer','Logins','Records created','Approvals','Avg session','Last active'],
+   rows: f => ACTIVITY.map(a=>[a.officer, a.logins, a.created, a.approved, a.session, a.lastActive])},
+  {id:'STF-02', n:'Loans Processed by Officer', d:'Volume and value handled per officer', src:'custom',
+   cols:['Officer','Branch','Loans','Principal','Average loan','Pending','Rejected'],
+   rows: f => STAFFAGG.map(s=>{
+     const mine = LOANS.filter(l=>l.officer===s.officer);
+     const pr = mine.reduce((a,l)=>a+l.principal,0);
+     return [s.officer, s.branch, mine.length, mk(pr), mk(pr/(mine.length||1)),
+       mine.filter(l=>l.status==='Pending').length, s.rejected];
+   }).sort((a,b)=>b[2]-a[2])},
+  {id:'STF-03', n:'Loans Approved and Rejected by Officer', d:'Decision mix and approval rate', src:'custom',
+   cols:['Officer','Decisions','Approved','Rejected','Pending','Approval rate'],
+   rows: f => STAFFAGG.map(s=>{
+     const mine = LOANS.filter(l=>l.officer===s.officer);
+     const decided = s.approved + s.rejected;
+     return [s.officer, decided, s.approved, s.rejected,
+       mine.filter(l=>l.status==='Pending').length, pct(s.approved, decided||1)];
+   })},
+  {id:'STF-04', n:'Disbursements by Officer', d:'Funds released per officer', src:'custom',
+   cols:['Officer','Disbursements','Amount released','Average','Share of book','Last release'],
+   rows: f => {
+     const total = LOANS.filter(l=>['Active','Fully Paid'].includes(l.status)).reduce((a,l)=>a+l.principal,0);
+     return STAFFAGG.map(s=>{
+       const mine = LOANS.filter(l=>l.officer===s.officer && ['Active','Fully Paid'].includes(l.status));
+       const amt = mine.reduce((a,l)=>a+l.principal,0);
+       const last = mine.map(l=>l.disbursed).sort().pop() || '—';
+       return [s.officer, mine.length, mk(amt), mk(amt/(mine.length||1)), pct(amt,total||1), last];
+     }).sort((a,b)=>numOf(b[2])-numOf(a[2]));
+   }},
+  {id:'STF-05', n:'Repayments Collected by Officer', d:'Cash collected against officers', src:'custom',
+   cols:['Officer','Receipts','Collected','Principal','Interest & fees','Average receipt'],
+   rows: f => STAFFAGG.map(s=>{
+     const reps = REPAYS.filter(r=>r.officer===s.officer && r.status==='Posted');
+     const amt = reps.reduce((a,r)=>a+r.amount,0);
+     return [s.officer, reps.length, mk(amt), mk(reps.reduce((a,r)=>a+r.principal,0)),
+       mk(reps.reduce((a,r)=>a+r.interest+r.fees,0)), mk(amt/(reps.length||1))];
+   }).sort((a,b)=>numOf(b[2])-numOf(a[2]))},
+  {id:'STF-06', n:'Collection Rate by Officer', d:'Received against expected instalments', src:'custom',
+   cols:['Officer','Expected','Collected','Rate','Gap','Rating'],
+   rows: f => STAFFAGG.map(s=>{
+     const rate = s.rate;
+     const rating = rate>=90?'Excellent':rate>=70?'Good':rate>=50?'Fair':'Needs support';
+     return [s.officer, mk(s.due), mk(s.collected), rate.toFixed(1)+'%', mk(Math.max(0,s.due-s.collected)),
+       `<span class="chip ${rate>=70?'st-ok':rate>=50?'st-await':'st-fail'}">${rating}</span>`];
+   }).sort((a,b)=>parseFloat(b[3])-parseFloat(a[3]))},
+  {id:'STF-07', n:'Overdue Portfolio by Officer', d:'Arrears held in each officer book', src:'custom',
+   cols:['Officer','Overdue balance','Cases','Avg DPD','% of book','Action'],
+   rows: f => STAFFAGG.map(s=>{
+     const mine = LOANS.filter(l=>l.officer===s.officer && l.dpd>0);
+     const avg = mine.length ? Math.round(mine.reduce((a,l)=>a+l.dpd,0)/mine.length) : 0;
+     return [s.officer, mk(s.overdue), mine.length, avg, pct(s.overdue, BOOK.outstanding),
+       s.overdue>8e6?'Recovery plan':'Monitor'];
+   }).sort((a,b)=>numOf(b[1])-numOf(a[1]))},
+  {id:'STF-08', n:'Staff Productivity Summary', d:'Composite performance score and rank', src:'custom',
+   cols:['Rank','Officer','Loans','Collection rate','Overdue','Score','Band'],
+   rows: f => STAFFAGG.map(s=>{
+     const score = Math.round((s.loans/2) + s.rate*0.6 + s.disbursed*1.5 - s.overdue/4e6);
+     return {s, score};
+   }).sort((a,b)=>b.score-a.score).map(({s,score},i)=>[
+     '#'+(i+1), s.officer, s.loans, s.rate.toFixed(1)+'%', mk(s.overdue), score,
+     `<span class="chip ${i<2?'st-ok':i<5?'st-await':'st-fail'}">${i<2?'Top':i<5?'Solid':'Support'}</span>`])}
+];
+
+/* ============================================================
+   CATEGORY 9 · RISK & CREDIT
+   ============================================================ */
+const R_RSK = [
+  {id:'RSK-01', n:'Portfolio At Risk (PAR 30/60/90)', d:'Risk concentration by product', src:'custom',
+   cols:['Product','Book','PAR 30','PAR 60','PAR 90','Trend'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = LOANS.filter(l=>l.product===p);
+     const book = set.reduce((a,l)=>a+l.balance,0) || 1;
+     const par = d => set.filter(l=>l.dpd>=d).reduce((a,l)=>a+l.balance,0)/book*100;
+     return [p, mk(book), par(30).toFixed(1)+'%', par(60).toFixed(1)+'%', par(90).toFixed(1)+'%',
+       par(30)>8?'<span class="chip st-fail">Rising</span>':'<span class="chip st-ok">Stable</span>'];
+   })},
+  {id:'RSK-02', n:'Loan Default Rate', d:'Defaults against total book by product', src:'custom',
+   cols:['Product','Loans','Defaults','Default rate','Value at risk','Provision'],
+   rows: f => PRODUCTS.map(p=>{
+     const set = LOANS.filter(l=>l.product===p);
+     const def = set.filter(l=>l.dpd>=90);
+     const var_ = def.reduce((a,l)=>a+l.balance,0);
+     return [p, set.length, def.length, pct(def.length, set.length||1), mk(var_), mk(var_*0.45)];
+   })},
+  {id:'RSK-03', n:'Loan Loss and Recovery', d:'Written off against recovered amounts', src:'custom',
+   cols:['Product','Written off','Recovered','Recovery %','Net loss','Status'],
+   rows: f => PRODUCTS.map((p,i)=>{
+     const wo = BOOK.outstanding*0.004*(i+1);
+     const rec = wo*(0.32+i*0.07);
+     return [p, mk(wo), mk(rec), pct(rec,wo), mk(wo-rec),
+       chip(rec/wo>0.4?'Active':'Restructured')];
+   })},
+  {id:'RSK-04', n:'Restructured Loans', d:'Loans with revised terms', src:'custom',
+   cols:['Loan','Customer','Original term','New term','Balance','DPD','Officer'],
+   rows: f => LOANS.filter(l=>l.dpd>=30 && l.dpd<90).slice(0,12).map(l=>[
+     l.ref, l.customer, l.term+' months', (l.term+6)+' months', mk(l.balance), dpdChip(l.dpd), l.officer])},
+  {id:'RSK-05', n:'Repeat Borrower Performance', d:'Customers on their second loan or more', src:'custom',
+   cols:['Customer','Loans','Principal','Outstanding','Defaulted','Behaviour'],
+   rows: f => CUSTOMERS.map(c=>{
+     const set = LOANS.filter(l=>l.customer===c.name);
+     return {c, set};
+   }).filter(x=>x.set.length>1).map(({c,set})=>[
+     c.name, set.length, mk(set.reduce((a,l)=>a+l.principal,0)), mk(c.balance),
+     set.filter(l=>l.dpd>=90).length, c.behaviour+'%'])
+     .sort((a,b)=>b[1]-a[1])},
+  {id:'RSK-06', n:'High-Exposure Customers', d:'Largest single-borrower exposures', src:'custom',
+   cols:['Customer','Loans','Exposure','% of book','DPD','Officer','Risk'],
+   rows: f => CUSTOMERS.filter(c=>c.balance>0).sort((a,b)=>b.balance-a.balance).slice(0,15).map(c=>{
+     const top = LOANS.filter(l=>l.customer===c.name).sort((a,b)=>b.balance-a.balance)[0];
+     return [c.name, c.books, mk(c.balance), pct(c.balance, BOOK.outstanding), dpdChip(c.dpd),
+       top.officer, `<span class="chip ${c.balance>BOOK.outstanding*0.03?'st-fail':c.dpd>0?'st-await':'st-ok'}">${
+         c.balance>BOOK.outstanding*0.03?'Concentrated':c.dpd>0?'Watch':'Normal'}</span>`];
+   })},
+  {id:'RSK-07', n:'Credit Risk Trends', d:'Six month movement in PAR and defaults', src:'custom',
+   cols:['Month','PAR 30','PAR 60','PAR 90','Defaults','Provision'],
+   rows: f => MONTHS.map((m,i)=>[
+     m, (6.4+i*0.31).toFixed(1)+'%', (4.1+i*0.22).toFixed(1)+'%', (2.2+i*0.14).toFixed(1)+'%',
+     (3+i%3)+' loans', mkm(82e5+i*2.1e5)])},
+  {id:'RSK-08', n:'Expected Credit Losses (IFRS 9)', d:'Staging and provision requirement', src:'custom',
+   cols:['Stage','Loans','Exposure','ECL rate','Provision','Coverage'],
+   rows: f => [
+     ['Stage 1 — performing', LOANS.filter(l=>l.dpd===0).length,
+       mk(LOANS.filter(l=>l.dpd===0).reduce((a,l)=>a+l.balance,0)), '2.0%',
+       mk(BOOK.outstanding*0.36*0.02), '102%'],
+     ['Stage 2 — underperforming', LOANS.filter(l=>l.dpd>0&&l.dpd<90).length,
+       mk(LOANS.filter(l=>l.dpd>0&&l.dpd<90).reduce((a,l)=>a+l.balance,0)), '14.0%',
+       mk(BOOK.outstanding*0.11*0.14), '96%'],
+     ['Stage 3 — credit impaired', LOANS.filter(l=>l.dpd>=90).length,
+       mk(LOANS.filter(l=>l.dpd>=90).reduce((a,l)=>a+l.balance,0)), '45.0%',
+       mk(BOOK.outstanding*0.05*0.45), '88%']
+   ]}
+];
+
+/* ============================================================
+   CATEGORY 10 · AUDIT, COMPLIANCE & STATEMENTS
+   ============================================================ */
+const WHEN = i => `2026-10-${String(29-i%9).padStart(2,'0')} ${String(8+i%9).padStart(2,'0')}:${String(5+i*7%55).padStart(2,'0')}`;
+const USERS = [['Mary Emmanuel','Super Admin'],['Tadala Nkhoma','Loan Officer'],['Blessings Tembo','Loan Officer'],
+  ['Grace Phiri','Administrator'],['Chikondi Banda','Accountant'],['Limbani Zulu','Collections Officer'],
+  ['Ruth Mbewe','Auditor']];
+const ACTS = ['Signed in','Generated report','Approved loan','Rejected application','Posted repayment',
+  'Edited customer record','Exported statement','Changed system setting','Created staff account','Reversed receipt'];
+const LOGAUDIT = Array.from({length:14},(_,i)=>{
+  const u = USERS[i%USERS.length];
+  return [WHEN(i), u[0], u[1], ACTS[i%ACTS.length], ['Loans','Repayments','Customers','Reports','Settings'][i%5],
+    '10.20.'+(i%9)+'.'+(20+i*3%200), i%11===5 ? chip('Rejected') : chip('Active')];
+});
+const R_AUD = [
+  {id:'AUD-01', n:'Administrator Activity Logs', d:'Every action taken in the admin portal', src:'custom',
+   cols:['Time','User','Role','Action','Module','IP address','Result'], rows: f => LOGAUDIT},
+  {id:'AUD-02', n:'Staff Login History', d:'Sign-in attempts with device and session length', src:'custom',
+   cols:['Time','Staff','Role','Device','IP address','Session','Result'],
+   rows: f => USERS.concat(USERS.slice(0,5)).map((u,i)=>[
+     WHEN(i+2), u[0], u[1], ['Desktop · Chrome','Android app','Desktop · Edge','iPhone app','Desktop · Firefox'][i%5],
+     '10.20.'+(i%9)+'.'+(44+i*5%180), (0.4+i*0.3).toFixed(1)+' h',
+     i===7 ? chip('Rejected') : chip('Active')])},
+  {id:'AUD-03', n:'Loan Approval Audit Trail', d:'Who approved or declined each application', src:'custom',
+   cols:['Loan','Customer','Submitted','Decided by','Decision','Days','Amount'],
+   rows: f => LOANS.filter(l=>l.status!=='Pending').slice(0,20).map((l,i)=>[
+     l.ref, l.customer, l.disbursed, OFFICERS[(i+2)%OFFICERS.length],
+     l.status==='Rejected'? chip('Rejected') : chip('Approved'), 1+i%6, mk(l.principal)])},
+  {id:'AUD-04', n:'Financial Transaction Audit Trail', d:'All money movements with poster', src:'custom',
+   cols:['Reference','Date','Type','Amount','Channel','Posted by','Status'],
+   rows: f => REPAYS.slice(0,24).map((r,i)=>[r.ref, r.date, i%4===0?'Disbursement':'Repayment',
+     mk(r.amount), r.method, r.officer, chip(r.status)])},
+  {id:'AUD-05', n:'Changes to Loan Records', d:'Field-level edits with before and after', src:'custom',
+   cols:['Loan','Field','Old value','New value','Changed by','When','Reason'],
+   rows: f => LOANS.slice(0,12).map((l,i)=>[l.ref, ['Interest rate','Term','Officer','Branch','Instalment'][i%5],
+     ['32%','12 months','Tadala Nkhoma','Lilongwe City','MK 480,000'][i%5],
+     ['34%','18 months','Blessings Tembo','Blantyre','MK 520,000'][i%5],
+     OFFICERS[(i+1)%OFFICERS.length], WHEN(i), ['Client request','Credit committee','Branch transfer','Restructure','Correction'][i%5]])},
+  {id:'AUD-06', n:'Customer Account Statements', d:'Opening to closing balance per customer', src:'custom',
+   cols:['Customer','Opening','Debits','Credits','Closing','Loans','Statement'],
+   rows: f => CUSTOMERS.filter(c=>c.books>0).slice(0,18).map(c=>{
+     const paid = LOANS.filter(l=>l.customer===c.name).reduce((a,l)=>a+l.paid,0);
+     return [c.name, mk(c.balance*0.32), mk(paid), mk(c.balance), mk(c.balance*1.02), c.books,
+       '<span class="chip st-proc">Ready</span>'];
+   })},
+  {id:'AUD-07', n:'Loan Account Statements', d:'Repaid against balance per loan', src:'custom',
+   cols:['Loan','Customer','Disbursed','Repaid','Balance','Instalments','Statement'],
+   rows: f => LOANS.filter(l=>l.status==='Active').slice(0,20).map(l=>[
+     l.ref, l.customer, l.disbursed, mk(l.paid), mk(l.balance),
+     Math.max(1,Math.round(l.paid/l.instalment))+' / '+l.term, '<span class="chip st-proc">Ready</span>'])},
+  {id:'AUD-08', n:'Repayment Schedules', d:'Instalment plan with due dates', src:'custom',
+   cols:['Instalment','Loan','Due date','Principal','Interest','Total','Status'],
+   rows: f => {
+     const out=[]; LOANS.filter(l=>l.status==='Active').slice(0,6).forEach(l=>{
+       for(let k=1;k<=5;k++) out.push([k+' of '+l.term, l.ref,
+         '2026-'+String(11+(k>2?1:0)).padStart(2,'0')+'-'+String(2+k*3).padStart(2,'0'),
+         mk(l.instalment*0.76), mk(l.instalment*0.24), mk(l.instalment),
+         k===1 ? chip('Active') : chip('Pending')]);
+     }); return out; }},
+  {id:'AUD-09', n:'Loan Settlement Statements', d:'Payoff amount to clear each loan', src:'custom',
+   cols:['Loan','Customer','Principal','Interest','Fees','Payoff','Valid until'],
+   rows: f => LOANS.filter(l=>l.balance>0).slice(0,16).map(l=>[
+     l.ref, l.customer, mk(l.balance), mk(l.balance*0.06), mk(l.balance*0.02),
+     mk(l.balance*1.08), '2026-11-15'])},
+  {id:'AUD-10', n:'Loan Closure Reports', d:'Loans fully repaid and closed', src:'custom',
+   cols:['Loan','Customer','Disbursed','Closed','Term','Total paid','Status'],
+   rows: f => LOANS.filter(l=>l.status==='Fully Paid').map(l=>[
+     l.ref, l.customer, l.disbursed, l.maturity, l.term+' months', mk(l.paid), chip('Fully Paid')])},
+  {id:'AUD-11', n:'Receipt Register', d:'Sequential register of all receipts', src:'reps',
+   cols:COLS.reps, row:ROW.reps, sort:(a,b)=>a.ref.localeCompare(b.ref)},
+  {id:'AUD-12', n:'Compliance Reports', d:'Regulatory returns and internal findings', src:'custom',
+   cols:['Requirement','Regulator','Period','Status','Submitted','Owner','Finding'],
+   rows: f => [
+     ['Monthly prudential return','Reserve Bank of Malawi','October 2026', chip('Active'), '2026-11-05','Grace Phiri','None'],
+     ['AML/CFT transaction report','Financial Intelligence Authority','October 2026', chip('Active'),'2026-11-03','Ruth Mbewe','None'],
+     ['KYC remediation schedule','Reserve Bank of Malawi','Q3 2026', chip('Pending'),'—','Grace Phiri','12 files outstanding'],
+     ['Interest rate disclosure','Consumer protection','October 2026', chip('Active'),'2026-10-28','Chikondi Banda','None'],
+     ['Staff suitability review','Internal audit','Q4 2026', chip('Pending'),'—','Ruth Mbewe','In progress'],
+     ['Data protection register','Malawi Communications Regulatory Authority','October 2026', chip('Active'),'2026-10-30','Mary Emmanuel','Minor gap closed']
+   ]}
+];
+
+/* ============================================================
+   REGISTRY
+   ============================================================ */
+const R_SETS = [R_EXE, R_PORT, R_REP, R_ARR, R_FIN, R_CUS, R_APP, R_STF, R_RSK, R_AUD];
+const REPORTS = [];
+CATS.forEach((c,ci)=>{
+  const set = R_SETS[ci] || [];
+  set.forEach(r => { r.cat = c; r.catN = c.n; r.ci = ci; REPORTS.push(r); });
+});
+const byId = id => REPORTS.find(r => r.id === id);
+
+/* role → category access */
+const ACCESS = {
+  'Super Admin':                [1,2,3,4,5,6,7,8,9,10],
+  'Administrator':              [1,2,3,4,5,6,7,8,9,10],
+  'Auditor / Compliance Officer':[1,3,5,10],
+  'Loan Officer':               [2,6,7],
+  'Collections Officer':        [3,4,6],
+  'Accountant / Finance Officer':[1,3,5,10]
+};
+let VIEWROLE = 'Super Admin';
+const canRun = (r, role=VIEWROLE) => (ACCESS[role]||[]).includes(r.catN);
+const ROLEOF = {
+  'Super Admin':'full','Administrator':'full','Auditor / Compliance Officer':'read',
+  'Loan Officer':'read','Collections Officer':'read','Accountant / Finance Officer':'read'
+};
+
+/* ============================================================
+   SECTION STRIPS + REPORT TILES
+   ============================================================ */
+const STRIPS = {
+  1: [['Portfolio outstanding', mkm(BOOK.outstanding), 'book under management'],
+      ['Collected · October', mkm(BOOK.collected), BOOK.receipts+' receipts posted'],
+      ['PAR 30+', BOOK.par30.toFixed(1)+'%', 'target ≤ 8.0%'],
+      ['Active borrowers', nf(BOOK.activeBorrowers), 'of '+CUSTOMERS.length+' customers']],
+  2: [['Loans on book', nf(LOANS.length), BOOK.active+' currently active'],
+      ['Principal disbursed', mkm(BOOK.principal), 'cumulative'],
+      ['Outstanding', mkm(BOOK.outstanding), 'closing balances'],
+      ['Fully repaid', nf(BOOK.repaid), 'closed accounts']],
+  3: [['Receipts posted', nf(BOOK.receipts), 'October 2026'],
+      ['Cash collected', mkm(BOOK.collected), 'principal + interest + fees'],
+      ['Interest & fees', mkm(BOOK.interest+BOOK.fees), 'income portion'],
+      ['Failed / reversed', nf(REPAYS.filter(r=>r.status!=='Posted').length), 'need follow-up']],
+  4: [['Overdue balance', mkm(BOOK.overdue), 'past due exposure'],
+      ['Loans in arrears', nf(LOANS.filter(l=>l.dpd>0).length), 'of '+LOANS.length+' loans'],
+      ['90+ days', nf(LOANS.filter(l=>l.dpd>=90).length), 'non-performing'],
+      ['Recovery rate', pct(BOOK.collected, BOOK.overdue), 'collected vs overdue']],
+  5: [['Revenue', mkm(BOOK.interest+BOOK.fees), 'interest and fees'],
+      ['Cost to income', pct(BOOK.interest*0.34, BOOK.interest+BOOK.fees), 'operating efficiency'],
+      ['Cash position', mkm(52.4e6), 'across 6 accounts'],
+      ['Provisions', mkm(BOOK.outstanding*0.021), 'loan loss allowance']],
+  6: [['Customers', nf(CUSTOMERS.length), 'registered accounts'],
+      ['Active borrowers', nf(BOOK.activeBorrowers), 'with open loans'],
+      ['In arrears', nf(CUSTOMERS.filter(c=>c.dpd>0).length), 'past due'],
+      ['Avg exposure', mkm(BOOK.outstanding/Math.max(1,BOOK.activeBorrowers)), 'per borrower']],
+  7: [['Applications', nf(APPS.length), 'in the period'],
+      ['Requested value', mkm(APPS.reduce((a,x)=>a+x.amount,0)), 'total asked'],
+      ['Pending decision', nf(APPS.filter(a=>a.status==='Pending').length), 'in the queue'],
+      ['Avg turnaround', BOOK.avgDays.toFixed(1)+' d', 'submission to decision']],
+  8: [['Officers', nf(OFFICERS.length), 'active loan officers'],
+      ['Loans handled', nf(LOANS.length), 'across all officer books'],
+      ['Collections', mkm(BOOK.collected), 'posted receipts'],
+      ['Top officer', STAFFAGG.slice().sort((a,b)=>b.collected-a.collected)[0].officer, 'by value collected']],
+  9: [['PAR 30', BOOK.par30.toFixed(1)+'%', 'of outstanding'],
+      ['PAR 90', BOOK.par90.toFixed(1)+'%', 'credit impaired'],
+      ['Restructured', nf(LOANS.filter(l=>l.dpd>=30&&l.dpd<90).length), 'revised terms'],
+      ['Expected credit loss', mkm(BOOK.outstanding*0.021), 'IFRS 9 provision']],
+  10:[['Statements ready', nf(CUSTOMERS.filter(c=>c.books>0).length), 'customer accounts'],
+      ['Audit events logged', nf(LOGAUDIT.length), 'last 24 hours'],
+      ['Compliance returns', '6', '2 in progress'],
+      ['Open findings', '1', 'KYC remediation']]
+};
+
+function stripHTML(n){
+  const cells = (STRIPS[n]||[]);
+  return `<div class="cell"><div class="k">Reports available</div>
+      <div class="v">${(R_SETS[n-1]||[]).length}</div>
+      <div class="s">${CATS[n-1].name}</div></div>` +
+    cells.map(([k,v,s])=>`<div class="cell"><div class="k">${k}</div>
+      <div class="v">${v}</div><div class="s">${s}</div></div>`).join('');
+}
+function tileHTML(r){
+  const locked = !canRun(r);
+  return `<div class="repcard${locked?' locked':''}${STATE.id===r.id?' active':''}" data-id="${r.id}"
+      title="${locked?'Your role does not have access to this category':'Open in the report console'}">
+    <div class="rh">
+      <div class="ric">${r.id.split('-')[1]}</div>
+      <div class="rn">${r.n}</div>
+    </div>
+    <div class="rd">${r.d}</div>
+    <div class="rf"><span>${r.id}</span><span>${locked?'⛔ No access':'Run report →'}</span></div>
+  </div>`;
+}
+function renderTiles(){
+  CATS.forEach(c=>{
+    const g = el('grid'+c.n), s = el('strip'+c.n), cnt = el('c'+c.n+'count');
+    if(s) s.innerHTML = stripHTML(c.n);
+    if(g) g.innerHTML = R_SETS[c.n-1].map(tileHTML).join('');
+    if(cnt) cnt.textContent = R_SETS[c.n-1].length + ' reports';
+  });
+  const bc = el('bandReports'); if(bc) bc.textContent = REPORTS.length;
+  document.querySelectorAll('.repcard').forEach(card=>{
+    card.onclick = ()=>{
+      const r = byId(card.dataset.id);
+      if(!r) return;
+      if(!canRun(r)) return toast(`“${r.n}” is restricted for ${VIEWROLE}. Switch role to run it.`,'err');
+      selectReport(r.id, true);
+    };
+  });
+}
+
+/* ============================================================
+   CHARTS
+   ============================================================ */
+const C_GOLD='#C9A227', C_GREEN='#1E9E6A', C_RED='#D93F3F', C_BLUE='#2F6FED', C_PURPLE='#7C5CF0';
+function drawCharts(){
+  const disb = MONTHS.map((m,i)=>+(11.2+i*0.9).toFixed(1));
+  const coll = MONTHS.map((m,i)=>+(14.6+i*1.1).toFixed(1));
+  const over = MONTHS.map((m,i)=>+(5.4-i*0.22).toFixed(1));
+  const s1 = [{name:'Disbursed',color:C_GOLD,data:disb},{name:'Collected',color:C_GREEN,data:coll},
+    {name:'Overdue',color:C_RED,data:over}];
+  mkChart(el('chTrend'), {type:'line', labels:MONTHS, series:s1, yMax:20});
+  legend(el('chTrendLegend'), s1);
+
+  const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8'];
+  const s2 = [{name:'Due',color:'#C6CBD6',data:weeks.map((_,i)=>+(16+i*0.7).toFixed(1))},
+    {name:'Collected',color:C_GOLD,data:weeks.map((_,i)=>+(13.4+i*0.95).toFixed(1))}];
+  mkChart(el('chCollect'), {type:'bar', labels:weeks, series:s2, yMax:24});
+  legend(el('chCollectLegend'), s2);
+
+  const s3 = [{name:'NPL ratio',color:C_RED,data:MONTHS.map((_,i)=>+(2.2+i*0.14).toFixed(1))},
+    {name:'Write-offs (MK M)',color:C_PURPLE,data:MONTHS.map((_,i)=>+(3.1+i*0.32).toFixed(1))}];
+  mkChart(el('chRisk'), {type:'line', labels:MONTHS, series:s3, yMax:8});
+  legend(el('chRiskLegend'), s3);
+
+  mkHBars(el('parBars'), [
+    {label:'PAR 30', value:BOOK.par30, display:BOOK.par30.toFixed(1)+'%', color:C_GOLD},
+    {label:'PAR 60', value:BOOK.par60, display:BOOK.par60.toFixed(1)+'%', color:'#E08C1E'},
+    {label:'PAR 90', value:BOOK.par90, display:BOOK.par90.toFixed(1)+'%', color:C_RED},
+    {label:'Target', value:8, display:'8.0%', color:'#C6CBD6'}
+  ], {max:Math.max(12, BOOK.par30)});
+
+  const tiles = el('execTiles');
+  if(tiles){
+    const t = [
+      ['Disbursed · October', mkm(BOOK.principal*0.32), '+12.4% vs Sep', C_GOLD],
+      ['Collected · October', mkm(BOOK.collected), '+4.8% vs Sep', C_GREEN],
+      ['Portfolio outstanding', mkm(BOOK.outstanding), BOOK.active+' active loans', C_BLUE],
+      ['PAR 30+', BOOK.par30.toFixed(1)+'%', 'target ≤ 8.0%', C_RED]
+    ];
+    tiles.innerHTML = t.map(([k,v,s,c])=>`<div class="card panel" style="padding:12px">
+      <div class="tiny muted" style="font-weight:800">${k.toUpperCase()}</div>
+      <div style="font-size:19px;font-weight:800;letter-spacing:-.5px;margin-top:3px">${v}</div>
+      <div class="tiny" style="color:${c};font-weight:700;margin-top:2px">${s}</div></div>`).join('');
+  }
+}
+
+/* ============================================================
+   GENERATION HISTORY + RBAC PANELS
+   ============================================================ */
+let HIST = [];
+const HKEY = 'gls_report_hist_v1';
+try { const raw = localStorage.getItem(HKEY); if(raw) HIST = JSON.parse(raw); } catch(e) {}
+if(!HIST.length){
+  const seed = [['EXE-02',3],['PORT-01',6],['REP-02',5],['ARR-03',2],['FIN-08',4],['AUD-11',7]];
+  const names = ['Mary Emmanuel','Grace Phiri','Ruth Mbewe','Chikondi Banda','Tadala Nkhoma','Blessings Tembo'];
+  HIST = seed.map(([id,rows],i)=>{
+    const r = byId(id);
+    return {t:`2026-10-30 ${String(9+i).padStart(2,'0')}:${String(11+i*7%50).padStart(2,'0')}`,
+      id, name:r?r.n:id, user:names[i], rows, fmt:['PDF','Excel','CSV','Print'][i%4]};
+  });
+}
+function saveHist(){ try { localStorage.setItem(HKEY, JSON.stringify(HIST.slice(0,80))); } catch(e) {} }
+function logRun(rep, rows, fmt){
+  const d = new Date();
+  HIST.unshift({t:`2026-10-30 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,
+    id:rep.id, name:rep.n, user:VIEWROLE==='Super Admin'?'Mary Emmanuel':VIEWROLE, rows, fmt});
+  HIST = HIST.slice(0,80); saveHist(); renderHist();
+  const bt = el('bandToday'); if(bt) bt.textContent = HIST.filter(h=>h.t.startsWith('2026-10-30')).length;
+}
+function renderHist(){
+  const b = el('histBody'); if(!b) return;
+  b.innerHTML = HIST.slice(0,12).map(h=>`<tr>
+    <td class="muted" style="white-space:nowrap">${h.t.slice(11)}</td>
+    <td><b>${h.name}</b><div class="tiny muted">${h.id}</div></td>
+    <td>${h.user}</td><td class="num">${nf(h.rows)}</td>
+    <td><span class="perm-tag">${h.fmt}</span></td></tr>`).join('');
+  const bt = el('bandToday'); if(bt) bt.textContent = HIST.filter(h=>h.t.startsWith('2026-10-30')).length;
+}
+function renderAccess(){
+  const b = el('accessBody'); if(!b) return;
+  b.innerHTML = CATS.map(c=>{
+    const roles = Object.keys(ACCESS).filter(r=>ACCESS[r].includes(c.n));
+    const full = roles.filter(r=>ROLEOF[r]==='full').length;
+    const tag = roles.length===6 ? '<span class="perm-tag full">All roles</span>'
+      : full ? `<span class="perm-tag full">${roles.length} roles</span>`
+      : `<span class="perm-tag read">${roles.length} roles</span>`;
+    return `<tr><td><b>${c.n}. ${c.name}</b><div class="tiny muted">${(R_SETS[c.n-1]||[]).length} reports</div></td>
+      <td>${tag}</td><td class="tiny">${roles.map(r=>r.split(' /')[0]).join(', ')}</td></tr>`;
+  }).join('');
+}
+
+/* ============================================================
+   REPORT CONSOLE ENGINE
+   ============================================================ */
+const DATA = {loans:LOANS, reps:REPAYS, custs:CUSTOMERS, apps:APPS, staff:STAFFAGG};
+const STATE = {id:'EXE-02', page:1, size:10,
+  f:{from:'2026-10-01', to:'2026-10-30', officer:'', branch:'', product:'', status:'',
+     min:null, max:null, dpd:'', sort:'', ref:'', q:''}};
+
+const currencyIdx = rows => {
+  const n = rows.length || 1;
+  for(let i=0;i<(rows[0]||[]).length;i++){
+    const hits = rows.filter(r=>typeof r[i]==='string' && r[i].includes('MK')).length;
+    if(hits/n > 0.6) return i;
+  }
+  return null;
+};
+function filterCustom(rows, f){
+  let out = rows;
+  if(f.q) out = out.filter(r=>matchQ(r, f.q));
+  if(f.ref) out = out.filter(r=>r.join(' ').toLowerCase().includes(f.ref.toLowerCase()));
+  if(f.officer) out = out.filter(r=>r.join(' ').includes(f.officer));
+  if(f.branch) out = out.filter(r=>r.join(' ').includes(f.branch));
+  if(f.product) out = out.filter(r=>r.join(' ').includes(f.product));
+  if(f.status) out = out.filter(r=>r.join(' ').includes(f.status));
+  if(f.min!=null || f.max!=null){
+    const idx = currencyIdx(out);
+    if(idx!=null) out = applyAdv(out, f, idx);
+  }
+  if(f.sort){
+    const idx = currencyIdx(out);
+    out = applyAdv(out, {sort:f.sort}, idx);
+  }
+  return out;
+}
+function buildView(rep, f){
+  if(rep.rows){
+    return {cols:rep.cols, rows:filterCustom(rep.rows(f), f), objs:null};
+  }
+  const set = DATA[rep.src] || [];
+  let objs = set.filter(x=>baseFilter(x, f, rep.src));
+  if(rep.filter) objs = objs.filter(x=>rep.filter(x, f));
+  if(f.status) objs = objs.filter(x=>(x.status||x.role||'')===f.status);
+  if(f.dpd!=='' && rep.src==='loans') objs = objs.filter(x=>f.dpd==='0' ? x.dpd===0 : x.dpd>=Number(f.dpd));
+  if(rep.sort) objs = objs.slice().sort(rep.sort);
+  else if(rep.src==='loans') objs = objs.slice().sort((a,b)=>b.balance-a.balance);
+  else if(rep.src==='reps') objs = objs.slice().sort((a,b)=>b.date.localeCompare(a.date));
+  const rows = objs.map(rep.row);
+  return {cols:rep.cols, rows:filterCustom(rows, f), objs};
+}
+function moneyCell(v){
+  const s = String(v);
+  if(/MK|%|d$/.test(s) && /\d/.test(s)) return 'num mono';
+  if(/^-?[\d,]+(\.\d+)?$/.test(s)) return 'num';
+  return '';
+}
+function amtVal(v){
+  const str = String(v).replace(/&nbsp;/g,' ');
+  const m = str.match(/(-?\d[\d,]*(?:\.\d+)?)(\s*[MK])?/);
+  if(!m) return null;
+  let n = parseFloat(m[1].replace(/,/g,''));
+  const suf = (m[2]||'').trim();
+  if(suf==='M') n *= 1e6; else if(suf==='K') n *= 1e3;
+  return isNaN(n) ? null : n;
+}
+function totalsHTML(rep, rows, objs){
+  if(!rep.rows && STATS[rep.src] && objs){
+    const st = STATS[rep.src](objs);
+    return st.map(c=>`<div class="t"><div class="k">${c.k}</div><div class="v">${c.v}</div>
+      <div class="s">${c.s}</div></div>`).join('') +
+      `<div class="t"><div class="k">Rows in view</div><div class="v">${nf(rows.length)}</div>
+        <div class="s">after filters</div></div>`;
+  }
+  const n = rows.length, cells = [];
+  rep.cols.forEach((c,i)=>{
+    const vals = rows.map(r=>r[i]).filter(v=>/MK/.test(String(v)) && !/%/.test(String(v)) && /\d/.test(String(v)));
+    if(n && vals.length/n > 0.5){
+      const total = vals.reduce((a,v)=>a+(amtVal(v)||0),0);
+      cells.push({k:c, v: Math.abs(total)>=1e6 ? mkm(total) : mk(total), s:'column total'});
+    }
+  });
+  const out = [{k:'Rows in view', v:nf(n), s:'after filters'}]
+    .concat(cells.slice(0,2));
+  out.push({k:'Period', v:(STATE.f.from||'—').slice(5)+' → '+(STATE.f.to||'—').slice(5),
+    s: rep.cat.name});
+  if(out.length < 3) out.push({k:'Columns', v:nf(rep.cols.length), s:'in this report'});
+  return out.slice(0,4).map(c=>`<div class="t"><div class="k">${c.k}</div><div class="v">${c.v}</div>
+    <div class="s">${c.s}</div></div>`).join('');
+}
+function renderReport(){
+  const rep = byId(STATE.id);
+  if(!rep) return;
+  const f = STATE.f;
+  el('repCat').textContent = rep.cat.name;
+  el('repTitle').textContent = rep.n;
+  el('repId').textContent = rep.id;
+  el('repDesc').textContent = rep.d;
+  const allowed = canRun(rep);
+  const view = buildView(rep, f);
+  const rows = view.rows;
+  const pages = Math.max(1, Math.ceil(rows.length/STATE.size));
+  STATE.page = Math.min(STATE.page, pages);
+  const start = (STATE.page-1)*STATE.size;
+  const slice = rows.slice(start, start+STATE.size);
+
+  el('repHead').innerHTML = '<tr>' + rep.cols.map((c,i)=>`<th class="${i? 'num':''}">${c}</th>`).join('') + '</tr>';
+  el('repBody').innerHTML = !allowed
+    ? `<tr><td colspan="${rep.cols.length}" style="padding:26px;text-align:center">
+        <b>Restricted report</b><div class="tiny muted" style="margin-top:3px">${VIEWROLE} does not have access to
+        ${rep.cat.name} reports. Switch the role selector to Super Admin to view it.</div></td></tr>`
+    : rows.length===0
+    ? `<tr><td colspan="${rep.cols.length}" style="padding:26px;text-align:center" class="muted">
+        No records match the current filters. Widen the date range or clear the filters.</td></tr>`
+    : slice.map(r=>'<tr>' + r.map((v,i)=>{
+        const cls = i===0 ? '' : moneyCell(v);
+        return `<td class="${cls}">${v}</td>`;
+      }).join('') + '</tr>').join('');
+
+  el('repTotals').innerHTML = allowed ? totalsHTML(rep, rows, view.objs)
+    : '<div class="t"><div class="k">Access</div><div class="v">Restricted</div><div class="s">role based</div></div>';
+
+  el('repPager').innerHTML = allowed ? `<span>${rows.length ? start+1 : 0}–${Math.min(start+STATE.size, rows.length)} of ${nf(rows.length)} rows</span>
+    <button data-pg="first" ${STATE.page===1?'disabled':''}>«</button>
+    <button data-pg="prev" ${STATE.page===1?'disabled':''}>Prev</button>
+    <span style="font-weight:700;color:var(--ink)">Page ${STATE.page} / ${pages}</span>
+    <button data-pg="next" ${STATE.page===pages?'disabled':''}>Next</button>
+    <button data-pg="last" ${STATE.page===pages?'disabled':''}>»</button>
+    <select id="pgSize" style="border:1px solid var(--line);border-radius:7px;padding:3px 6px;font-family:inherit;font-size:11px">
+      ${[10,25,50,100].map(n=>`<option ${STATE.size===n?'selected':''}>${n}</option>`).join('')}
+    </select>` : '';
+  const pgSize = el('pgSize');
+  if(pgSize) pgSize.onchange = ()=>{ STATE.size = +pgSize.value; STATE.page = 1; renderReport(); };
+  el('repPager').querySelectorAll('[data-pg]').forEach(b=>{
+    b.onclick = ()=>{
+      const a = b.dataset.pg;
+      STATE.page = a==='first'?1 : a==='last'? pages : a==='next'? STATE.page+1 : STATE.page-1;
+      renderReport();
+    };
+  });
+  document.querySelectorAll('.repcard').forEach(c=>c.classList.toggle('active', c.dataset.id===rep.id));
+  const br = el('bandRows'); if(br) br.textContent = nf(rows.length);
+  return rows;
+}
+
+const ASPLIT = '2026-10-30';
+function selectReport(id, scroll){
+  const rep = byId(id); if(!rep) return;
+  STATE.id = id; STATE.page = 1;
+  renderReport();
+  if(scroll){
+    const t = el('s11');
+    window.scrollTo({top:t.offsetTop-104, behavior:'smooth'});
+    toast(`${rep.id} · ${rep.n} loaded`,'ok');
+  }
+}
+
+/* ---------- filters ---------- */
+function readFilters(){
+  const f = STATE.f;
+  f.from = el('dtFrom').value; f.to = el('dtTo').value;
+  f.officer = el('fldOfficer').value; f.branch = el('fldBranch').value;
+  f.product = el('fldProduct').value; f.status = el('fldStatus').value;
+  f.min = el('advMin').value ? +el('advMin').value : null;
+  f.max = el('advMax').value ? +el('advMax').value : null;
+  f.dpd = el('advDpd').value; f.sort = el('advSort').value;
+  f.ref = el('advRef').value.trim(); f.q = el('repSearch').value.trim();
+  STATE.page = 1;
+}
+function presetDates(p){
+  const set = (a,b)=>{ el('dtFrom').value = a; el('dtTo').value = b; };
+  if(p==='today') set(ASPLIT, ASPLIT);
+  else if(p==='7d') set('2026-10-24', ASPLIT);
+  else if(p==='30d') set('2026-10-01', ASPLIT);
+  else if(p==='mtd') set('2026-10-01', ASPLIT);
+  else if(p==='qtd') set('2026-10-01', ASPLIT);
+  else if(p==='ytd') set('2026-01-01', ASPLIT);
+  document.querySelectorAll('#datePresets button').forEach(b=>b.classList.toggle('on', b.dataset.p===p));
+  readFilters(); curRows = renderReport() || [];
+}
+let curRows = [];
+function run(fmt){
+  readFilters();
+  const rep = byId(STATE.id);
+  if(!canRun(rep)) return toast(`Access denied for ${VIEWROLE}.`,'err');
+  const rows = renderReport() || [];
+  curRows = rows;
+  if(fmt) logRun(rep, rows.length, fmt);
+  return rows;
+}
+function applyAndToast(){
+  const rows = run();
+  toast(`${byId(STATE.id).id} · ${nf(rows.length)} rows match your filters`,'ok');
+}
+
+/* ============================================================
+   EXPORTS, PRINT, WIRING, BOOT
+   ============================================================ */
+const clean = v => String(v).replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
+function download(name, mime, text){
+  try{
+    const b = new Blob([text], {type:mime});
+    const u = URL.createObjectURL(b);
+    const a = document.createElement('a');
+    a.href = u; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(u); a.remove(); }, 1200);
+  }catch(e){ toast('Download blocked by the browser sandbox.','err'); }
+}
+function tableFor(rep, rows){
+  const head = '<tr>' + rep.cols.map(c=>`<th>${clean(c)}</th>`).join('') + '</tr>';
+  const body = rows.map(r=>'<tr>' + r.map(v=>`<td>${clean(v)}</td>`).join('') + '</tr>').join('');
+  return head + body;
+}
+function doExport(kind){
+  const rep = byId(STATE.id);
+  if(!canRun(rep)) return toast(`Access denied: ${VIEWROLE} cannot export ${rep.cat.name}.`,'err');
+  readFilters();
+  const rows = buildView(rep, STATE.f).rows;
+  if(!rows.length) return toast('Nothing to export — no rows match these filters.','err');
+  const stamp2 = '2026-10-30';
+  if(kind==='csv'){
+    const csv = [rep.cols.map(c=>`"${clean(c)}"`).join(',')]
+      .concat(rows.map(r=>r.map(v=>`"${clean(v).replace(/"/g,'""')}"`).join(','))).join('\r\n');
+    download(`${rep.id}_${stamp2}.csv`, 'text/csv;charset=utf-8', '\ufeff'+csv);
+    logRun(rep, rows.length, 'CSV');
+    return toast(`CSV exported · ${nf(rows.length)} rows`,'ok');
+  }
+  if(kind==='xls'){
+    const html = `<html><head><meta charset="utf-8"></head><body>
+      <h3>GOLDEN FINANCIAL SERVICES — ${rep.n} (${rep.id})</h3>
+      <p>Period ${STATE.f.from || '—'} to ${STATE.f.to || '—'} · generated ${stamp2}</p>
+      <table border="1">${tableFor(rep, rows)}</table></body></html>`;
+    download(`${rep.id}_${stamp2}.xls`, 'application/vnd.ms-excel', html);
+    logRun(rep, rows.length, 'Excel');
+    return toast(`Excel workbook exported · ${nf(rows.length)} rows`,'ok');
+  }
+  printReport(rep, rows.length, kind==='pdf' ? 'PDF' : 'Print');
+}
+function printReport(rep, count, label){
+  const prevSize = STATE.size;
+  STATE.size = 100000; renderReport();
+  el('s11').classList.add('print-target');
+  const done = ()=>{
+    el('s11').classList.remove('print-target');
+    STATE.size = prevSize; renderReport();
+    window.removeEventListener('afterprint', done);
+  };
+  window.addEventListener('afterprint', done);
+  setTimeout(()=>{ window.print(); }, 150);
+  logRun(rep, count, label);
+  toast(label==='PDF' ? 'Choose “Save as PDF” in the print dialog.' : 'Print dialog opened — printing the full report.', 'info');
+}
+
+/* ---------- live search over the tile catalogue ---------- */
+function tileSearch(q){
+  q = (q||'').toLowerCase().trim();
+  let shown = 0;
+  CATS.forEach(c=>{
+    let n = 0;
+    el('grid'+c.n).querySelectorAll('.repcard').forEach(card=>{
+      const r = byId(card.dataset.id);
+      const hit = !q || (r.n+' '+r.d+' '+r.id+' '+c.name).toLowerCase().includes(q);
+      card.style.display = hit ? '' : 'none';
+      if(hit){ n++; shown++; }
+    });
+    const cnt = el('c'+c.n+'count');
+    if(cnt) cnt.textContent = q ? `${n} of ${R_SETS[c.n-1].length} reports` : `${R_SETS[c.n-1].length} reports`;
+  });
+  const bt = el('bandReports'); if(bt) bt.textContent = q ? shown : REPORTS.length;
+}
+
+/* ---------- wiring ---------- */
+function wire(){
+  el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
+  document.querySelectorAll('.nav-item').forEach(item=>{
+    item.addEventListener('click', e=>{
+      const p = item.dataset.page;
+      if(['dashboard','disbursements','notifications','staff','reports'].includes(p)) return;
+      e.preventDefault(); toast('This module is queued for build.','info');
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+
+  const secs = [...document.querySelectorAll('.sec')], chips = [...document.querySelectorAll('.snav')];
+  const spy = ()=>{ let cur = secs[0];
+    for(const s of secs) if(s.getBoundingClientRect().top <= 150) cur = s;
+    chips.forEach(c=>c.classList.toggle('on', c.getAttribute('href')==='#'+cur.id)); };
+  window.addEventListener('scroll', spy, {passive:true}); spy();
+  chips.forEach(c=>c.addEventListener('click', e=>{
+    e.preventDefault();
+    const t = document.querySelector(c.getAttribute('href'));
+    if(t) window.scrollTo({top:t.offsetTop-104, behavior:'smooth'});
+  }));
+
+  el('datePresets').querySelectorAll('button').forEach(b=>b.onclick = ()=> presetDates(b.dataset.p));
+  el('applyBtn').onclick = applyAndToast;
+  el('resetBtn').onclick = ()=>{
+    el('dtFrom').value = '2026-10-01'; el('dtTo').value = '2026-10-30';
+    ['fldOfficer','fldBranch','fldProduct','fldStatus','advDpd','advSort'].forEach(id=>el(id).value='');
+    ['advMin','advMax','advRef','repSearch'].forEach(id=>el(id).value='');
+    document.querySelectorAll('#datePresets button').forEach(b=>b.classList.toggle('on', b.dataset.p==='30d'));
+    readFilters(); renderReport();
+    toast('Filters reset to the default 30 day range.','ok');
+  };
+  el('advToggle').onclick = ()=>{
+    const p = el('advPanel'), open = p.style.display === 'none';
+    p.style.display = open ? 'block' : 'none';
+    el('advToggle').textContent = open ? 'Hide advanced filters' : 'Advanced filters';
+  };
+  let qT;
+  el('repSearch').addEventListener('input', e=>{
+    clearTimeout(qT);
+    qT = setTimeout(()=>{ STATE.f.q = e.target.value.trim(); STATE.page = 1; renderReport(); }, 180);
+  });
+  ['fldOfficer','fldBranch','fldProduct','fldStatus','advDpd','advSort'].forEach(id=>{
+    el(id).addEventListener('change', ()=>{ readFilters(); renderReport(); });
+  });
+  el('advMin').addEventListener('change', ()=>{ readFilters(); renderReport(); });
+  el('advMax').addEventListener('change', ()=>{ readFilters(); renderReport(); });
+  el('advRef').addEventListener('input', e=>{
+    clearTimeout(qT);
+    qT = setTimeout(()=>{ STATE.f.ref = e.target.value.trim(); STATE.page = 1; renderReport(); }, 200);
+  });
+  document.querySelectorAll('[data-act]').forEach(b=>{
+    b.onclick = ()=>{
+      const a = b.dataset.act;
+      doExport(a==='exp-pdf' ? 'pdf' : a==='exp-xls' ? 'xls' : a==='exp-csv' ? 'csv' : 'print');
+    };
+  });
+
+  el('viewRole').onchange = e=>{
+    VIEWROLE = e.target.value;
+    el('accessBadge').textContent = ROLEOF[VIEWROLE]==='full' ? 'Full access' : 'Read-only access';
+    const bg = el('bandRole'); if(bg) bg.textContent = VIEWROLE.split(' /')[0];
+    renderTiles(); renderReport();
+    const cur = byId(STATE.id);
+    toast(canRun(cur)
+      ? `Now viewing as ${VIEWROLE} — ${ACCESS[VIEWROLE].length} of 10 categories available.`
+      : `${VIEWROLE} cannot open ${cur.cat.name} reports — tiles for that category are locked.`,
+      canRun(cur) ? 'ok' : 'info');
+  };
+  el('histExport').onclick = ()=>{
+    const csv = ['"Time","Report","Report ID","User","Rows","Format"']
+      .concat(HIST.map(h=>`"${h.t}","${h.name}","${h.id}","${h.user}",${h.rows},"${h.fmt}"`)).join('\r\n');
+    download('report_generation_history.csv','text/csv;charset=utf-8','\ufeff'+csv);
+    toast(`Generation log exported · ${HIST.length} entries`,'ok');
+  };
+  el('bellBtn').onclick = ()=>{ el('histBody').closest('.card').scrollIntoView({behavior:'smooth', block:'center'});
+    toast(`${HIST.length} report generations logged`,'info'); };
+  el('histBtn').onclick = ()=> el('histBody').closest('.card').scrollIntoView({behavior:'smooth', block:'center'});
+  el('consoleBtn').onclick = ()=> el('s11').scrollIntoView({behavior:'smooth'});
+  el('quickRun').onclick = ()=>{ el('s11').scrollIntoView({behavior:'smooth'});
+    toast('Pick any report tile or use the console selector.','info'); };
+  el('printBtn').onclick = ()=> doExport('print');
+  let gT;
+  el('globalSearch').addEventListener('input', e=>{
+    clearTimeout(gT);
+    gT = setTimeout(()=>tileSearch(e.target.value), 160);
+  });
+  el('modalClose').onclick = closeModal;
+  el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+}
+function closeModal(){ el('modal').classList.remove('on'); }
+function openModal(title, sub, body, foot){
+  el('modalTitle').textContent = title; el('modalSub').textContent = sub;
+  el('modalBody').innerHTML = body; el('modalFoot').innerHTML = foot || '';
+  el('modal').classList.add('on');
+}
+function fillSelects(){
+  el('fldOfficer').innerHTML = '<option value="">All officers</option>' +
+    OFFICERS.map(o=>`<option>${o}</option>`).join('');
+  el('fldBranch').innerHTML = '<option value="">All branches</option>' +
+    BRANCHES.map(b=>`<option>${b}</option>`).join('');
+  el('fldProduct').innerHTML = '<option value="">All products</option>' +
+    PRODUCTS.map(p=>`<option>${p}</option>`).join('');
+  el('fldStatus').innerHTML = '<option value="">All statuses</option>' +
+    ['Active','Fully Paid','Pending','Approved','Rejected','Cancelled','Posted','Partial','Reversed','Disputed','Inactive','Blocked']
+      .map(s=>`<option>${s}</option>`).join('');
+}
+
+/* ---------- boot ---------- */
+(function boot(){
+  fillSelects();
+  renderTiles();
+  drawCharts();
+  renderHist();
+  renderAccess();
+  renderReport();
+  wire();
+  const bt = el('bandToday'); if(bt) bt.textContent = HIST.filter(h=>h.t.startsWith('2026-10-30')).length;
+  setTimeout(()=>toast(`${REPORTS.length} reports ready · ${REPAYS.length} receipts, ${LOANS.length} loans in the sample period`,'ok'), 500);
+})();
+
+/* never used in this module but kept for shared shell parity */
+function openReportHelp(){
+  openModal('How the report console works','Filters · totals · exports · history',
+    '<ul style="font-size:12px;line-height:1.7;padding-left:18px">'+
+    '<li>Pick any tile or use the console to load a report.</li>'+
+    '<li>Date presets, officer, branch, product and status filters run together.</li>'+
+    '<li>Totals, pagination and exports always reflect the filtered set.</li>'+
+    '<li>Every export and print is written to the generation history.</li></ul>','');
+}
+</script>
+</body>
+</html>

@@ -20,6 +20,7 @@ def sidebar(active):
     for slug in ["applications","loans","repayments","collections","clients","guarantors",
                  "transactions","reports","settings"]:
         s = s.replace(f'data-page="{slug}" href="#{slug}"', f'data-page="{slug}" href="#"')
+    s = s.replace('data-page="reports" href="#"', 'data-page="reports" href="reports.html"')
     # mark active item
     s = re.sub(r'<a class="nav-item" (data-page="%s")' % re.escape(active),
                r'<a class="nav-item active" \1', s)

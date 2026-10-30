@@ -344,7 +344,7 @@ el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click', e=>{
     const page = item.dataset.page;
-    if(['disbursements','dashboard','staff','notifications'].includes(page)) return;   // real links
+    if(['disbursements','dashboard','staff','notifications','reports'].includes(page)) return;   // real links
     e.preventDefault();
     toast('This module is queued for build.', 'info');
     document.getElementById('sidebar').classList.remove('open');

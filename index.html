@@ -358,7 +358,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
       Transactions
     </a>
-    <a class="nav-item" data-page="reports" href="#reports">
+    <a class="nav-item" data-page="reports" href="reports.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
       Reports &amp; Analytics
     </a>
@@ -1726,7 +1726,6 @@ const pageMeta = {
   reports:{title:'Reports & Analytics', sub:'Portfolio, ageing and performance reporting'},
   notifications:{title:'Notifications', sub:'Message delivery, templates and alerts'},
   staff:{title:'Staff & Users', sub:'Roles, permissions and branch officers'},
-  staff:{title:'Staff & Users', sub:'Roles, permissions and branch officers'},
   settings:{title:'Settings', sub:'Products, interest rates, fees and system rules'}
 };
 
@@ -1739,6 +1738,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'disbursements'){ window.location.href = 'disbursements.html'; return; }
     if(page === 'notifications'){ window.location.href = 'notifications.html'; return; }
     if(page === 'staff'){ window.location.href = 'staff.html'; return; }
+    if(page === 'reports'){ window.location.href = 'reports.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;

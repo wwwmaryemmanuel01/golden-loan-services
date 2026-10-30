@@ -536,7 +536,7 @@ el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click', e=>{
     const p = item.dataset.page;
-    if(['dashboard','disbursements','staff'].includes(p)) return;
+    if(['dashboard','disbursements','staff','reports'].includes(p)) return;
     e.preventDefault(); toast('This module is queued for build.','info');
     document.getElementById('sidebar').classList.remove('open');
   });

@@ -656,7 +656,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
       Transactions
     </a>
-    <a class="nav-item" data-page="reports" href="#">
+    <a class="nav-item" data-page="reports" href="reports.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
       Reports &amp; Analytics
     </a>
@@ -3036,7 +3036,7 @@ el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click', e=>{
     const p = item.dataset.page;
-    if(['dashboard','disbursements','notifications','staff'].includes(p)) return;
+    if(['dashboard','disbursements','notifications','staff','reports'].includes(p)) return;
     e.preventDefault(); toast('This module is queued for build.','info');
     document.getElementById('sidebar').classList.remove('open');
   });
