@@ -114,7 +114,7 @@ const R_FIN = [
      ['Cash on hand — Lilongwe City','Cash','Branch till', mk(1.42e6), mk(1.42e6), chip('Active')],
      ['Cash on hand — Blantyre','Cash','Branch till', mk(0.86e6), mk(0.86e6), chip('Active')]
    ]},
-  {id:'FIN-08', n:'Profit and Loss Summary', d:'Revenue, costs and result for the month', src:'custom',
+  {id:'FIN-08', n:'Profit and Loss Summary', d:'Revenue, costs and result for the month', src:'custom', noTotal:true,
    cols:['Line','Amount','Last month','Variance','Margin'],
    rows: f => {
      const rev = BOOK.interest + BOOK.fees, cost = BOOK.interest*0.34;

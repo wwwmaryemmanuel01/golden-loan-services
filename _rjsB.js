@@ -124,7 +124,7 @@ const R_EXE = [
      ['New applications', nf(APPS.length), '58', '+9.0%', chip('Pending')]
    ]},
   {id:'EXE-02', n:'Financial Performance Summary', d:'Revenue, cost and profit for the selected period',
-   src:'custom', cols:['Line','Amount','Share','Change','Comment'],
+   src:'custom', noTotal:true, cols:['Line','Amount','Share','Change','Comment'],
    rows: f => {
      const interest = BOOK.interest, fees = BOOK.fees, cost = BOOK.interest*0.34;
      const rev = interest+fees;

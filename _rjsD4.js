@@ -3,19 +3,65 @@
    EXPORTS, PRINT, WIRING, BOOT
    ============================================================ */
 const clean = v => String(v).replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
-function download(name, mime, text){
+/* the portal is often embedded in a sandboxed preview frame, where browsers block
+   downloads and the print dialog — detect that so we never claim a false success */
+const EMBEDDED = (()=>{ try{ return window.self !== window.top; }catch(e){ return true; } })();
+
+function download(name, mime, data){
   try{
-    const b = new Blob([text], {type:mime});
+    const b = (data instanceof Blob) ? data : new Blob([data], {type:mime});
     const u = URL.createObjectURL(b);
     const a = document.createElement('a');
-    a.href = u; a.download = name; document.body.appendChild(a); a.click();
-    setTimeout(()=>{ URL.revokeObjectURL(u); a.remove(); }, 1200);
-  }catch(e){ toast('Download blocked by the browser sandbox.','err'); }
+    a.href = u; a.download = name; a.rel = 'noopener';
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(u); a.remove(); }, 1500);
+    return true;
+  }catch(e){ return false; }
 }
 function tableFor(rep, rows){
   const head = '<tr>' + rep.cols.map(c=>`<th>${clean(c)}</th>`).join('') + '</tr>';
   const body = rows.map(r=>'<tr>' + r.map(v=>`<td>${clean(v)}</td>`).join('') + '</tr>').join('');
   return head + body;
+}
+function tableView(rep, rows, max){
+  const shown = rows.slice(0, 400);
+  return `<div class="tblwrap" style="max-height:${max||320}px;border:1px solid var(--line);border-radius:10px">
+      <table class="tbl2"><thead><tr>${rep.cols.map(c=>`<th>${clean(c)}</th>`).join('')}</tr></thead>
+      <tbody>${shown.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    ${rows.length>400 ? `<div class="tiny muted" style="margin-top:6px">Previewing the first 400 of ${nf(rows.length)} rows.</div>` : ''}`;
+}
+function legacyCopy(text, done){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy'); ta.remove(); done && done(ok);
+  }catch(e){ done && done(false); }
+}
+function copyText(text, done){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(()=>done&&done(true)).catch(()=>legacyCopy(text, done));
+      return;
+    }
+  }catch(e){}
+  legacyCopy(text, done);
+}
+function previewExport(rep, rows, label, text){
+  openModal(rep.n + ' · ' + label + ' preview',
+    rep.id + ' · ' + nf(rows.length) + ' rows · nothing was sent anywhere',
+    `<div class="note" style="margin-bottom:10px;align-items:flex-start">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+       <div>This page is running inside an embedded preview frame, and browsers block file
+       downloads and the print dialog there. The ${label} content is below — copy it, or open
+       <b>reports.html</b> in its own browser tab (or the live site) to download the file.</div>
+     </div>${tableView(rep, rows, 340)}`,
+    `<button class="btn btn-ghost" id="copyExport">Copy ${label}</button>
+     <button class="btn btn-dark" id="closeExport">Close</button>`);
+  const cp = el('copyExport');
+  if(cp) cp.onclick = ()=> copyText(text || '', ok =>
+    toast(ok ? label + ' copied to the clipboard' : 'Copy blocked — select the table and copy manually.', ok ? 'ok' : 'err'));
+  const cl = el('closeExport'); if(cl) cl.onclick = closeModal;
 }
 function doExport(kind){
   const rep = byId(STATE.id);
@@ -23,38 +69,63 @@ function doExport(kind){
   readFilters();
   const rows = buildView(rep, STATE.f).rows;
   if(!rows.length) return toast('Nothing to export — no rows match these filters.','err');
-  const stamp2 = '2026-10-30';
-  if(kind==='csv'){
-    const csv = [rep.cols.map(c=>`"${clean(c)}"`).join(',')]
+
+  if(kind === 'csv'){
+    const csv = [rep.cols.map(c=>`"${clean(c).replace(/"/g,'""')}"`).join(',')]
       .concat(rows.map(r=>r.map(v=>`"${clean(v).replace(/"/g,'""')}"`).join(','))).join('\r\n');
-    download(`${rep.id}_${stamp2}.csv`, 'text/csv;charset=utf-8', '\ufeff'+csv);
-    logRun(rep, rows.length, 'CSV');
-    return toast(`CSV exported · ${nf(rows.length)} rows`,'ok');
+    logRun(rep, rows.length, EMBEDDED ? 'CSV · preview' : 'CSV');
+    if(EMBEDDED) return previewExport(rep, rows, 'CSV', csv);
+    const ok = download(`GFS_${rep.id}_2026-10-30.csv`, 'text/csv;charset=utf-8', '\ufeff' + csv);
+    return ok ? toast(`CSV downloaded · ${nf(rows.length)} rows`,'ok')
+              : toast('The browser blocked the download. Open the page in its own tab and retry.','err');
   }
-  if(kind==='xls'){
-    const html = `<html><head><meta charset="utf-8"></head><body>
-      <h3>GOLDEN FINANCIAL SERVICES — ${rep.n} (${rep.id})</h3>
-      <p>Period ${STATE.f.from || '—'} to ${STATE.f.to || '—'} · generated ${stamp2}</p>
-      <table border="1">${tableFor(rep, rows)}</table></body></html>`;
-    download(`${rep.id}_${stamp2}.xls`, 'application/vnd.ms-excel', html);
-    logRun(rep, rows.length, 'Excel');
-    return toast(`Excel workbook exported · ${nf(rows.length)} rows`,'ok');
+
+  if(kind === 'xls'){
+    let blob = null;
+    try { blob = xlsxBlob(sheetFor(rep, rows, STATE.f)); } catch(e){ blob = null; }
+    logRun(rep, rows.length, EMBEDDED ? 'Excel · preview' : 'Excel');
+    if(!blob) return toast('Could not build the workbook.','err');
+    if(EMBEDDED){
+      const tsv = [rep.cols.map(clean).join('\t')]
+        .concat(rows.map(r=>r.map(v=>clean(v)).join('\t'))).join('\n');
+      return previewExport(rep, rows, 'Excel', tsv);
+    }
+    const ok = download(`GFS_${rep.id}_2026-10-30.xlsx`, blob.type, blob);
+    return ok ? toast(`Excel workbook downloaded · ${nf(rows.length)} rows (.xlsx)`,'ok')
+              : toast('The browser blocked the download. Open the page in its own tab and retry.','err');
   }
-  printReport(rep, rows.length, kind==='pdf' ? 'PDF' : 'Print');
+
+  if(EMBEDDED){
+    logRun(rep, rows.length, kind === 'pdf' ? 'PDF · preview' : 'Print · preview');
+    openModal(rep.n + (kind === 'pdf' ? ' · PDF export' : ' · Print preview'),
+      rep.id + ' · ' + nf(rows.length) + ' rows',
+      `<div class="note" style="margin-bottom:10px;align-items:flex-start">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+         <div>Embedded previews cannot open the print dialog. This is exactly what the printed
+         ${kind === 'pdf' ? 'PDF' : 'report'} would contain — open <b>reports.html</b> in its own tab to
+         ${kind === 'pdf' ? 'save it as PDF' : 'print it'}.</div></div>${tableView(rep, rows, 380)}`,
+      `<button class="btn btn-dark" id="closePrint">Close</button>`);
+    const c = el('closePrint'); if(c) c.onclick = closeModal;
+    return;
+  }
+  printReport(rep, rows.length, kind === 'pdf' ? 'PDF' : 'Print');
 }
 function printReport(rep, count, label){
   const prevSize = STATE.size;
   STATE.size = 100000; renderReport();
   el('s11').classList.add('print-target');
+  let restored = false;
   const done = ()=>{
+    if(restored) return; restored = true;
     el('s11').classList.remove('print-target');
     STATE.size = prevSize; renderReport();
     window.removeEventListener('afterprint', done);
   };
   window.addEventListener('afterprint', done);
-  setTimeout(()=>{ window.print(); }, 150);
+  setTimeout(()=>{ try{ window.print(); }catch(e){ toast('This browser blocked the print dialog.','err'); done(); } }, 150);
+  setTimeout(done, 60000);                       /* safety net if afterprint never fires */
   logRun(rep, count, label);
-  toast(label==='PDF' ? 'Choose “Save as PDF” in the print dialog.' : 'Print dialog opened — printing the full report.', 'info');
+  toast(label === 'PDF' ? 'Choose “Save as PDF” in the print dialog.' : 'Print dialog opened — printing the full report.','info');
 }
 
 /* ---------- live search over the tile catalogue ---------- */

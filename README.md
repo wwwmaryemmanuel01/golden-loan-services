@@ -11,7 +11,14 @@ Repayments 9, Arrears 9, Financial 9, Customers 9, Applications 9, Staff 8, Risk
 Audit & Statements 12) plus a report console: date presets and range, officer / branch /
 product / status filters, advanced filters, in-report search, summary totals, paginated
 records table, CSV / Excel / PDF export, print, generation history and a role-based
-access matrix. Nothing is a static screenshot — every figure is recomputed from the
+access matrix.
+
+Exports are real files: CSV (`text/csv` with BOM), **Excel as a genuine `.xlsx`**
+(hand-built Office Open XML in a STORE zip — no libraries, no "format does not match"
+warning) and PDF through the browser print dialog. When the page is opened inside a
+sandboxed preview frame — where browsers block downloads and the print dialog — each
+export falls back to an in-page preview modal with a **Copy** button instead of failing
+silently. Nothing is a static screenshot — every figure is recomputed from the
 sample dataset when a filter changes.
 
 ## Back navigation
@@ -65,7 +72,7 @@ inject_backnav.py       appends the back-navigation script before </body>
 _bodyA/B/C.html  _jsA/B/C*.js          disbursements partials
 _nbodyA/B/C.html _njsA/B/C*.js         notifications partials
 _sbodyA/B/C.html _sjsA/B/C*/D.js       staff partials
-_rbodyA/B.html   _rjsA/B/C*/D*.js      reports partials
+_rbodyA/B.html   _rjsA/B/C*/D*/E.js    reports partials (_rjsE.js = xlsx writer)
 
 preview-*.png           full-page screenshots at 1280px
 ```

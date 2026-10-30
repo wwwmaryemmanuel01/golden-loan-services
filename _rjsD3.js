@@ -61,6 +61,7 @@ function amtVal(v){
   let n = parseFloat(m[1].replace(/,/g,''));
   const suf = (m[2]||'').trim();
   if(suf==='M') n *= 1e6; else if(suf==='K') n *= 1e3;
+  if(/^\s*\(/.test(str)) n = -n;          /* accounting convention: (MK 3,753,600) is a cost */
   return isNaN(n) ? null : n;
 }
 function totalsHTML(rep, rows, objs){
@@ -79,6 +80,7 @@ function totalsHTML(rep, rows, objs){
       cells.push({k:c, v: Math.abs(total)>=1e6 ? mkm(total) : mk(total), s:'column total'});
     }
   });
+  if(rep.noTotal) cells.length = 0;         /* P&L style reports: a column sum would be meaningless */
   const out = [{k:'Rows in view', v:nf(n), s:'after filters'}]
     .concat(cells.slice(0,2));
   out.push({k:'Period', v:(STATE.f.from||'—').slice(5)+' → '+(STATE.f.to||'—').slice(5),
