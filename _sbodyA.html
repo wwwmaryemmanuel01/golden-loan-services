@@ -1,0 +1,282 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Staff Management</div>
+      <div class="page-sub">Directory · roles · permissions · security · performance · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search staff, roles, departments, IDs…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Security alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportStaff">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold" id="quickAdd">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+      Add Staff Member
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · All Staff</a>
+    <a class="snav" href="#s3">3 · Add Staff</a>
+    <a class="snav" href="#s4">4 · Profiles</a>
+    <a class="snav" href="#s5">5 · Roles</a>
+    <a class="snav" href="#s6">6 · Permissions</a>
+    <a class="snav" href="#s7">7 · Account Status</a>
+    <a class="snav" href="#s8">8 · Password</a>
+    <a class="snav" href="#s9">9 · Assignments</a>
+    <a class="snav" href="#s10">10 · Performance</a>
+    <a class="snav" href="#s11">11 · Activity Logs</a>
+    <a class="snav" href="#s12">12 · Departments</a>
+    <a class="snav" href="#s13">13 · Invitations</a>
+    <a class="snav" href="#s14">14 · Communication</a>
+    <a class="snav" href="#s15">15 · Documents</a>
+    <a class="snav" href="#s16">16 · Reports</a>
+    <a class="snav" href="#s17">17 · Closure</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Staff Management</h1>
+        <p>Accounts, roles, permissions and access control for GOLDEN FINANCIAL SERVICES</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandStaff">24</b><span>Staff members</span></div>
+        <div class="band-stat"><b id="bandActive">19</b><span>Active</span></div>
+        <div class="band-stat"><b id="bandInvites">3</b><span>Invitations</span></div>
+        <div class="band-stat"><b id="bandAlerts">5</b><span>Security alerts</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="inviteBtn">Invite staff</button>
+        <button class="btn btn-gold btn-sm" id="quickInvite">New invitation</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Staff Management Overview</h2><p>Headcount, roles, activity and security posture · 30 October 2026</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+      <div class="grid5" id="ovTiles" style="margin-bottom:13px"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Role</div>
+            <div class="panel-sub">Active accounts per role</div></div></div>
+          <div id="ovRoles" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Department / Branch</div>
+            <div class="panel-sub">Headcount distribution</div></div></div>
+          <div id="ovDepts" style="margin-top:12px"></div>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recently Added Staff</div>
+            <div class="panel-sub">Newest accounts and invitations</div></div>
+            <button class="btn btn-ghost btn-sm" id="recentAll">Open directory</button></div>
+          <div id="ovRecent" style="margin-top:4px"></div>
+          <div class="panel-head" style="margin-top:14px"><div>
+            <div class="panel-title">Staff Security Alerts</div>
+            <div class="panel-sub">Access and authentication events</div></div>
+            <span class="badge b-rev" id="alertCount">5</span></div>
+          <div id="ovAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Staff Activities</div>
+            <div class="panel-sub">Latest actions across the platform</div></div></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Activity</th>
+              <th>Module</th><th>Result</th></tr></thead><tbody id="ovActivity"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>All Staff Members</h2><p>Directory with search, filters, profiles, editing and export</p></div>
+        <div class="sec-tools"><span class="count-pill" id="dirCount">0 staff</span></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld"><select id="dirSearchBy">
+            <option value="name">Full name</option><option value="username">Username</option>
+            <option value="phone">Phone number</option><option value="email">Email address</option>
+            <option value="id">Staff ID</option></select></div>
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="dirSearch" placeholder="Search by full name…" />
+          </div>
+          <div class="fld"><select id="dirRole"><option value="">All roles</option></select></div>
+          <div class="fld"><select id="dirStatus"><option value="">All statuses</option>
+            <option>Active</option><option>Inactive</option><option>Suspended</option><option>Locked</option><option>Pending</option></select></div>
+          <div class="fld"><select id="dirDept"><option value="">All departments</option></select></div>
+          <div class="fld"><select id="dirBranch"><option value="">All branches</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="dirReset">Reset</button>
+          <button class="btn btn-gold btn-sm" id="dirExport">Export records</button>
+        </div>
+        <div class="tblwrap" style="max-height:560px">
+          <table class="tbl2"><thead><tr>
+            <th style="width:26px"><input type="checkbox" id="dirSelAll" /></th>
+            <th>Staff ID</th><th>Name</th><th>Role</th><th>Department</th><th>Branch</th>
+            <th>Status</th><th>Last login</th><th>Actions</th>
+          </tr></thead><tbody id="dirBody"></tbody></table>
+        </div>
+        <div class="pager" id="dirPager"></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Add New Staff Member</h2><p>Create the account, assign access and record the registration</p></div>
+        <div class="sec-tools"><span class="badge b-pend" id="addBadge">Draft</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Details</div>
+            <div class="panel-sub">Fields marked * are required</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Full name *</label><input id="nsName" placeholder="e.g. Tadala Nkhoma" /></div>
+            <div class="fg"><label>Username *</label><input id="nsUser" placeholder="e.g. t.nkhoma" /></div>
+            <div class="fg"><label>Email address</label><input id="nsEmail" placeholder="name@goldenfs.mw" />
+              <div class="hint">Optional — required for invitation and password reset.</div></div>
+            <div class="fg"><label>Phone number *</label><input id="nsPhone" placeholder="+265 99 000 0000" /></div>
+            <div class="fg"><label>Staff identification number *</label><input id="nsIdNo" placeholder="e.g. MW-0412" /></div>
+            <div class="fg"><label>Assign staff role *</label><select id="nsRole"></select></div>
+            <div class="fg"><label>Assign department *</label><select id="nsDept"></select></div>
+            <div class="fg"><label>Assign branch *</label><select id="nsBranch"></select></div>
+            <div class="fg"><label>Reporting manager</label><select id="nsManager"></select></div>
+            <div class="fg"><label>Account status</label><select id="nsStatus">
+              <option>Active</option><option>Pending invitation</option><option>Inactive</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Secure login credentials</label>
+              <div style="display:flex;gap:7px;align-items:center">
+                <input id="nsPass" readonly value="••••••••••••" style="flex:1;letter-spacing:1px" />
+                <button class="btn btn-ghost btn-sm" id="genPass">Generate</button>
+                <button class="btn btn-ghost btn-sm" id="copyPass">Copy</button>
+              </div>
+              <div class="charline"><span id="passHint">Temporary password · must be changed at first login</span>
+                <span>Never displayed again after saving</span></div>
+            </div>
+            <div class="fg" style="grid-column:1/-1"><label>Options</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsInvite" checked /> Send account invitation</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsMfa" checked /> Enforce MFA</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsExpire" checked /> Force password change</label>
+              </div></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="createStaff">Create staff account</button>
+            <button class="btn btn-ghost" id="clearStaff">Clear</button>
+            <span class="tiny muted" id="createMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Registration Record</div>
+              <div class="panel-sub">Captured with the account</div></div></div>
+            <div id="regRecord" style="margin-top:6px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Access Summary</div>
+              <div class="panel-sub">What this role will be able to do</div></div></div>
+            <div id="accessSummary" style="margin-top:6px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Staff Profile Management</h2><p>Personal, employment, access and activity record for one staff member</p></div>
+        <div class="sec-tools">
+          <select id="profSelect" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px"></select>
+          <button class="btn btn-ghost btn-sm" id="profEdit">Edit details</button>
+        </div>
+      </div>
+      <div id="profileWrap"></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Staff Roles &amp; Designations</h2><p>Standard roles, custom roles and their restrictions</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="newRole">Create custom role</button>
+          <span class="count-pill" id="roleCount">0 roles</span></div>
+      </div>
+      <div class="grid g4 two" id="roleGrid"></div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role Restrictions</div>
+            <div class="panel-sub">Hard limits applied regardless of permissions</div></div></div>
+          <div id="roleRestrictions"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Assign Roles to Staff</div>
+            <div class="panel-sub">Change a designation immediately</div></div></div>
+          <div class="form-grid" style="grid-template-columns:1fr 1fr">
+            <div class="fg"><label>Staff member</label><select id="assignStaff"></select></div>
+            <div class="fg"><label>New role</label><select id="assignRole"></select></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-dark btn-sm" id="assignRoleBtn">Assign role</button>
+            <span class="tiny muted" id="assignMsg"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Staff Permissions &amp; Access Control</h2><p>Module-level access with sensitive-action restrictions</p></div>
+        <div class="sec-tools">
+          <select id="permRoleSel" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px"></select>
+          <button class="btn btn-gold btn-sm" id="savePerms">Save permissions</button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Permission Matrix</div>
+            <div class="panel-sub" id="permSub">View, create, edit and delete by module</div></div></div>
+          <div class="tblwrap" style="max-height:470px">
+            <table class="perm-tbl"><thead><tr><th>Module / capability</th><th>View</th><th>Create</th>
+              <th>Edit</th><th>Delete</th></tr></thead><tbody id="permBody"></tbody></table>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" id="permAll">Select all</button>
+            <button class="btn btn-ghost btn-sm" id="permNone">Clear all</button>
+            <button class="btn btn-ghost btn-sm" id="permView">View only</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Sensitive Financial Actions</div>
+              <div class="panel-sub">Restricted and approval-gated</div></div>
+              <span class="badge b-rev">Locked</span></div>
+            <div id="permSensitive"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Review Permission Changes</div>
+              <div class="panel-sub">Audit trail of access changes</div></div></div>
+            <div id="permChanges"></div>
+          </div>
+        </div>
+      </div>
+    </section>

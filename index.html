@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<title>GOLDEN FINANCIAL SERVICES — Admin Portal</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- ==================== SIDEBAR ==================== -->
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">GF</div>
+    <div>
+      <div class="brand-name">GOLDEN FINANCIAL<br>SERVICES</div>
+      <div class="brand-sub">ADMIN PORTAL</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item active" data-page="dashboard" href="#dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Lending</div>
+    <a class="nav-item" data-page="applications" href="#applications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
+      Loan Applications <span class="pill gold">18</span>
+    </a>
+    <a class="nav-item" data-page="loans" href="#loans">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
+      Loan Portfolio
+    </a>
+    <a class="nav-item" data-page="repayments" href="#repayments">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+      Repayments
+    </a>
+    <a class="nav-item" data-page="collections" href="#collections">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
+      Collections &amp; Arrears <span class="pill red">142</span>
+    </a>
+    <div class="nav-label">Customers</div>
+    <a class="nav-item" data-page="clients" href="#clients">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
+      Clients (KYC)
+    </a>
+    <a class="nav-item" data-page="guarantors" href="#guarantors">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      Guarantors &amp; Collateral
+    </a>
+    <div class="nav-label">Finance</div>
+    <a class="nav-item" data-page="disbursements" href="#disbursements">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+      Disbursements
+    </a>
+    <a class="nav-item" data-page="transactions" href="#transactions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+      Transactions
+    </a>
+    <a class="nav-item" data-page="reports" href="#reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Reports &amp; Analytics
+    </a>
+    <div class="nav-label">Communication</div>
+    <a class="nav-item" data-page="notifications" href="#notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      Notifications
+    </a>
+    <div class="nav-label">System</div>
+    <a class="nav-item" data-page="staff" href="#staff">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+      Staff &amp; Users
+    </a>
+    <a class="nav-item" data-page="settings" href="#settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1.2Z"/></svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="avatar">CM</div>
+    <div>
+      <div class="sf-name">Chikondi Mwale</div>
+      <div class="sf-role">System Administrator</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ==================== MAIN ==================== -->
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title" id="pageTitle">Dashboard</div>
+      <div class="page-sub" id="pageSub">Administration management portal · Thursday, 30 October 2026 · 09:45 CAT</div>
+    </div>
+
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search customer, loan ID, phone, staff…" />
+    </div>
+
+    <div class="tabs" id="periodTabs">
+      <button class="tab" data-period="today">Today</button>
+      <button class="tab" data-period="week">Week</button>
+      <button class="tab on" data-period="month">Month</button>
+      <button class="tab" data-period="ytd">YTD</button>
+    </div>
+
+    <a class="icon-btn" title="Notifications" href="notifications.html" style="display:inline-flex;align-items:center;justify-content:center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </a>
+
+    <button class="btn btn-ghost" id="exportBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+      New Loan
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · KPIs</a>
+    <a class="snav" href="#s2">2 · Financial</a>
+    <a class="snav" href="#s3">3 · Portfolio</a>
+    <a class="snav" href="#s4">4 · Applications</a>
+    <a class="snav" href="#s5">5 · Repayments</a>
+    <a class="snav" href="#s6">6 · Arrears</a>
+    <a class="snav" href="#s7">7 · Customers</a>
+    <a class="snav" href="#s8">8 · Staff</a>
+    <a class="snav" href="#s9">9 · Activity</a>
+    <a class="snav" href="#s10">10 · Alerts</a>
+    <a class="snav" href="#s11">11 · Analytics</a>
+    <a class="snav" href="#s12">12 · Actions</a>
+    <a class="snav" href="#s13">13 · System</a>
+  </div>
+
+  <main class="content" id="page-dashboard">
+
+    <!-- ===== 1. KPI ===== -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div>
+          <h2>Key Performance Indicators</h2>
+          <p>Consolidated portfolio snapshot · as at 30 October 2026, 09:45 CAT</p>
+        </div>
+        <div class="sec-tools">
+          <span class="badge b-appr">Live data</span>
+        </div>
+      </div>
+      <div class="grid g4" id="kpiGrid"></div>
+    </section>
+
+    <!-- ===== 2. FINANCIAL ===== -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div>
+          <h2>Financial Overview</h2>
+          <p>Capital, income, expenses and cash position · current financial year</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">View ledger</button></div>
+      </div>
+      <div class="grid g4" id="finTiles" style="margin-bottom:13px"></div>
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Net Profit Summary</div>
+              <div class="panel-sub">Year to date · MK</div>
+            </div>
+            <span class="badge b-appr">Profit</span>
+          </div>
+          <div class="stmt" id="pnl"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Cash Position Overview</div>
+              <div class="panel-sub">Available funds across all accounts</div>
+            </div>
+          </div>
+          <div class="stmt" id="cashPos"></div>
+          <div class="prog-row" style="margin-top:14px">
+            <div class="prog-top"><b>Capital utilisation</b><span id="capUtilTxt">80.1%</span></div>
+            <div class="bar"><i style="width:80.1%"></i></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Capital Deployment</div>
+              <div class="panel-sub">Available vs disbursed capital</div>
+            </div>
+          </div>
+          <div id="capDonut" style="display:flex;justify-content:center;margin-top:8px"></div>
+          <div class="stmt" id="capLegend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. PORTFOLIO ===== -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div>
+          <h2>Loan Portfolio Overview</h2>
+          <p>3,019 loans on book · status mix, due dates and maturities</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Open portfolio</button></div>
+      </div>
+      <div class="grid g4 two" id="portfolioTiles" style="margin-bottom:13px"></div>
+      <div class="grid g-2-1">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Portfolio Status Mix</div>
+              <div class="panel-sub">Share of loans by current status</div>
+            </div>
+          </div>
+          <div style="margin-top:12px" id="portfolioBars"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Upcoming Obligations</div>
+              <div class="panel-sub">Next 30 days</div>
+            </div>
+          </div>
+          <div class="stmt" id="upcoming"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. APPLICATIONS ===== -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div>
+          <h2>Loan Applications Overview</h2>
+          <p>Pipeline from submission to disbursement · this month</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Review queue</button></div>
+      </div>
+      <div class="grid g4 two" id="appTiles" style="margin-bottom:13px"></div>
+      <div class="grid g-2-1">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Application Pipeline</div>
+              <div class="panel-sub">Volume at each stage · this month</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><svg class="chart" id="appPipeline" viewBox="0 0 640 220"></svg></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Recent Application Activity</div>
+              <div class="panel-sub">Latest movements in the queue</div>
+            </div>
+          </div>
+          <div class="list" id="appActivity"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. REPAYMENTS ===== -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div class="sec-num">5</div>
+        <div>
+          <h2>Repayments &amp; Collections Overview</h2>
+          <p>Collections received, expected and outstanding instalments</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Post repayment</button></div>
+      </div>
+      <div class="grid g4 two" id="repayTiles" style="margin-bottom:13px"></div>
+      <div class="grid g-2-1">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Received vs Expected Repayments</div>
+              <div class="panel-sub">Last 10 working days · MK millions</div>
+            </div>
+            <div class="legend" style="margin:0">
+              <div class="lg"><i style="background:#C9A227"></i> Received</div>
+              <div class="lg"><i style="background:#B9BFCC"></i> Expected</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><svg class="chart" id="repayChart" viewBox="0 0 640 230"></svg></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Recent Payment Transactions</div>
+              <div class="panel-sub">Latest receipts posted today</div>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Customer</th><th>Channel</th><th class="num">Amount</th></tr></thead>
+              <tbody id="payTxns"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. ARREARS ===== -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div class="sec-num">6</div>
+        <div>
+          <h2>Arrears &amp; Delinquency Overview</h2>
+          <p>Ageing analysis · portfolio at risk and recovery performance</p>
+        </div>
+        <div class="sec-tools"><span class="badge b-rev">Above threshold</span></div>
+      </div>
+      <div class="grid g-2-1">
+        <div class="grid">
+          <div class="grid g4 two" id="arrearsTiles"></div>
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Ageing Buckets</div>
+                <div class="panel-sub">Overdue loans and amounts by days past due</div>
+              </div>
+            </div>
+            <div class="stmt" id="ageing" style="margin-top:6px"></div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Collection Recovery Progress</div>
+                <div class="panel-sub">October target vs collected</div>
+              </div>
+            </div>
+            <div id="recovery" style="margin-top:12px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Customers Requiring Follow-up</div>
+                <div class="panel-sub">Highest exposure first</div>
+              </div>
+              <span class="badge b-pend">58 accounts</span>
+            </div>
+            <div class="list" id="followup"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7. CUSTOMERS ===== -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div class="sec-num">7</div>
+        <div>
+          <h2>Customer Overview</h2>
+          <p>Registered customers, borrowers and account activity</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Customer register</button></div>
+      </div>
+      <div class="grid g4 two" id="custTiles" style="margin-bottom:13px"></div>
+      <div class="grid g-2-1">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Customer Account Activity</div>
+              <div class="panel-sub">New registrations &amp; KYC completions · last 8 weeks</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><svg class="chart" id="custChart" viewBox="0 0 640 210"></svg></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Recently Registered Customers</div>
+              <div class="panel-sub">Latest KYC records</div>
+            </div>
+          </div>
+          <div class="list" id="newCust"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. STAFF ===== -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div class="sec-num">8</div>
+        <div>
+          <h2>Staff &amp; Officer Performance</h2>
+          <p>24 active staff · productivity and collection rankings for October</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Full report</button></div>
+      </div>
+      <div class="grid g4 two" id="staffTiles" style="margin-bottom:13px"></div>
+      <div class="grid g-2-1">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Officer Performance</div>
+              <div class="panel-sub">Loans processed, approved, disbursed and collected · October</div>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th>Officer</th><th>Branch</th><th class="num">Processed</th><th class="num">Approved</th>
+                <th class="num">Disbursed</th><th class="num">Collected</th><th>Rank</th>
+              </tr></thead>
+              <tbody id="staffTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Collection Performance Rankings</div>
+                <div class="panel-sub">Recovered vs monthly target</div>
+              </div>
+            </div>
+            <div style="margin-top:12px" id="staffRank"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Staff Activity Summary</div>
+                <div class="panel-sub">Today</div>
+              </div>
+            </div>
+            <div class="stmt" id="staffActivity"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 9. ACTIVITY ===== -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div>
+          <h2>Recent Activities &amp; Transactions</h2>
+          <p>Chronological activity feed across the platform</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Audit log</button></div>
+      </div>
+      <div class="card panel">
+        <div class="subtabs" id="activityTabs">
+          <button class="stab on" data-tab="apps">Applications</button>
+          <button class="stab" data-tab="appr">Approvals</button>
+          <button class="stab" data-tab="disb">Disbursements</button>
+          <button class="stab" data-tab="repy">Repayments</button>
+          <button class="stab" data-tab="reg">Registrations</button>
+          <button class="stab" data-tab="close">Loan Closures</button>
+          <button class="stab" data-tab="admin">Admin Actions</button>
+        </div>
+        <div class="tbl-wrap" style="margin-top:6px">
+          <table>
+            <thead><tr>
+              <th>Time</th><th>Reference</th><th>Details</th><th>Handled by</th><th class="num">Amount</th><th>Status</th>
+            </tr></thead>
+            <tbody id="activityBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 10. ALERTS ===== -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div>
+          <h2>Alerts &amp; Notifications</h2>
+          <p>Items requiring administrator attention</p>
+        </div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="markRead">Mark all as read</button>
+        </div>
+      </div>
+      <div class="grid g4 two" id="alertsGrid"></div>
+    </section>
+
+    <!-- ===== 11. CHARTS ===== -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div>
+          <h2>Charts &amp; Analytics</h2>
+          <p>Trends across disbursement, collections, income, arrears and customer growth</p>
+        </div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Download charts</button></div>
+      </div>
+
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Loan Disbursements Over Time</div>
+            <div class="panel-sub">Monthly value disbursed · MK millions</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch1" viewBox="0 0 640 230"></svg></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Repayments Collected Over Time</div>
+            <div class="panel-sub">Monthly collections · MK millions</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch2" viewBox="0 0 640 230"></svg></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Outstanding vs Repaid Loans</div>
+            <div class="panel-sub">Book composition · MK millions</div>
+          </div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:215px;margin-top:6px">
+            <div id="ch3"></div>
+            <div class="legend" id="ch3Legend" style="justify-content:center;gap:18px;margin:0"></div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Loan Portfolio by Status</div>
+            <div class="panel-sub">3,019 loans on book</div>
+          </div></div>
+          <div id="ch4" style="display:flex;justify-content:center;align-items:center;gap:18px;margin-top:6px;flex-wrap:wrap"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Applications Approved vs Rejected</div>
+            <div class="panel-sub">Monthly decision volumes</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch5" viewBox="0 0 640 220"></svg></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Monthly Income Trends</div>
+            <div class="panel-sub">Interest, fees &amp; penalties · MK millions</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch6" viewBox="0 0 640 220"></svg></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Arrears and Default Trends</div>
+            <div class="panel-sub">Overdue balance vs defaulted value · MK millions</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch7" viewBox="0 0 640 220"></svg></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Customer Growth Trends</div>
+            <div class="panel-sub">Cumulative registered customers</div>
+          </div></div>
+          <div class="chart-wrap"><svg class="chart" id="ch8" viewBox="0 0 640 220"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 12. QUICK ACTIONS ===== -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div>
+          <h2>Quick Actions</h2>
+          <p>Common administrative tasks</p>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="qa-grid" id="quickGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== 13. SYSTEM ===== -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div class="sec-num">13</div>
+        <div>
+          <h2>System Status &amp; Administration</h2>
+          <p>Platform health, connectivity, access and audit</p>
+        </div>
+        <div class="sec-tools"><span class="badge b-appr">All systems operational</span></div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">System Status</div>
+            <div class="panel-sub">Infrastructure &amp; connectivity</div>
+          </div></div>
+          <div id="sysStatus" style="margin-top:6px"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">User Roles and Permissions</div>
+            <div class="panel-sub">24 active staff accounts</div>
+          </div></div>
+          <div class="stmt" id="roles"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Active Staff Sessions</div>
+            <div class="panel-sub">9 sessions signed in</div>
+          </div></div>
+          <div class="list" id="sessions"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Recent Login Activity</div>
+            <div class="panel-sub">Authentication events</div>
+          </div></div>
+          <div class="list" id="logins"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">Recent Errors &amp; Failed Operations</div>
+            <div class="panel-sub">Last 24 hours</div>
+          </div>
+          <span class="badge b-pend">3 events</span>
+          </div>
+          <div class="list" id="errors"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div>
+            <div class="panel-title">System Notifications</div>
+            <div class="panel-sub">Broadcast to staff</div>
+          </div></div>
+          <div class="list" id="sysNotices"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= PLACEHOLDER FOR NEXT MODULES ================= -->
+  <main class="content hide" id="page-generic">
+    <div class="card placeholder">
+      <h3 id="ph-title">Module</h3>
+      <p id="ph-text"></p>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ==========================================================
+   GOLDEN FINANCIAL SERVICES — Admin Portal · Dashboard
+   Sample data only. Replace the DATA blocks with API responses.
+   ========================================================== */
+
+/* ---------------- helpers ---------------- */
+const nf = n => n.toLocaleString('en-US');
+const km = n => n>=1e9 ? 'MK '+(n/1e9).toFixed(2)+'B'
+              : n>=1e6 ? 'MK '+(n/1e6).toFixed(1)+'M'
+              : n>=1e3 ? 'MK '+Math.round(n/1e3)+'K'
+              : 'MK '+Math.round(n);
+const numM = n => 'MK '+n.toFixed(2)+'M';
+const initials = s => s.split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const el = id => document.getElementById(id);
+
+function spark(data, color){
+  const W=220,H=32,p=2, min=Math.min(...data), max=Math.max(...data), r=(max-min)||1;
+  const pts = data.map((v,i)=>[p+i*(W-p*2)/(data.length-1), H-p-((v-min)/r)*(H-p*2)]);
+  const line = pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  const gid = 'sp'+Math.random().toString(36).slice(2,7);
+  const last = pts[pts.length-1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity=".26"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${line} L${last[0].toFixed(1)} ${H} L${pts[0][0].toFixed(1)} ${H} Z" fill="url(#${gid})"/>
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.4" fill="${color}"/>
+  </svg>`;
+}
+
+function niceMax(v){
+  if(v<=0) return 10;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  const steps = [1,1.2,1.5,2,2.5,3,4,5,6,8,10];
+  for(const s of steps) if(v <= s*p) return s*p;
+  return 10*p;
+}
+
+/* generic chart: type 'bar' | 'line' */
+function mkChart(host, o){
+  if(!host) return;
+  const type = o.type || 'line';
+  const labels = o.labels || [];
+  const series = o.series || [];
+  const W = 640, H = o.height || 230, L = o.padL || 38, R = 12, T = 12, B = 26;
+  const iw = W-L-R, ih = H-T-B;
+  const dataMax = Math.max(0, ...series.flatMap(s=>s.data));
+  const yMax = o.yMax || niceMax(dataMax);
+  const step = iw / Math.max(labels.length,1);
+  let g = '';
+
+  for(let i=0;i<=4;i++){
+    const v = yMax/4*i;
+    const y = T + ih - (v/yMax)*ih;
+    g += `<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
+    const yTxt = o.yFmt ? o.yFmt(v) : (Number.isInteger(v) ? v : v.toFixed(1));
+    g += `<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${yTxt}</text>`;
+  }
+  labels.forEach((lb,i)=>{
+    if(labels.length>12 && i%2) return;
+    g += `<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+  });
+
+  if(type==='bar'){
+    const n = series.length;
+    const groupW = step*0.60;
+    const bw = Math.max(3, groupW/n - (n>1?2:0));
+    labels.forEach((lb,i)=>{
+      const gx = L + step*i + (step-groupW)/2;
+      series.forEach((s,j)=>{
+        const v = s.data[i] || 0;
+        const h = (v/yMax)*ih;
+        if(h < 0.6) return;
+        const x = gx + j*(bw+2), y = T+ih-h, r = Math.min(3, bw/2, h/2);
+        g += `<path d="M${x.toFixed(1)} ${(y+r).toFixed(1)} q0 ${-r} ${r} ${-r} h${(bw-2*r).toFixed(1)} q${r} 0 ${r} ${r} v${(h-r).toFixed(1)} h${-bw.toFixed(1)} Z" fill="${s.color}"><title>${lb} · ${s.name}: ${v}</title></path>`;
+      });
+    });
+  } else {
+    series.forEach(s=>{
+      const pts = s.data.map((v,i)=>[L+step*i+step/2, T+ih-(v/yMax)*ih]);
+      const d = pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+      if(s.fill !== false){
+        const gid = 'gr'+Math.random().toString(36).slice(2,8);
+        g += `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${s.color}" stop-opacity=".20"/>
+          <stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient></defs>`
+          + `<path d="${d} L${pts[pts.length-1][0].toFixed(1)} ${T+ih} L${pts[0][0].toFixed(1)} ${T+ih} Z" fill="url(#${gid})"/>`;
+      }
+      g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round" ${s.dashed?'stroke-dasharray="5 4"':''}/>`;
+      pts.forEach((q,i)=>{
+        g += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.4" fill="#fff" stroke="${s.color}" stroke-width="1.8"><title>${labels[i]} · ${s.name}: ${s.data[i]}</title></circle>`;
+      });
+    });
+  }
+  host.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  host.innerHTML = g;
+}
+
+/* generic donut */
+function mkDonut(host, data, opt={}){
+  if(!host) return;
+  const total = data.reduce((s,d)=>s+d.value,0) || 1;
+  const size = opt.size || 150, c = size/2, r = size*0.335, sw = opt.ring || 15;
+  const C = 2*Math.PI*r, GAP = 2.5;
+  let off = 0, arcs = '';
+  data.forEach(d=>{
+    const len = (d.value/total)*C;
+    const dash = Math.max(len-GAP, 0.6);
+    arcs += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${(C-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${c} ${c})"><title>${d.label}: ${nf(d.value)}</title></circle>`;
+    off += len;
+  });
+  host.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
+    <text x="${c}" y="${c-1}" text-anchor="middle" font-size="${(size*0.125).toFixed(1)}" font-weight="800" fill="#0F1115" font-family="inherit">${opt.center || nf(total)}</text>
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.058).toFixed(1)}" font-weight="700" fill="#8A90A0" letter-spacing=".8" font-family="inherit">${opt.caption || 'TOTAL'}</text>
+  </svg>`;
+}
+
+/* ==========================================================
+   1 · KPI CARDS
+   ========================================================== */
+const kpis = [
+  {label:'Total Customers', value:'4,286', tone:'b', icon:'users',
+   foot:'<span class="trend up">▲ 126</span> new this month',
+   data:[2860,3010,3160,3320,3480,3610,3770,3920,4102,4286], color:'#2F6FED'},
+  {label:'Total Active Loans', value:'1,284', tone:'', icon:'card',
+   foot:'<span class="trend up">▲ 3.1%</span> vs last month',
+   data:[980,1010,1040,1025,1090,1120,1150,1180,1205,1284], color:'#C9A227'},
+  {label:'Total Loan Applications', value:'3,946', tone:'p', icon:'doc',
+   foot:'<span class="trend up">▲ 68</span> received this month',
+   data:[2100,2310,2520,2740,2960,3180,3410,3620,3830,3946], color:'#7C5CF0'},
+  {label:'Total Loans Disbursed', value:'MK 482.6<small>M</small>', tone:'', icon:'down',
+   foot:'2,915 loans disbursed to date',
+   data:[28,31,30,35,37,34,40,38,44,49], color:'#C9A227'},
+  {label:'Total Outstanding Loan Balance', value:'MK 316.9<small>M</small>', tone:'b', icon:'wallet',
+   foot:'Principal + interest receivable',
+   data:[290,298,305,300,312,308,315,311,318,317], color:'#2F6FED'},
+  {label:'Total Repayments Collected', value:'MK 1.18<small>B</small>', tone:'g', icon:'check',
+   foot:'174,382 receipts posted',
+   data:[30,36,35,42,48,43,53,57,54,59], color:'#1E9E6A'},
+  {label:'Total Overdue Amount', value:'MK 26.4<small>M</small>', tone:'r', icon:'alert',
+   foot:'<span class="trend down">▲ 0.8 pts</span> · 142 loans in arrears',
+   data:[18.2,19.4,20.1,21.6,22.4,23.1,24.0,25.2,25.8,26.4], color:'#D93F3F'},
+  {label:'Total Interest Income', value:'MK 168.2<small>M</small>', tone:'g', icon:'chart',
+   foot:'<span class="trend up">▲ 9.7%</span> vs last year',
+   data:[96,104,112,119,127,135,143,151,160,168], color:'#1E9E6A'}
+];
+const icons = {
+  users:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.4a3.2 3.2 0 0 1 0 6.2M18.6 20a6.2 6.2 0 0 0-3-5.2"/></svg>',
+  card:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.4"/></svg>',
+  doc:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/></svg>',
+  down:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M7 11l5 5 5-5M4 20h16"/></svg>',
+  wallet:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2"/><rect x="3" y="8" width="18" height="11" rx="2.5"/><circle cx="17" cy="13.5" r="1.2"/></svg>',
+  check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 13 5 5L21 5"/></svg>',
+  alert:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17.5h.01"/></svg>',
+  chart:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>'
+};
+el('kpiGrid').innerHTML = kpis.map(k=>`
+  <div class="card stat">
+    <div class="stat-top">
+      <div class="stat-label">${k.label}</div>
+      <div class="stat-ic ${k.tone}">${icons[k.icon]}</div>
+    </div>
+    <div class="stat-val">${k.value}</div>
+    <div class="stat-foot">${k.foot}</div>
+    ${spark(k.data, k.color)}
+  </div>`).join('');
+
+/* ==========================================================
+   2 · FINANCIAL OVERVIEW
+   ========================================================== */
+const finTiles = [
+  {label:'Total Capital Available', value:'MK 120.0<small>M</small>', tone:'g', icon:'wallet', foot:'Liquidity headroom for new lending'},
+  {label:'Total Capital Disbursed', value:'MK 482.6<small>M</small>', tone:'', icon:'down', foot:'Cumulative · 2,915 loans'},
+  {label:'Total Principal Outstanding', value:'MK 274.5<small>M</small>', tone:'b', icon:'card', foot:'86.6% of loan book'},
+  {label:'Total Interest Collected', value:'MK 168.2<small>M</small>', tone:'g', icon:'chart', foot:'Blended yield 3.9% / month'},
+  {label:'Total Fees &amp; Penalties Collected', value:'MK 12.9<small>M</small>', tone:'a', icon:'doc', foot:'Processing, insurance &amp; late fees'},
+  {label:'Total Operating Expenses', value:'MK 58.4<small>M</small>', tone:'r', icon:'down', foot:'Salaries, rent, systems, logistics'},
+  {label:'Net Profit (YTD)', value:'MK 113.1<small>M</small>', tone:'g', icon:'check', foot:'<span class="trend up">▲ 14.2%</span> vs prior period'},
+  {label:'Cash Position', value:'MK 64.2<small>M</small>', tone:'b', icon:'wallet', foot:'Bank, mobile money &amp; cash in hand'}
+];
+el('finTiles').innerHTML = finTiles.map(t=>`
+  <div class="card stat">
+    <div class="stat-top">
+      <div class="stat-label">${t.label}</div>
+      <div class="stat-ic ${t.tone}">${icons[t.icon]}</div>
+    </div>
+    <div class="stat-val">${t.value}</div>
+    <div class="stat-foot">${t.foot}</div>
+  </div>`).join('');
+
+/* net profit statement */
+const pnl = [
+  ['Interest income','168,200,000','pos'],
+  ['Fees &amp; penalties collected','12,900,000','pos'],
+  ['Total revenue','181,100,000','',true],
+  ['Operating expenses','(58,400,000)','neg'],
+  ['Loan impairment provision','(9,600,000)','neg'],
+  ['Net profit','113,100,000','pos',true]
+];
+el('pnl').innerHTML = pnl.map(([k,v,cls,total])=>`
+  <div class="stmt-row ${total?'total':''} ${cls}">
+    <span class="k">${total?'<span class="kdot" style="background:var(--gold)"></span>':''}${k}</span>
+    <span class="v">MK ${v}</span>
+  </div>`).join('') + `
+  <div class="stmt-row"><span class="k tiny muted">Net profit margin</span><span class="v">62.4%</span></div>`;
+
+/* cash position */
+const cash = [
+  ['NBM — Operations account','28,450,000','#2F6FED'],
+  ['Standard Bank — Collections','14,220,000','#1E9E6A'],
+  ['Airtel Money wallet','6,980,000','#D93F3F'],
+  ['TNM Mpamba wallet','5,620,000','#E08C1E'],
+  ['Cash in hand (branches)','3,410,000','#7C5CF0'],
+  ['Stanbic — Disb. float','5,520,000','#0F9BA8']
+];
+el('cashPos').innerHTML = cash.map(([k,v,c])=>`
+  <div class="stmt-row"><span class="k"><i class="kdot" style="background:${c}"></i>${k}</span>
+    <span class="v">MK ${nf(v)}</span></div>`).join('') +
+  `<div class="stmt-row total"><span class="k">Total cash position</span><span class="v">MK 64,200,000</span></div>`;
+
+/* capital deployment donut */
+const capData = [
+  {label:'Disbursed / on book', value:482.6, color:'#C9A227'},
+  {label:'Available capital',   value:120.0, color:'#2F6FED'}
+];
+mkDonut(el('capDonut'), capData, {size:158, center:'MK 602.6M', caption:'TOTAL CAPITAL'});
+el('capLegend').innerHTML = capData.map(d=>`
+  <div class="stmt-row"><span class="k"><i class="kdot" style="background:${d.color}"></i>${d.label}</span>
+    <span class="v">${d.value.toFixed(1)}M · ${(d.value/602.6*100).toFixed(1)}%</span></div>`).join('');
+
+/* ==========================================================
+   3 · LOAN PORTFOLIO
+   ========================================================== */
+const portfolio = [
+  {label:'Active Loans', value:'1,284', sub:'Loans currently in repayment', color:'#2F6FED', soft:'var(--blue-soft)', tag:'81.5%'},
+  {label:'Pending Loans', value:'42', sub:'Awaiting first review', color:'#E08C1E', soft:'var(--amber-soft)', tag:'new'},
+  {label:'Approved · Awaiting Payout', value:'27', sub:'Ready for payout', color:'#1E9E6A', soft:'var(--green-soft)', tag:'action'},
+  {label:'Fully Repaid', value:'1,486', sub:'Closed in good standing', color:'#1E9E6A', soft:'var(--green-soft)', tag:'48.9%'},
+  {label:'Overdue Loans', value:'142', sub:'Past due instalments', color:'#D93F3F', soft:'var(--red-soft)', tag:'4.7%'},
+  {label:'Defaulted Loans', value:'38', sub:'Written-off candidates', color:'#B32C2C', soft:'var(--red-soft)', tag:'1.3%'},
+  {label:'Loans Due Today', value:'96', sub:'MK 5.10M expected', color:'#E08C1E', soft:'var(--amber-soft)', tag:'today'},
+  {label:'Maturing (30 days)', value:'74', sub:'Within the next 30 days', color:'#7C5CF0', soft:'var(--purple-soft)', tag:'30 days'}
+];
+el('portfolioTiles').innerHTML = portfolio.map(p=>`
+  <div class="card mini">
+    <div class="m-ic" style="background:${p.soft};color:${p.color}">${icons.card}</div>
+    <div>
+      <div class="m-v">${p.value}</div>
+      <div class="m-l">${p.label}</div>
+    </div>
+    <div class="m-r" style="background:${p.soft};color:${p.color}">${p.tag}</div>
+  </div>`).join('');
+
+function mkHBars(host, rows){
+  if(!host) return;
+  const max = Math.max(...rows.map(r=>r.value));
+  host.innerHTML = rows.map(r=>`
+    <div class="hbar-row">
+      <div class="hbar-l">${r.label}</div>
+      <div class="hbar-t"><i style="width:${Math.max(2,(r.value/max)*100)}%;background:${r.color}"></i></div>
+      <div class="hbar-v">${nf(r.value)}</div>
+    </div>`).join('');
+}
+mkHBars(el('portfolioBars'), [
+  {label:'Active', value:1284, color:'#2F6FED'},
+  {label:'Pending', value:42, color:'#E08C1E'},
+  {label:'Approved', value:27, color:'#1E9E6A'},
+  {label:'Fully repaid', value:1486, color:'#159C6E'},
+  {label:'Overdue', value:142, color:'#D93F3F'},
+  {label:'Defaulted', value:38, color:'#B32C2C'},
+  {label:'Due today', value:96, color:'#E08C1E'},
+  {label:'Maturing (30d)', value:74, color:'#7C5CF0'}
+]);
+
+el('upcoming').innerHTML = [
+  ['Due today', '96 loans', '5,100,000'],
+  ['Next 7 days', '214 loans', '11,840,000'],
+  ['8 – 30 days', '402 loans', '19,620,000'],
+  ['31 – 60 days', '366 loans', '17,240,000']
+].map(([k,l,v])=>`
+  <div class="stmt-row"><span class="k">${k} <span class="tiny muted">· ${l}</span></span>
+    <span class="v">MK ${nf(v)}</span></div>`).join('') +
+  `<div class="stmt-row total"><span class="k">Total expected (60 days)</span><span class="v">MK 53,800,000</span></div>`;
+
+/* ==========================================================
+   4 · APPLICATIONS
+   ========================================================== */
+const appTiles = [
+  {label:'This Month', value:'313', color:'#2F6FED', soft:'var(--blue-soft)', tag:'+22%'},
+  {label:'New Applications', value:'68', color:'#1E9E6A', soft:'var(--green-soft)', tag:'7 days'},
+  {label:'Pending Review', value:'18', color:'#E08C1E', soft:'var(--amber-soft)', tag:'queue'},
+  {label:'Under Assessment', value:'24', color:'#7C5CF0', soft:'var(--purple-soft)', tag:'appraisal'},
+  {label:'Approved', value:'156', color:'#1E9E6A', soft:'var(--green-soft)', tag:'49.8%'},
+  {label:'Rejected', value:'37', color:'#D93F3F', soft:'var(--red-soft)', tag:'11.8%'},
+  {label:'Docs Missing', value:'11', color:'#E08C1E', soft:'var(--amber-soft)', tag:'hold'},
+  {label:'Awaiting Payout', value:'27', color:'#2F6FED', soft:'var(--blue-soft)', tag:'ready'}
+];
+el('appTiles').innerHTML = appTiles.map(p=>`
+  <div class="card mini">
+    <div class="m-ic" style="background:${p.soft};color:${p.color}">${icons.doc}</div>
+    <div><div class="m-v">${p.value}</div><div class="m-l">${p.label}</div></div>
+    <div class="m-r" style="background:${p.soft};color:${p.color}">${p.tag}</div>
+  </div>`).join('');
+
+mkChart(el('appPipeline'), {
+  type:'bar', height:220,
+  labels:['Received','Review','Assessment','Approved','Rejected','Awaiting docs','Disbursed'],
+  series:[{name:'Applications', color:'#7C5CF0', data:[313,18,24,156,37,11,92]}]
+});
+
+el('appActivity').innerHTML = [
+  {t:'LN-2026-1842 submitted · MK 2,500,000', s:'Thokozani Banda · 09:38 · Branch: Lilongwe', c:'#2F6FED', i:'+'},
+  {t:'LN-2026-1839 approved by committee', s:'Grace Mvula · 09:12 · 3 of 3 votes', c:'#1E9E6A', i:'✓'},
+  {t:'LN-2026-1840 moved to assessment', s:'Yamikani Gondwe · 08:54 · Officer: T. Phiri', c:'#7C5CF0', i:'→'},
+  {t:'LN-2026-1834 rejected — affordability', s:'Daniel Kaunda · 08:31 · DTI above 45%', c:'#D93F3F', i:'✕'},
+  {t:'LN-2026-1837 documents requested', s:'Esther Kamanga · 08:05 · Payslip missing', c:'#E08C1E', i:'!'}
+].map(a=>`
+  <div class="li">
+    <div class="av" style="background:${a.c}1A;color:${a.c};font-size:12px">${a.i}</div>
+    <div><div class="t1">${a.t}</div><div class="t2">${a.s}</div></div>
+  </div>`).join('');
+
+/* ==========================================================
+   5 · REPAYMENTS
+   ========================================================== */
+const repayTiles = [
+  {label:"Today's Collections", value:'MK 4.28<small>M</small>', color:'#1E9E6A', soft:'var(--green-soft)', tag:'138 pymts'},
+  {label:"This Week's Collections", value:'MK 26.9<small>M</small>', color:'#1E9E6A', soft:'var(--green-soft)', tag:'+6.4%'},
+  {label:"This Month's Collections", value:'MK 108.4<small>M</small>', color:'#2F6FED', soft:'var(--blue-soft)', tag:'91% target'},
+  {label:'Expected Today', value:'MK 5.10<small>M</small>', color:'#E08C1E', soft:'var(--amber-soft)', tag:'96 loans'},
+  {label:'Received vs Expected', value:'84<small>%</small>', color:'#E08C1E', soft:'var(--amber-soft)', tag:'MK 0.82M gap'},
+  {label:'Missed Repayments', value:'63', color:'#D93F3F', soft:'var(--red-soft)', tag:'today'},
+  {label:'Partial Payments', value:'29', color:'#7C5CF0', soft:'var(--purple-soft)', tag:'shortfall'},
+  {label:'Avg Daily Collection', value:'MK 3.90<small>M</small>', color:'#2F6FED', soft:'var(--blue-soft)', tag:'30-day'}
+];
+el('repayTiles').innerHTML = repayTiles.map(p=>`
+  <div class="card mini">
+    <div class="m-ic" style="background:${p.soft};color:${p.color}">${icons.check}</div>
+    <div><div class="m-v">${p.value}</div><div class="m-l">${p.label}</div></div>
+    <div class="m-r" style="background:${p.soft};color:${p.color}">${p.tag}</div>
+  </div>`).join('');
+
+mkChart(el('repayChart'), {
+  type:'bar', height:230,
+  labels:['17','18','21','22','23','24','25','28','29','30'],
+  series:[
+    {name:'Expected', color:'#D7DAE2', data:[5.2,4.8,5.5,5.1,4.9,5.6,5.3,5.0,5.4,5.1]},
+    {name:'Received', color:'#C9A227', data:[4.6,4.9,5.2,4.7,5.0,5.4,5.1,4.8,5.3,4.28]}
+  ]
+});
+
+el('payTxns').innerHTML = [
+  {n:'Alfred Jimu', c:'Airtel Money', a:'185,000'},
+  {n:'Rose Chikopa', c:'Bank transfer', a:'320,000'},
+  {n:'Kondwani Msiska', c:'Cash — Lilongwe', a:'96,000'},
+  {n:'Fatima Salimu', c:'TNM Mpamba', a:'415,000'},
+  {n:'Blessings Tembo', c:'Airtel Money', a:'240,000'},
+  {n:'Chimwemwe Zulu', c:'Bank transfer', a:'512,000'}
+].map(p=>`<tr>
+  <td><div class="who"><div class="av">${initials(p.n)}</div><div class="nm">${p.n}</div></div></td>
+  <td class="muted">${p.c}</td>
+  <td class="num">MK ${p.a}</td></tr>`).join('');
+
+/* ==========================================================
+   6 · ARREARS
+   ========================================================== */
+const arrearsTiles = [
+  {label:'Total Overdue Loans', value:'142', color:'#D93F3F', soft:'var(--red-soft)', tag:'9.2% of book'},
+  {label:'Total Arrears Outstanding', value:'MK 26.4<small>M</small>', color:'#D93F3F', soft:'var(--red-soft)', tag:'8.3% of O/S'},
+  {label:'Customers Requiring Follow-up', value:'58', color:'#E08C1E', soft:'var(--amber-soft)', tag:'assigned'},
+  {label:'Portfolio at Risk (30+)', value:'6.7<small>%</small>', color:'#B32C2C', soft:'var(--red-soft)', tag:'threshold 5%'}
+];
+el('arrearsTiles').innerHTML = arrearsTiles.map(p=>`
+  <div class="card stat">
+    <div class="stat-top">
+      <div class="stat-label">${p.label}</div>
+      <div class="stat-ic" style="background:${p.soft};color:${p.color}">${icons.alert}</div>
+    </div>
+    <div class="stat-val">${p.value}</div>
+    <div class="stat-foot"><span class="badge" style="background:${p.soft};color:${p.color}">${p.tag}</span></div>
+  </div>`).join('');
+
+const buckets = [
+  ['1 – 30 days overdue', 76, '11.8', 44.7, '#E08C1E'],
+  ['31 – 60 days overdue', 34, '6.9', 26.1, '#E47A2E'],
+  ['61 – 90 days overdue', 19, '4.2', 15.9, '#D93F3F'],
+  ['Over 90 days overdue', 13, '3.5', 13.3, '#B32C2C']
+];
+el('ageing').innerHTML = buckets.map(([k,n,amt,pct,c])=>`
+  <div class="prog-row">
+    <div class="prog-top">
+      <b>${k} <span class="tiny muted">· ${n} loans</span></b>
+      <span>MK ${amt}M · ${pct}%</span>
+    </div>
+    <div class="bar" style="height:8px"><i style="width:${pct}%;background:${c}"></i></div>
+  </div>`).join('') + `
+  <div class="stmt-row total" style="margin-top:6px">
+    <span class="k">Total arrears</span><span class="v">142 loans · MK 26.4M</span></div>`;
+
+el('recovery').innerHTML = `
+  <div class="prog-row">
+    <div class="prog-top"><b>Overall recovery — October</b><span>MK 8.4M / 9.0M · 93%</span></div>
+    <div class="bar green" style="height:9px"><i style="width:93%"></i></div>
+  </div>` + [
+  ['Thoko Phiri','8.4','9.0',93,'#C9A227'],
+  ['Linda Chirwa','7.1','8.0',89,'#2F6FED'],
+  ['Samuel Zimba','6.3','7.5',84,'#7C5CF0'],
+  ['Agnes Mbewe','5.9','7.0',84,'#1E9E6A']
+].map(([n,r,t,p,c])=>`
+  <div class="prog-row">
+    <div class="prog-top"><b>${n}</b><span>MK ${r}M / ${t}M · ${p}%</span></div>
+    <div class="bar"><i style="width:${p}%;background:${c}"></i></div>
+  </div>`).join('');
+
+el('followup').innerHTML = [
+  {n:'Blessings Tembo', d:'LN-2025-0688', v:'MK 480,000', s:'3 days overdue · no contact'},
+  {n:'Mercy Chatsika', d:'LN-2025-1109', v:'MK 312,000', s:'42 days overdue · promise to pay'},
+  {n:'Isaac Mponda', d:'LN-2024-0761', v:'MK 1,240,000', s:'95 days overdue · legal stage'},
+  {n:'Dorothy Nyirenda', d:'LN-2025-1204', v:'MK 268,000', s:'17 days overdue · field visit'}
+].map(f=>`
+  <div class="li"><div class="av">${initials(f.n)}</div>
+    <div><div class="t1">${f.n}</div><div class="t2">${f.d} · ${f.s}</div></div>
+    <div class="amt"><b>${f.v}</b><span class="down">Overdue</span></div></div>`).join('');
+
+/* ==========================================================
+   7 · CUSTOMERS
+   ========================================================== */
+const custTiles = [
+  {label:'Registered Customers', value:'4,286', color:'#2F6FED', soft:'var(--blue-soft)', tag:'all time'},
+  {label:'New Customers This Month', value:'126', color:'#1E9E6A', soft:'var(--green-soft)', tag:'+18%'},
+  {label:'Active Borrowers', value:'1,196', color:'#C9A227', soft:'var(--gold-soft)', tag:'68% repeat'},
+  {label:'With Active Loans', value:'1,102', color:'#2F6FED', soft:'var(--blue-soft)', tag:'1.16 avg'},
+  {label:'With Overdue Accounts', value:'118', color:'#D93F3F', soft:'var(--red-soft)', tag:'2.8%'},
+  {label:'KYC Verified', value:'4,132', color:'#1E9E6A', soft:'var(--green-soft)', tag:'96.4%'},
+  {label:'Pending KYC Docs', value:'154', color:'#E08C1E', soft:'var(--amber-soft)', tag:'review'},
+  {label:'Dormant Customers', value:'214', color:'#5A6172', soft:'#F1F2F6', tag:'6 months+'}
+];
+el('custTiles').innerHTML = custTiles.map(p=>`
+  <div class="card mini">
+    <div class="m-ic" style="background:${p.soft};color:${p.color}">${icons.users}</div>
+    <div><div class="m-v">${p.value}</div><div class="m-l">${p.label}</div></div>
+    <div class="m-r" style="background:${p.soft};color:${p.color}">${p.tag}</div>
+  </div>`).join('');
+
+mkChart(el('custChart'), {
+  type:'bar', height:210,
+  labels:['W36','W37','W38','W39','W40','W41','W42','W43'],
+  series:[{name:'New customers', color:'#2F6FED', data:[21,26,24,31,28,34,30,38]}]
+});
+
+el('newCust').innerHTML = [
+  {n:'Chikondi Banda', s:'Lilongwe · KYC complete · 09:41', v:'CUST-004286'},
+  {n:'Tadala Nkhoma', s:'Blantyre · pending ID · 09:18', v:'CUST-004285'},
+  {n:'Blessings Phiri', s:'Mzuzu · KYC complete · 08:52', v:'CUST-004284'},
+  {n:'Sarah Kaunda', s:'Zomba · KYC complete · 08:24', v:'CUST-004283'},
+  {n:'Joseph Mwale', s:'Lilongwe · pending payslip · 07:58', v:'CUST-004282'}
+].map(c=>`
+  <div class="li"><div class="av">${initials(c.n)}</div>
+    <div><div class="t1">${c.n}</div><div class="t2">${c.s}</div></div>
+    <div class="amt"><b class="tiny muted">${c.v}</b></div></div>`).join('');
+
+/* ==========================================================
+   8 · STAFF
+   ========================================================== */
+const staffTiles = [
+  {label:'Total Active Staff', value:'24', color:'#2F6FED', soft:'var(--blue-soft)', tag:'9 online'},
+  {label:'Loans Processed by Staff', value:'313', color:'#7C5CF0', soft:'var(--purple-soft)', tag:'October'},
+  {label:'Loans Approved by Staff', value:'156', color:'#1E9E6A', soft:'var(--green-soft)', tag:'49.8% rate'},
+  {label:'Repayments Collected by Officer', value:'MK 108.4<small>M</small>', color:'#C9A227', soft:'var(--gold-soft)', tag:'91% target'}
+];
+el('staffTiles').innerHTML = staffTiles.map(p=>`
+  <div class="card stat">
+    <div class="stat-top"><div class="stat-label">${p.label}</div>
+      <div class="stat-ic" style="background:${p.soft};color:${p.color}">${icons.users}</div></div>
+    <div class="stat-val">${p.value}</div>
+    <div class="stat-foot"><span class="badge" style="background:${p.soft};color:${p.color}">${p.tag}</span></div>
+  </div>`).join('');
+
+const staff = [
+  {n:'Thoko Phiri',  b:'Lilongwe', p:78, a:42, d:'18.4M', c:'8.4M', r:1},
+  {n:'Linda Chirwa', b:'Blantyre', p:71, a:38, d:'16.2M', c:'7.1M', r:2},
+  {n:'Samuel Zimba', b:'Mzuzu',    p:64, a:31, d:'14.8M', c:'6.3M', r:3},
+  {n:'Agnes Mbewe',  b:'Zomba',    p:58, a:27, d:'8.6M',  c:'5.9M', r:4},
+  {n:'Peter Kamoto', b:'Lilongwe', p:42, a:18, d:'5.4M',  c:'4.2M', r:5}
+];
+el('staffTable').innerHTML = staff.map(s=>`<tr>
+  <td><div class="who"><div class="av">${initials(s.n)}</div>
+    <div><div class="nm">${s.n}</div><div class="id">Loan Officer</div></div></div></td>
+  <td class="muted">${s.b}</td>
+  <td class="num">${s.p}</td>
+  <td class="num">${s.a}</td>
+  <td class="num">MK ${s.d}</td>
+  <td class="num">MK ${s.c}</td>
+  <td><span class="badge ${s.r===1?'b-appr':'b-gray'}">#${s.r}</span></td>
+</tr>`).join('');
+
+el('staffRank').innerHTML = staff.slice(0,4).map(s=>{
+  const pct = Math.min(100, Math.round(parseFloat(s.c)/9*100));
+  return `<div class="ag-row">
+    <div class="ag-top"><b>#${s.r} ${s.n}</b><span>MK ${s.c} collected</span></div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+  </div>`;
+}).join('');
+
+el('staffActivity').innerHTML = [
+  ['Applications reviewed today','34'],
+  ['Loans approved today','12'],
+  ['Disbursements authorised','7'],
+  ['Repayments posted','138'],
+  ['Customers registered','19'],
+  ['Staff currently logged in','9']
+].map(([k,v])=>`<div class="stmt-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+
+/* ==========================================================
+   9 · RECENT ACTIVITIES & TRANSACTIONS
+   ========================================================== */
+const activityData = {
+  apps: [
+    ['09:38','LN-2026-1842','Application submitted — Business Growth','Thokozani Banda','MK 2,500,000','Pending','b-pend'],
+    ['09:26','LN-2026-1843','Application submitted — Salary Advance','Memory Nkhoma','MK 450,000','Pending','b-pend'],
+    ['09:04','LN-2026-1840','Moved to assessment stage','Yamikani Gondwe','MK 1,200,000','Under review','b-rev'],
+    ['08:47','LN-2026-1841','Documents verified','Grace Mvula','MK 800,000','Assessed','b-act'],
+    ['08:15','LN-2026-1838','Application submitted — Asset Finance','Peter Kachale','MK 4,800,000','Pending','b-pend']
+  ],
+  appr: [
+    ['09:42','LN-2026-1842','Approved by credit committee (3/3)','T. Phiri','MK 2,500,000','Approved','b-appr'],
+    ['09:12','LN-2026-1839','Approved — group loan','A. Mbewe','MK 800,000','Approved','b-appr'],
+    ['08:58','LN-2026-1834','Rejected — debt-to-income above limit','L. Chirwa','MK 1,500,000','Rejected','b-rev'],
+    ['08:33','LN-2026-1831','Approved with conditions','S. Zimba','MK 3,200,000','Approved','b-appr']
+  ],
+  disb: [
+    ['09:35','LN-2026-1837','Disbursed to Airtel Money wallet','Cashier — Lilongwe','MK 150,000','Disbursed','b-act'],
+    ['09:02','LN-2026-1832','Disbursed by bank transfer','Cashier — Blantyre','MK 2,800,000','Disbursed','b-act'],
+    ['08:44','LN-2026-1829','Disbursed — cheque cleared','Cashier — Mzuzu','MK 1,150,000','Disbursed','b-act'],
+    ['08:10','LN-2026-1826','Disbursed to TNM Mpamba','Cashier — Zomba','MK 640,000','Disbursed','b-act']
+  ],
+  repy: [
+    ['09:44','RCP-99412','Installment received — Airtel Money','Alfred Jimu','MK 185,000','Posted','b-appr'],
+    ['09:31','RCP-99411','Installment received — bank transfer','Rose Chikopa','MK 320,000','Posted','b-appr'],
+    ['09:18','RCP-99410','Partial payment received','Kondwani Msiska','MK 96,000','Partial','b-pend'],
+    ['09:02','RCP-99409','Standing order collection','Fatima Salimu','MK 415,000','Posted','b-appr'],
+    ['08:46','RCP-99408','Payment failed — insufficient funds','Blessings Tembo','MK 240,000','Failed','b-rev']
+  ],
+  reg: [
+    ['09:41','CUST-004286','New customer registered — KYC complete','C. Banda','—','Verified','b-appr'],
+    ['09:18','CUST-004285','New customer registered — ID pending','T. Nkhoma','—','Pending','b-pend'],
+    ['08:52','CUST-004284','New customer registered — KYC complete','B. Phiri','—','Verified','b-appr'],
+    ['08:24','CUST-004283','New customer registered — KYC complete','S. Kaunda','—','Verified','b-appr']
+  ],
+  close: [
+    ['09:20','LN-2025-0541','Fully repaid — account closed','Alfred Jimu','MK 1,240,000','Closed','b-cls'],
+    ['08:39','LN-2025-0322','Fully repaid — account closed','Rose Chikopa','MK 860,000','Closed','b-cls'],
+    ['08:06','LN-2024-1105','Written off after 120 days','Isaac Mponda','MK 1,240,000','Written off','b-rev']
+  ],
+  admin: [
+    ['09:45','SYS-2210','Daily reconciliation completed','System','—','Success','b-appr'],
+    ['09:12','ADM-0771','Interest rate updated — Business Growth to 4.2%','C. Mwale','—','Applied','b-act'],
+    ['08:40','ADM-0770','New loan officer account created','C. Mwale','—','Created','b-appr'],
+    ['08:05','ADM-0769','Collection target adjusted for October','C. Mwale','—','Applied','b-act']
+  ]
+};
+function renderActivity(key){
+  el('activityBody').innerHTML = activityData[key].map(([t,ref,det,by,amt,st,cls])=>`
+    <tr>
+      <td class="muted tiny">${t}</td>
+      <td class="tiny" style="font-weight:600">${ref}</td>
+      <td>${det}</td>
+      <td class="muted">${by}</td>
+      <td class="num">${amt}</td>
+      <td><span class="badge ${cls}">${st}</span></td>
+    </tr>`).join('');
+}
+renderActivity('apps');
+document.querySelectorAll('#activityTabs .stab').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#activityTabs .stab').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    renderActivity(b.dataset.tab);
+  });
+});
+
+/* ==========================================================
+   10 · ALERTS
+   ========================================================== */
+const alerts = [
+  {v:'18', l:'Loans Requiring Approval', s:'Credit committee queue · oldest 3 days', sev:'hi', tone:'#B32C2C', soft:'var(--red-soft)'},
+  {v:'96', l:'Repayments Due Today', s:'MK 5.10M expected · 84% received so far', sev:'lo', tone:'#2456C4', soft:'var(--blue-soft)'},
+  {v:'142', l:'Overdue Payment Alerts', s:'MK 26.4M in arrears · 13 over 90 days', sev:'hi', tone:'#B32C2C', soft:'var(--red-soft)'},
+  {v:'27', l:'Pending Disbursements', s:'Approved loans awaiting payout', sev:'md', tone:'#9A6A0D', soft:'var(--amber-soft)'},
+  {v:'6', l:'Failed Payment Alerts', s:'Insufficient funds / reversed transactions', sev:'hi', tone:'#B32C2C', soft:'var(--red-soft)'},
+  {v:'14', l:'Unreconciled Transactions', s:'Bank & mobile money feeds awaiting match', sev:'md', tone:'#9A6A0D', soft:'var(--amber-soft)'},
+  {v:'11', l:'Missing Customer Documents', s:'ID, payslip or proof of address outstanding', sev:'md', tone:'#9A6A0D', soft:'var(--amber-soft)'},
+  {v:'2', l:'System and Security Alerts', s:'3 failed logins · password reset required', sev:'hi', tone:'#B32C2C', soft:'var(--red-soft)'}
+];
+el('alertsGrid').innerHTML = alerts.map(a=>`
+  <div class="card alert ${a.sev}">
+    <div class="a-ic">${icons.alert}</div>
+    <div style="flex:1">
+      <div class="a-v" style="color:${a.tone}">${a.v}</div>
+      <div class="a-l">${a.l}</div>
+      <div class="a-s">${a.s}</div>
+      <div class="a-lnk">Open queue →</div>
+    </div>
+  </div>`).join('');
+
+el('markRead').addEventListener('click', e=>{
+  e.currentTarget.textContent = 'All caught up ✓';
+  e.currentTarget.disabled = true;
+  document.querySelectorAll('#alertsGrid .alert').forEach(a=>a.style.opacity = '.55');
+});
+
+/* ==========================================================
+   11 · CHARTS
+   ========================================================== */
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+
+mkChart(el('ch1'), {type:'bar', height:230, labels:MONTHS,
+  series:[{name:'Disbursed', color:'#C9A227', data:[34,41,38,47,52,44,58,61,55,63]}]});
+
+mkChart(el('ch2'), {type:'line', height:230, labels:MONTHS,
+  series:[{name:'Collected', color:'#1E9E6A', data:[30,36,35,42,48,43,53,57,54,59]}]});
+
+mkDonut(el('ch3'), [
+  {label:'Repaid to date', value:1180, color:'#1E9E6A'},
+  {label:'Outstanding balance', value:316.9, color:'#C9A227'}
+], {size:165, center:'MK 1.50B', caption:'BOOK VALUE'});
+el('ch3Legend').innerHTML = `
+  <div class="lg"><i style="background:#1E9E6A"></i> Repaid · MK 1.18B (78.8%)</div>
+  <div class="lg"><i style="background:#C9A227"></i> Outstanding · MK 316.9M (21.2%)</div>`;
+
+const statusData = [
+  {label:'Active', value:1284, color:'#2F6FED'},
+  {label:'Fully repaid', value:1486, color:'#1E9E6A'},
+  {label:'Overdue', value:142, color:'#D93F3F'},
+  {label:'Defaulted', value:38, color:'#B32C2C'},
+  {label:'Pending / approved', value:69, color:'#E08C1E'}
+];
+el('ch4').innerHTML = '<div id="ch4Donut"></div><div class="donut-legend" style="min-width:190px" id="ch4Legend"></div>';
+mkDonut(el('ch4Donut'), statusData, {size:165, center:'3,019', caption:'LOANS ON BOOK'});
+el('ch4Legend').innerHTML = statusData.map(d=>`
+  <div class="stmt-row" style="padding:6px 0">
+    <span class="k"><i class="kdot" style="background:${d.color}"></i>${d.label}</span>
+    <span class="v">${nf(d.value)} · ${(d.value/3019*100).toFixed(1)}%</span>
+  </div>`).join('');
+
+mkChart(el('ch5'), {type:'bar', height:220, labels:MONTHS,
+  series:[
+    {name:'Approved', color:'#1E9E6A', data:[120,132,141,150,138,146,160,152,148,156]},
+    {name:'Rejected', color:'#D93F3F', data:[28,31,26,35,30,33,29,34,36,37]}
+  ]});
+
+mkChart(el('ch6'), {type:'line', height:220, labels:MONTHS,
+  series:[
+    {name:'Interest income', color:'#C9A227', data:[12.1,13.4,14.2,15.0,15.6,16.1,17.0,17.8,18.4,19.2]},
+    {name:'Fees & penalties', color:'#2F6FED', data:[0.9,1.0,1.1,1.2,1.1,1.3,1.2,1.4,1.3,1.4]}
+  ]});
+
+mkChart(el('ch7'), {type:'line', height:220, labels:MONTHS,
+  series:[
+    {name:'Overdue balance', color:'#D93F3F', data:[18.2,19.4,20.1,21.6,22.4,23.1,24.0,25.2,25.8,26.4]},
+    {name:'Defaulted value', color:'#7C5CF0', data:[2.1,2.4,2.2,2.8,3.0,3.1,3.3,3.4,3.6,3.7]}
+  ]});
+
+mkChart(el('ch8'), {type:'line', height:220, labels:['W36','W37','W38','W39','W40','W41','W42','W43'],
+  series:[{name:'Customers', color:'#2F6FED', data:[4102,4134,4168,4190,4218,4244,4262,4286]}]});
+
+/* ==========================================================
+   12 · QUICK ACTIONS
+   ========================================================== */
+const qa = [
+  {t:'Register New Customer', s:'Create a KYC profile and customer account', i:'users'},
+  {t:'Create Loan Application', s:'Capture a new credit request', i:'doc'},
+  {t:'Review Loan Applications', s:'18 applications in the queue', i:'alert'},
+  {t:'Approve or Reject Applications', s:'Credit committee decisions', i:'check'},
+  {t:'Disburse Approved Loan', s:'27 loans ready for payout', i:'down'},
+  {t:'Record Repayment', s:'Post cash, bank or mobile money receipt', i:'card'},
+  {t:'View Customer Accounts', s:'Statements, balances and history', i:'wallet'},
+  {t:'Generate Reports', s:'Portfolio, ageing and performance reports', i:'chart'}
+];
+el('quickGrid').innerHTML = qa.map(q=>`
+  <button class="qa">
+    <div class="qi">${icons[q.i]}</div>
+    <div class="qt">${q.t}</div>
+    <div class="qs">${q.s}</div>
+  </button>`).join('');
+
+/* ==========================================================
+   13 · SYSTEM
+   ========================================================== */
+el('sysStatus').innerHTML = [
+  ['Database connection','Connected',true],
+  ['Supabase connectivity','Connected',true],
+  ['API gateway','Operational',true],
+  ['Last successful data synchronization','Today · 09:42 CAT',null],
+  ['Average API latency','138 ms',null],
+  ['Storage usage','62% of 50 GB',null],
+  ['Last backup','29 Oct 2026 · 02:00',null]
+].map(([k,v,ok])=>`
+  <div class="sysrow"><span class="k">${k}</span>
+    <span class="v">${ok===true?'<i class="live"></i>':''}${ok===false?'<i class="dead"></i>':''}${v}</span></div>`).join('');
+
+el('roles').innerHTML = [
+  ['Administrator', 2], ['Credit Committee', 4], ['Loan Officer', 12],
+  ['Collections Officer', 4], ['Cashier', 2]
+].map(([k,v])=>`<div class="stmt-row"><span class="k">${k}</span><span class="v">${v} users</span></div>`).join('') +
+  `<div class="stmt-row total"><span class="k">Total active accounts</span><span class="v">24</span></div>`;
+
+el('sessions').innerHTML = [
+  {n:'Chikondi Mwale', r:'Administrator · Lilongwe', t:'Active now'},
+  {n:'Thoko Phiri', r:'Loan Officer · Lilongwe', t:'Active 2 min ago'},
+  {n:'Linda Chirwa', r:'Loan Officer · Blantyre', t:'Active 6 min ago'},
+  {n:'Samuel Zimba', r:'Collections · Mzuzu', t:'Active 14 min ago'},
+  {n:'Grace Mtemang\'ombe', r:'Cashier · Lilongwe', t:'Active 21 min ago'}
+].map(s=>`
+  <div class="li"><div class="av">${initials(s.n)}</div>
+    <div><div class="t1">${s.n}</div><div class="t2">${s.r}</div></div>
+    <div class="amt"><b class="tiny" style="color:var(--green)">${s.t}</b></div></div>`).join('');
+
+el('logins').innerHTML = [
+  {n:'C. Mwale', s:'09:41 · Lilongwe · Chrome / Windows · 196.44.x.x', c:'#1E9E6A'},
+  {n:'T. Phiri', s:'09:12 · Lilongwe · Android app · 41.87.x.x', c:'#1E9E6A'},
+  {n:'L. Chirwa', s:'08:54 · Blantyre · Chrome / Windows · 196.44.x.x', c:'#1E9E6A'},
+  {n:'Unknown user', s:'08:31 · 3 failed attempts · 102.68.x.x', c:'#D93F3F'}
+].map(l=>`
+  <div class="li"><div class="av" style="background:${l.c}1A;color:${l.c}">${initials(l.n)}</div>
+    <div><div class="t1">${l.n}</div><div class="t2">${l.s}</div></div></div>`).join('');
+
+el('errors').innerHTML = [
+  {t:'Mobile money callback timeout', s:'Airtel Money · MTN API · 09:22 · retried 3×'},
+  {t:'SMS notification delivery failed', s:'Bulk reminder batch · 08:47 · 42 recipients'},
+  {t:'Unmatched bank statement line', s:'Standard Bank feed · 08:15 · MK 512,000'}
+].map(e=>`
+  <div class="li"><div class="av" style="background:var(--red-soft);color:#B32C2C">!</div>
+    <div><div class="t1">${e.t}</div><div class="t2">${e.s}</div></div></div>`).join('');
+
+el('sysNotices').innerHTML = [
+  {t:'Month-end close scheduled for 31 Oct, 18:00', s:'System will be read-only for 30 minutes'},
+  {t:'New interest rate effective 1 Nov 2026', s:'Business Growth: 4.0% → 4.2% per month'},
+  {t:'Mandatory password reset for all staff', s:'Complete before 5 Nov 2026'}
+].map(n=>`
+  <div class="li"><div class="av" style="background:var(--gold-soft);color:var(--gold-dark)">i</div>
+    <div><div class="t1">${n.t}</div><div class="t2">${n.s}</div></div></div>`).join('');
+
+/* ==========================================================
+   NAVIGATION · SUBNAV · INTERACTIONS
+   ========================================================== */
+const pageMeta = {
+  dashboard:{title:'Dashboard', sub:'Administration management portal · Thursday, 30 October 2026 · 09:45 CAT'},
+  applications:{title:'Loan Applications', sub:'Screen, appraise and approve credit requests'},
+  loans:{title:'Loan Portfolio', sub:'All disbursed loans and their standing'},
+  repayments:{title:'Repayments', sub:'Installment schedules and received payments'},
+  collections:{title:'Collections & Arrears', sub:'Overdue accounts and recovery activity'},
+  clients:{title:'Clients (KYC)', sub:'Customer register and identity verification'},
+  guarantors:{title:'Guarantors & Collateral', sub:'Security held against active loans'},
+  disbursements:{title:'Disbursements', sub:'Fund release and payout batches'},
+  transactions:{title:'Transactions', sub:'Cashbook, bank and mobile money entries'},
+  reports:{title:'Reports & Analytics', sub:'Portfolio, ageing and performance reporting'},
+  notifications:{title:'Notifications', sub:'Message delivery, templates and alerts'},
+  staff:{title:'Staff & Users', sub:'Roles, permissions and branch officers'},
+  staff:{title:'Staff & Users', sub:'Roles, permissions and branch officers'},
+  settings:{title:'Settings', sub:'Products, interest rates, fees and system rules'}
+};
+
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', e=>{
+    e.preventDefault();
+    const page = item.dataset.page;
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    if(page === 'disbursements'){ window.location.href = 'disbursements.html'; return; }
+    if(page === 'notifications'){ window.location.href = 'notifications.html'; return; }
+    if(page === 'staff'){ window.location.href = 'staff.html'; return; }
+    const meta = pageMeta[page] || {title:page, sub:''};
+    el('pageTitle').textContent = meta.title;
+    el('pageSub').textContent = meta.sub;
+
+    const dash = el('page-dashboard'), gen = el('page-generic');
+    if(page === 'dashboard'){
+      dash.classList.remove('hide'); gen.classList.add('hide');
+      document.getElementById('subnav').classList.remove('hide');
+    } else {
+      dash.classList.add('hide'); gen.classList.remove('hide');
+      document.getElementById('subnav').classList.add('hide');
+      el('ph-title').textContent = meta.title;
+      el('ph-text').textContent = 'This module is queued for build. Send the ' + meta.title +
+        ' contents (fields, columns, actions and rules) and it will be implemented here.';
+    }
+    document.getElementById('sidebar').classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+el('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+/* scroll-spy for section chips */
+const sections = [...document.querySelectorAll('.sec')];
+const chips = [...document.querySelectorAll('.snav')];
+const spy = () => {
+  let current = sections[0];
+  for(const s of sections){
+    if(s.getBoundingClientRect().top <= 160) current = s;
+  }
+  chips.forEach(c=>c.classList.toggle('on', c.getAttribute('href') === '#'+current.id));
+};
+window.addEventListener('scroll', spy, {passive:true});
+spy();
+
+chips.forEach(c=>{
+  c.addEventListener('click', e=>{
+    e.preventDefault();
+    const t = document.querySelector(c.getAttribute('href'));
+    if(t){ window.scrollTo({top: t.offsetTop - 116, behavior:'smooth'}); }
+  });
+});
+
+/* period tabs (visual state; wire to API later) */
+document.querySelectorAll('#periodTabs .tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('#periodTabs .tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+  });
+});
+
+/* export current view as CSV of KPI figures */
+el('exportBtn').addEventListener('click', ()=>{
+  const rows = [['Metric','Value']];
+  kpis.forEach(k=>rows.push([k.label.replace(/&amp;/g,'&'), k.value.replace(/<[^>]+>/g,'')]));
+  const csv = rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'golden-fs-dashboard-kpis-2026-10-30.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
+</body>
+</html>

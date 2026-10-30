@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<title>Disbursements — GOLDEN FINANCIAL SERVICES</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+
+  /* ===================== MODULE PAGE ADDITIONS ===================== */
+  .modband{background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);color:#fff;
+    border-radius:16px;padding:16px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:center;
+    flex-wrap:wrap;box-shadow:0 10px 30px rgba(16,18,24,.18)}
+  .modband h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .modband p{font-size:11.5px;color:#B9BFCB;margin-top:3px}
+  .modband .mb-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .modband > div:first-child{flex:0 1 auto;min-width:0}
+  .band-stats{display:flex;gap:0;align-items:center;flex-wrap:nowrap;flex:0 0 auto;margin-left:4px}
+  .band-stat{display:flex;flex-direction:column;gap:2px;padding-left:16px;border-left:1px solid #2E3340;white-space:nowrap;flex:0 0 auto}
+  .band-stat b{font-size:15px;font-variant-numeric:tabular-nums}
+  .band-stat span{font-size:10px;color:#9AA0AC;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .fld{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:9px;padding:7px 10px;font-size:12px;min-width:0}
+  .fld:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fld input,.fld select{border:0;outline:none;background:transparent;font-family:inherit;
+    font-size:12px;color:var(--ink);min-width:0}
+  .fld input::placeholder{color:#9AA0AC}
+  .fld.search{flex:1 1 240px;max-width:340px}
+  .fld.search input{width:100%}
+  .fld select{cursor:pointer}
+  .count-pill{font-size:10.5px;font-weight:800;color:var(--gold-dark);background:var(--gold-soft);
+    border-radius:20px;padding:3px 8px;white-space:nowrap}
+
+  /* dense table */
+  .tbl2{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl2 thead th{position:sticky;top:0;background:#fff;text-align:left;font-size:9.5px;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--muted-2);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line);
+    white-space:nowrap;z-index:2}
+  .tbl2 td{padding:8px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  .tbl2 tbody tr:hover{background:#FCFAF2}
+  .tbl2 tr.sel{background:var(--gold-soft)}
+  .tbl2 .mono{font-variant-numeric:tabular-nums;font-weight:700}
+  .tbl2 th.num,.tbl2 td.num{text-align:right}
+  .tblwrap{max-height:560px;overflow:auto;margin-top:8px;border-radius:10px;border:1px solid var(--line-2)}
+
+  /* status chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .st-draft{background:#F1F2F6;color:#5A6172}
+  .st-await{background:var(--amber-soft);color:#9A6A0D}
+  .st-auth{background:var(--blue-soft);color:#2456C4}
+  .st-proc{background:var(--purple-soft);color:#5A3FCB}
+  .st-conf{background:#E6F1FE;color:#1E5FBF}
+  .st-ok{background:var(--green-soft);color:#157A50}
+  .st-fail{background:var(--red-soft);color:#B32C2C}
+  .st-rej{background:#FBE7E7;color:#962626}
+  .st-canc{background:#EEF0F4;color:#616B7C}
+  .st-rev{background:#F6E7EA;color:#8E2F45}
+
+  /* forms */
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:10px}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .form-grid.one{grid-template-columns:1fr}
+  .fg{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fg label{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#5A6172}
+  .fg input,.fg select,.fg textarea{border:1px solid var(--line);border-radius:9px;padding:8px 10px;
+    font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fg input[readonly]{background:#F7F8FA;color:#4A5160}
+  .fg .hint{font-size:10px;color:var(--muted);margin-top:1px}
+  .form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:#1B1F27}
+  .btn-red{background:#FDECEC;color:#B32C2C;border-color:#F6D5D5}
+  .btn-red:hover{background:#FBDCDC}
+  .btn-green{background:#E7F6EF;color:#157A50;border-color:#CFECE0}
+  .btn-green:hover{background:#D9F1E6}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* checklist */
+  .check{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed #EDEFF4;font-size:12px}
+  .check:last-child{border-bottom:0}
+  .check .ck{width:16px;height:16px;flex:0 0 16px;border-radius:5px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;margin-top:1px}
+  .check .ck.y{background:var(--green-soft);color:#157A50}
+  .check .ck.n{background:var(--red-soft);color:#B32C2C}
+  .check .ck.w{background:var(--amber-soft);color:#9A6A0D}
+  .check b{font-weight:600}
+  .check span.s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* method cards */
+  .methodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:10px}
+  .method{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s}
+  .method:hover{border-color:var(--gold)}
+  .method-top{display:flex;align-items:center;gap:8px}
+  .method .mi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:12px}
+  .method-top > div:nth-child(2){flex:1;min-width:0}
+  .method b{font-size:12px;line-height:1.25;display:block}
+  .method .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .method .mv{display:flex;justify-content:space-between;margin-top:9px;font-size:11px}
+  .method .mv b{font-variant-numeric:tabular-nums}
+
+  /* toggle */
+  .toggle{position:relative;width:36px;height:20px;border-radius:20px;background:#D8DCE4;cursor:pointer;
+    border:0;transition:.18s;flex:0 0 36px}
+  .toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+    background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .toggle.on{background:var(--gold)}
+  .toggle.on::after{transform:translateX(16px)}
+
+  /* settings rows */
+  .setrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed #EDEFF4}
+  .setrow:last-child{border-bottom:0}
+  .setrow .sk{font-size:12px;font-weight:600;color:#2B303B}
+  .setrow .ss{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .setrow .sv{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .setrow input[type=number],.setrow input[type=text],.setrow select{border:1px solid var(--line);
+    border-radius:8px;padding:5px 8px;font-size:11.5px;font-family:inherit;width:110px;text-align:right}
+
+  /* timeline */
+  .tl{position:relative;margin-top:10px;padding-left:16px}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 12px 0}
+  .tl-item::before{content:"";position:absolute;left:-15px;top:3px;width:7px;height:7px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px #fff}
+  .tl-item b{font-size:11.5px;font-weight:700}
+  .tl-item span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* documents */
+  .doc{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .doc:last-child{border-bottom:0}
+  .doc .di{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-dark);
+    display:grid;place-items:center;flex:0 0 28px}
+  .doc .dn{font-size:11.5px;font-weight:600}
+  .doc .ds{font-size:10px;color:var(--muted);margin-top:1px}
+  .doc .da{margin-left:auto;display:flex;gap:5px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,17,21,.5);backdrop-filter:blur(3px);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .modal.on{display:flex}
+  .modal-card{background:#fff;border-radius:16px;width:100%;max-width:720px;box-shadow:0 24px 60px rgba(0,0,0,.3);
+    animation:pop .16s ease}
+  @keyframes pop{from{transform:translateY(8px);opacity:.6}to{transform:none;opacity:1}}
+  .modal-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .modal-head h3{font-size:14.5px;font-weight:800}
+  .modal-head p{font-size:11px;color:var(--muted);margin-top:2px}
+  .modal-body{padding:16px 18px}
+  .modal-foot{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;
+    flex-wrap:wrap;background:#FCFCFD;border-radius:0 0 16px 16px}
+  .x{border:0;background:#F1F2F6;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;
+    color:#4A5160;margin-left:auto;display:grid;place-items:center}
+
+  /* toast */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px}
+  .toast{background:var(--ink);color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:center;
+    animation:slide .2s ease;max-width:340px}
+  .toast.ok{border-left:3px solid var(--green)}
+  .toast.err{border-left:3px solid var(--red)}
+  .toast.info{border-left:3px solid var(--gold)}
+  @keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+  /* misc */
+  .split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:13px;align-items:start}
+  .split > *{min-width:0}
+  .grid > *{min-width:0}
+  .split.even{grid-template-columns:1fr 1fr}
+  .split.rev{grid-template-columns:1fr 1.5fr}
+  .note{display:flex;gap:9px;align-items:flex-start;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160;line-height:1.5}
+  .note.gold{background:#FFF9E8;border-color:#F2E3B0;color:#7A5C08}
+  .note.red{background:#FDF0F0;border-color:#F6D5D5;color:#8E2F2F}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:7px 0;
+    border-bottom:1px dashed #EDEFF4}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--muted);font-weight:600}
+  .kv .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .kv .v.big{font-size:13.5px}
+  .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .mini-stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .mini-stat b{display:block;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+  .mini-stat span{font-size:10.5px;color:var(--muted);font-weight:600}
+  .pager{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:10px;font-size:11.5px;color:var(--muted)}
+  .pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;cursor:pointer;
+    font-size:11.5px;font-family:inherit;color:#3A3F4A}
+  .pager button:hover{border-color:var(--gold)}
+  .pager button:disabled{opacity:.45;cursor:not-allowed}
+  .empty{padding:26px 10px;text-align:center;font-size:12px;color:var(--muted)}
+  .sec{margin-bottom:22px}
+  @media(max-width:1120px){
+    .split,.split.even,.split.rev{grid-template-columns:1fr}
+    .form-grid,.form-grid.three{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .modband{padding:14px}
+  }
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">GF</div>
+    <div>
+      <div class="brand-name">GOLDEN FINANCIAL<br>SERVICES</div>
+      <div class="brand-sub">ADMIN PORTAL</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item" data-page="dashboard" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Lending</div>
+    <a class="nav-item" data-page="applications" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
+      Loan Applications <span class="pill gold">18</span>
+    </a>
+    <a class="nav-item" data-page="loans" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
+      Loan Portfolio
+    </a>
+    <a class="nav-item" data-page="repayments" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+      Repayments
+    </a>
+    <a class="nav-item" data-page="collections" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
+      Collections &amp; Arrears <span class="pill red">142</span>
+    </a>
+    <div class="nav-label">Customers</div>
+    <a class="nav-item" data-page="clients" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
+      Clients (KYC)
+    </a>
+    <a class="nav-item" data-page="guarantors" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      Guarantors &amp; Collateral
+    </a>
+    <div class="nav-label">Finance</div>
+    <a class="nav-item active" data-page="disbursements" href="disbursements.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+      Disbursements
+    </a>
+    <a class="nav-item" data-page="transactions" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+      Transactions
+    </a>
+    <a class="nav-item" data-page="reports" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Reports &amp; Analytics
+    </a>
+    <div class="nav-label">Communication</div>
+    <a class="nav-item" data-page="notifications" href="notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      Notifications
+    </a>
+    <div class="nav-label">System</div>
+    <a class="nav-item" data-page="staff" href="staff.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+      Staff &amp; Users
+    </a>
+    <a class="nav-item" data-page="settings" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1.2Z"/></svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="avatar">CM</div>
+    <div>
+      <div class="sf-name">Chikondi Mwale</div>
+      <div class="sf-role">System Administrator</div>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Disbursements</div>
+      <div class="page-sub">Fund release, authorization, verification and reconciliation · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search loan, customer, disbursement ref…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Notifications" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold" id="quickPrepare">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+      New Disbursement
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Approved Loans</a>
+    <a class="snav" href="#s3">3 · Preparation</a>
+    <a class="snav" href="#s4">4 · Authorization</a>
+    <a class="snav" href="#s5">5 · Record</a>
+    <a class="snav" href="#s6">6 · Register</a>
+    <a class="snav" href="#s7">7 · Methods</a>
+    <a class="snav" href="#s8">8 · Verification</a>
+    <a class="snav" href="#s9">9 · Status</a>
+    <a class="snav" href="#s10">10 · Failed</a>
+    <a class="snav" href="#s11">11 · Fees</a>
+    <a class="snav" href="#s12">12 · Activation</a>
+    <a class="snav" href="#s13">13 · Documents</a>
+    <a class="snav" href="#s14">14 · Reconciliation</a>
+    <a class="snav" href="#s15">15 · Reports</a>
+    <a class="snav" href="#s16">16 · Notifications</a>
+    <a class="snav" href="#s17">17 · Audit</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Disbursement Control Centre</h1>
+        <p>Prepare · authorize · release · verify · reconcile — Lilongwe Head Office</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandTotal">MK 63.4M</b><span>Disbursed today</span></div>
+        <div class="band-stat"><b id="bandAwait">27</b><span>Awaiting release</span></div>
+        <div class="band-stat"><b id="bandAuth">9</b><span>Pending authorization</span></div>
+        <div class="band-stat"><b id="bandFail">6</b><span>Failed / exceptions</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="runRecon">Run reconciliation</button>
+        <button class="btn btn-gold btn-sm" id="quickDisburse">Record disbursement</button>
+      </div>
+    </div>
+
+    <!-- ===== 1 · OVERVIEW ===== -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Disbursements Overview</h2><p>Position for 30 October 2026 · updated 09:45 CAT</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+      <div class="grid g3" id="ovTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div>
+          <div class="panel-title">Recent Disbursement Activities</div>
+          <div class="panel-sub">Latest movements across preparation, authorization and release</div>
+        </div><button class="btn btn-ghost btn-sm" id="actAll">Audit trail</button></div>
+        <div class="tbl-wrap" style="margin-top:6px">
+          <table><thead><tr><th>Time</th><th>Reference</th><th>Activity</th><th>Handled by</th><th class="num">Amount</th><th>Status</th></tr></thead>
+          <tbody id="ovActivity"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2 · APPROVED LOANS AWAITING DISBURSEMENT ===== -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Approved Loans Awaiting Disbursement</h2>
+          <p>Verify eligibility, deductions and requirements before preparing a release</p></div>
+        <div class="sec-tools"><span class="count-pill" id="apprCount">0 loans</span></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="apprSearch" placeholder="Search customer, account no. or application no…" />
+          </div>
+          <div class="fld"><select id="apprElig">
+            <option value="">All eligibility</option>
+            <option value="ready">Ready to disburse</option>
+            <option value="missing">Missing requirements</option>
+          </select></div>
+          <div class="fld"><select id="apprProduct">
+            <option value="">All products</option>
+            <option>Business Growth</option><option>Salary Advance</option><option>Agri Input Loan</option>
+            <option>Group Loan</option><option>Asset Finance</option><option>Emergency Loan</option>
+          </select></div>
+          <button class="btn btn-ghost btn-sm" id="apprClear">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2">
+            <thead><tr>
+              <th>Application</th><th>Customer</th><th class="num">Approved</th><th>Rate</th><th>Term</th>
+              <th class="num">Fees</th><th class="num">Net payable</th><th>Eligibility</th><th></th>
+            </tr></thead>
+            <tbody id="apprBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3 · PREPARATION ===== -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Disbursement Preparation</h2>
+          <p>Build the disbursement instruction and submit it for authorization</p></div>
+        <div class="sec-tools"><span class="badge b-pend" id="prepBadge">Draft</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Preparation Form</div>
+            <div class="panel-sub">All fields marked * are required</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1">
+              <label>Select approved loan *</label>
+              <select id="prepLoan"><option value="">— choose an approved loan —</option></select>
+              <div class="hint" id="prepHint">Only loans approved by the credit committee appear here.</div>
+            </div>
+            <div class="fg"><label>Customer</label><input id="prepCust" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Account number</label><input id="prepAcct" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Approved amount (MK)</label><input id="prepAmount" readonly /></div>
+            <div class="fg"><label>Interest rate</label><input id="prepRate" readonly /></div>
+            <div class="fg"><label>Loan term</label><input id="prepTerm" readonly /></div>
+            <div class="fg"><label>Net amount payable (MK)</label><input id="prepNet" readonly /></div>
+            <div class="fg"><label>Disbursement method *</label>
+              <select id="prepMethod"><option value="">Select method</option>
+                <option>Bank Transfer</option><option>Airtel Money</option><option>TNM Mpamba</option>
+                <option>Cash</option><option>Cheque</option></select></div>
+            <div class="fg"><label>Disbursement reference *</label>
+              <input id="prepRef" placeholder="DIS-2026-XXXX" />
+              <div class="hint">Format: DIS-YYYY-NNNN (auto-suggested)</div></div>
+            <div class="fg" style="grid-column:1/-1"><label>Preparation notes</label>
+              <textarea id="prepNotes" rows="2" placeholder="e.g. customer to collect cheque at Lilongwe branch"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="prepSubmit">Submit for authorization</button>
+            <button class="btn btn-ghost" id="prepClearBtn">Clear form</button>
+            <span class="tiny muted" id="prepMsg"></span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Eligibility &amp; Requirements</div>
+              <div class="panel-sub">Verified against the approved application</div></div></div>
+            <div id="prepChecks" style="margin-top:6px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Net Payable Calculation</div>
+              <div class="panel-sub">Approved amount less deductions</div></div></div>
+            <div class="stmt" id="prepSummary"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4 · AUTHORIZATION ===== -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Disbursement Approval &amp; Authorization</h2>
+          <p>Second-line control · approval limits enforced by role</p></div>
+        <div class="sec-tools"><span class="count-pill" id="authCount">0 pending</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Authorization Requests</div>
+            <div class="panel-sub">Approve, reject or return each request</div></div></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr>
+              <th>Reference</th><th>Customer</th><th class="num">Amount</th><th class="num">Net</th><th>Method</th><th>Prepared by</th><th></th>
+            </tr></thead><tbody id="authBody"></tbody></table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">My Approval Limits</div>
+              <div class="panel-sub">Role: System Administrator</div></div></div>
+            <div class="stmt" id="authLimits"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Authorization History</div>
+              <div class="panel-sub">Most recent decisions</div></div></div>
+            <div class="list" id="authHist"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5 · RECORD NEW DISBURSEMENT ===== -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Record New Disbursement</h2>
+          <p>Capture the actual fund release against an authorized loan</p></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Release Details</div>
+            <div class="panel-sub">Only authorized disbursements can be recorded</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Select authorized disbursement *</label>
+              <select id="recSel"><option value="">— choose an authorized disbursement —</option></select></div>
+            <div class="fg"><label>Customer &amp; loan</label><input id="recCust" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Amount to disburse (MK) *</label><input id="recAmount" type="number" /></div>
+            <div class="fg"><label>Disbursement date *</label><input id="recDate" type="date" value="2026-10-30" /></div>
+            <div class="fg"><label>Payment method *</label>
+              <select id="recMethod"><option>Bank Transfer</option><option>Airtel Money</option>
+                <option>TNM Mpamba</option><option>Cash</option><option>Cheque</option></select></div>
+            <div class="fg"><label>Transaction reference *</label><input id="recTxn" placeholder="e.g. FT2610308841" /></div>
+            <div class="fg"><label>Bank / wallet details</label><input id="recBank" placeholder="Account or wallet number" /></div>
+            <div class="fg" style="grid-column:1/-1"><label>Payment evidence</label>
+              <div class="fld" style="justify-content:space-between">
+                <span class="tiny muted" id="recFileName">No file selected</span>
+                <button class="btn btn-ghost btn-sm" id="recUpload">Choose file</button>
+              </div>
+              <div class="hint">PDF, JPG or PNG · max 5 MB (proof of payment / slip)</div></div>
+            <div class="fg" style="grid-column:1/-1"><label>Disbursement notes</label>
+              <textarea id="recNotes" rows="2" placeholder="Optional remarks for the release"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="recSubmit">Submit disbursement record</button>
+            <button class="btn btn-ghost" id="recClear">Clear</button>
+            <span class="tiny muted" id="recMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Ready to Release</div>
+              <div class="panel-sub">Authorized and not yet released</div></div></div>
+            <div class="list" id="recReady"></div>
+          </div>
+          <div class="note gold">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Recorded disbursements move to <b>Processing</b> and must be confirmed under
+              <b>Verification</b> before the loan account can be activated.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6 · ALL DISBURSEMENTS ===== -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>All Disbursements</h2><p>Complete disbursement register with filters and exports</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="regPrint">Print</button>
+          <button class="btn btn-ghost btn-sm" id="regExport">Export CSV</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="regSearch" placeholder="Customer, account, loan or disbursement ref…" />
+          </div>
+          <div class="fld"><span class="tiny muted">From</span><input id="regFrom" type="date" /></div>
+          <div class="fld"><span class="tiny muted">To</span><input id="regTo" type="date" /></div>
+          <div class="fld"><select id="regMethod"><option value="">All methods</option>
+            <option>Bank Transfer</option><option>Airtel Money</option><option>TNM Mpamba</option>
+            <option>Cash</option><option>Cheque</option></select></div>
+          <div class="fld"><select id="regStatus"><option value="">All statuses</option>
+            <option>Draft</option><option>Awaiting authorization</option><option>Authorized</option>
+            <option>Processing</option><option>Awaiting confirmation</option><option>Successful</option>
+            <option>Failed</option><option>Rejected</option><option>Cancelled</option><option>Reversed</option>
+          </select></div>
+          <div class="fld"><select id="regOfficer"><option value="">All officers</option>
+            <option>T. Phiri</option><option>L. Chirwa</option><option>S. Zimba</option>
+            <option>A. Mbewe</option><option>G. Mtemang'ombe</option><option>C. Mwale</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="regReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr>
+            <th>Reference</th><th>Date</th><th>Customer</th><th>Loan</th><th class="num">Amount</th>
+            <th class="num">Net</th><th>Method</th><th>Officer</th><th>Status</th><th></th>
+          </tr></thead><tbody id="regBody"></tbody></table>
+        </div>
+        <div class="pager" id="regPager"></div>
+      </div>
+    </section>
+
+    <!-- ===== 7 · METHODS ===== -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Disbursement Methods</h2><p>Enabled channels, recipient verification and method-level performance</p></div>
+        <div class="sec-tools"><span class="badge b-gray">5 channels</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Available Methods</div>
+          <div class="panel-sub">Toggle to enable or disable a channel at the counter</div></div></div>
+        <div class="methodgrid" id="methodCards"></div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Method-Specific Failures</div>
+            <div class="panel-sub">Reversals and declines by channel · this month</div></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Attempts</th>
+              <th class="num">Failed</th><th class="num">Failure rate</th><th>Common reason</th></tr></thead>
+              <tbody id="methodFailures"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recipient Verification Rules</div>
+            <div class="panel-sub">Applied before any release</div></div></div>
+          <div class="checklist" id="methodRules"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8 · VERIFICATION ===== -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Disbursement Verification &amp; Confirmation</h2>
+          <p>Confirm that the customer actually received the funds</p></div>
+        <div class="sec-tools"><span class="count-pill" id="verifCount">0 pending</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Payment Confirmation</div>
+            <div class="panel-sub">Processing and awaiting-confirmation disbursements</div></div></div>
+          <div class="tblwrap" style="max-height:400px">
+            <table class="tbl2"><thead><tr><th>Reference</th><th>Customer</th><th class="num">Amount</th>
+              <th>Method</th><th>Txn ref</th><th></th></tr></thead><tbody id="verifBody"></tbody></table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Verification Checklist</div>
+              <div class="panel-sub">Select a disbursement to verify</div></div></div>
+            <div id="verifPanel"><div class="empty">No disbursement selected.</div></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Confirmation History</div>
+              <div class="panel-sub">Last verified transactions</div></div></div>
+            <div class="list" id="verifHist"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 9 · STATUS TRACKING ===== -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Disbursement Status Tracking</h2><p>Full lifecycle view of every disbursement</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="statusReset">Clear filter</button></div>
+      </div>
+      <div class="grid g4" id="statusTiles" style="margin-bottom:13px"></div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Status Changes</div>
+            <div class="panel-sub">Audit of lifecycle transitions</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>From</th><th>To</th><th>By</th></tr></thead>
+              <tbody id="statusChanges"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Lifecycle</div>
+            <div class="panel-sub">Draft → released → activated</div></div></div>
+          <div class="tl" id="statusTimeline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 10 · FAILED ===== -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Failed &amp; Exceptional Disbursements</h2>
+          <p>Diagnose, correct, retry or cancel problem transactions</p></div>
+        <div class="sec-tools"><span class="count-pill" id="failCount">0 in exceptions</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Failed Transaction Register</div>
+          <div class="panel-sub">Reasons, retry eligibility and resolution state</div></div></div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr><th>Reference</th><th>Customer</th><th class="num">Amount</th><th>Method</th>
+            <th>Failure reason</th><th>Attempts</th><th>Resolution</th><th></th></tr></thead>
+            <tbody id="failBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Resolution History</div>
+            <div class="panel-sub">Retries, corrections and cancellations</div></div></div>
+          <div class="list" id="failHistory"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Exception Controls</div>
+            <div class="panel-sub">Rules applied automatically</div></div></div>
+          <div class="checklist" id="failRules"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 11 · FEES ===== -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Disbursement Fees &amp; Deductions</h2>
+          <p>Fee calculation, waivers and adjustments</p></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Net Payable Calculator</div>
+            <div class="panel-sub">Applies the configured fee rules</div></div></div>
+          <div class="form-grid three">
+            <div class="fg"><label>Approved amount (MK)</label><input id="feeAmount" type="number" value="2500000" /></div>
+            <div class="fg"><label>Processing fee %</label><input id="feeProc" type="number" step="0.1" value="2.5" /></div>
+            <div class="fg"><label>Insurance %</label><input id="feeIns" type="number" step="0.1" value="1" /></div>
+            <div class="fg"><label>Other deductions (MK)</label><input id="feeOther" type="number" value="0" /></div>
+            <div class="fg"><label>Waiver (MK)</label><input id="feeWaive" type="number" value="0" /></div>
+            <div class="fg"><label>Net payable</label><input id="feeNet" readonly /></div>
+          </div>
+          <div class="stmt" id="feeBreak" style="margin-top:12px"></div>
+          <div class="form-actions">
+            <button class="btn btn-dark btn-sm" id="feeHistoryBtn">View calculation history</button>
+            <button class="btn btn-ghost btn-sm" id="feeRequestBtn">Request fee waiver</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Fee Calculation Rules</div>
+              <div class="panel-sub">Configured under Settings</div></div></div>
+            <div class="stmt" id="feeRules"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Waiver &amp; Adjustment Requests</div>
+              <div class="panel-sub">Awaiting approval</div></div><span class="badge b-pend">3 open</span></div>
+            <div class="list" id="feeWaivers"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 12 · ACTIVATION ===== -->
+    <section class="sec" id="s12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Loan Account Activation</h2>
+          <p>Activate successfully disbursed loans and generate repayment schedules</p></div>
+        <div class="sec-tools"><span class="count-pill" id="actCount">0 ready</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Awaiting Activation</div>
+            <div class="panel-sub">Confirmed disbursements not yet linked to a loan account</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Reference</th><th>Customer</th><th class="num">Principal</th>
+              <th>Disbursed</th><th>Loan account</th><th></th></tr></thead><tbody id="actBody"></tbody></table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Activation Panel</div>
+              <div class="panel-sub">Pre-activation checks</div></div></div>
+            <div id="actPanel"><div class="empty">Select a disbursement to activate.</div></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Recently Activated</div>
+              <div class="panel-sub">Schedules generated today</div></div></div>
+            <div class="list" id="actHistory"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 13 · DOCUMENTS ===== -->
+    <section class="sec" id="s13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Disbursement Documents</h2><p>Agreements, authorizations, evidence and receipts</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="docBundle">Download bundle</button></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Pack</div>
+            <div class="panel-sub">Reference: <span id="docRef" style="font-weight:700;color:var(--ink)">DIS-2026-1042</span></div></div>
+            <div class="fld" style="padding:5px 8px"><select id="docSelect"></select></div>
+          </div>
+          <div id="docList"></div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Document Verification History</div>
+              <div class="panel-sub">Who checked what, and when</div></div></div>
+            <div class="list" id="docHistory"></div>
+          </div>
+          <div class="note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/></svg>
+            <div>Documents are retained for 7 years and are immutable once verified. Downloads are logged
+              in the audit trail.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 14 · RECONCILIATION ===== -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Disbursement Reconciliation</h2><p>Match authorized amounts to actual releases by channel</p></div>
+        <div class="sec-tools">
+          <div class="fld" style="padding:5px 8px"><input id="reconDate" type="date" value="2026-10-30" /></div>
+          <button class="btn btn-gold btn-sm" id="reconRun">Reconcile</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Daily Disbursement Reconciliation</div>
+          <div class="panel-sub" id="reconSub">30 October 2026 · all channels</div></div>
+          <span class="badge b-pend" id="reconBadge">3 variances</span></div>
+        <div class="tblwrap" style="max-height:340px">
+          <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Authorized</th><th class="num">Actual released</th>
+            <th class="num">Variance</th><th class="num">Txn count</th><th>State</th></tr></thead>
+            <tbody id="reconBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Discrepancies</div>
+            <div class="panel-sub">Missing, duplicate and unmatched items</div></div></div>
+          <div class="list" id="reconDisc"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reconciliation History</div>
+            <div class="panel-sub">Last 5 runs</div></div></div>
+          <div class="list" id="reconHist"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 15 · REPORTS ===== -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Disbursement Reports &amp; Analytics</h2><p>Standard reports with PDF, Excel and CSV export</p></div>
+        <div class="sec-tools"><span class="badge b-gray">12 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards" style="margin-bottom:13px"></div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Loan Product</div>
+            <div class="panel-sub">Value released · MK millions</div></div></div>
+          <div id="chProduct" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Payment Method</div>
+            <div class="panel-sub">Share of value · this month</div></div></div>
+          <div id="chMethod" style="display:flex;gap:16px;align-items:center;justify-content:center;margin-top:8px;flex-wrap:wrap"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Staff Member</div>
+            <div class="panel-sub">October · MK millions</div></div></div>
+          <div id="chStaff" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Disbursement Trend</div>
+            <div class="panel-sub">Last 10 working days · MK millions</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chTrend" viewBox="0 0 640 220"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 16 · NOTIFICATIONS ===== -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Disbursement Notifications</h2><p>Approval, processing and customer confirmations</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="notifRead">Mark all read</button></div>
+      </div>
+      <div class="split rev">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+            <div class="panel-sub">Who is alerted at each stage</div></div></div>
+          <div class="checklist" id="notifRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery History</div>
+            <div class="panel-sub">SMS, email and in-app</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Recipient</th><th>Channel</th><th>Message</th><th>State</th></tr></thead>
+              <tbody id="notifHist"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 17 · AUDIT ===== -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Disbursement Audit &amp; Security</h2><p>Immutable trail of every disbursement action</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="auditExport">Export audit</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="auditSearch" placeholder="Search reference, user or action…" />
+          </div>
+          <div class="fld"><select id="auditAction">
+            <option value="">All actions</option>
+            <option>Created</option><option>Authorized</option><option>Rejected</option>
+            <option>Modified</option><option>Confirmed</option><option>Cancelled</option>
+            <option>Reversed</option><option>Activated</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="auditReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Action</th><th>User</th>
+            <th>Detail</th><th>IP</th><th>Outcome</th></tr></thead><tbody id="auditBody"></tbody></table>
+        </div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Unauthorized Action Alerts</div>
+          <div class="panel-sub">Blocked attempts and policy violations</div></div>
+          <span class="badge b-rev">2 alerts</span></div>
+        <div class="list" id="auditAlerts"></div>
+      </div>
+    </section>
+
+    <!-- ===== 18 · SETTINGS ===== -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Disbursement Settings</h2><p>Controls that govern the disbursement workflow</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="settingsReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="settingsSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Methods &amp; Limits</div>
+            <div class="panel-sub">Channel enablement and transaction ceilings</div></div></div>
+          <div id="setMethods"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval &amp; Authorization</div>
+            <div class="panel-sub">Who may release which amount</div></div></div>
+          <div id="setApproval"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Eligibility &amp; Requirements</div>
+            <div class="panel-sub">Preconditions for release and activation</div></div></div>
+          <div id="setRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Format, Fees &amp; Notifications</div>
+            <div class="panel-sub">References, deductions and messaging</div></div></div>
+          <div id="setFees"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>This module runs on sample data. All actions (prepare, authorize, release, verify, retry, activate)
+        update the in-page state so you can walk the full disbursement lifecycle.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   GOLDEN FINANCIAL SERVICES · DISBURSEMENTS MODULE
+   Sample data + in-page workflow state. Swap DATA for API calls.
+   ============================================================ */
+
+/* ---------------- utils ---------------- */
+const el = id => document.getElementById(id);
+const nf = n => Math.round(n).toLocaleString('en-US');
+const mk = n => 'MK ' + nf(n);
+const mkm = n => n>=1e6 ? 'MK '+(n/1e6).toFixed(2)+'M' : n>=1e3 ? 'MK '+Math.round(n/1e3)+'K' : mk(n);
+const initials = s => s.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const today = '2026-10-30';
+
+function toast(msg, type='ok'){
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.innerHTML = `<span>${type==='err'?'⚠':type==='info'?'ℹ':'✓'}</span><div>${msg}</div>`;
+  el('toasts').appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(16px)'; t.style.transition='.25s'; }, 2600);
+  setTimeout(()=>t.remove(), 3000);
+}
+
+const STATUS_CLASS = {
+  'Draft':'st-draft','Awaiting authorization':'st-await','Authorized':'st-auth','Processing':'st-proc',
+  'Awaiting confirmation':'st-conf','Successful':'st-ok','Failed':'st-fail','Rejected':'st-rej',
+  'Cancelled':'st-canc','Reversed':'st-rev'
+};
+const chip = s => `<span class="chip ${STATUS_CLASS[s]||'st-draft'}">${s}</span>`;
+
+/* ---------------- fee engine ---------------- */
+const FEE = {proc:2.5, ins:1, other:0, waive:0};
+function calcFees(amount, proc=FEE.proc, ins=FEE.ins, other=FEE.other, waive=FEE.waive){
+  const p = amount*proc/100, i = amount*ins/100;
+  const total = Math.max(0, p+i+other-waive);
+  return {proc:p, ins:i, other, waive, total, net: amount-total};
+}
+
+/* ---------------- data ---------------- */
+const state = {
+  seq: 1042,
+  loans: [
+    {app:'LN-2026-1842', cust:'Thokozani Banda', acct:'CUS-004286', product:'Business Growth',
+     approved:2500000, rate:'4.2% / month', term:'12 months', officer:'T. Phiri', approvedOn:'2026-10-29',
+     docs:{agreement:true, id:true, payslip:true, guarantor:false}, prepared:false},
+    {app:'LN-2026-1839', cust:'Grace Mvula', acct:'CUS-004121', product:'Group Loan',
+     approved:800000, rate:'3.8% / month', term:'8 months', officer:'A. Mbewe', approvedOn:'2026-10-29',
+     docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
+    {app:'LN-2026-1827', cust:'Peter Kachale', acct:'CUS-003902', product:'Asset Finance',
+     approved:4800000, rate:'3.5% / month', term:'24 months', officer:'S. Zimba', approvedOn:'2026-10-28',
+     docs:{agreement:true, id:true, payslip:false, guarantor:true}, prepared:false},
+    {app:'LN-2026-1831', cust:'Memory Nkhoma', acct:'CUS-004008', product:'Salary Advance',
+     approved:450000, rate:'4.5% / month', term:'6 months', officer:'L. Chirwa', approvedOn:'2026-10-28',
+     docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
+    {app:'LN-2026-1815', cust:'Yamikani Gondwe', acct:'CUS-003744', product:'Agri Input Loan',
+     approved:1200000, rate:'3.9% / month', term:'10 months', officer:'T. Phiri', approvedOn:'2026-10-27',
+     docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
+    {app:'LN-2026-1822', cust:'Esther Kamanga', acct:'CUS-003981', product:'Emergency Loan',
+     approved:150000, rate:'5.0% / month', term:'4 months', officer:'L. Chirwa', approvedOn:'2026-10-27',
+     docs:{agreement:false, id:true, payslip:true, guarantor:true}, prepared:false},
+    {app:'LN-2026-1809', cust:'Isaac Mponda', acct:'CUS-003612', product:'Business Growth',
+     approved:3200000, rate:'4.2% / month', term:'18 months', officer:'S. Zimba', approvedOn:'2026-10-26',
+     docs:{agreement:true, id:false, payslip:true, guarantor:true}, prepared:false},
+    {app:'LN-2026-1836', cust:'Fatima Salimu', acct:'CUS-004233', product:'Salary Advance',
+     approved:600000, rate:'4.5% / month', term:'6 months', officer:'A. Mbewe', approvedOn:'2026-10-30',
+     docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false}
+  ],
+  disb: [],
+  audit: [],
+  changes: [],
+  notifs: []
+};
+
+/* seed disbursement records across the lifecycle */
+const seed = [
+  ['DIS-2026-1041','LN-2026-1810','Kondwani Msiska','CUS-003811','Group Loan',900000,'Bank Transfer','T. Phiri','2026-10-30','Successful','FT2610307712',true],
+  ['DIS-2026-1040','LN-2026-1812','Rose Chikopa','CUS-003844','Salary Advance',320000,'Airtel Money','L. Chirwa','2026-10-30','Successful','AM2610304451',true],
+  ['DIS-2026-1039','LN-2026-1818','Alfred Jimu','CUS-003889','Business Growth',1750000,'Bank Transfer','S. Zimba','2026-10-30','Awaiting confirmation','FT2610306602',false],
+  ['DIS-2026-1038','LN-2026-1819','Blessings Tembo','CUS-003901','Emergency Loan',240000,'TNM Mpamba','A. Mbewe','2026-10-30','Processing','MP2610301188',false],
+  ['DIS-2026-1037','LN-2026-1805','Dorothy Nyirenda','CUS-003699','Agri Input Loan',1400000,'Bank Transfer','T. Phiri','2026-10-29','Failed','FT2610295510',false],
+  ['DIS-2026-1036','LN-2026-1802','Chimwemwe Zulu','CUS-003655','Asset Finance',2600000,'Bank Transfer','S. Zimba','2026-10-29','Successful','FT2610294408',true],
+  ['DIS-2026-1035','LN-2026-1798','Mercy Chatsika','CUS-003590','Group Loan',700000,'Airtel Money','L. Chirwa','2026-10-29','Successful','AM2610293390',true],
+  ['DIS-2026-1034','LN-2026-1795','Daniel Kaunda','CUS-003544','Salary Advance',380000,'Cash','G. Mtemang\'ombe','2026-10-28','Successful','CSH-261028-04',true],
+  ['DIS-2026-1033','LN-2026-1791','Sarah Kaunda','CUS-003501','Business Growth',2000000,'Bank Transfer','T. Phiri','2026-10-28','Reversed','FT2610282277',false],
+  ['DIS-2026-1032','LN-2026-1789','Joseph Mwale','CUS-003488','Agri Input Loan',1150000,'TNM Mpamba','A. Mbewe','2026-10-28','Successful','MP2610280755',true],
+  ['DIS-2026-1031','LN-2026-1784','Tadala Nkhoma','CUS-003412','Emergency Loan',180000,'Airtel Money','L. Chirwa','2026-10-27','Cancelled','',false],
+  ['DIS-2026-1030','LN-2026-1780','Peter Kachale','CUS-003390','Asset Finance',4500000,'Bank Transfer','S. Zimba','2026-10-27','Successful','FT2610279001',true],
+  ['DIS-2026-1029','LN-2026-1776','Grace Mvula','CUS-003355','Group Loan',650000,'Bank Transfer','A. Mbewe','2026-10-26','Failed','FT2610264488',false],
+  ['DIS-2026-1028','LN-2026-1770','Thokozani Banda','CUS-003311','Business Growth',2400000,'Bank Transfer','T. Phiri','2026-10-26','Successful','FT2610263312',true],
+  ['DIS-2026-1027','LN-2026-1765','Memory Nkhoma','CUS-003280','Salary Advance',500000,'Airtel Money','L. Chirwa','2026-10-25','Successful','AM2610251140',true],
+  ['DIS-2026-1026','LN-2026-1761','Isaac Mponda','CUS-003244','Business Growth',3000000,'Bank Transfer','S. Zimba','2026-10-25','Rejected','',false],
+  ['DIS-2026-1025','LN-2026-1758','Fatima Salimu','CUS-003210','Salary Advance',540000,'Bank Transfer','A. Mbewe','2026-10-24','Successful','FT2610247781',true],
+  ['DIS-2026-1024','LN-2026-1752','Yamikani Gondwe','CUS-003178','Agri Input Loan',1250000,'Bank Transfer','T. Phiri','2026-10-24','Successful','FT2610246690',true],
+  ['DIS-2026-1023','LN-2026-1749','Esther Kamanga','CUS-003141','Emergency Loan',160000,'Cash','G. Mtemang\'ombe','2026-10-23','Successful','CSH-261023-11',true],
+  ['DIS-2026-1022','LN-2026-1744','Alfred Jimu','CUS-003102','Business Growth',1600000,'Bank Transfer','S. Zimba','2026-10-23','Failed','FT2610235520',false]
+];
+const pendingActivation = ['DIS-2026-1041','DIS-2026-1040','DIS-2026-1036'];
+seed.forEach(([ref,app,cust,acct,product,amount,method,officer,date,status,txn,activated])=>{
+  if(pendingActivation.includes(ref)) activated = false;
+  const f = calcFees(amount);
+  state.disb.push({ref,app,cust,acct,product,amount,method,officer,date,status,txn,activated,
+    fees:f, net:f.net, preparedBy:officer, authorizedBy:'C. Mwale', notes:'', attempts:status==='Failed'?2:1,
+    reason: status==='Failed' ? (method==='Bank Transfer'?'Beneficiary account name mismatch':'Wallet limit exceeded')
+          : status==='Reversed' ? 'Funds returned by beneficiary bank' : ''});
+});
+
+/* seed: two pending authorization + one draft */
+[['LN-2026-1817','Chisomo Mhango','CUS-003777','Business Growth',1900000,'Airtel Money','T. Phiri','Awaiting authorization'],
+ ['LN-2026-1816','Patrick Nsanja','CUS-003755','Asset Finance',3400000,'Bank Transfer','S. Zimba','Awaiting authorization'],
+ ['LN-2026-1814','Loveness Kalua','CUS-003712','Group Loan',720000,'Cash','A. Mbewe','Draft']
+].forEach(([app,cust,acct,product,amount,method,officer,status])=>{
+  const ref = 'DIS-2026-' + (++state.seq);
+  const f = calcFees(amount);
+  state.disb.push({ref,app,cust,acct,product,amount,method,officer,date:today,status,txn:'',activated:false,
+    fees:f, net:f.net, preparedBy:officer, authorizedBy:'', notes:'Prepared at branch counter', attempts:0, reason:''});
+});
+
+const nextRef = () => 'DIS-2026-' + (++state.seq);
+
+/* audit + notification seeds */
+state.audit = [
+  ['09:44','DIS-2026-1041','Created','T. Phiri','Prepared bank transfer release','196.44.21.7','Success'],
+  ['09:41','DIS-2026-1041','Authorized','C. Mwale','Approved within limit MK 5,000,000','196.44.21.4','Success'],
+  ['09:22','DIS-2026-1039','Modified','S. Zimba','Recipient account corrected','196.44.21.9','Success'],
+  ['09:10','DIS-2026-1038','Created','A. Mbewe','Prepared TNM Mpamba release','41.87.112.3','Success'],
+  ['08:58','DIS-2026-1037','Confirmed','C. Mwale','Marked failed — account mismatch','196.44.21.4','Success'],
+  ['08:31','DIS-2026-1026','Rejected','C. Mwale','Customer KYC expired','196.44.21.4','Blocked'],
+  ['08:12','DIS-2026-1033','Reversed','System','Bank returned funds','10.0.4.12','Success'],
+  ['07:55','AUTH-0x91','Authorization attempt','L. Chirwa','Amount above personal limit','41.87.112.8','Blocked']
+];
+state.changes = [
+  {time:'09:44', ref:'DIS-2026-1041', from:'Authorized', to:'Successful', by:'C. Mwale'},
+  {time:'09:41', ref:'DIS-2026-1041', from:'Awaiting authorization', to:'Authorized', by:'C. Mwale'},
+  {time:'09:22', ref:'DIS-2026-1039', from:'Processing', to:'Awaiting confirmation', by:'S. Zimba'},
+  {time:'09:10', ref:'DIS-2026-1038', from:'Authorized', to:'Processing', by:'A. Mbewe'},
+  {time:'08:58', ref:'DIS-2026-1037', from:'Processing', to:'Failed', by:'C. Mwale'},
+  {time:'08:31', ref:'DIS-2026-1026', from:'Awaiting authorization', to:'Rejected', by:'C. Mwale'}
+];
+state.notifs = [
+  ['09:45','Thokozani Banda','SMS','Disbursement processed — funds sent to your Airtel Money wallet','Delivered'],
+  ['09:41','C. Mwale','In-app','DIS-2026-1041 authorized and queued for release','Read'],
+  ['09:10','G. Mtemang\'ombe','Email','Cash disbursement awaiting confirmation at counter','Delivered'],
+  ['08:58','Blessings Tembo','SMS','Your loan has been approved. Await disbursement confirmation.','Delivered'],
+  ['08:30','A. Mbewe','In-app','DIS-2026-1038 failed — wallet limit exceeded','Unread'],
+  ['08:10','D. Nyirenda','SMS','Disbursement delayed. Our team will contact you.','Failed']
+];
+
+/* ============================================================
+   CHART HELPERS
+   ============================================================ */
+function niceMax(v){
+  if(v<=0) return 10;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  for(const s of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(v <= s*p) return s*p;
+  return 10*p;
+}
+function mkChart(host, o){
+  if(!host) return;
+  const type = o.type || 'line', labels = o.labels||[], series = o.series||[];
+  const W=640, H=o.height||220, L=38, R=12, T=12, B=26;
+  const iw=W-L-R, ih=H-T-B;
+  const yMax = o.yMax || niceMax(Math.max(0,...series.flatMap(s=>s.data)));
+  const step = iw/Math.max(labels.length,1);
+  let g='';
+  for(let i=0;i<=4;i++){
+    const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
+    g += `<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
+    const t = Number.isInteger(v)?v:v.toFixed(1);
+    g += `<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}</text>`;
+  }
+  labels.forEach((lb,i)=>{
+    if(labels.length>12 && i%2) return;
+    g += `<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+  });
+  if(type==='bar'){
+    const n=series.length, groupW=step*0.60, bw=Math.max(3, groupW/n-(n>1?2:0));
+    labels.forEach((lb,i)=>{
+      const gx=L+step*i+(step-groupW)/2;
+      series.forEach((s,j)=>{
+        const v=s.data[i]||0, h=(v/yMax)*ih;
+        if(h<0.6) return;
+        const x=gx+j*(bw+2), y=T+ih-h, r=Math.min(3,bw/2,h/2);
+        g += `<path d="M${x.toFixed(1)} ${(y+r).toFixed(1)} q0 ${-r} ${r} ${-r} h${(bw-2*r).toFixed(1)} q${r} 0 ${r} ${r} v${(h-r).toFixed(1)} h${-bw.toFixed(1)} Z" fill="${s.color}"><title>${lb} · ${s.name}: ${v}</title></path>`;
+      });
+    });
+  } else {
+    series.forEach(s=>{
+      const pts=s.data.map((v,i)=>[L+step*i+step/2, T+ih-(v/yMax)*ih]);
+      const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+      const gid='gd'+Math.random().toString(36).slice(2,8);
+      g += `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${s.color}" stop-opacity=".20"/>
+        <stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient></defs>
+        <path d="${d} L${pts[pts.length-1][0].toFixed(1)} ${T+ih} L${pts[0][0].toFixed(1)} ${T+ih} Z" fill="url(#${gid})"/>
+        <path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>`;
+      pts.forEach((q,i)=>{ g += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.4" fill="#fff" stroke="${s.color}" stroke-width="1.8"><title>${labels[i]} · ${s.name}: ${s.data[i]}</title></circle>`; });
+    });
+  }
+  host.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  host.innerHTML = g;
+}
+function mkDonut(host, data, opt={}){
+  const total = data.reduce((s,d)=>s+d.value,0)||1;
+  const size=opt.size||150, c=size/2, r=size*0.335, sw=opt.ring||15;
+  const C=2*Math.PI*r, GAP=2.5; let off=0, arcs='';
+  data.forEach(d=>{
+    const len=(d.value/total)*C, dash=Math.max(len-GAP,0.6);
+    arcs += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${(C-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${c} ${c})"><title>${d.label}: ${nf(d.value)}</title></circle>`;
+    off+=len;
+  });
+  host.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
+    <text x="${c}" y="${c-1}" text-anchor="middle" font-size="${(size*0.125).toFixed(1)}" font-weight="800" fill="#0F1115" font-family="inherit">${opt.center||nf(total)}</text>
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.058).toFixed(1)}" font-weight="700" fill="#8A90A0" letter-spacing=".8" font-family="inherit">${opt.caption||'TOTAL'}</text></svg>`;
+}
+function mkHBars(host, rows){
+  if(!host) return;
+  const max = Math.max(...rows.map(r=>r.value))||1;
+  host.innerHTML = rows.map(r=>`
+    <div class="hbar-row">
+      <div class="hbar-l">${r.label}</div>
+      <div class="hbar-t"><i style="width:${Math.max(2,(r.value/max)*100)}%;background:${r.color}"></i></div>
+      <div class="hbar-v">${r.display || nf(r.value)}</div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   SECTION 1 · OVERVIEW
+   ============================================================ */
+function renderOverview(){
+  const success = state.disb.filter(d=>d.status==='Successful');
+  const todayS = success.filter(d=>d.date===today);
+  const monthS = success.filter(d=>d.date.startsWith('2026-10'));
+  const awaiting = state.loans.filter(l=>!l.prepared).length;
+  const pendingAuth = state.disb.filter(d=>d.status==='Awaiting authorization').length;
+  const inProgress = state.disb.filter(d=>['Processing','Awaiting confirmation'].includes(d.status)).length;
+  const failed = state.disb.filter(d=>['Failed','Reversed'].includes(d.status)).length;
+  const cancelled = state.disb.filter(d=>d.status==='Cancelled').length;
+
+  const tiles = [
+    ['Total Amount Disbursed Ever', mk(482600000), 'Since inception · 2,915 releases', 'wallet', '',
+      `<span class="trend up">▲ 8.4%</span> vs last month`],
+    ['Disbursements Today', mk(todayS.reduce((s,d)=>s+d.amount,0)), `${todayS.length} successful releases`, 'down', 'g',
+      `<span class="trend up">▲ 12.6%</span> vs yesterday`],
+    ['This Month', mkm(monthS.reduce((s,d)=>s+d.amount,0)), `${monthS.length} releases in October`, 'chart', 'b',
+      `<span class="trend up">91%</span> of monthly target`],
+    ['Loans Awaiting Disbursement', String(awaiting), 'Approved and not yet prepared', 'doc', 'a',
+      `<span class="badge b-pend">queue</span>`],
+    ['Pending Disbursement Approvals', String(pendingAuth), 'Awaiting second-line authorization', 'check', 'p',
+      `<span class="badge b-act">control</span>`],
+    ['Disbursements in Progress', String(inProgress), 'Released, not yet confirmed', 'card', 'b',
+      `<span class="badge b-act">processing</span>`],
+    ['Successful Disbursements', String(success.length), 'Confirmed and activated', 'check', 'g',
+      `<span class="badge b-appr">${Math.round(success.length/state.disb.length*100)}% of records</span>`],
+    ['Failed Disbursements', String(failed), 'Includes reversed transactions', 'alert', 'r',
+      `<span class="badge b-rev">exceptions</span>`],
+    ['Cancelled Disbursements', String(cancelled), 'Withdrawn before release', 'doc', '',
+      `<span class="badge b-gray">closed</span>`]
+  ];
+  el('ovTiles').innerHTML = tiles.map(([label,value,foot,icon,tone,extra])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${label}</div>
+        <div class="stat-ic ${tone}">${ICONS[icon]}</div></div>
+      <div class="stat-val">${value}</div>
+      <div class="stat-foot">${extra}</div>
+      <div class="tiny muted" style="margin-top:4px">${foot}</div>
+    </div>`).join('');
+
+  el('bandTotal').textContent = mk(todayS.reduce((s,d)=>s+d.amount,0));
+  el('bandAwait').textContent = awaiting;
+  el('bandAuth').textContent = pendingAuth;
+  el('bandFail').textContent = failed;
+
+  const acts = [...state.disb].sort((a,b)=>b.ref.localeCompare(a.ref)).slice(0,7).map(d=>{
+    const verb = {'Draft':'Draft prepared','Awaiting authorization':'Submitted for authorization','Authorized':'Authorized for release',
+      'Processing':'Release recorded — processing','Awaiting confirmation':'Awaiting customer confirmation','Successful':'Disbursed and confirmed',
+      'Failed':'Release failed','Rejected':'Rejected by authorizer','Cancelled':'Cancelled','Reversed':'Reversed by bank'}[d.status] || d.status;
+    return `<tr>
+      <td class="muted tiny" style="white-space:nowrap">${d.date.slice(8)} Oct</td>
+      <td class="tiny" style="font-weight:700">${d.ref}</td>
+      <td>${verb}</td>
+      <td class="muted">${d.preparedBy}</td>
+      <td class="num">${mk(d.amount)}</td>
+      <td>${chip(d.status)}</td></tr>`;
+  }).join('');
+  el('ovActivity').innerHTML = acts;
+}
+
+const ICONS = {
+  wallet:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2"/><rect x="3" y="8" width="18" height="11" rx="2.5"/><circle cx="17" cy="13.5" r="1.2"/></svg>',
+  down:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M7 11l5 5 5-5M4 20h16"/></svg>',
+  chart:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  doc:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/></svg>',
+  check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 13 5 5L21 5"/></svg>',
+  alert:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17.5h.01"/></svg>',
+  card:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.4"/></svg>'
+};
+
+/* ============================================================
+   SECTION 2 · APPROVED LOANS
+   ============================================================ */
+const missingDocs = l => Object.entries(l.docs).filter(([,v])=>!v).map(([k])=>({
+  agreement:'Signed loan agreement', id:'Customer ID', payslip:'Proof of income', guarantor:'Guarantor confirmation'
+}[k]));
+
+function renderApproved(){
+  const q = (el('apprSearch').value||'').toLowerCase();
+  const elig = el('apprElig').value;
+  const prod = el('apprProduct').value;
+  let rows = state.loans.filter(l=>!l.prepared);
+  if(q) rows = rows.filter(l=>(l.cust+l.acct+l.app).toLowerCase().includes(q));
+  if(prod) rows = rows.filter(l=>l.product===prod);
+  if(elig==='ready') rows = rows.filter(l=>missingDocs(l).length===0);
+  if(elig==='missing') rows = rows.filter(l=>missingDocs(l).length>0);
+
+  el('apprCount').textContent = rows.length + (rows.length===1?' loan':' loans');
+  el('apprBody').innerHTML = rows.length ? rows.map(l=>{
+    const f = calcFees(l.approved);
+    const miss = missingDocs(l);
+    const ok = miss.length===0;
+    return `<tr>
+      <td><div style="font-weight:700;font-size:11.5px">${l.app}</div>
+        <div class="tiny muted">${l.approvedOn} · ${l.officer}</div></td>
+      <td><div class="who"><div class="av">${initials(l.cust)}</div><div>
+        <div class="nm">${l.cust}</div><div class="id">${l.acct} · ${l.product}</div></div></div></td>
+      <td class="num">${mk(l.approved)}</td>
+      <td class="tiny" style="white-space:nowrap">${l.rate}</td>
+      <td class="tiny" style="white-space:nowrap">${l.term}</td>
+      <td class="num">${mk(f.total)}</td>
+      <td class="num" style="color:#157A50">${mk(f.net)}</td>
+      <td>${ok?'<span class="chip st-ok">Ready</span>'
+        :`<span class="chip st-await" title="${miss.join(', ')}">Missing ${miss.length}</span>`}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-ghost btn-sm" data-act="view-loan" data-ref="${l.app}">View</button>
+        <button class="btn btn-gold btn-sm" data-act="prepare-loan" data-ref="${l.app}">Prepare</button>
+      </td></tr>`;
+  }).join('') : `<tr><td colspan="9"><div class="empty">No approved loans match your filters.</div></td></tr>`;
+}
+
+/* ============================================================
+   SECTION 3 · PREPARATION
+   ============================================================ */
+function renderPrepOptions(){
+  const avail = state.loans.filter(l=>!l.prepared);
+  el('prepLoan').innerHTML = `<option value="">— choose an approved loan —</option>` +
+    avail.map(l=>`<option value="${l.app}">${l.app} · ${l.cust} · ${mk(l.approved)}</option>`).join('');
+}
+
+function fillPrep(app){
+  const l = state.loans.find(x=>x.app===app);
+  if(!l){
+    ['prepCust','prepAcct','prepAmount','prepRate','prepTerm','prepNet'].forEach(id=>el(id).value='');
+    el('prepChecks').innerHTML = '<div class="empty">Select an approved loan to see its requirement checks.</div>';
+    el('prepSummary').innerHTML = '<div class="empty">Deductions and net payable will appear here.</div>';
+    return;
+  }
+  const f = calcFees(l.approved);
+  el('prepCust').value = l.cust;
+  el('prepAcct').value = l.acct;
+  el('prepAmount').value = nf(l.approved);
+  el('prepRate').value = l.rate;
+  el('prepTerm').value = l.term;
+  el('prepNet').value = nf(f.net);
+  if(!el('prepRef').value) el('prepRef').value = nextRef();
+
+  const checks = [
+    ['Customer identity confirmed', l.docs.id, 'National ID matched to KYC record'],
+    ['Signed loan agreement on file', l.docs.agreement, l.docs.agreement?'ES-2026-'+l.app.slice(-4):'Missing signature page'],
+    ['Proof of income / payslip', l.docs.payslip, l.docs.payslip?'Uploaded 26 Oct':'Not uploaded'],
+    ['Guarantor confirmation', l.docs.guarantor, l.docs.guarantor?'Guarantor verified':'Awaiting guarantor signature'],
+    ['Within approval limit', l.approved<=15000000, 'Committee limit MK 15,000,000'],
+    ['No duplicate disbursement', !state.disb.some(d=>d.app===l.app && d.status!=='Rejected' && d.status!=='Cancelled'), 'Checked against register']
+  ];
+  el('prepChecks').innerHTML = checks.map(([t,ok,s])=>`
+    <div class="check"><div class="ck ${ok?'y':'n'}">${ok?'✓':'✕'}</div>
+      <div><b>${t}</b><span class="s">${s}</span></div></div>`).join('') +
+    (missingDocs(l).length ? `<div class="note red" style="margin-top:10px">Prepare may continue, but the release
+      will be blocked until missing requirements are resolved.</div>`
+      : `<div class="note" style="margin-top:10px">All requirements satisfied — ready for authorization.</div>`);
+
+  el('prepSummary').innerHTML = `
+    <div class="kv"><span class="k">Approved amount</span><span class="v">${mk(l.approved)}</span></div>
+    <div class="kv"><span class="k">Processing fee (${FEE.proc}%)</span><span class="v">− ${mk(f.proc)}</span></div>
+    <div class="kv"><span class="k">Insurance (${FEE.ins}%)</span><span class="v">− ${mk(f.ins)}</span></div>
+    <div class="kv"><span class="k">Other deductions</span><span class="v">− ${mk(f.other)}</span></div>
+    <div class="kv"><span class="k">Total deductions</span><span class="v">− ${mk(f.total)}</span></div>
+    <div class="kv"><span class="k" style="font-weight:800;color:var(--ink)">Net amount payable</span>
+      <span class="v big" style="color:#157A50">${mk(f.net)}</span></div>`;
+  return l;
+}
+
+/* ============================================================
+   SECTION 4 · AUTHORIZATION
+   ============================================================ */
+function renderAuth(){
+  const pend = state.disb.filter(d=>d.status==='Awaiting authorization');
+  el('authCount').textContent = pend.length + ' pending';
+  el('authBody').innerHTML = pend.length ? pend.map(d=>`
+    <tr>
+      <td style="font-weight:700;font-size:11.5px;white-space:nowrap">${d.ref}</td>
+      <td><div class="nm" style="font-weight:600;white-space:nowrap">${d.cust}</div><div class="tiny muted">${d.acct}</div></td>
+      <td class="num">${mk(d.amount)}<div class="tiny" style="color:#157A50;font-weight:600">net ${mk(d.net)}</div></td>
+      <td class="tiny" style="white-space:nowrap">${d.method}</td>
+      <td class="muted tiny" style="white-space:nowrap">${d.preparedBy}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-green btn-sm" data-act="authorize" data-ref="${d.ref}">Approve</button>
+        <button class="btn btn-ghost btn-sm" data-act="return" data-ref="${d.ref}">Return</button>
+        <button class="btn btn-red btn-sm" data-act="reject" data-ref="${d.ref}">Reject</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="6"><div class="empty">No disbursements are awaiting authorization.</div></td></tr>`;
+
+  el('authLimits').innerHTML = `
+    <div class="kv"><span class="k">Personal release limit</span><span class="v">MK 5,000,000</span></div>
+    <div class="kv"><span class="k">Credit committee limit</span><span class="v">MK 15,000,000</span></div>
+    <div class="kv"><span class="k">Above limit requires</span><span class="v">CFO + 2 authorizers</span></div>
+    <div class="kv"><span class="k">Daily authorization ceiling</span><span class="v">MK 40,000,000</span></div>
+    <div class="kv"><span class="k">Used today</span><span class="v">${mk(state.disb.filter(d=>d.date===today&&['Authorized','Processing','Awaiting confirmation','Successful'].includes(d.status)).reduce((s,d)=>s+d.amount,0))}</span></div>
+    <div class="kv"><span class="k">Segregation of duties</span><span class="v" style="color:#157A50">Enforced</span></div>`;
+
+  const hist = state.audit.filter(a=>['Authorized','Rejected'].includes(a[2])).slice(0,5);
+  el('authHist').innerHTML = hist.map(a=>`
+    <div class="li">
+      <div class="av" style="background:${a[2]==='Authorized'?'var(--green-soft)':'var(--red-soft)'};color:${a[2]==='Authorized'?'#157A50':'#B32C2C'}">
+        ${a[2]==='Authorized'?'✓':'✕'}</div>
+      <div><div class="t1">${a[2]} · ${a[1]}</div><div class="t2">${a[3]} · ${a[4].split('·')[0].trim()}</div></div>
+      <div class="amt"><b class="tiny muted">${a[0]}</b></div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   SECTION 5 · RECORD NEW DISBURSEMENT
+   ============================================================ */
+function renderRecord(){
+  const auth = state.disb.filter(d=>d.status==='Authorized');
+  el('recSel').innerHTML = `<option value="">— choose an authorized disbursement —</option>` +
+    auth.map(d=>`<option value="${d.ref}">${d.ref} · ${d.cust} · ${mk(d.amount)}</option>`).join('');
+  el('recReady').innerHTML = auth.length ? auth.map(d=>`
+    <div class="li"><div class="av">${initials(d.cust)}</div>
+      <div><div class="t1">${d.cust}</div><div class="t2">${d.ref} · ${d.method}</div></div>
+      <div class="amt"><b>${mk(d.net)}</b><span>net payable</span></div></div>`).join('')
+    : `<div class="empty">Nothing authorized and waiting for release.</div>`;
+}
+
+function fillRecord(ref){
+  const d = state.disb.find(x=>x.ref===ref);
+  if(!d){ el('recCust').value=''; el('recAmount').value=''; return; }
+  el('recCust').value = `${d.cust} · ${d.app} · ${d.acct}`;
+  el('recAmount').value = d.net;
+  el('recMethod').value = d.method;
+  el('recTxn').value = '';
+  el('recBank').value = d.method==='Cash' ? 'Branch cash desk' : '';
+}
+
+/* ============================================================
+   SECTION 6 · REGISTER
+   ============================================================ */
+const regState = {page:1, size:10};
+
+function filterRegister(){
+  const q = (el('regSearch').value||'').toLowerCase();
+  const from = el('regFrom').value, to = el('regTo').value;
+  const method = el('regMethod').value, status = el('regStatus').value, officer = el('regOfficer').value;
+  return state.disb.filter(d=>{
+    if(q && !(d.cust+d.acct+d.app+d.ref).toLowerCase().includes(q)) return false;
+    if(from && d.date < from) return false;
+    if(to && d.date > to) return false;
+    if(method && d.method!==method) return false;
+    if(status && d.status!==status) return false;
+    if(officer && d.officer!==officer) return false;
+    return true;
+  }).sort((a,b)=> b.date===a.date ? b.ref.localeCompare(a.ref) : b.date.localeCompare(a.date));
+}
+
+function renderRegister(){
+  const rows = filterRegister();
+  const pages = Math.max(1, Math.ceil(rows.length/regState.size));
+  if(regState.page>pages) regState.page = pages;
+  const slice = rows.slice((regState.page-1)*regState.size, regState.page*regState.size);
+  el('regBody').innerHTML = slice.length ? slice.map(d=>`
+    <tr>
+      <td style="font-weight:700;font-size:11.5px">${d.ref}</td>
+      <td class="tiny muted">${d.date}</td>
+      <td><div class="nm" style="font-weight:600">${d.cust}</div><div class="tiny muted">${d.acct}</div></td>
+      <td class="tiny muted">${d.app}</td>
+      <td class="num">${mk(d.amount)}</td>
+      <td class="num">${mk(d.net)}</td>
+      <td class="tiny">${d.method}</td>
+      <td class="tiny muted">${d.officer}</td>
+      <td>${chip(d.status)}</td>
+      <td><button class="btn btn-ghost btn-sm" data-act="view-disb" data-ref="${d.ref}">View</button></td>
+    </tr>`).join('')
+    : `<tr><td colspan="10"><div class="empty">No disbursements match these filters.</div></td></tr>`;
+  el('regPager').innerHTML = `
+    <span>${rows.length} record${rows.length===1?'':'s'} · page ${regState.page} of ${pages}</span>
+    <button data-act="reg-prev" ${regState.page<=1?'disabled':''}>Prev</button>
+    <button data-act="reg-next" ${regState.page>=pages?'disabled':''}>Next</button>`;
+}
+
+/* ============================================================
+   SECTION 7 · METHODS
+   ============================================================ */
+const METHODS = [
+  {name:'Bank Transfer', icon:'🏦', enabled:true, color:'#2F6FED', txns:12, value:18.4, fee:'MK 0 (absorbed)'},
+  {name:'Airtel Money', icon:'📱', enabled:true, color:'#D93F3F', txns:9, value:3.2, fee:'1.2% wallet charge'},
+  {name:'TNM Mpamba', icon:'📲', enabled:true, color:'#1E9E6A', txns:5, value:2.1, fee:'1.0% wallet charge'},
+  {name:'Cash', icon:'💵', enabled:true, color:'#C9A227', txns:4, value:1.4, fee:'—'},
+  {name:'Cheque', icon:'🧾', enabled:false, color:'#7C5CF0', txns:0, value:0, fee:'MK 5,000 handling'}
+];
+
+function renderMethods(){
+  el('methodCards').innerHTML = METHODS.map((m,i)=>`
+    <div class="method">
+      <div class="method-top">
+        <div class="mi" style="background:${m.color}1A;color:${m.color};font-size:14px">${m.icon}</div>
+        <div><b>${m.name}</b><div class="ms">${m.enabled?'Enabled':'Disabled'} · ${m.fee}</div></div>
+        <button class="toggle ${m.enabled?'on':''}" data-act="toggle-method" data-idx="${i}" style="margin-left:auto"></button>
+      </div>
+      <div class="mv"><span class="muted">Transactions</span><b>${m.txns}</b></div>
+      <div class="mv"><span class="muted">Value released</span><b>MK ${m.value.toFixed(1)}M</b></div>
+    </div>`).join('');
+
+  el('methodFailures').innerHTML = [
+    ['Bank Transfer', 12, 1, 'Beneficiary name mismatch'],
+    ['Airtel Money', 9, 2, 'Wallet limit exceeded'],
+    ['TNM Mpamba', 5, 1, 'Invalid wallet number'],
+    ['Cash', 4, 0, '—'],
+    ['Cheque', 0, 0, '—']
+  ].map(([m,a,f,r])=>`<tr><td style="font-weight:600">${m}</td><td class="num">${a}</td>
+    <td class="num">${f}</td><td class="num">${a?Math.round(f/a*100):0}%</td>
+    <td class="tiny muted">${r}</td></tr>`).join('');
+
+  el('methodRules').innerHTML = [
+    ['Bank transfer — account name must match KYC exactly', true],
+    ['Mobile money — wallet registered in customer name', true],
+    ['Mobile money — wallet tier limit checked before release', true],
+    ['Cash — collected at counter with biometric or ID check', true],
+    ['Cheque — only for amounts above MK 2,000,000', true],
+    ['Every method must store a unique transaction reference', true]
+  ].map(([t,ok])=>`<div class="check"><div class="ck ${ok?'y':'w'}">${ok?'✓':'!'}</div>
+    <div><b>${t}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 8 · VERIFICATION
+   ============================================================ */
+let verifSel = null;
+
+function renderVerify(){
+  const pend = state.disb.filter(d=>['Processing','Awaiting confirmation'].includes(d.status));
+  el('verifCount').textContent = pend.length + ' pending';
+  el('verifBody').innerHTML = pend.length ? pend.map(d=>`
+    <tr>
+      <td style="font-weight:700;font-size:11.5px">${d.ref}</td>
+      <td><div class="nm" style="font-weight:600;white-space:nowrap">${d.cust}</div><div class="tiny muted">${d.acct}</div></td>
+      <td class="num">${mk(d.net)}</td>
+      <td class="tiny">${d.method}</td>
+      <td class="tiny muted">${d.txn||'—'}</td>
+      <td><button class="btn btn-gold btn-sm" data-act="verif-open" data-ref="${d.ref}">Verify</button></td>
+    </tr>`).join('')
+    : `<tr><td colspan="6"><div class="empty">No payments awaiting confirmation.</div></td></tr>`;
+  renderVerifPanel();
+}
+
+function renderVerifPanel(){
+  if(!verifSel){ el('verifPanel').innerHTML = '<div class="empty">No disbursement selected.</div>'; return; }
+  const d = state.disb.find(x=>x.ref===verifSel);
+  if(!d){ el('verifPanel').innerHTML = '<div class="empty">No disbursement selected.</div>'; return; }
+  el('verifPanel').innerHTML = `
+    <div class="kv"><span class="k">Reference</span><span class="v">${d.ref}</span></div>
+    <div class="kv"><span class="k">Customer</span><span class="v">${d.cust}</span></div>
+    <div class="kv"><span class="k">Amount released</span><span class="v">${mk(d.net)}</span></div>
+    <div class="kv"><span class="k">Method</span><span class="v">${d.method}</span></div>
+    <div class="kv"><span class="k">Transaction reference</span><span class="v">${d.txn||'—'}</span></div>
+    <div style="margin-top:8px">
+      ${[['Transaction reference matches the bank / wallet statement', !!d.txn],
+         ['Amount released equals the authorized net payable', true],
+         ['Payment evidence attached', true],
+         ['Customer confirmed receipt (call or SMS reply)', d.status==='Awaiting confirmation']]
+        .map(([t,ok])=>`<div class="check"><div class="ck ${ok?'y':'w'}">${ok?'✓':'!'}</div>
+          <div><b>${t}</b></div></div>`).join('')}
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-green btn-sm" data-act="verify-ok" data-ref="${d.ref}">Mark successfully disbursed</button>
+      <button class="btn btn-red btn-sm" data-act="verify-fail" data-ref="${d.ref}">Reject confirmation</button>
+    </div>`;
+}
+
+function renderVerifHist(){
+  const hist = state.disb.filter(d=>d.status==='Successful').slice(0,5);
+  el('verifHist').innerHTML = hist.map(d=>`
+    <div class="li"><div class="av" style="background:var(--green-soft);color:#157A50">✓</div>
+      <div><div class="t1">${d.cust} · ${mk(d.net)}</div><div class="t2">${d.ref} · ${d.method} · ${d.date}</div></div>
+      <div class="amt"><b class="tiny" style="color:#157A50">Confirmed</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 9 · STATUS TRACKING
+   ============================================================ */
+const STATUSES = ['Draft','Awaiting authorization','Authorized','Processing','Awaiting confirmation',
+  'Successful','Failed','Rejected','Cancelled','Reversed'];
+
+function statusColor(s){
+  return {Draft:'#5A6172','Awaiting authorization':'#9A6A0D',Authorized:'#2456C4',Processing:'#5A3FCB',
+    'Awaiting confirmation':'#1E5FBF',Successful:'#157A50',Failed:'#B32C2C',Rejected:'#962626',
+    Cancelled:'#616B7C',Reversed:'#8E2F45'}[s] || '#5A6172';
+}
+
+function renderStatus(){
+  const counts = {};
+  STATUSES.forEach(s=>counts[s] = state.disb.filter(d=>d.status===s).length);
+  el('statusTiles').innerHTML = STATUSES.map(s=>`
+    <div class="card mini" data-act="filter-status" data-ref="${s}" style="cursor:pointer">
+      <div class="m-ic" style="background:${statusColor(s)}1A;color:${statusColor(s)}">${counts[s]}</div>
+      <div style="min-width:0"><div class="m-v">${counts[s]}</div><div class="m-l">${s}</div></div>
+    </div>`).join('');
+
+  const changes = state.changes.slice(0,10);
+  el('statusChanges').innerHTML = changes.length ? changes.map(c=>`
+    <tr><td class="tiny muted">${c.time}</td><td class="tiny" style="font-weight:700">${c.ref}</td>
+      <td class="tiny">${c.from?chip(c.from):'—'}</td><td class="tiny">${chip(c.to)}</td>
+      <td class="tiny muted">${c.by}</td></tr>`).join('')
+    : `<tr><td colspan="5"><div class="empty">No status changes recorded yet — walk the workflow above.</div></td></tr>`;
+
+  el('statusTimeline').innerHTML = [
+    ['Draft prepared','Instruction captured, not yet submitted', counts['Draft']],
+    ['Awaiting authorization','Queued for second-line control', counts['Awaiting authorization']],
+    ['Authorized','Cleared for release', counts['Authorized']],
+    ['Processing','Funds released to channel', counts['Processing']],
+    ['Awaiting confirmation','Monitoring receipt by customer', counts['Awaiting confirmation']],
+    ['Successful','Confirmed and ready for activation', counts['Successful']],
+    ['Exceptions','Failed, rejected or reversed', counts['Failed']+counts['Rejected']+counts['Reversed']]
+  ].map(([t,s,n])=>`<div class="tl-item"><b>${t} · ${n}</b><span>${s}</span></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 10 · FAILED & EXCEPTIONAL
+   ============================================================ */
+function renderFails(){
+  const rows = state.disb.filter(d=>['Failed','Rejected','Reversed'].includes(d.status));
+  el('failCount').textContent = rows.length + ' in exceptions';
+  el('failBody').innerHTML = rows.length ? rows.map(d=>`
+    <tr>
+      <td style="font-weight:700;font-size:11.5px">${d.ref}</td>
+      <td><div class="nm" style="font-weight:600">${d.cust}</div><div class="tiny muted">${d.acct}</div></td>
+      <td class="num">${mk(d.net)}</td>
+      <td class="tiny">${d.method}</td>
+      <td class="tiny" style="color:#B32C2C">${d.reason || 'Rejected by authorizer'}</td>
+      <td class="num">${d.attempts||1}</td>
+      <td>${d.status==='Failed'?'<span class="chip st-fail">Open</span>':chip(d.status)}</td>
+      <td style="white-space:nowrap">
+        ${d.status==='Failed'?`<button class="btn btn-ghost btn-sm" data-act="retry" data-ref="${d.ref}">Retry</button>
+        <button class="btn btn-ghost btn-sm" data-act="correct" data-ref="${d.ref}">Correct</button>`:''}
+        <button class="btn btn-red btn-sm" data-act="cancel" data-ref="${d.ref}">Cancel</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="8"><div class="empty">No failed or exceptional disbursements.</div></td></tr>`;
+
+  el('failHistory').innerHTML = [
+    ['09:58','C. Mwale','Retried DIS-2026-1037 after correcting account name','Resent to bank'],
+    ['09:22','S. Zimba','Corrected recipient details on DIS-2026-1039','Re-authorized'],
+    ['08:58','C. Mwale','Marked DIS-2026-1037 as failed','Exception opened'],
+    ['08:12','System','Bank returned funds for DIS-2026-1033','Marked reversed']
+  ].map(([t,by,what,res])=>`
+    <div class="li"><div class="av">${initials(by)}</div>
+      <div><div class="t1">${what}</div><div class="t2">${by} · ${t} · ${res}</div></div></div>`).join('');
+
+  el('failRules').innerHTML = [
+    ['Block automatic retry when the beneficiary name mismatches'],
+    ['Duplicate detection on customer + amount + 24h window'],
+    ['Wallet / bank declines require manual correction'],
+    ['Retries above MK 1,000,000 need re-authorization'],
+    ['Reversed transactions re-open the loan for disbursement']
+  ].map(([t])=>`<div class="check"><div class="ck y">✓</div><div><b>${t}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 11 · FEES
+   ============================================================ */
+function renderFees(){
+  const amt = +el('feeAmount').value||0, proc = +el('feeProc').value||0,
+        ins = +el('feeIns').value||0, other = +el('feeOther').value||0, waive = +el('feeWaive').value||0;
+  const f = calcFees(amt, proc, ins, other, waive);
+  el('feeNet').value = nf(f.net);
+  el('feeBreak').innerHTML = `
+    <div class="kv"><span class="k">Approved loan amount</span><span class="v">${mk(amt)}</span></div>
+    <div class="kv"><span class="k">Processing fee (${proc}%)</span><span class="v">− ${mk(f.proc)}</span></div>
+    <div class="kv"><span class="k">Insurance / charges (${ins}%)</span><span class="v">− ${mk(f.ins)}</span></div>
+    <div class="kv"><span class="k">Other authorized deductions</span><span class="v">− ${mk(other)}</span></div>
+    <div class="kv"><span class="k">Approved waiver</span><span class="v">+ ${mk(waive)}</span></div>
+    <div class="kv"><span class="k">Total deductions</span><span class="v">− ${mk(f.total)}</span></div>
+    <div class="kv"><span class="k" style="font-weight:800;color:var(--ink)">Net payable to customer</span>
+      <span class="v big" style="color:#157A50">${mk(f.net)}</span></div>`;
+}
+
+function renderFeeRules(){
+  el('feeRules').innerHTML = `
+    <div class="kv"><span class="k">Processing fee</span><span class="v">2.5% of approved amount</span></div>
+    <div class="kv"><span class="k">Insurance / credit life</span><span class="v">1.0% of approved amount</span></div>
+    <div class="kv"><span class="k">Minimum fee</span><span class="v">MK 25,000</span></div>
+    <div class="kv"><span class="k">Maximum combined deduction</span><span class="v">7.5% of principal</span></div>
+    <div class="kv"><span class="k">Waiver approval threshold</span><span class="v">MK 150,000</span></div>
+    <div class="kv"><span class="k">Fees are collected</span><span class="v">Upfront, deducted at release</span></div>`;
+  el('feeWaivers').innerHTML = [
+    ['Memory Nkhoma','LN-2026-1831','Processing fee waiver · MK 11,250','Pending'],
+    ['Esther Kamanga','LN-2026-1822','Insurance waiver · MK 1,500','Pending'],
+    ['Grace Mvula','LN-2026-1839','Late adjustment · MK 4,000','Awaiting CFO']
+  ].map(([n,a,r,s])=>`
+    <div class="li"><div class="av">${initials(n)}</div>
+      <div><div class="t1">${n}</div><div class="t2">${a} · ${r}</div></div>
+      <div class="amt"><b class="tiny" style="color:#9A6A0D">${s}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 12 · ACTIVATION
+   ============================================================ */
+let actSel = null;
+
+function renderActivation(){
+  const ready = state.disb.filter(d=>d.status==='Successful' && !d.activated);
+  el('actCount').textContent = ready.length + ' ready';
+  el('actBody').innerHTML = ready.length ? ready.map(d=>`
+    <tr><td style="font-weight:700;font-size:11.5px">${d.ref}</td>
+      <td><div class="nm" style="font-weight:600">${d.cust}</div><div class="tiny muted">${d.app}</div></td>
+      <td class="num">${mk(d.amount)}</td>
+      <td class="tiny muted">${d.date}</td>
+      <td class="tiny">LN-AC-${d.ref.slice(-4)}</td>
+      <td><button class="btn btn-gold btn-sm" data-act="act-open" data-ref="${d.ref}">Activate</button></td></tr>`).join('')
+    : `<tr><td colspan="6"><div class="empty">All confirmed disbursements have been activated.</div></td></tr>`;
+
+  if(actSel){
+    const d = state.disb.find(x=>x.ref===actSel);
+    if(d){
+      el('actPanel').innerHTML = `
+        <div class="kv"><span class="k">Disbursement</span><span class="v">${d.ref}</span></div>
+        <div class="kv"><span class="k">Customer</span><span class="v">${d.cust}</span></div>
+        <div class="kv"><span class="k">Principal disbursed</span><span class="v">${mk(d.amount)}</span></div>
+        <div class="kv"><span class="k">Disbursement date</span><span class="v">${d.date}</span></div>
+        <div class="kv"><span class="k">First repayment due</span><span class="v">30 Nov 2026</span></div>
+        <div style="margin-top:8px">
+          ${['Disbursement confirmed successful','Disbursement linked to loan account','Repayment schedule generated',
+             'First due date set','Outstanding balance updated','Customer notified by SMS']
+            .map(t=>`<div class="check"><div class="ck y">✓</div><div><b>${t}</b></div></div>`).join('')}
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold btn-sm" data-act="activate" data-ref="${d.ref}">Activate loan account</button>
+          <button class="btn btn-ghost btn-sm" data-act="act-close">Cancel</button>
+        </div>`;
+    }
+  }
+
+  const done = state.disb.filter(d=>d.activated).slice(0,5);
+  el('actHistory').innerHTML = done.length ? done.map(d=>`
+    <div class="li"><div class="av" style="background:var(--green-soft);color:#157A50">✓</div>
+      <div><div class="t1">${d.cust}</div><div class="t2">LN-AC-${d.ref.slice(-4)} · schedule generated</div></div>
+      <div class="amt"><b>${mk(d.amount)}</b><span>${d.date}</span></div></div>`).join('')
+    : `<div class="empty">No activations today.</div>`;
+}
+
+/* ============================================================
+   SECTION 13 · DOCUMENTS
+   ============================================================ */
+const DOC_LIST = [
+  ['Loan Agreement','Signed by customer and guarantor','ES-2026-####.pdf'],
+  ['Disbursement Authorization','Credit committee / CFO sign-off','AUTH-2026-####.pdf'],
+  ['Customer Identification','National ID + KYC pack','KYC-####.pdf'],
+  ['Payment Confirmation Evidence','Bank or wallet proof of payment','EVD-####.png'],
+  ['Disbursement Advice','Sent to finance and customer','ADV-####.pdf'],
+  ['Disbursement Receipt','Counter receipt / e-receipt','RCP-####.pdf'],
+  ['Customer Acknowledgment','Signed receipt of funds','ACK-####.pdf']
+];
+
+function renderDocs(){
+  const refs = state.disb.filter(d=>['Successful','Processing','Awaiting confirmation'].includes(d.status));
+  const keep = el('docSelect').value;
+  el('docSelect').innerHTML = refs.map(d=>`<option value="${d.ref}">${d.ref} · ${d.cust}</option>`).join('')
+    || `<option value="">No disbursements</option>`;
+  if(keep && refs.some(r=>r.ref===keep)) el('docSelect').value = keep;
+  const ref = el('docSelect').value || (refs[0] && refs[0].ref);
+  el('docRef').textContent = ref || '—';
+  el('docList').innerHTML = DOC_LIST.map(([t,s,f])=>`
+    <div class="doc">
+      <div class="di">${ICONS.doc}</div>
+      <div><div class="dn">${t}</div><div class="ds">${s} · ${f.replace('####', (ref||'').slice(-4))}</div></div>
+      <div class="da">
+        <button class="btn btn-ghost btn-sm" data-act="doc-dl" data-ref="${t}">Download</button>
+        <button class="btn btn-ghost btn-sm" data-act="doc-print" data-ref="${t}">Print</button>
+      </div>
+    </div>`).join('');
+  el('docHistory').innerHTML = [
+    ['C. Mwale','Verified loan agreement and authorization','09:41'],
+    ['G. Mtemang\'ombe','Uploaded payment confirmation evidence','09:12'],
+    ['System','Customer acknowledgment captured via SMS','08:58'],
+    ['T. Phiri','Re-uploaded signed agreement (previous scan illegible)','08:22']
+  ].map(([who,what,t])=>`
+    <div class="li"><div class="av">${initials(who)}</div>
+      <div><div class="t1">${what}</div><div class="t2">${who} · ${t}</div></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 14 · RECONCILIATION
+   ============================================================ */
+function renderRecon(){
+  const channels = [
+    ['Bank Transfer', 18.4, 18.4, 12, 'Matched'],
+    ['Airtel Money', 3.2, 3.05, 9, 'Variance'],
+    ['TNM Mpamba', 2.1, 2.1, 5, 'Matched'],
+    ['Cash', 1.4, 1.4, 4, 'Matched'],
+    ['Cheque', 0, 0, 0, 'No activity']
+  ];
+  el('reconBody').innerHTML = channels.map(([c,a,act,n,state])=>{
+    const v = +(act-a).toFixed(2);
+    return `<tr><td style="font-weight:600">${c}</td>
+      <td class="num">${mkm(a*1e6)}</td><td class="num">${mkm(act*1e6)}</td>
+      <td class="num" style="color:${v===0?'#157A50':'#B32C2C'}">${v===0?'—':'− '+mkm(Math.abs(v)*1e6)}</td>
+      <td class="num">${n}</td>
+      <td>${state==='Matched'?'<span class="chip st-ok">Matched</span>'
+        : state==='Variance'?'<span class="chip st-fail">Variance</span>'
+        : '<span class="chip st-canc">No activity</span>'}</td></tr>`;
+  }).join('');
+
+  el('reconDisc').innerHTML = [
+    ['Airtel Money','Wallet debit MK 150,000 lower than authorized','MK 150,000'],
+    ['Bank Transfer','Duplicate reference FT2610307712 flagged','MK 900,000'],
+    ['Cash','Counter slip missing for DIS-2026-1034','MK 380,000']
+  ].map(([ch,what,amt])=>`
+    <div class="li"><div class="av" style="background:var(--red-soft);color:#B32C2C">!</div>
+      <div><div class="t1">${what}</div><div class="t2">${ch}</div></div>
+      <div class="amt"><b>${amt}</b><span>variance</span></div></div>`).join('');
+
+  el('reconHist').innerHTML = [
+    ['30 Oct 2026','3 variances · 30 transactions','Open'],
+    ['29 Oct 2026','0 variances · 26 transactions','Balanced'],
+    ['28 Oct 2026','1 variance · 22 transactions','Resolved'],
+    ['27 Oct 2026','0 variances · 24 transactions','Balanced'],
+    ['26 Oct 2026','2 variances · 19 transactions','Resolved']
+  ].map(([d,s,st])=>`
+    <div class="li"><div class="av">${st==='Open'?'!':'✓'}</div>
+      <div><div class="t1">${d}</div><div class="t2">${s}</div></div>
+      <div class="amt"><b class="tiny" style="color:${st==='Open'?'#B32C2C':'#157A50'}">${st}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 15 · REPORTS
+   ============================================================ */
+const REPORTS = [
+  ['Daily Disbursement Report','Releases, values and exceptions for a single day'],
+  ['Weekly Disbursement Report','Seven-day roll-up by branch and officer'],
+  ['Monthly Disbursement Report','Full month with targets and variances'],
+  ['Disbursements by Loan Product','Volume and value per product'],
+  ['Disbursements by Payment Method','Channel mix and failure rate'],
+  ['Disbursements by Staff Member','Officer productivity and limits'],
+  ['Successful Disbursement Report','Confirmed and activated releases'],
+  ['Failed Disbursement Report','Exceptions with resolution status'],
+  ['Pending Disbursement Report','Pipeline awaiting authorization or release'],
+  ['Fees & Deductions Report','Processing fees, insurance and waivers'],
+  ['Disbursement Reconciliation Report','Authorized vs actual by channel'],
+  ['Disbursement Audit Report','Full action trail for compliance']
+];
+
+function renderReports(){
+  el('reportCards').innerHTML = REPORTS.map(([t,s])=>`
+    <div class="card panel" style="padding:13px">
+      <div class="panel-title" style="font-size:12.5px">${t}</div>
+      <div class="panel-sub" style="min-height:30px">${s}</div>
+      <div style="display:flex;gap:6px;margin-top:6px">
+        <button class="btn btn-ghost btn-sm" data-act="report-pdf" data-ref="${t}">PDF</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-xls" data-ref="${t}">Excel</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-csv" data-ref="${t}">CSV</button>
+      </div>
+    </div>`).join('');
+
+  mkHBars(el('chProduct'), [
+    {label:'Business Growth', value:26.4, color:'#C9A227', display:'26.4M'},
+    {label:'Asset Finance', value:14.2, color:'#2F6FED', display:'14.2M'},
+    {label:'Agri Input', value:8.6, color:'#1E9E6A', display:'8.6M'},
+    {label:'Group Loan', value:6.1, color:'#7C5CF0', display:'6.1M'},
+    {label:'Salary Advance', value:5.4, color:'#E08C1E', display:'5.4M'},
+    {label:'Emergency', value:2.7, color:'#D93F3F', display:'2.7M'}
+  ]);
+
+  const methodData = [
+    {label:'Bank Transfer', value:18.4, color:'#2F6FED'},
+    {label:'Airtel Money', value:3.2, color:'#D93F3F'},
+    {label:'TNM Mpamba', value:2.1, color:'#1E9E6A'},
+    {label:'Cash', value:1.4, color:'#C9A227'}
+  ];
+  el('chMethod').innerHTML = '<div id="chMethodDonut"></div><div id="chMethodLegend" style="min-width:180px"></div>';
+  mkDonut(el('chMethodDonut'), methodData, {size:160, center:'MK 25.1M', caption:'RELEASED'});
+  el('chMethodLegend').innerHTML = methodData.map(d=>`
+    <div class="kv"><span class="k" style="display:flex;align-items:center;gap:6px">
+      <i style="width:7px;height:7px;border-radius:50%;background:${d.color};display:block"></i>${d.label}</span>
+      <span class="v">MK ${d.value.toFixed(1)}M</span></div>`).join('');
+
+  mkHBars(el('chStaff'), [
+    {label:'T. Phiri', value:18.4, color:'#C9A227', display:'18.4M'},
+    {label:'L. Chirwa', value:16.2, color:'#2F6FED', display:'16.2M'},
+    {label:'S. Zimba', value:14.8, color:'#7C5CF0', display:'14.8M'},
+    {label:'A. Mbewe', value:8.6, color:'#1E9E6A', display:'8.6M'},
+    {label:"G. Mtemang'ombe", value:5.4, color:'#E08C1E', display:'5.4M'}
+  ]);
+
+  mkChart(el('chTrend'), {type:'line', height:220,
+    labels:['17','18','21','22','23','24','25','28','29','30'],
+    series:[{name:'Released', color:'#C9A227', data:[4.2,5.1,6.3,4.8,5.6,7.1,5.2,6.4,6.1,7.8]}]});
+}
+
+/* ============================================================
+   SECTION 16 · NOTIFICATIONS
+   ============================================================ */
+function renderNotifications(){
+  el('notifRules').innerHTML = [
+    ['Approval requested → authorizers (in-app + email)'],
+    ['Pending authorization > 2 hours → reminder'],
+    ['Disbursement released → finance + officer'],
+    ['Customer disbursement confirmation → SMS'],
+    ['Failed transaction → officer + supervisor'],
+    ['Loan activated → customer SMS with first due date'],
+    ['Daily reconciliation summary → administrator']
+  ].map(([t])=>`<div class="check"><div class="ck y">✓</div><div><b>${t}</b></div></div>`).join('');
+
+  el('notifHist').innerHTML = state.notifs.map(([t,to,ch,msg,st])=>`
+    <tr><td class="tiny muted">${t}</td><td class="tiny" style="font-weight:600">${to}</td>
+      <td class="tiny">${ch}</td><td class="tiny muted">${msg}</td>
+      <td><span class="chip ${st==='Failed'?'st-fail':st==='Unread'?'st-await':'st-ok'}">${st}</span></td></tr>`).join('');
+}
+
+/* ============================================================
+   SECTION 17 · AUDIT
+   ============================================================ */
+function renderAudit(){
+  const q = (el('auditSearch').value||'').toLowerCase();
+  const act = el('auditAction').value;
+  const rows = state.audit.filter(a=>{
+    if(q && !(a[1]+a[3]+a[4]).toLowerCase().includes(q)) return false;
+    if(act && a[2]!==act) return false;
+    return true;
+  });
+  el('auditBody').innerHTML = rows.length ? rows.map(a=>`
+    <tr><td class="tiny muted">${a[0]}</td><td class="tiny" style="font-weight:700">${a[1]}</td>
+      <td class="tiny">${a[2]}</td><td class="tiny">${a[3]}</td><td class="tiny muted">${a[4]}</td>
+      <td class="tiny muted">${a[5]}</td>
+      <td><span class="chip ${a[6]==='Blocked'?'st-fail':'st-ok'}">${a[6]}</span></td></tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No audit entries match your filters.</div></td></tr>`;
+
+  el('auditAlerts').innerHTML = [
+    ['L. Chirwa','Attempted to authorize MK 9,200,000 above personal limit','08:02','Blocked'],
+    ['Unknown session','Disbursement record accessed from unrecognised device','07:41','Flagged']
+  ].map(([who,what,t,st])=>`
+    <div class="li"><div class="av" style="background:var(--red-soft);color:#B32C2C">!</div>
+      <div><div class="t1">${what}</div><div class="t2">${who} · ${t}</div></div>
+      <div class="amt"><b class="tiny" style="color:#B32C2C">${st}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 18 · SETTINGS
+   ============================================================ */
+function renderSettings(){
+  el('setMethods').innerHTML = METHODS.map((m,i)=>`
+    <div class="setrow">
+      <div><div class="sk">${m.name}</div><div class="ss">${m.fee}</div></div>
+      <div class="sv"><button class="toggle ${m.enabled?'on':''}" data-act="toggle-method" data-idx="${i}"></button></div>
+    </div>`).join('') + `
+    <div class="setrow"><div><div class="sk">Per-transaction ceiling</div>
+      <div class="ss">Above this amount, two authorizers are required</div></div>
+      <div class="sv"><input type="number" value="5000000" /></div></div>`;
+
+  el('setApproval').innerHTML = `
+    <div class="setrow"><div><div class="sk">Require second-line authorization</div>
+      <div class="ss">Preparer cannot authorize their own instruction</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>
+    <div class="setrow"><div><div class="sk">Officer release limit</div><div class="ss">Per user role</div></div>
+      <div class="sv"><input type="number" value="5000000" /></div></div>
+    <div class="setrow"><div><div class="sk">Committee limit</div><div class="ss">Credit committee sign-off</div></div>
+      <div class="sv"><input type="number" value="15000000" /></div></div>
+    <div class="setrow"><div><div class="sk">Re-authorization after edit</div>
+      <div class="ss">Any change to amount or recipient restarts approval</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>
+    <div class="setrow"><div><div class="sk">Require authorization notes</div><div class="ss">Mandatory comment on rejection</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>`;
+
+  el('setRules').innerHTML = `
+    <div class="setrow"><div><div class="sk">Required documents before release</div>
+      <div class="ss">Signed agreement, ID, proof of income</div></div>
+      <div class="sv"><select><option>All required</option><option>Agreement + ID only</option></select></div></div>
+    <div class="setrow"><div><div class="sk">Block release when documents are missing</div>
+      <div class="ss">Draft is kept, authorization blocked</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>
+    <div class="setrow"><div><div class="sk">Eligibility: KYC verified</div><div class="ss">Customer must pass KYC</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>
+    <div class="setrow"><div><div class="sk">Duplicate release window</div><div class="ss">Hours used for duplicate detection</div></div>
+      <div class="sv"><input type="number" value="24" /></div></div>
+    <div class="setrow"><div><div class="sk">Auto-activate loan on confirmation</div>
+      <div class="ss">Generate schedule immediately</div></div>
+      <div class="sv"><button class="toggle" data-act="toggle"></button></div></div>`;
+
+  el('setFees').innerHTML = `
+    <div class="setrow"><div><div class="sk">Disbursement reference format</div>
+      <div class="ss">Prefix and sequence</div></div>
+      <div class="sv"><input type="text" value="DIS-YYYY-NNNN" /></div></div>
+    <div class="setrow"><div><div class="sk">Processing fee</div><div class="ss">% of approved amount</div></div>
+      <div class="sv"><input type="number" step="0.1" value="2.5" /></div></div>
+    <div class="setrow"><div><div class="sk">Insurance / credit life</div><div class="ss">% of approved amount</div></div>
+      <div class="sv"><input type="number" step="0.1" value="1" /></div></div>
+    <div class="setrow"><div><div class="sk">Payment confirmation required</div>
+      <div class="ss">Before activation</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>
+    <div class="setrow"><div><div class="sk">Customer SMS on release</div><div class="ss">Notify recipient instantly</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>`;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+function logChange(ref, from, to, by='C. Mwale'){
+  state.changes.unshift({time:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    ref, from, to, by});
+  state.changes = state.changes.slice(0,40);
+}
+function logAudit(ref, action, detail, outcome='Success'){
+  state.audit.unshift([new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    ref, action, 'C. Mwale', detail, '196.44.21.4', outcome]);
+}
+const findByRef = ref => state.disb.find(d=>d.ref===ref);
+const stamp = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+
+function prepareLoan(app){
+  const l = state.loans.find(x=>x.app===app);
+  if(!l) return;
+  el('prepLoan').value = app;
+  fillPrep(app);
+  el('prepRef').value = nextRef();
+  document.getElementById('s3').scrollIntoView({behavior:'smooth', block:'start'});
+  toast(`${l.cust} loaded into the preparation form`, 'info');
+}
+
+function submitPreparation(){
+  const app = el('prepLoan').value;
+  if(!app) return toast('Select an approved loan first', 'err');
+  const l = state.loans.find(x=>x.app===app);
+  const method = el('prepMethod').value;
+  if(!method) return toast('Select a disbursement method', 'err');
+  const ref = el('prepRef').value.trim() || nextRef();
+  if(state.disb.some(d=>d.ref===ref)) return toast('That reference already exists', 'err');
+
+  const f = calcFees(l.approved);
+  const missing = missingDocs(l);
+  const status = missing.length ? 'Draft' : 'Awaiting authorization';
+  state.disb.unshift({
+    ref, app:l.app, cust:l.cust, acct:l.acct, product:l.product, amount:l.approved, method,
+    officer:l.officer, date:today, status, txn:'', activated:false, fees:f, net:f.net,
+    preparedBy:'C. Mwale', authorizedBy:'', notes:el('prepNotes').value, attempts:0,
+    reason: missing.length ? 'Missing requirements: ' + missing.join(', ') : ''
+  });
+  l.prepared = true;
+  logChange(ref, null, status);
+  logAudit(ref, 'Created', 'Prepared ' + method + ' release for ' + l.cust);
+  state.notifs.unshift([stamp(), 'Credit Committee', 'In-app', `${ref} submitted for authorization`, 'Unread']);
+
+  toast(status==='Draft'
+    ? `${ref} saved as draft — ${missing.length} requirement(s) outstanding`
+    : `${ref} submitted for authorization`, status==='Draft'?'info':'ok');
+  el('prepLoan').value=''; fillPrep(''); el('prepRef').value=''; el('prepNotes').value=''; el('prepMethod').value='';
+  el('prepBadge').textContent = status;
+  renderAll();
+}
+
+function authorizeDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  if(d.net > 5000000){
+    toast('Amount above your personal limit — routed to CFO', 'err');
+    logAudit(ref, 'Authorization attempt', 'Above personal limit', 'Blocked');
+    renderAudit();
+    return;
+  }
+  const from = d.status;
+  d.status = 'Authorized'; d.authorizedBy = 'C. Mwale';
+  logChange(ref, from, 'Authorized');
+  logAudit(ref, 'Authorized', 'Approved release of ' + mk(d.net));
+  state.notifs.unshift([stamp(), d.officer, 'In-app', `${ref} authorized — ready for release`, 'Unread']);
+  toast(`${ref} authorized`, 'ok');
+  renderAll();
+}
+
+function rejectDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  const from = d.status;
+  d.status = 'Rejected'; d.reason = 'Rejected by authorizer';
+  const l = state.loans.find(x=>x.app===d.app); if(l) l.prepared = false;
+  logChange(ref, from, 'Rejected');
+  logAudit(ref, 'Rejected', 'Rejected release request');
+  toast(`${ref} rejected`, 'err');
+  renderAll();
+}
+
+function returnDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  const from = d.status;
+  d.status = 'Draft';
+  logChange(ref, from, 'Draft');
+  logAudit(ref, 'Modified', 'Returned to preparer for correction');
+  toast(`${ref} returned for correction`, 'info');
+  renderAll();
+}
+
+function submitRecord(){
+  const ref = el('recSel').value;
+  if(!ref) return toast('Select an authorized disbursement', 'err');
+  const txn = el('recTxn').value.trim();
+  if(!txn) return toast('Enter the transaction reference', 'err');
+  const d = findByRef(ref);
+  const from = d.status;
+  d.status = 'Processing';
+  d.txn = txn;
+  d.date = el('recDate').value || today;
+  d.method = el('recMethod').value;
+  d.net = +el('recAmount').value || d.net;
+  d.notes = el('recNotes').value;
+  d.attempts = (d.attempts||0)+1;
+  logChange(ref, from, 'Processing');
+  logAudit(ref, 'Created', `Release recorded · ${d.method} · ${txn}`);
+  toast(`${ref} recorded — now processing`, 'ok');
+  el('recSel').value=''; el('recCust').value=''; el('recTxn').value='';
+  el('recFileName').textContent='No file selected'; el('recNotes').value='';
+  renderAll();
+}
+
+function verifyOk(ref){
+  const d = findByRef(ref); if(!d) return;
+  const from = d.status;
+  d.status = 'Successful';
+  logChange(ref, from, 'Successful');
+  logAudit(ref, 'Confirmed', 'Payment confirmed and matched to statement');
+  state.notifs.unshift([stamp(), d.cust, 'SMS', `Disbursement ${ref} confirmed — funds credited`, 'Delivered']);
+  toast(`${ref} marked successfully disbursed`, 'ok');
+  verifSel = null;
+  renderAll();
+}
+
+function verifyFail(ref){
+  const d = findByRef(ref); if(!d) return;
+  const from = d.status;
+  d.status = 'Failed'; d.reason = 'Confirmation rejected — customer did not receive funds';
+  logChange(ref, from, 'Failed');
+  logAudit(ref, 'Confirmed', 'Confirmation rejected — payment disputed');
+  toast(`${ref} moved to exceptions`, 'err');
+  verifSel = null;
+  renderAll();
+}
+
+function retryDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  d.attempts = (d.attempts||1)+1;
+  d.reason = '';
+  const from = d.status;
+  d.status = 'Processing';
+  logChange(ref, from, 'Processing');
+  logAudit(ref, 'Modified', `Retried failed release (attempt ${d.attempts})`);
+  toast(`${ref} retried — attempt ${d.attempts}`, 'info');
+  renderAll();
+}
+
+function correctDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  openModal('Correct Disbursement Details', ref + ' · ' + d.cust, `
+    <div class="form-grid">
+      <div class="fg"><label>Recipient / account number</label><input id="corrAcct" value="${d.acct}" /></div>
+      <div class="fg"><label>Payment method</label>
+        <select id="corrMethod">${['Bank Transfer','Airtel Money','TNM Mpamba','Cash','Cheque']
+          .map(m=>`<option ${m===d.method?'selected':''}>${m}</option>`).join('')}</select></div>
+      <div class="fg" style="grid-column:1/-1"><label>Correction notes</label>
+        <textarea id="corrNotes" rows="2" placeholder="Explain the correction for the audit trail"></textarea></div>
+    </div>
+    <div class="note gold" style="margin-top:10px">Corrections above MK 1,000,000 restart authorization.</div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save & re-submit', cls:'btn-gold', act:()=>{
+        d.method = el('corrMethod').value;
+        d.reason = 'Corrected: ' + (el('corrNotes').value || 'recipient details updated');
+        const from = d.status;
+        d.status = 'Awaiting authorization';
+        logChange(ref, from, 'Awaiting authorization');
+        logAudit(ref, 'Modified', 'Corrected disbursement details — re-authorization requested');
+        closeModal(); toast(`${ref} corrected and resubmitted for authorization`, 'ok');
+        renderAll();
+     }}]);
+}
+
+function cancelDisb(ref){
+  const d = findByRef(ref); if(!d) return;
+  const from = d.status;
+  d.status = 'Cancelled';
+  logChange(ref, from, 'Cancelled');
+  logAudit(ref, 'Cancelled', 'Disbursement cancelled');
+  toast(`${ref} cancelled`, 'info');
+  renderAll();
+}
+
+function activateLoan(ref){
+  const d = findByRef(ref); if(!d) return;
+  d.activated = true;
+  logChange(ref, 'Successful', 'Successful');
+  logAudit(ref, 'Activated', `Loan account LN-AC-${ref.slice(-4)} activated · schedule generated`);
+  state.notifs.unshift([stamp(), d.cust, 'SMS', `Your loan ${d.app} is active. First repayment due 30 Nov 2026.`, 'Delivered']);
+  toast('Loan activated · repayment schedule generated', 'ok');
+  actSel = null;
+  renderAll();
+}
+
+/* ---------------- modal ---------------- */
+function openModal(title, sub, body, actions=[]){
+  el('modalTitle').textContent = title;
+  el('modalSub').textContent = sub;
+  el('modalBody').innerHTML = body;
+  el('modalFoot').innerHTML = '';
+  actions.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = 'btn ' + (a.cls||'btn-ghost');
+    b.textContent = a.label;
+    b.onclick = a.act==='close' ? closeModal : a.act;
+    el('modalFoot').appendChild(b);
+  });
+  el('modal').classList.add('on');
+}
+function closeModal(){ el('modal').classList.remove('on'); }
+
+function viewDisbursement(ref){
+  const d = findByRef(ref); if(!d) return;
+  openModal(`Disbursement ${d.ref}`, `${d.cust} · ${d.app} · ${d.date}`, `
+    <div class="grid g2" style="gap:10px">
+      <div>
+        <div class="kv"><span class="k">Status</span><span class="v">${chip(d.status)}</span></div>
+        <div class="kv"><span class="k">Approved amount</span><span class="v">${mk(d.amount)}</span></div>
+        <div class="kv"><span class="k">Total deductions</span><span class="v">− ${mk(d.fees.total)}</span></div>
+        <div class="kv"><span class="k">Net payable</span><span class="v">${mk(d.net)}</span></div>
+        <div class="kv"><span class="k">Method</span><span class="v">${d.method}</span></div>
+        <div class="kv"><span class="k">Transaction ref</span><span class="v">${d.txn||'—'}</span></div>
+      </div>
+      <div>
+        <div class="kv"><span class="k">Prepared by</span><span class="v">${d.preparedBy}</span></div>
+        <div class="kv"><span class="k">Authorized by</span><span class="v">${d.authorizedBy||'—'}</span></div>
+        <div class="kv"><span class="k">Attempts</span><span class="v">${d.attempts||1}</span></div>
+        <div class="kv"><span class="k">Loan account</span><span class="v">LN-AC-${d.ref.slice(-4)}</span></div>
+        <div class="kv"><span class="k">Activated</span><span class="v">${d.activated?'Yes':'No'}</span></div>
+        <div class="kv"><span class="k">Notes</span><span class="v">${d.notes||'—'}</span></div>
+      </div>
+    </div>
+    ${d.reason?`<div class="note red" style="margin-top:10px">${d.reason}</div>`:''}
+    <div style="margin-top:12px"><div class="panel-title" style="font-size:12px;margin-bottom:6px">Lifecycle</div>
+      <div class="tl">
+        <div class="tl-item"><b>Draft prepared</b><span>${d.preparedBy}</span></div>
+        ${d.authorizedBy?`<div class="tl-item"><b>Authorized</b><span>${d.authorizedBy}</span></div>`:''}
+        ${['Processing','Awaiting confirmation','Successful'].includes(d.status)
+          ?`<div class="tl-item"><b>Released to ${d.method}</b><span>${d.txn||'—'}</span></div>`:''}
+        ${d.status==='Successful'?`<div class="tl-item"><b>Payment confirmed</b><span>Matched to statement</span></div>`:''}
+        ${d.activated?`<div class="tl-item"><b>Loan account activated</b><span>Schedule generated</span></div>`:''}
+      </div>
+    </div>`,
+    [{label:'Close', cls:'btn-ghost', act:'close'}]);
+}
+
+function viewLoan(app){
+  const l = state.loans.find(x=>x.app===app); if(!l) return;
+  const f = calcFees(l.approved);
+  const miss = missingDocs(l);
+  openModal(`Approved Loan ${l.app}`, `${l.cust} · ${l.acct}`, `
+    <div class="grid g2" style="gap:10px">
+      <div>
+        <div class="kv"><span class="k">Product</span><span class="v">${l.product}</span></div>
+        <div class="kv"><span class="k">Approved amount</span><span class="v">${mk(l.approved)}</span></div>
+        <div class="kv"><span class="k">Interest rate</span><span class="v">${l.rate}</span></div>
+        <div class="kv"><span class="k">Term</span><span class="v">${l.term}</span></div>
+      </div>
+      <div>
+        <div class="kv"><span class="k">Approved on</span><span class="v">${l.approvedOn}</span></div>
+        <div class="kv"><span class="k">Officer</span><span class="v">${l.officer}</span></div>
+        <div class="kv"><span class="k">Deductions</span><span class="v">− ${mk(f.total)}</span></div>
+        <div class="kv"><span class="k">Net payable</span><span class="v">${mk(f.net)}</span></div>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      ${Object.entries(l.docs).map(([k,v])=>{
+        const name = {agreement:'Signed loan agreement', id:'Customer ID', payslip:'Proof of income', guarantor:'Guarantor confirmation'}[k];
+        return `<div class="check"><div class="ck ${v?'y':'n'}">${v?'✓':'✕'}</div><div><b>${name}</b></div></div>`;
+      }).join('')}
+    </div>
+    ${miss.length?`<div class="note red" style="margin-top:8px">Missing: ${miss.join(', ')}</div>`:''}`,
+    [{label:'Close', cls:'btn-ghost', act:'close'},
+     {label:'Prepare disbursement', cls:'btn-gold', act:()=>{ closeModal(); prepareLoan(app); }}]);
+}
+
+function exportCSV(rows, name){
+  const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Export ready · ' + name, 'ok');
+}
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-act]');
+  if(!t) return;
+  const act = t.dataset.act, ref = t.dataset.ref;
+  switch(act){
+    case 'view-loan': viewLoan(ref); break;
+    case 'prepare-loan': prepareLoan(ref); break;
+    case 'view-disb': viewDisbursement(ref); break;
+    case 'authorize': authorizeDisb(ref); break;
+    case 'reject': rejectDisb(ref); break;
+    case 'return': returnDisb(ref); break;
+    case 'verif-open': verifSel = ref; renderVerifPanel();
+      document.getElementById('s8').scrollIntoView({behavior:'smooth'}); break;
+    case 'verify-ok': verifyOk(ref); break;
+    case 'verify-fail': verifyFail(ref); break;
+    case 'retry': retryDisb(ref); break;
+    case 'correct': correctDisb(ref); break;
+    case 'cancel': cancelDisb(ref); break;
+    case 'act-open': actSel = ref; renderActivation(); break;
+    case 'act-close': actSel = null; renderActivation(); break;
+    case 'activate': activateLoan(ref); break;
+    case 'reg-prev': regState.page = Math.max(1, regState.page-1); renderRegister(); break;
+    case 'reg-next': regState.page++; renderRegister(); break;
+    case 'filter-status':
+      el('regStatus').value = ref; regState.page = 1; renderRegister();
+      document.getElementById('s6').scrollIntoView({behavior:'smooth'}); break;
+    case 'toggle-method': {
+      const i = +t.dataset.idx;
+      METHODS[i].enabled = !METHODS[i].enabled;
+      renderMethods(); renderSettings();
+      toast(`${METHODS[i].name} ${METHODS[i].enabled?'enabled':'disabled'}`, 'info');
+      break;
+    }
+    case 'toggle': t.classList.toggle('on'); break;
+    case 'doc-dl': toast(`Downloading “${ref}”…`, 'info'); break;
+    case 'doc-print': toast(`Sending “${ref}” to printer…`, 'info'); break;
+    case 'report-pdf': toast(`${ref} · PDF generated`, 'ok'); break;
+    case 'report-xls': toast(`${ref} · Excel generated`, 'ok'); break;
+    case 'report-csv':
+      exportCSV([['Reference','Customer','Amount','Net','Method','Status'],
+        ...state.disb.map(d=>[d.ref,d.cust,d.amount,d.net,d.method,d.status])],
+        ref.toLowerCase().replace(/[^a-z]+/g,'-') + '.csv');
+      break;
+  }
+});
+
+el('modalClose').onclick = closeModal;
+el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
+
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', e=>{
+    const page = item.dataset.page;
+    if(['disbursements','dashboard','staff','notifications'].includes(page)) return;   // real links
+    e.preventDefault();
+    toast('This module is queued for build.', 'info');
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+/* scroll-spy */
+const secs = [...document.querySelectorAll('.sec')];
+const chips = [...document.querySelectorAll('.snav')];
+const spy = ()=>{
+  let cur = secs[0];
+  for(const s of secs) if(s.getBoundingClientRect().top <= 150) cur = s;
+  chips.forEach(c=>c.classList.toggle('on', c.getAttribute('href')==='#'+cur.id));
+};
+window.addEventListener('scroll', spy, {passive:true});
+chips.forEach(c=>c.addEventListener('click', e=>{
+  e.preventDefault();
+  const t = document.querySelector(c.getAttribute('href'));
+  if(t) window.scrollTo({top:t.offsetTop-112, behavior:'smooth'});
+}));
+
+/* filters */
+['apprSearch','apprElig','apprProduct'].forEach(id=>{
+  el(id).addEventListener('input', renderApproved);
+  el(id).addEventListener('change', renderApproved);
+});
+el('apprClear').onclick = ()=>{ el('apprSearch').value=''; el('apprElig').value=''; el('apprProduct').value=''; renderApproved(); };
+['regSearch','regFrom','regTo','regMethod','regStatus','regOfficer'].forEach(id=>{
+  const h = ()=>{ regState.page=1; renderRegister(); };
+  el(id).addEventListener('input', h); el(id).addEventListener('change', h);
+});
+el('regReset').onclick = ()=>{ ['regSearch','regFrom','regTo'].forEach(i=>el(i).value='');
+  ['regMethod','regStatus','regOfficer'].forEach(i=>el(i).value=''); regState.page=1; renderRegister(); };
+el('regExport').onclick = ()=>{
+  const rows = filterRegister();
+  exportCSV([['Reference','Date','Customer','Account','Loan','Amount','Net','Method','Officer','Status'],
+    ...rows.map(d=>[d.ref,d.date,d.cust,d.acct,d.app,d.amount,d.net,d.method,d.officer,d.status])],
+    'golden-disbursements-2026-10-30.csv');
+};
+el('regPrint').onclick = ()=> toast('Register sent to printer', 'info');
+el('exportAll').onclick = ()=> el('regExport').click();
+el('auditExport').onclick = ()=>{
+  exportCSV([['Time','Reference','Action','User','Detail','IP','Outcome'], ...state.audit],
+    'golden-disbursement-audit.csv');
+};
+['auditSearch','auditAction'].forEach(id=>{
+  el(id).addEventListener('input', renderAudit);
+  el(id).addEventListener('change', renderAudit);
+});
+el('auditReset').onclick = ()=>{ el('auditSearch').value=''; el('auditAction').value=''; renderAudit(); };
+
+/* preparation */
+el('prepLoan').addEventListener('change', e=>{
+  fillPrep(e.target.value);
+  el('prepRef').value = e.target.value ? nextRef() : '';
+});
+el('prepSubmit').onclick = submitPreparation;
+el('prepClearBtn').onclick = ()=>{ el('prepLoan').value=''; fillPrep(''); el('prepRef').value='';
+  el('prepMethod').value=''; el('prepNotes').value=''; };
+
+/* recording */
+el('recSel').addEventListener('change', e=> fillRecord(e.target.value));
+el('recSubmit').onclick = submitRecord;
+el('recClear').onclick = ()=>{ el('recSel').value=''; el('recCust').value=''; el('recTxn').value='';
+  el('recAmount').value=''; el('recNotes').value=''; };
+el('recUpload').onclick = ()=>{ el('recFileName').textContent = 'payment-slip-' + Date.now().toString().slice(-5) + '.jpg';
+  toast('Payment evidence attached', 'ok'); };
+
+/* fees */
+['feeAmount','feeProc','feeIns','feeOther','feeWaive'].forEach(id=> el(id).addEventListener('input', renderFees));
+el('feeRequestBtn').onclick = ()=> toast('Fee waiver request sent to credit committee', 'info');
+el('feeHistoryBtn').onclick = ()=> openModal('Calculation History', 'Last 5 disbursement calculations', `
+  <table class="tbl2"><thead><tr><th>Date</th><th class="num">Approved</th><th class="num">Deductions</th>
+  <th class="num">Net</th><th>By</th></tr></thead>
+  <tbody>${state.disb.slice(0,5).map(d=>`<tr><td class="tiny">${d.date}</td><td class="num">${mk(d.amount)}</td>
+    <td class="num">${mk(d.fees.total)}</td><td class="num">${mk(d.net)}</td>
+    <td class="tiny">${d.preparedBy}</td></tr>`).join('')}</tbody></table>`,
+  [{label:'Close', cls:'btn-ghost', act:'close'}]);
+
+/* documents */
+el('docSelect').addEventListener('change', renderDocs);
+el('docBundle').onclick = ()=> toast('Document bundle prepared for download', 'ok');
+
+/* reconciliation */
+el('reconRun').onclick = ()=>{ renderRecon(); toast('Reconciliation completed · 3 variances found', 'info'); };
+el('runRecon').onclick = ()=>{ document.getElementById('s14').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>toast('Reconciliation completed · 3 variances found', 'info'), 400); };
+
+/* misc */
+el('quickPrepare').onclick = ()=> document.getElementById('s3').scrollIntoView({behavior:'smooth'});
+el('quickDisburse').onclick = ()=> document.getElementById('s5').scrollIntoView({behavior:'smooth'});
+el('statusReset').onclick = ()=>{ el('regStatus').value=''; renderRegister(); renderStatus(); };
+el('actAll').onclick = ()=> document.getElementById('s17').scrollIntoView({behavior:'smooth'});
+el('notifRead').onclick = ()=>{ state.notifs = state.notifs.map(n=>[n[0],n[1],n[2],n[3],'Read']);
+  renderNotifications(); toast('All notifications marked read', 'ok'); };
+el('settingsSave').onclick = ()=> toast('Disbursement settings saved', 'ok');
+el('settingsReset').onclick = ()=>{ renderSettings(); toast('Changes discarded', 'info'); };
+el('bellBtn').onclick = ()=> document.getElementById('s16').scrollIntoView({behavior:'smooth'});
+el('globalSearch').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){ el('regSearch').value = e.target.value; regState.page=1; renderRegister();
+    document.getElementById('s6').scrollIntoView({behavior:'smooth'}); }
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function renderAll(){
+  renderOverview(); renderApproved(); renderPrepOptions(); renderAuth(); renderRecord();
+  renderRegister(); renderVerify(); renderVerifHist(); renderStatus(); renderFails();
+  renderActivation(); renderDocs(); renderRecon(); renderNotifications(); renderAudit();
+  renderMethods(); renderSettings();
+}
+renderFees(); renderFeeRules(); renderReports(); renderMethods(); renderSettings();
+renderAll();
+spy();
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+
+    <!-- ===== 13 · DOCUMENTS ===== -->
+    <section class="sec" id="s13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Disbursement Documents</h2><p>Agreements, authorizations, evidence and receipts</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="docBundle">Download bundle</button></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Pack</div>
+            <div class="panel-sub">Reference: <span id="docRef" style="font-weight:700;color:var(--ink)">DIS-2026-1042</span></div></div>
+            <div class="fld" style="padding:5px 8px"><select id="docSelect"></select></div>
+          </div>
+          <div id="docList"></div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Document Verification History</div>
+              <div class="panel-sub">Who checked what, and when</div></div></div>
+            <div class="list" id="docHistory"></div>
+          </div>
+          <div class="note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/></svg>
+            <div>Documents are retained for 7 years and are immutable once verified. Downloads are logged
+              in the audit trail.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 14 · RECONCILIATION ===== -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Disbursement Reconciliation</h2><p>Match authorized amounts to actual releases by channel</p></div>
+        <div class="sec-tools">
+          <div class="fld" style="padding:5px 8px"><input id="reconDate" type="date" value="2026-10-30" /></div>
+          <button class="btn btn-gold btn-sm" id="reconRun">Reconcile</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Daily Disbursement Reconciliation</div>
+          <div class="panel-sub" id="reconSub">30 October 2026 · all channels</div></div>
+          <span class="badge b-pend" id="reconBadge">3 variances</span></div>
+        <div class="tblwrap" style="max-height:340px">
+          <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Authorized</th><th class="num">Actual released</th>
+            <th class="num">Variance</th><th class="num">Txn count</th><th>State</th></tr></thead>
+            <tbody id="reconBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Discrepancies</div>
+            <div class="panel-sub">Missing, duplicate and unmatched items</div></div></div>
+          <div class="list" id="reconDisc"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reconciliation History</div>
+            <div class="panel-sub">Last 5 runs</div></div></div>
+          <div class="list" id="reconHist"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 15 · REPORTS ===== -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Disbursement Reports &amp; Analytics</h2><p>Standard reports with PDF, Excel and CSV export</p></div>
+        <div class="sec-tools"><span class="badge b-gray">12 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards" style="margin-bottom:13px"></div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Loan Product</div>
+            <div class="panel-sub">Value released · MK millions</div></div></div>
+          <div id="chProduct" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Payment Method</div>
+            <div class="panel-sub">Share of value · this month</div></div></div>
+          <div id="chMethod" style="display:flex;gap:16px;align-items:center;justify-content:center;margin-top:8px;flex-wrap:wrap"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements by Staff Member</div>
+            <div class="panel-sub">October · MK millions</div></div></div>
+          <div id="chStaff" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Disbursement Trend</div>
+            <div class="panel-sub">Last 10 working days · MK millions</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chTrend" viewBox="0 0 640 220"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 16 · NOTIFICATIONS ===== -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Disbursement Notifications</h2><p>Approval, processing and customer confirmations</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="notifRead">Mark all read</button></div>
+      </div>
+      <div class="split rev">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+            <div class="panel-sub">Who is alerted at each stage</div></div></div>
+          <div class="checklist" id="notifRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery History</div>
+            <div class="panel-sub">SMS, email and in-app</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Recipient</th><th>Channel</th><th>Message</th><th>State</th></tr></thead>
+              <tbody id="notifHist"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 17 · AUDIT ===== -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Disbursement Audit &amp; Security</h2><p>Immutable trail of every disbursement action</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="auditExport">Export audit</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="auditSearch" placeholder="Search reference, user or action…" />
+          </div>
+          <div class="fld"><select id="auditAction">
+            <option value="">All actions</option>
+            <option>Created</option><option>Authorized</option><option>Rejected</option>
+            <option>Modified</option><option>Confirmed</option><option>Cancelled</option>
+            <option>Reversed</option><option>Activated</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="auditReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Action</th><th>User</th>
+            <th>Detail</th><th>IP</th><th>Outcome</th></tr></thead><tbody id="auditBody"></tbody></table>
+        </div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Unauthorized Action Alerts</div>
+          <div class="panel-sub">Blocked attempts and policy violations</div></div>
+          <span class="badge b-rev">2 alerts</span></div>
+        <div class="list" id="auditAlerts"></div>
+      </div>
+    </section>
+
+    <!-- ===== 18 · SETTINGS ===== -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Disbursement Settings</h2><p>Controls that govern the disbursement workflow</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="settingsReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="settingsSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Methods &amp; Limits</div>
+            <div class="panel-sub">Channel enablement and transaction ceilings</div></div></div>
+          <div id="setMethods"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval &amp; Authorization</div>
+            <div class="panel-sub">Who may release which amount</div></div></div>
+          <div id="setApproval"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Eligibility &amp; Requirements</div>
+            <div class="panel-sub">Preconditions for release and activation</div></div></div>
+          <div id="setRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Format, Fees &amp; Notifications</div>
+            <div class="panel-sub">References, deductions and messaging</div></div></div>
+          <div id="setFees"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>This module runs on sample data. All actions (prepare, authorize, release, verify, retry, activate)
+        update the in-page state so you can walk the full disbursement lifecycle.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

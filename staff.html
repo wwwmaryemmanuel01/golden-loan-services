@@ -1,0 +1,3220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<title>Staff Management — GOLDEN FINANCIAL SERVICES</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+
+  /* ===================== MODULE PAGE ADDITIONS ===================== */
+  .modband{background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);color:#fff;
+    border-radius:16px;padding:16px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:center;
+    flex-wrap:wrap;box-shadow:0 10px 30px rgba(16,18,24,.18)}
+  .modband h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .modband p{font-size:11.5px;color:#B9BFCB;margin-top:3px}
+  .modband .mb-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .modband > div:first-child{flex:0 1 auto;min-width:0}
+  .band-stats{display:flex;gap:0;align-items:center;flex-wrap:nowrap;flex:0 0 auto;margin-left:4px}
+  .band-stat{display:flex;flex-direction:column;gap:2px;padding-left:16px;border-left:1px solid #2E3340;white-space:nowrap;flex:0 0 auto}
+  .band-stat b{font-size:15px;font-variant-numeric:tabular-nums}
+  .band-stat span{font-size:10px;color:#9AA0AC;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .fld{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:9px;padding:7px 10px;font-size:12px;min-width:0}
+  .fld:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fld input,.fld select{border:0;outline:none;background:transparent;font-family:inherit;
+    font-size:12px;color:var(--ink);min-width:0}
+  .fld input::placeholder{color:#9AA0AC}
+  .fld.search{flex:1 1 240px;max-width:340px}
+  .fld.search input{width:100%}
+  .fld select{cursor:pointer}
+  .count-pill{font-size:10.5px;font-weight:800;color:var(--gold-dark);background:var(--gold-soft);
+    border-radius:20px;padding:3px 8px;white-space:nowrap}
+
+  /* dense table */
+  .tbl2{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl2 thead th{position:sticky;top:0;background:#fff;text-align:left;font-size:9.5px;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--muted-2);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line);
+    white-space:nowrap;z-index:2}
+  .tbl2 td{padding:8px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  .tbl2 tbody tr:hover{background:#FCFAF2}
+  .tbl2 tr.sel{background:var(--gold-soft)}
+  .tbl2 .mono{font-variant-numeric:tabular-nums;font-weight:700}
+  .tbl2 th.num,.tbl2 td.num{text-align:right}
+  .tblwrap{max-height:560px;overflow:auto;margin-top:8px;border-radius:10px;border:1px solid var(--line-2)}
+
+  /* status chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .st-draft{background:#F1F2F6;color:#5A6172}
+  .st-await{background:var(--amber-soft);color:#9A6A0D}
+  .st-auth{background:var(--blue-soft);color:#2456C4}
+  .st-proc{background:var(--purple-soft);color:#5A3FCB}
+  .st-conf{background:#E6F1FE;color:#1E5FBF}
+  .st-ok{background:var(--green-soft);color:#157A50}
+  .st-fail{background:var(--red-soft);color:#B32C2C}
+  .st-rej{background:#FBE7E7;color:#962626}
+  .st-canc{background:#EEF0F4;color:#616B7C}
+  .st-rev{background:#F6E7EA;color:#8E2F45}
+
+  /* forms */
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:10px}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .form-grid.one{grid-template-columns:1fr}
+  .fg{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fg label{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#5A6172}
+  .fg input,.fg select,.fg textarea{border:1px solid var(--line);border-radius:9px;padding:8px 10px;
+    font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fg input[readonly]{background:#F7F8FA;color:#4A5160}
+  .fg .hint{font-size:10px;color:var(--muted);margin-top:1px}
+  .form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:#1B1F27}
+  .btn-red{background:#FDECEC;color:#B32C2C;border-color:#F6D5D5}
+  .btn-red:hover{background:#FBDCDC}
+  .btn-green{background:#E7F6EF;color:#157A50;border-color:#CFECE0}
+  .btn-green:hover{background:#D9F1E6}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* checklist */
+  .check{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed #EDEFF4;font-size:12px}
+  .check:last-child{border-bottom:0}
+  .check .ck{width:16px;height:16px;flex:0 0 16px;border-radius:5px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;margin-top:1px}
+  .check .ck.y{background:var(--green-soft);color:#157A50}
+  .check .ck.n{background:var(--red-soft);color:#B32C2C}
+  .check .ck.w{background:var(--amber-soft);color:#9A6A0D}
+  .check b{font-weight:600}
+  .check span.s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* method cards */
+  .methodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:10px}
+  .method{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s}
+  .method:hover{border-color:var(--gold)}
+  .method-top{display:flex;align-items:center;gap:8px}
+  .method .mi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:12px}
+  .method-top > div:nth-child(2){flex:1;min-width:0}
+  .method b{font-size:12px;line-height:1.25;display:block}
+  .method .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .method .mv{display:flex;justify-content:space-between;margin-top:9px;font-size:11px}
+  .method .mv b{font-variant-numeric:tabular-nums}
+
+  /* toggle */
+  .toggle{position:relative;width:36px;height:20px;border-radius:20px;background:#D8DCE4;cursor:pointer;
+    border:0;transition:.18s;flex:0 0 36px}
+  .toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+    background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .toggle.on{background:var(--gold)}
+  .toggle.on::after{transform:translateX(16px)}
+
+  /* settings rows */
+  .setrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed #EDEFF4}
+  .setrow:last-child{border-bottom:0}
+  .setrow .sk{font-size:12px;font-weight:600;color:#2B303B}
+  .setrow .ss{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .setrow .sv{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .setrow input[type=number],.setrow input[type=text],.setrow select{border:1px solid var(--line);
+    border-radius:8px;padding:5px 8px;font-size:11.5px;font-family:inherit;width:110px;text-align:right}
+
+  /* timeline */
+  .tl{position:relative;margin-top:10px;padding-left:16px}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 12px 0}
+  .tl-item::before{content:"";position:absolute;left:-15px;top:3px;width:7px;height:7px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px #fff}
+  .tl-item b{font-size:11.5px;font-weight:700}
+  .tl-item span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* documents */
+  .doc{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .doc:last-child{border-bottom:0}
+  .doc .di{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-dark);
+    display:grid;place-items:center;flex:0 0 28px}
+  .doc .dn{font-size:11.5px;font-weight:600}
+  .doc .ds{font-size:10px;color:var(--muted);margin-top:1px}
+  .doc .da{margin-left:auto;display:flex;gap:5px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,17,21,.5);backdrop-filter:blur(3px);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .modal.on{display:flex}
+  .modal-card{background:#fff;border-radius:16px;width:100%;max-width:720px;box-shadow:0 24px 60px rgba(0,0,0,.3);
+    animation:pop .16s ease}
+  @keyframes pop{from{transform:translateY(8px);opacity:.6}to{transform:none;opacity:1}}
+  .modal-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .modal-head h3{font-size:14.5px;font-weight:800}
+  .modal-head p{font-size:11px;color:var(--muted);margin-top:2px}
+  .modal-body{padding:16px 18px}
+  .modal-foot{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;
+    flex-wrap:wrap;background:#FCFCFD;border-radius:0 0 16px 16px}
+  .x{border:0;background:#F1F2F6;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;
+    color:#4A5160;margin-left:auto;display:grid;place-items:center}
+
+  /* toast */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px}
+  .toast{background:var(--ink);color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:center;
+    animation:slide .2s ease;max-width:340px}
+  .toast.ok{border-left:3px solid var(--green)}
+  .toast.err{border-left:3px solid var(--red)}
+  .toast.info{border-left:3px solid var(--gold)}
+  @keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+  /* misc */
+  .split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:13px;align-items:start}
+  .split > *{min-width:0}
+  .grid > *{min-width:0}
+  .split.even{grid-template-columns:1fr 1fr}
+  .split.rev{grid-template-columns:1fr 1.5fr}
+  .note{display:flex;gap:9px;align-items:flex-start;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160;line-height:1.5}
+  .note.gold{background:#FFF9E8;border-color:#F2E3B0;color:#7A5C08}
+  .note.red{background:#FDF0F0;border-color:#F6D5D5;color:#8E2F2F}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:7px 0;
+    border-bottom:1px dashed #EDEFF4}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--muted);font-weight:600}
+  .kv .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .kv .v.big{font-size:13.5px}
+  .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .mini-stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .mini-stat b{display:block;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+  .mini-stat span{font-size:10.5px;color:var(--muted);font-weight:600}
+  .pager{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:10px;font-size:11.5px;color:var(--muted)}
+  .pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;cursor:pointer;
+    font-size:11.5px;font-family:inherit;color:#3A3F4A}
+  .pager button:hover{border-color:var(--gold)}
+  .pager button:disabled{opacity:.45;cursor:not-allowed}
+  .empty{padding:26px 10px;text-align:center;font-size:12px;color:var(--muted)}
+  .sec{margin-bottom:22px}
+  @media(max-width:1120px){
+    .split,.split.even,.split.rev{grid-template-columns:1fr}
+    .form-grid,.form-grid.three{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .modband{padding:14px}
+  }
+
+  /* ===================== STAFF MANAGEMENT MODULE ===================== */
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:10px}
+  .scard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;cursor:pointer}
+  .scard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .scard .sh{display:flex;gap:9px;align-items:center}
+  .scard .sn{font-size:12px;font-weight:700;line-height:1.25}
+  .scard .sr{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .scard .sf{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:10.5px;color:var(--muted)}
+
+  .sav{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 34px;
+    font-size:11.5px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark);letter-spacing:.3px}
+  .sav.lg{width:54px;height:54px;border-radius:15px;font-size:17px}
+  .sav.blue{background:#EAF1FE;color:#2456C4}
+  .sav.green{background:#E8F6EF;color:#157A50}
+  .sav.red{background:#FDEDED;color:#B32C2C}
+  .sav.purple{background:#F1EDFE;color:#5A3FCB}
+  .sav.gray{background:#F1F2F6;color:#5A6172}
+
+  .meter{height:7px;border-radius:20px;background:#EEF0F4;overflow:hidden;flex:1}
+  .meter i{display:block;height:100%;border-radius:20px;background:var(--gold)}
+  .meter.green i{background:#1E9E6A}
+  .meter.red i{background:#D93F3F}
+  .meter.blue i{background:#2F6FED}
+
+  .perm-tbl{width:100%;border-collapse:separate;border-spacing:0}
+  .perm-tbl th{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);
+    font-weight:800;text-align:center;padding:8px 6px;border-bottom:1px solid var(--line);background:#FAFBFC}
+  .perm-tbl th:first-child{text-align:left}
+  .perm-tbl td{padding:7px 6px;border-bottom:1px solid #F1F2F6;font-size:11px;text-align:center}
+  .perm-tbl td:first-child{text-align:left;font-weight:600}
+  .perm-tbl tr:hover td{background:#FCFAF2}
+  .perm-tbl input[type=checkbox]{width:14px;height:14px;accent-color:var(--gold-dark);cursor:pointer}
+
+  .docrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed #EDEFF4}
+  .docrow:last-child{border-bottom:0}
+  .docrow .dic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;
+    background:var(--gold-soft);color:var(--gold-dark);font-size:12px}
+  .docrow .dt{font-size:11.5px;font-weight:700}
+  .docrow .ds{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  .invite{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed #EDEFF4}
+  .invite:last-child{border-bottom:0}
+  .invite .it{font-size:11.5px;font-weight:700}
+  .invite .is{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  .taglist{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+  .ptag{font-size:9.5px;font-weight:700;background:#F1F2F6;color:#4A5160;border-radius:20px;padding:2px 8px}
+
+  .stateline{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:6px}
+
+  /* directory table: keep action buttons inside the frame */
+  #dirBody td, #dirBody th{white-space:nowrap}
+  #dirBody .msg{white-space:normal;max-width:190px}
+  #dirBody .btn-sm{padding:4px 8px;font-size:10.5px}
+  #dirBody .tick{padding:4px 7px;font-size:12px;line-height:1}
+  .setrow .sv input[type=text], .setrow .sv input[type=number], .setrow .sv select{
+    border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px;background:#fff}
+  .setrow .sv input[type=number]{width:78px;text-align:right}
+  .auto-name b{display:block;font-size:11.5px;font-weight:700}
+  .auto-name span{font-size:10px;color:var(--muted);font-weight:700}
+  .nitem{display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;cursor:pointer;transition:.14s}
+  .nitem:last-child{border-bottom:0}
+  .nitem:hover{background:#FCFAF2}
+  .nitem .nic{width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800}
+  .nitem .nt{font-size:12px;font-weight:700;line-height:1.3}
+  .nitem .nb{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .nitem .nm2{font-size:10px;color:var(--muted-2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .preview{background:#0F1115;border-radius:14px;padding:12px;color:#fff;min-height:190px;display:flex;flex-direction:column}
+  .preview .phead{display:flex;justify-content:space-between;font-size:10px;color:#9AA0AC;padding-bottom:8px;
+    border-bottom:1px solid #23262E;margin-bottom:10px}
+  .preview .pbody{background:#1B1F27;border-radius:10px;padding:11px 12px;font-size:12px;line-height:1.55;flex:1}
+  .preview .psub{font-weight:700;font-size:12px;margin-bottom:4px;color:#E8C860}
+  .preview .pfoot{font-size:9.5px;color:#7A808D;margin-top:8px;display:flex;justify-content:space-between}
+  .locked{display:flex;align-items:center;gap:8px;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160}
+  .segbar{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px}
+  .segbar button{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .segbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+  .charline{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+
+  /* role cards (§5) */
+  .rcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;cursor:pointer}
+  .rcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .rcard .rh{display:flex;align-items:center;gap:8px}
+  .rcard .ric{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 26px;font-size:12px;font-weight:800}
+  .rcard .rn{font-size:12px;font-weight:700;line-height:1.25}
+  .rcard .rd{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.4;min-height:28px}
+  .rcard .rrow{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:6px}
+  .rcard .rrow b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* option checkboxes must not squeeze their labels */
+  .form-grid label.tiny, .optlab{white-space:nowrap}
+
+  /* invitation rows stay on one line per element */
+  .invite .chip, .invite .btn{white-space:nowrap;flex:0 0 auto}
+  .invite .is{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .invite > div:nth-child(2){min-width:0}
+
+  /* wide tables inside full-width panels */
+  #statusBody td, #statusBody th, #taskBody td, #taskBody th,
+  #perfBody td, #perfBody th, #docBody td, #docBody th{white-space:nowrap}
+  #taskBody .msg, #docBody .msg{white-space:normal;max-width:230px}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">GF</div>
+    <div>
+      <div class="brand-name">GOLDEN FINANCIAL<br>SERVICES</div>
+      <div class="brand-sub">ADMIN PORTAL</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item" data-page="dashboard" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Lending</div>
+    <a class="nav-item" data-page="applications" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
+      Loan Applications <span class="pill gold">18</span>
+    </a>
+    <a class="nav-item" data-page="loans" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
+      Loan Portfolio
+    </a>
+    <a class="nav-item" data-page="repayments" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+      Repayments
+    </a>
+    <a class="nav-item" data-page="collections" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
+      Collections &amp; Arrears <span class="pill red">142</span>
+    </a>
+    <div class="nav-label">Customers</div>
+    <a class="nav-item" data-page="clients" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
+      Clients (KYC)
+    </a>
+    <a class="nav-item" data-page="guarantors" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      Guarantors &amp; Collateral
+    </a>
+    <div class="nav-label">Finance</div>
+    <a class="nav-item" data-page="disbursements" href="disbursements.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+      Disbursements
+    </a>
+    <a class="nav-item" data-page="transactions" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+      Transactions
+    </a>
+    <a class="nav-item" data-page="reports" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Reports &amp; Analytics
+    </a>
+    <div class="nav-label">Communication</div>
+    <a class="nav-item" data-page="notifications" href="notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      Notifications
+    </a>
+    <div class="nav-label">System</div>
+    <a class="nav-item active" data-page="staff" href="staff.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+      Staff &amp; Users
+    </a>
+    <a class="nav-item" data-page="settings" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1.2Z"/></svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="avatar">CM</div>
+    <div>
+      <div class="sf-name">Chikondi Mwale</div>
+      <div class="sf-role">System Administrator</div>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Staff Management</div>
+      <div class="page-sub">Directory · roles · permissions · security · performance · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search staff, roles, departments, IDs…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Security alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportStaff">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold" id="quickAdd">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+      Add Staff Member
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · All Staff</a>
+    <a class="snav" href="#s3">3 · Add Staff</a>
+    <a class="snav" href="#s4">4 · Profiles</a>
+    <a class="snav" href="#s5">5 · Roles</a>
+    <a class="snav" href="#s6">6 · Permissions</a>
+    <a class="snav" href="#s7">7 · Account Status</a>
+    <a class="snav" href="#s8">8 · Password</a>
+    <a class="snav" href="#s9">9 · Assignments</a>
+    <a class="snav" href="#s10">10 · Performance</a>
+    <a class="snav" href="#s11">11 · Activity Logs</a>
+    <a class="snav" href="#s12">12 · Departments</a>
+    <a class="snav" href="#s13">13 · Invitations</a>
+    <a class="snav" href="#s14">14 · Communication</a>
+    <a class="snav" href="#s15">15 · Documents</a>
+    <a class="snav" href="#s16">16 · Reports</a>
+    <a class="snav" href="#s17">17 · Closure</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Staff Management</h1>
+        <p>Accounts, roles, permissions and access control for GOLDEN FINANCIAL SERVICES</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandStaff">24</b><span>Staff members</span></div>
+        <div class="band-stat"><b id="bandActive">19</b><span>Active</span></div>
+        <div class="band-stat"><b id="bandInvites">3</b><span>Invitations</span></div>
+        <div class="band-stat"><b id="bandAlerts">5</b><span>Security alerts</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="inviteBtn">Invite staff</button>
+        <button class="btn btn-gold btn-sm" id="quickInvite">New invitation</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Staff Management Overview</h2><p>Headcount, roles, activity and security posture · 30 October 2026</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+      <div class="grid5" id="ovTiles" style="margin-bottom:13px"></div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Role</div>
+            <div class="panel-sub">Active accounts per role</div></div></div>
+          <div id="ovRoles" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Department / Branch</div>
+            <div class="panel-sub">Headcount distribution</div></div></div>
+          <div id="ovDepts" style="margin-top:12px"></div>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recently Added Staff</div>
+            <div class="panel-sub">Newest accounts and invitations</div></div>
+            <button class="btn btn-ghost btn-sm" id="recentAll">Open directory</button></div>
+          <div id="ovRecent" style="margin-top:4px"></div>
+          <div class="panel-head" style="margin-top:14px"><div>
+            <div class="panel-title">Staff Security Alerts</div>
+            <div class="panel-sub">Access and authentication events</div></div>
+            <span class="badge b-rev" id="alertCount">5</span></div>
+          <div id="ovAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Staff Activities</div>
+            <div class="panel-sub">Latest actions across the platform</div></div></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Activity</th>
+              <th>Module</th><th>Result</th></tr></thead><tbody id="ovActivity"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>All Staff Members</h2><p>Directory with search, filters, profiles, editing and export</p></div>
+        <div class="sec-tools"><span class="count-pill" id="dirCount">0 staff</span></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld"><select id="dirSearchBy">
+            <option value="name">Full name</option><option value="username">Username</option>
+            <option value="phone">Phone number</option><option value="email">Email address</option>
+            <option value="id">Staff ID</option></select></div>
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="dirSearch" placeholder="Search by full name…" />
+          </div>
+          <div class="fld"><select id="dirRole"><option value="">All roles</option></select></div>
+          <div class="fld"><select id="dirStatus"><option value="">All statuses</option>
+            <option>Active</option><option>Inactive</option><option>Suspended</option><option>Locked</option><option>Pending</option></select></div>
+          <div class="fld"><select id="dirDept"><option value="">All departments</option></select></div>
+          <div class="fld"><select id="dirBranch"><option value="">All branches</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="dirReset">Reset</button>
+          <button class="btn btn-gold btn-sm" id="dirExport">Export records</button>
+        </div>
+        <div class="tblwrap" style="max-height:560px">
+          <table class="tbl2"><thead><tr>
+            <th style="width:26px"><input type="checkbox" id="dirSelAll" /></th>
+            <th>Staff ID</th><th>Name</th><th>Role</th><th>Department</th><th>Branch</th>
+            <th>Status</th><th>Last login</th><th>Actions</th>
+          </tr></thead><tbody id="dirBody"></tbody></table>
+        </div>
+        <div class="pager" id="dirPager"></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Add New Staff Member</h2><p>Create the account, assign access and record the registration</p></div>
+        <div class="sec-tools"><span class="badge b-pend" id="addBadge">Draft</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Details</div>
+            <div class="panel-sub">Fields marked * are required</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Full name *</label><input id="nsName" placeholder="e.g. Tadala Nkhoma" /></div>
+            <div class="fg"><label>Username *</label><input id="nsUser" placeholder="e.g. t.nkhoma" /></div>
+            <div class="fg"><label>Email address</label><input id="nsEmail" placeholder="name@goldenfs.mw" />
+              <div class="hint">Optional — required for invitation and password reset.</div></div>
+            <div class="fg"><label>Phone number *</label><input id="nsPhone" placeholder="+265 99 000 0000" /></div>
+            <div class="fg"><label>Staff identification number *</label><input id="nsIdNo" placeholder="e.g. MW-0412" /></div>
+            <div class="fg"><label>Assign staff role *</label><select id="nsRole"></select></div>
+            <div class="fg"><label>Assign department *</label><select id="nsDept"></select></div>
+            <div class="fg"><label>Assign branch *</label><select id="nsBranch"></select></div>
+            <div class="fg"><label>Reporting manager</label><select id="nsManager"></select></div>
+            <div class="fg"><label>Account status</label><select id="nsStatus">
+              <option>Active</option><option>Pending invitation</option><option>Inactive</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Secure login credentials</label>
+              <div style="display:flex;gap:7px;align-items:center">
+                <input id="nsPass" readonly value="••••••••••••" style="flex:1;letter-spacing:1px" />
+                <button class="btn btn-ghost btn-sm" id="genPass">Generate</button>
+                <button class="btn btn-ghost btn-sm" id="copyPass">Copy</button>
+              </div>
+              <div class="charline"><span id="passHint">Temporary password · must be changed at first login</span>
+                <span>Never displayed again after saving</span></div>
+            </div>
+            <div class="fg" style="grid-column:1/-1"><label>Options</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsInvite" checked /> Send account invitation</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsMfa" checked /> Enforce MFA</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nsExpire" checked /> Force password change</label>
+              </div></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="createStaff">Create staff account</button>
+            <button class="btn btn-ghost" id="clearStaff">Clear</button>
+            <span class="tiny muted" id="createMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Registration Record</div>
+              <div class="panel-sub">Captured with the account</div></div></div>
+            <div id="regRecord" style="margin-top:6px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Access Summary</div>
+              <div class="panel-sub">What this role will be able to do</div></div></div>
+            <div id="accessSummary" style="margin-top:6px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Staff Profile Management</h2><p>Personal, employment, access and activity record for one staff member</p></div>
+        <div class="sec-tools">
+          <select id="profSelect" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px"></select>
+          <button class="btn btn-ghost btn-sm" id="profEdit">Edit details</button>
+        </div>
+      </div>
+      <div id="profileWrap"></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Staff Roles &amp; Designations</h2><p>Standard roles, custom roles and their restrictions</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="newRole">Create custom role</button>
+          <span class="count-pill" id="roleCount">0 roles</span></div>
+      </div>
+      <div class="grid g4 two" id="roleGrid"></div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role Restrictions</div>
+            <div class="panel-sub">Hard limits applied regardless of permissions</div></div></div>
+          <div id="roleRestrictions"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Assign Roles to Staff</div>
+            <div class="panel-sub">Change a designation immediately</div></div></div>
+          <div class="form-grid" style="grid-template-columns:1fr 1fr">
+            <div class="fg"><label>Staff member</label><select id="assignStaff"></select></div>
+            <div class="fg"><label>New role</label><select id="assignRole"></select></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-dark btn-sm" id="assignRoleBtn">Assign role</button>
+            <span class="tiny muted" id="assignMsg"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Staff Permissions &amp; Access Control</h2><p>Module-level access with sensitive-action restrictions</p></div>
+        <div class="sec-tools">
+          <select id="permRoleSel" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px"></select>
+          <button class="btn btn-gold btn-sm" id="savePerms">Save permissions</button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Permission Matrix</div>
+            <div class="panel-sub" id="permSub">View, create, edit and delete by module</div></div></div>
+          <div class="tblwrap" style="max-height:470px">
+            <table class="perm-tbl"><thead><tr><th>Module / capability</th><th>View</th><th>Create</th>
+              <th>Edit</th><th>Delete</th></tr></thead><tbody id="permBody"></tbody></table>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" id="permAll">Select all</button>
+            <button class="btn btn-ghost btn-sm" id="permNone">Clear all</button>
+            <button class="btn btn-ghost btn-sm" id="permView">View only</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Sensitive Financial Actions</div>
+              <div class="panel-sub">Restricted and approval-gated</div></div>
+              <span class="badge b-rev">Locked</span></div>
+            <div id="permSensitive"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Review Permission Changes</div>
+              <div class="panel-sub">Audit trail of access changes</div></div></div>
+            <div id="permChanges"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Staff Account Status &amp; Security</h2><p>Activate, deactivate, suspend, lock and monitor sign-in behaviour</p></div>
+        <div class="sec-tools"><span class="count-pill" id="statusCount">0 accounts</span></div>
+      </div>
+      <div class="grid5" id="statusTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Account Controls</div>
+          <div class="panel-sub">Every action is recorded in the status change log</div></div>
+          <span class="badge b-gray">Two-person rule on deactivation</span></div>
+        <div class="tblwrap" style="max-height:430px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th>Role</th><th>Status</th><th>Last login</th>
+            <th class="num">Failed logins</th><th>Controls</th></tr></thead><tbody id="statusBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed &amp; Suspicious Sign-ins</div>
+            <div class="panel-sub">Review before unlocking</div></div></div>
+          <div id="suspiciousList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Status Change Log</div>
+            <div class="panel-sub">Immutable record</div></div></div>
+          <div class="tblwrap" style="max-height:260px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Change</th><th>By</th></tr></thead>
+              <tbody id="statusLog"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Staff Password &amp; Authentication Management</h2><p>Policies, reset procedures, MFA and authentication events</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Policy enforced</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password Policy</div>
+            <div class="panel-sub">Applied to every staff account</div></div></div>
+          <div id="pwPolicy"></div>
+          <div class="locked" style="margin-top:10px">🔒 Existing passwords are never displayed, exported or recoverable — only reset.</div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reset &amp; Session Controls</div>
+            <div class="panel-sub">Initiate a reset or end sessions</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Staff member</label><select id="pwStaff"></select></div>
+            <div class="fg"><label>Action</label><select id="pwAction">
+              <option>Initiate password reset</option><option>Force change at next login</option>
+              <option>Enable multi-factor authentication</option><option>Reset MFA device</option>
+              <option>Revoke all active sessions</option><option>Send recovery instructions</option></select></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-dark btn-sm" id="pwGo">Apply</button>
+            <span class="tiny muted" id="pwMsg"></span></div>
+          <div class="panel-head" style="margin-top:12px"><div><div class="panel-title">Authentication Events</div>
+            <div class="panel-sub">Last 24 hours</div></div></div>
+          <div class="tblwrap" style="max-height:240px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Event</th><th>Result</th></tr></thead>
+              <tbody id="authEvents"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Session &amp; Attempt Rules</div>
+            <div class="panel-sub">Enforced platform-wide</div></div></div>
+          <div id="sessionRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recovery Procedures</div>
+            <div class="panel-sub">Defined steps when access is lost</div></div></div>
+          <div id="recoverySteps"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Staff Assignments &amp; Workload</h2><p>Task allocation across applications, accounts, collections and verifications</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="openAssign">Assign task</button>
+          <span class="count-pill" id="taskCount">0 open</span></div>
+      </div>
+      <div class="grid5" id="taskTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Assigned Tasks</div>
+          <div class="panel-sub">Pending, in progress and completed</div></div>
+          <div class="fld"><select id="taskFilter" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option value="">All tasks</option><option>Pending</option><option>In Progress</option>
+            <option>Overdue</option><option>Completed</option></select></div></div>
+        <div class="tblwrap" style="max-height:430px">
+          <table class="tbl2"><thead><tr><th>Reference</th><th>Task</th><th>Assigned to</th>
+            <th>Priority</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead><tbody id="taskBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Workload Monitor</div>
+            <div class="panel-sub">Open tasks per officer</div></div></div>
+          <div id="workload" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Assignment History</div>
+            <div class="panel-sub">Assignments and reassignments</div></div></div>
+          <div id="assignHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Staff Performance &amp; Productivity</h2><p>Output metrics, completion times and collection performance</p></div>
+        <div class="sec-tools">
+          <div class="segbar" id="perfPeriod"><button class="on" data-p="Month">This month</button>
+            <button data-p="Quarter">Quarter</button><button data-p="Year">Year</button></div>
+        </div>
+      </div>
+      <div class="grid5" id="perfTiles" style="margin-bottom:13px"></div>
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="panel-head"><div><div class="panel-title">Staff Productivity</div>
+          <div class="panel-sub">Applications, loans, collections and cases by officer</div></div>
+          <span class="badge b-gray" id="perfPeriodBadge2">This month</span></div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th class="num">Reviewed</th><th class="num">Decisions</th>
+            <th class="num">Loans</th><th class="num">Disb.</th><th class="num">Repayments</th>
+            <th class="num">Collections</th><th class="num">Cases</th><th class="num">Open</th>
+            <th class="num">Avg hrs</th></tr></thead><tbody id="perfBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Task Completion Times</div>
+            <div class="panel-sub">Average hours per task type</div></div></div>
+          <div id="perfTimes" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Performance</div>
+            <div class="panel-sub">Recovery rate by officer · %</div></div></div>
+          <div id="perfCollection" style="margin-top:12px"></div>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Performance Reports</div>
+          <div class="panel-sub">Generated from the reporting period selected above</div></div>
+          <span class="badge b-gray" id="perfPeriodBadge">This month</span></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-ghost btn-sm" data-act="perf-pdf">Performance report · PDF</button>
+          <button class="btn btn-ghost btn-sm" data-act="perf-xls">Performance report · Excel</button>
+          <button class="btn btn-ghost btn-sm" data-act="perf-csv">Performance report · CSV</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Staff Activity &amp; Audit Logs</h2><p>Every staff action, recorded and exportable</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="auditExport">Export activity logs</button></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="audSearch" placeholder="Staff, reference, customer or detail…" />
+          </div>
+          <div class="fld"><select id="audCat"><option value="">All activity types</option>
+            <option>Login</option><option>Customer Record</option><option>Loan Application</option>
+            <option>Loan Approval</option><option>Disbursement</option><option>Repayment</option>
+            <option>Collection</option><option>Report Access</option><option>Permission Change</option>
+            <option>Status Change</option></select></div>
+          <div class="fld"><select id="audStaff"><option value="">All staff</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="audReset">Reset</button>
+        </div>
+        <div class="tblwrap" style="max-height:480px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Activity</th><th>Record</th>
+            <th>Detail</th><th>IP address</th><th>Result</th></tr></thead><tbody id="audBody"></tbody></table>
+        </div>
+        <div class="pager" id="audPager"></div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="sec" id="s12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Departments &amp; Branches</h2><p>Structure, managers and headcount</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="newDept">Create department</button>
+          <button class="btn btn-ghost btn-sm" id="newBranch">Create branch</button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Department Directory</div>
+            <div class="panel-sub">Create and edit departments, assign managers</div></div>
+            <span class="count-pill" id="deptCount">0</span></div>
+          <div class="tblwrap" style="max-height:400px">
+            <table class="tbl2"><thead><tr><th>Department</th><th>Manager</th><th class="num">Staff</th>
+              <th>Branch</th><th></th></tr></thead><tbody id="deptBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Branch Directory</div>
+            <div class="panel-sub">Create and edit branches</div></div>
+            <span class="count-pill" id="branchCount">0</span></div>
+          <div class="tblwrap" style="max-height:400px">
+            <table class="tbl2"><thead><tr><th>Branch</th><th>Code</th><th>Manager</th>
+              <th class="num">Staff</th><th></th></tr></thead><tbody id="branchBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Department or Branch</div>
+            <div class="panel-sub">Headcount per unit</div></div></div>
+          <div id="unitChart" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Department &amp; Branch Reports</div>
+            <div class="panel-sub">Headcount, roles and cost centres</div></div></div>
+          <div id="unitReports"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Staff Invitations &amp; Onboarding</h2><p>Invite, resend, cancel and complete registration</p></div>
+        <div class="sec-tools"><span class="count-pill" id="invCount">0 pending</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Invite New Staff</div>
+            <div class="panel-sub">The invitation email expires in 7 days</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Full name *</label><input id="invName" placeholder="e.g. Chisomo Phiri" /></div>
+            <div class="fg"><label>Email address *</label><input id="invEmail" placeholder="name@goldenfs.mw" /></div>
+            <div class="fg"><label>Initial role *</label><select id="invRole"></select></div>
+            <div class="fg"><label>Department</label><select id="invDept"></select></div>
+            <div class="fg"><label>Branch</label><select id="invBranch"></select></div>
+            <div class="fg"><label>Initial permissions</label><select id="invPerms">
+              <option>Role defaults</option><option>Role defaults + read-only finance</option>
+              <option>Minimum access</option></select></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="sendInvite">Send invitation</button>
+            <span class="tiny muted" id="invMsg"></span>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Invitations</div>
+            <div class="panel-sub">Resend or cancel any invitation</div></div></div>
+          <div id="inviteList" style="margin-top:4px"></div>
+          <div class="panel-head" style="margin-top:12px"><div>
+            <div class="panel-title">Onboarding Completion</div>
+            <div class="panel-sub">Account activation status</div></div></div>
+          <div id="onboardList"></div>
+        </div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Onboarding History</div>
+          <div class="panel-sub">Registration, initial role and activation record</div></div></div>
+        <div class="tblwrap" style="max-height:280px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th>Invited</th><th>Registered</th>
+            <th>Initial role</th><th>Initial permissions</th><th>Activated</th><th>Status</th></tr></thead>
+            <tbody id="onboardHistory"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Staff Communication &amp; Notifications</h2><p>Individual, role-based, department and security messaging</p></div>
+        <div class="sec-tools"><span class="badge b-gray">Delivery tracked</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compose Staff Notification</div>
+            <div class="panel-sub">Delivered to the staff dashboard and email</div></div></div>
+          <div class="segbar" id="staffAudSeg" style="margin-top:6px">
+            <button class="on" data-aud="Individual">Individual</button>
+            <button data-aud="Role">Role-based</button>
+            <button data-aud="Department">Department</button>
+            <button data-aud="Security">Security alert</button>
+            <button data-aud="Task">Task assignment</button>
+          </div>
+          <div class="form-grid" style="margin-top:10px">
+            <div class="fg"><label>Recipient</label><select id="cmRecipient"><option>—</option></select></div>
+            <div class="fg"><label>Priority</label><select id="cmPriority">
+              <option>Normal</option><option>High</option><option>Low</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Subject *</label>
+              <input id="cmSubject" placeholder="e.g. New approval permissions granted" /></div>
+            <div class="fg" style="grid-column:1/-1"><label>Message *</label>
+              <textarea id="cmBody" rows="4" placeholder="Type the message…"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="cmSend">Send notification</button>
+            <span class="tiny muted" id="cmMsg"></span>
+          </div>
+          <div class="locked" style="margin-top:10px">Permission changes, suspensions and security alerts are also sent automatically.</div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Staff Notification History</div>
+              <div class="panel-sub">Sent to staff members</div></div></div>
+            <div id="cmHistory" style="margin-top:4px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Notification Delivery Status</div>
+              <div class="panel-sub">Per channel</div></div></div>
+            <div class="tblwrap" style="max-height:210px">
+              <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Sent</th>
+                <th class="num">Delivered</th><th class="num">Failed</th></tr></thead><tbody id="cmStatus"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Staff Documents &amp; Employment Records</h2><p>Identity, employment, training and restricted records</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="uploadDoc">Upload document</button>
+          <span class="count-pill" id="docCount">0 documents</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Document Register</div>
+          <div class="panel-sub">Filter by document type · restricted records are access-logged</div></div>
+          <div class="fld"><select id="docFilter" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option value="">All documents</option><option>Identification</option><option>Employment</option>
+            <option>Appointment letter</option><option>Role assignment</option><option>Training / certification</option></select></div></div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2"><thead><tr><th>Document</th><th>Staff</th><th>Type</th>
+            <th>Uploaded</th><th>Expiry</th><th>Access</th><th>Actions</th></tr></thead><tbody id="docBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Expiry Reminders</div>
+            <div class="panel-sub">Documents needing renewal</div></div></div>
+          <div id="docExpiry"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document History</div>
+            <div class="panel-sub">Uploads, views and access</div></div></div>
+          <div id="docHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Staff Management Reports</h2><p>Directory, access, performance and security reporting</p></div>
+        <div class="sec-tools"><span class="badge b-gray">10 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards"></div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Staff Account Closure &amp; Transfer</h2><p>Deactivation, transfers, task reassignment and access revocation</p></div>
+        <div class="sec-tools"><span class="badge b-rev">Approval required</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Request Deactivation or Transfer</div>
+            <div class="panel-sub">Sensitive — reviewed by an administrator</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Staff member *</label><select id="clStaff"></select></div>
+            <div class="fg"><label>Request type *</label><select id="clType">
+              <option>Deactivate account</option><option>Transfer department</option><option>Transfer branch</option></select></div>
+            <div class="fg"><label>New department</label><select id="clDept"></select></div>
+            <div class="fg"><label>New branch</label><select id="clBranch"></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Reason for deactivation / transfer *</label>
+              <textarea id="clReason" rows="3" placeholder="Record the reason — retained in the closure audit trail"></textarea></div>
+            <div class="fg" style="grid-column:1/-1"><label>On approval</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clTasks" checked /> Reassign outstanding tasks</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clAccess" checked /> Revoke system access</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clSessions" checked /> Revoke active sessions</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clKeep" checked /> Preserve historical records</label>
+              </div></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-red" id="clSubmit">Submit request</button>
+            <span class="tiny muted" id="clMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Approval Queue</div>
+              <div class="panel-sub">Deactivation requests awaiting approval</div></div></div>
+            <div id="clQueue"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Closure Audit Trail</div>
+              <div class="panel-sub">Requests, approvals and revocations</div></div></div>
+            <div class="tblwrap" style="max-height:250px">
+              <table class="tbl2"><thead><tr><th>Time</th><th>Staff &amp; request</th>
+                <th>Outcome</th></tr></thead><tbody id="clTrail"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Staff Management Settings</h2><p>Account rules, security policy, invitation and audit settings</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="setReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="setSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Creation &amp; Invitations</div>
+            <div class="panel-sub">Rules applied when adding staff</div></div></div>
+          <div id="setAccount"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password &amp; Login Security</div>
+            <div class="panel-sub">Policy and session rules</div></div></div>
+          <div id="setSecurity"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Roles &amp; Default Permissions</div>
+            <div class="panel-sub">Applied to new accounts</div></div></div>
+          <div id="setRoles"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspension, Audit &amp; Approvals</div>
+            <div class="panel-sub">Escalation and retention</div></div></div>
+          <div id="setAudit"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Creating staff, changing status, assigning tasks and roles, resetting passwords and
+        processing closures all update the in-page state, so the access-control lifecycle can be walked end to end.
+        Passwords are never displayed.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   GOLDEN FINANCIAL SERVICES · STAFF MANAGEMENT MODULE
+   ============================================================ */
+const el = id => document.getElementById(id);
+const nf = n => Math.round(n).toLocaleString('en-US');
+const mk = n => 'MK ' + nf(n);
+const initials = s => String(s).split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const stamp = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+const TODAY = '30 Oct 2026';
+
+function toast(msg, type='ok'){
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<span>${type==='err'?'⚠':type==='info'?'ℹ':'✓'}</span><div>${msg}</div>`;
+  el('toasts').appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(16px)';t.style.transition='.25s';},2600);
+  setTimeout(()=>t.remove(),3000);
+}
+
+/* ---------- chart helpers (same visual language as the dashboard) ---------- */
+function niceMax(v){
+  if(v<=0) return 10;
+  const p=Math.pow(10,Math.floor(Math.log10(v)));
+  for(const s of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(v<=s*p) return s*p;
+  return 10*p;
+}
+function mkChart(host,o){
+  if(!host) return;
+  const type=o.type||'line', labels=o.labels||[], series=o.series||[];
+  const W=640,H=o.height||210,L=o.suffix?48:38,R=12,T=12,B=26, iw=W-L-R, ih=H-T-B;
+  const yMax=o.yMax||niceMax(Math.max(0,...series.flatMap(s=>s.data)));
+  const step=iw/Math.max(labels.length,1);
+  let g='';
+  for(let i=0;i<=4;i++){
+    const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
+    const t=Number.isInteger(v)?v:v.toFixed(1);
+    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}${o.suffix||''}</text>`;
+  }
+  labels.forEach((lb,i)=>{
+    if(labels.length>12 && i%2) return;
+    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+  });
+  if(type==='bar'){
+    const n=series.length, groupW=step*0.6, bw=Math.max(3,groupW/n-(n>1?2:0));
+    labels.forEach((lb,i)=>{
+      const gx=L+step*i+(step-groupW)/2;
+      series.forEach((s,j)=>{
+        const v=s.data[i]||0, h=(v/yMax)*ih;
+        if(h<0.6) return;
+        const x=gx+j*(bw+2), y=T+ih-h, r=Math.min(3,bw/2,h/2);
+        g+=`<path d="M${x.toFixed(1)} ${(y+r).toFixed(1)} q0 ${-r} ${r} ${-r} h${(bw-2*r).toFixed(1)} q${r} 0 ${r} ${r} v${(h-r).toFixed(1)} h${-bw.toFixed(1)} Z" fill="${s.color}"><title>${lb} · ${s.name}: ${v}</title></path>`;
+      });
+    });
+  } else {
+    series.forEach(s=>{
+      const pts=s.data.map((v,i)=>[L+step*i+step/2,T+ih-(v/yMax)*ih]);
+      const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+      const gid='g'+Math.random().toString(36).slice(2,8);
+      g+=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${s.color}" stop-opacity=".2"/><stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient></defs>
+        <path d="${d} L${pts[pts.length-1][0].toFixed(1)} ${T+ih} L${pts[0][0].toFixed(1)} ${T+ih} Z" fill="url(#${gid})"/>
+        <path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.1" stroke-linejoin="round"/>`;
+      pts.forEach((q,i)=>{g+=`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.3" fill="#fff" stroke="${s.color}" stroke-width="1.7"><title>${labels[i]}: ${s.data[i]}</title></circle>`;});
+    });
+  }
+  host.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  host.innerHTML=g;
+}
+function mkHBars(host, rows, opt={}){
+  if(!host) return;
+  const max=opt.max || Math.max(...rows.map(r=>r.value))||1;
+  host.innerHTML=rows.map(r=>`<div class="hbar-row">
+    <div class="hbar-l">${r.label}</div>
+    <div class="hbar-t"><i style="width:${Math.max(2,(r.value/max)*100)}%;background:${r.color||'#C9A227'}"></i></div>
+    <div class="hbar-v">${r.display||nf(r.value)}</div></div>`).join('');
+}
+function mkDonut(host, data, opt={}){
+  if(!host) return;
+  const total=data.reduce((s,d)=>s+d.value,0)||1;
+  const size=opt.size||150,c=size/2,r=size*0.335,sw=opt.ring||15,C=2*Math.PI*r,GAP=2.5;
+  let off=0,arcs='';
+  data.forEach(d=>{
+    const len=(d.value/total)*C, dash=Math.max(len-GAP,0.6);
+    arcs+=`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${(C-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${c} ${c})"><title>${d.label}: ${nf(d.value)}</title></circle>`;
+    off+=len;
+  });
+  host.innerHTML=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
+    <text x="${c}" y="${c-1}" text-anchor="middle" font-size="${(size*0.122).toFixed(1)}" font-weight="800" fill="#0F1115" font-family="inherit">${opt.center||nf(total)}</text>
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.056).toFixed(1)}" font-weight="700" fill="#8A90A0" letter-spacing=".8" font-family="inherit">${opt.caption||'TOTAL'}</text></svg>`;
+}
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const DEPTS = [
+  {name:'Executive', head:'Chikondi Mwale', branch:'Lilongwe City', code:'EXE'},
+  {name:'Credit', head:'Thoko Phiri', branch:'Lilongwe City', code:'CRD'},
+  {name:'Finance', head:'Agnes Mbewe', branch:'Lilongwe City', code:'FIN'},
+  {name:'Collections', head:'Samuel Zimba', branch:'Blantyre', code:'COL'},
+  {name:'Customer Support', head:'Grace Mtemang\'ombe', branch:'Lilongwe Area 47', code:'CSP'},
+  {name:'Compliance & Audit', head:'Linda Chirwa', branch:'Lilongwe City', code:'CMA'},
+  {name:'IT & Operations', head:'Peter Kamoto', branch:'Lilongwe City', code:'ITO'},
+  {name:'Human Resources', head:'Mercy Chatsika', branch:'Lilongwe City', code:'HRA'}
+];
+const BRANCHES = [
+  {name:'Lilongwe City', code:'LIL', manager:'Chikondi Mwale', region:'Central'},
+  {name:'Lilongwe Area 47', code:'A47', manager:'Grace Mtemang\'ombe', region:'Central'},
+  {name:'Blantyre', code:'BLZ', manager:'Samuel Zimba', region:'Southern'},
+  {name:'Mzuzu', code:'MZU', manager:'Joseph Mwale', region:'Northern'},
+  {name:'Zomba', code:'ZOM', manager:'Thoko Phiri', region:'Southern'},
+  {name:'Kasungu', code:'KSG', manager:'Agnes Mbewe', region:'Central'}
+];
+
+let ROLES = [
+  {name:'Super Admin', code:'SADM', level:'System', desc:'Unrestricted platform access', custom:false,
+    restrict:'Cannot approve own disbursements'},
+  {name:'Administrator', code:'ADMN', level:'System', desc:'Manages staff, settings and approvals', custom:false,
+    restrict:'Disbursement approval requires a second officer'},
+  {name:'Loan Officer', code:'LOFF', level:'Operations', desc:'Originates applications and serves customers', custom:false,
+    restrict:'Cannot approve the loans they originate'},
+  {name:'Loan Reviewer', code:'LREV', level:'Operations', desc:'Reviews submitted applications', custom:false,
+    restrict:'Read-only on disbursements'},
+  {name:'Loan Approver', code:'LAPP', level:'Credit', desc:'Approves or rejects applications', custom:false,
+    restrict:'Approval limit per officer applies'},
+  {name:'Disbursement Officer', code:'DOFF', level:'Finance', desc:'Prepares and releases approved loans', custom:false,
+    restrict:'Release requires authorization'},
+  {name:'Repayment Officer', code:'ROFF', level:'Finance', desc:'Records and verifies repayments', custom:false,
+    restrict:'Cannot reverse posted payments'},
+  {name:'Collections Officer', code:'COFF', level:'Operations', desc:'Works arrears and field follow-ups', custom:false,
+    restrict:'No access to financial data exports'},
+  {name:'Accountant / Finance Officer', code:'ACCT', level:'Finance', desc:'Ledger, reconciliation and reporting', custom:false,
+    restrict:'Cannot edit loan terms'},
+  {name:'Customer Support Officer', code:'CSUP', level:'Operations', desc:'Handles customer queries and cases', custom:false,
+    restrict:'No financial data access'},
+  {name:'Auditor / Compliance Officer', code:'AUDT', level:'Governance', desc:'Read-only access to every record', custom:false,
+    restrict:'Read-only — cannot create or edit'},
+  {name:'Branch Manager', code:'BMGR', level:'Management', desc:'Runs a branch and its staff', custom:true,
+    restrict:'Approval limit MK 5,000,000'},
+  {name:'Data Entry Clerk', code:'DENT', level:'Operations', desc:'Captures customer and loan data', custom:true,
+    restrict:'Create only — no approvals'},
+  {name:'Intern / Trainee', code:'INTR', level:'Operations', desc:'Supervised read-only access', custom:true,
+    restrict:'Read-only, supervised sign-in'}
+];
+const ROLE_COLORS = {System:'#B32C2C',Management:'#7C5CF0',Credit:'#C9A227',Finance:'#1E9E6A',
+  Operations:'#2F6FED',Governance:'#5A6172'};
+
+const PERM_MODULES = [
+  'Dashboard access','Customer management','Loan applications','Loan approval','Disbursements',
+  'Repayment management','Collections management','Reports access','Financial data','Notifications',
+  'Staff management','System settings'
+];
+let PERMS = {
+  'Super Admin':        [[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]],
+  'Administrator':      [[1,1,1,1],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,1,1,1],[1,1,1,0],[1,1,1,0]],
+  'Loan Officer':       [[1,0,0,0],[1,1,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Loan Reviewer':      [[1,0,0,0],[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Loan Approver':      [[1,0,0,0],[1,0,0,0],[1,1,1,0],[1,0,1,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Disbursement Officer':[[1,0,0,0],[1,0,0,0],[1,0,1,0],[0,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Repayment Officer':  [[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,0],[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Collections Officer':[[1,0,0,0],[1,0,1,0],[1,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[1,1,1,0],[1,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Accountant / Finance Officer':[[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[1,1,1,0],[1,1,1,0],[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Customer Support Officer':[[1,0,0,0],[1,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Auditor / Compliance Officer':[[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0]],
+  'Branch Manager':     [[1,1,1,0],[1,1,1,0],[1,1,1,0],[1,0,1,0],[0,0,0,0],[1,0,0,0],[1,0,1,0],[1,0,0,0],[1,0,0,0],[1,1,1,0],[1,0,0,0],[0,0,0,0]],
+  'Data Entry Clerk':   [[1,0,0,0],[1,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]],
+  'Intern / Trainee':   [[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,0,0],[0,0,0,0],[0,0,0,0]]
+};
+
+let STAFF = [];
+const S = {seq:24, page:1, size:8, selected:new Set(), auditPage:1, auditSize:8,
+  perfPeriod:'Month', staffAud:'Individual', permRole:'Loan Officer', profile:'STF-001'};
+
+function addStaff(o){
+  STAFF.push(Object.assign({fails:0, mfa:true, sessions:1, tasks:0, status:'Active',
+    joined:'2025-06-01', lastLogin:'—'}, o));
+  return STAFF[STAFF.length-1];
+}
+
+/* 24 staff members */
+[
+  ['STF-001','Chikondi Mwale','c.mwale','c.mwale@goldenfs.mw','+265 991 200 101','Super Admin','Executive','Lilongwe City','—','Active','MW-0001','2023-02-14','30 Oct 2026 09:38',0],
+  ['STF-002','Thoko Phiri','t.phiri','t.phiri@goldenfs.mw','+265 991 200 102','Loan Approver','Credit','Zomba','Chikondi Mwale','Active','MW-0002','2023-03-02','30 Oct 2026 09:02',0],
+  ['STF-003','Agnes Mbewe','a.mbewe','a.mbewe@goldenfs.mw','+265 991 200 103','Accountant / Finance Officer','Finance','Kasungu','Chikondi Mwale','Active','MW-0003','2023-03-20','30 Oct 2026 08:47',1],
+  ['STF-004','Samuel Zimba','s.zimba','s.zimba@goldenfs.mw','+265 991 200 104','Collections Officer','Collections','Blantyre','Chikondi Mwale','Active','MW-0004','2023-04-11','30 Oct 2026 08:31',2],
+  ['STF-005','Linda Chirwa','l.chirwa','l.chirwa@goldenfs.mw','+265 991 200 105','Auditor / Compliance Officer','Compliance & Audit','Lilongwe City','Chikondi Mwale','Active','MW-0005','2023-05-08','30 Oct 2026 07:35',5],
+  ['STF-006','Grace Mtemang\'ombe','g.mtemang','g.mtemang@goldenfs.mw','+265 991 200 106','Customer Support Officer','Customer Support','Lilongwe Area 47','Chikondi Mwale','Active','MW-0006','2023-06-19','30 Oct 2026 08:12',0],
+  ['STF-007','Peter Kamoto','p.kamoto','p.kamoto@goldenfs.mw','+265 991 200 107','Administrator','IT & Operations','Lilongwe City','Chikondi Mwale','Active','MW-0007','2023-07-03','30 Oct 2026 09:20',0],
+  ['STF-008','Mercy Chatsika','m.chatsika','m.chatsika@goldenfs.mw','+265 991 200 108','Branch Manager','Human Resources','Lilongwe City','Chikondi Mwale','Active','MW-0008','2023-08-15','30 Oct 2026 08:05',0],
+  ['STF-009','Joseph Mwale','j.mwale','j.mwale@goldenfs.mw','+265 991 200 109','Branch Manager','Credit','Mzuzu','Thoko Phiri','Active','MW-0009','2023-09-01','29 Oct 2026 17:22',0],
+  ['STF-010','Tadala Nkhoma','t.nkhoma','t.nkhoma@goldenfs.mw','+265 991 200 110','Loan Officer','Credit','Lilongwe City','Thoko Phiri','Active','MW-0010','2023-10-12','30 Oct 2026 08:58',0],
+  ['STF-011','Blessings Tembo','b.tembo','b.tembo@goldenfs.mw','+265 991 200 111','Loan Officer','Credit','Blantyre','Joseph Mwale','Active','MW-0011','2024-01-08','30 Oct 2026 08:40',1],
+  ['STF-012','Memory Nkhoma','m.nkhoma','m.nkhoma@goldenfs.mw','+265 991 200 112','Loan Reviewer','Credit','Lilongwe City','Thoko Phiri','Active','MW-0012','2024-02-14','30 Oct 2026 08:26',0],
+  ['STF-013','Peter Kachale','p.kachale','p.kachale@goldenfs.mw','+265 991 200 113','Disbursement Officer','Finance','Lilongwe City','Agnes Mbewe','Active','MW-0013','2024-03-04','30 Oct 2026 08:19',0],
+  ['STF-014','Esther Kamanga','e.kamanga','e.kamanga@goldenfs.mw','+265 991 200 114','Repayment Officer','Finance','Lilongwe City','Agnes Mbewe','Active','MW-0014','2024-04-22','30 Oct 2026 08:02',0],
+  ['STF-015','Isaac Mponda','i.mponda','i.mponda@goldenfs.mw','+265 991 200 115','Collections Officer','Collections','Zomba','Samuel Zimba','Active','MW-0015','2024-05-30','29 Oct 2026 16:51',0],
+  ['STF-016','Fatima Salimu','f.salimu','f.salimu@goldenfs.mw','+265 991 200 116','Customer Support Officer','Customer Support','Blantyre','Grace Mtemang\'ombe','Inactive','MW-0016','2024-07-11','12 Sep 2026 11:14',0],
+  ['STF-017','Kondwani Msiska','k.msiska','k.msiska@goldenfs.mw','+265 991 200 117','Loan Officer','Credit','Mzuzu','Joseph Mwale','Suspended','MW-0017','2024-08-19','26 Oct 2026 15:40',3],
+  ['STF-018','Rose Chikopa','r.chikopa','r.chikopa@goldenfs.mw','+265 991 200 118','Data Entry Clerk','Credit','Kasungu','Thoko Phiri','Active','MW-0018','2024-09-23','30 Oct 2026 07:58',0],
+  ['STF-019','Alfred Jimu','a.jimu','a.jimu@goldenfs.mw','+265 991 200 119','Collections Officer','Collections','Blantyre','Samuel Zimba','Locked','MW-0019','2024-11-05','28 Oct 2026 19:22',6],
+  ['STF-020','Sarah Kaunda','s.kaunda','s.kaunda@goldenfs.mw','+265 991 200 120','Repayment Officer','Finance','Lilongwe Area 47','Agnes Mbewe','Active','MW-0020','2025-01-15','30 Oct 2026 08:44',0],
+  ['STF-021','Yamikani Gondwe','y.gondwe','y.gondwe@goldenfs.mw','+265 991 200 121','Loan Reviewer','Credit','Mzuzu','Joseph Mwale','Active','MW-0021','2025-03-10','30 Oct 2026 08:07',0],
+  ['STF-022','Grace Mvula','g.mvula','g.mvula@goldenfs.mw','+265 991 200 122','Data Entry Clerk','Customer Support','Lilongwe City','Grace Mtemang\'ombe','Active','MW-0022','2025-05-26','29 Oct 2026 16:33',0],
+  ['STF-023','Chisomo Phiri','c.phiri','c.phiri@goldenfs.mw','+265 991 200 123','Intern / Trainee','Credit','Lilongwe City','Thoko Phiri','Pending','MW-0023','2026-10-27','—',0],
+  ['STF-024','Daniel Kaunda','d.kaunda','d.kaunda@goldenfs.mw','+265 991 200 124','Customer Support Officer','Customer Support','Zomba','Grace Mtemang\'ombe','Pending','MW-0024','2026-10-28','—',0]
+].forEach(([id,name,user,email,phone,role,dept,branch,manager,status,idno,joined,lastLogin,fails])=>{
+  addStaff({id,name,user,email,phone,role,dept,branch,manager,status,idno,joined,lastLogin,fails,
+    nid:'NID-'+(300000+ +id.slice(4)*137), dob:'19'+(70+ +id.slice(4)%25)+'-0'+(1+ +id.slice(4)%9)+'-1'+(+id.slice(4)%9),
+    address:'Private Bag '+(200+ +id.slice(4))+', '+branch+', Malawi',
+    mfa: +id.slice(4) !== 23, sessions: status==='Active' ? 1+ +id.slice(4)%3 : 0});
+});
+
+/* tasks */
+let TASKS = [
+  ['TSK-1101','Loan Application','Review LN-2026-1842 · Thokozani Banda','Tadala Nkhoma','High','31 Oct 2026','In Progress','30 Oct 2026'],
+  ['TSK-1102','Loan Application','Screen LN-2026-1844 · Grace Mvula','Memory Nkhoma','Normal','31 Oct 2026','Pending','30 Oct 2026'],
+  ['TSK-1103','Collection Case','Follow up LN-2024-0761 · Mercy Chatsika','Samuel Zimba','High','30 Oct 2026','Overdue','29 Oct 2026'],
+  ['TSK-1104','Disbursement','Release DIS-2026-1041 · MK 868,500','Peter Kachale','High','30 Oct 2026','In Progress','30 Oct 2026'],
+  ['TSK-1105','Repayment Verification','Verify RCP-99388 · MK 512,000','Esther Kamanga','Normal','29 Oct 2026','Completed','29 Oct 2026'],
+  ['TSK-1106','Customer Account','KYC refresh · Sarah Kaunda','Grace Mvula','Low','2 Nov 2026','Pending','30 Oct 2026'],
+  ['TSK-1107','Support Case','Query on missing receipt · CUS-003501','Grace Mtemang\'ombe','Normal','31 Oct 2026','In Progress','30 Oct 2026'],
+  ['TSK-1108','Collection Case','Field visit · Blessings Tembo','Alfred Jimu','High','30 Oct 2026','Overdue','28 Oct 2026'],
+  ['TSK-1109','Loan Application','Committee pack for 31 Oct','Thoko Phiri','High','31 Oct 2026','Pending','30 Oct 2026'],
+  ['TSK-1110','Repayment Verification','Reconcile mobile money batch','Sarah Kaunda','Normal','1 Nov 2026','Pending','30 Oct 2026'],
+  ['TSK-1111','Disbursement','Prepare release batch · 12 loans','Peter Kachale','Normal','1 Nov 2026','Pending','30 Oct 2026'],
+  ['TSK-1112','Support Case','Account lockout enquiry','Daniel Kaunda','Low','2 Nov 2026','Pending','29 Oct 2026'],
+  ['TSK-1113','Customer Account','Data capture · new applications','Rose Chikopa','Normal','31 Oct 2026','In Progress','30 Oct 2026'],
+  ['TSK-1114','Collection Case','Promised payment follow-up','Isaac Mponda','Normal','31 Oct 2026','Pending','30 Oct 2026'],
+  ['TSK-1115','Loan Application','Document check LN-2026-1846','Yamikani Gondwe','Normal','29 Oct 2026','Completed','29 Oct 2026'],
+  ['TSK-1116','Reporting','Weekly portfolio pack','Agnes Mbewe','Low','1 Nov 2026','Pending','30 Oct 2026']
+].map(([ref,type,title,staff,priority,due,status,created])=>({ref,type,title,staff,priority,due,status,created}));
+
+/* performance per staff */
+const PERF = {
+  'STF-002':[46,44,0,0,0,0,0,2,18.4], 'STF-003':[0,0,0,0,124,0,0,1,9.2],
+  'STF-004':[0,0,0,0,0,86,0,2,22.6], 'STF-006':[0,0,0,0,0,0,142,3,6.1],
+  'STF-009':[28,26,0,0,0,0,0,1,20.2], 'STF-010':[38,0,22,0,0,0,0,1,14.8],
+  'STF-011':[31,0,18,0,0,0,0,2,16.3], 'STF-012':[52,0,0,0,0,0,0,1,11.4],
+  'STF-013':[0,0,0,74,0,0,0,2,7.6],   'STF-014':[0,0,0,0,168,0,0,1,5.9],
+  'STF-015':[0,0,0,0,0,64,0,0,24.1],  'STF-018':[0,0,0,0,0,0,0,1,0],
+  'STF-020':[0,0,0,0,96,0,0,1,6.4],   'STF-021':[24,0,0,0,0,0,0,0,12.7],
+  'STF-022':[0,0,0,0,0,0,38,1,4.8],   'STF-005':[0,0,0,0,0,0,0,0,0]
+};
+const PERF_SCALE = {Month:1, Quarter:2.8, Year:9.4};
+const COLLECTION_RATE = {'STF-004':88.4,'STF-015':81.2,'STF-010':76.5,'STF-011':73.8,'STF-009':69.4,'STF-021':64.1};
+
+/* audit log */
+let AUDIT = [
+  ['09:38','Chikondi Mwale','Login','SESSION','Signed in from Lilongwe','196.44.21.4','Success'],
+  ['09:20','Peter Kamoto','System Settings','SET-04','Updated session timeout to 20 minutes','196.44.21.9','Success'],
+  ['09:12','Linda Chirwa','Permission Change','STF-017','Suspended K. Msiska · failed logins','196.44.21.6','Success'],
+  ['09:02','Thoko Phiri','Loan Approval','LN-2026-1831','Approved MK 450,000','196.44.21.11','Success'],
+  ['08:58','Tadala Nkhoma','Loan Application','LN-2026-1842','Submitted for review','196.44.21.18','Success'],
+  ['08:47','Agnes Mbewe','Repayment','RCP-99388','Verified MK 512,000','196.44.21.22','Success'],
+  ['08:31','Samuel Zimba','Collection','LN-2024-0761','Logged field visit','196.44.21.14','Success'],
+  ['08:19','Peter Kachale','Disbursement','DIS-2026-1041','Prepared release MK 868,500','196.44.21.25','Success'],
+  ['08:12','Grace Mtemang\'ombe','Customer Record','CUS-003501','Viewed customer profile','196.44.21.31','Success'],
+  ['08:05','Mercy Chatsika','Report Access','RPT-WORKLOAD','Exported workload report','196.44.21.28','Success'],
+  ['07:58','Rose Chikopa','Customer Record','CUS-003488','Created customer record','196.44.21.33','Success'],
+  ['07:35','Linda Chirwa','Status Change','STF-005','Failed sign-in attempts reviewed','196.44.21.6','Success'],
+  ['28 Oct 19:22','Alfred Jimu','Login','SESSION','Account locked after 6 attempts','41.87.112.8','Blocked'],
+  ['28 Oct 17:40','Esther Kamanga','Repayment','RCP-99371','Posted MK 320,000','196.44.21.22','Success'],
+  ['28 Oct 16:02','Tadala Nkhoma','Loan Application','LN-2026-1839','Edited applicant details','196.44.21.18','Success'],
+  ['28 Oct 14:55','Samuel Zimba','Report Access','RPT-ARREARS','Viewed arrears ageing report','196.44.21.14','Success'],
+  ['28 Oct 11:20','Peter Kamoto','Permission Change','ROLE-LOFF','Removed financial data access','196.44.21.9','Success'],
+  ['27 Oct 16:44','Kondwani Msiska','Disbursement','DIS-2026-1038','Attempted release without authorization','41.87.112.51','Blocked']
+].map(([time,staff,cat,record,detail,ip,result])=>({time,staff,cat,record,detail,ip,result}));
+
+/* permission change reviews */
+let PERM_CHANGES = [
+  ['30 Oct 2026 09:12','Linda Chirwa','Loan Officer','Financial data access removed','Administrator'],
+  ['29 Oct 2026 16:40','Peter Kamoto','Branch Manager','Approval limit raised to MK 5,000,000','Super Admin'],
+  ['28 Oct 2026 11:20','Peter Kamoto','Loan Officer','Disbursement permission removed','Administrator'],
+  ['26 Oct 2026 08:05','Chikondi Mwale','Data Entry Clerk','Delete permission revoked','Super Admin']
+];
+
+/* invitations */
+let INVITES = [
+  ['Chisomo Phiri','c.phiri@goldenfs.mw','Intern / Trainee','Credit','27 Oct 2026','3 Nov 2026','Pending'],
+  ['Daniel Kaunda','d.kaunda@goldenfs.mw','Customer Support Officer','Customer Support','28 Oct 2026','4 Nov 2026','Pending'],
+  ['Tabitha Kalua','t.kalua@goldenfs.mw','Data Entry Clerk','Credit','29 Oct 2026','5 Nov 2026','Pending'],
+  ['Henry Chikafa','h.chikafa@goldenfs.mw','Collections Officer','Collections','18 Oct 2026','25 Oct 2026','Expired']
+];
+const ONBOARD_HISTORY = [
+  ['Chisomo Phiri','27 Oct 2026','—','Intern / Trainee','Minimum access','—','Awaiting registration'],
+  ['Daniel Kaunda','28 Oct 2026','—','Customer Support Officer','Role defaults','—','Awaiting registration'],
+  ['Grace Mvula','26 May 2025','26 May 2025','Data Entry Clerk','Role defaults','26 May 2025','Complete'],
+  ['Yamikani Gondwe','10 Mar 2025','11 Mar 2025','Loan Reviewer','Role defaults','11 Mar 2025','Complete']
+];
+
+/* documents */
+let DOCS = [
+  ['National ID — copy','Chikondi Mwale','Identification','12 Feb 2023','—','Restricted'],
+  ['Employment contract','Chikondi Mwale','Employment','14 Feb 2023','—','Restricted'],
+  ['Appointment letter','Thoko Phiri','Appointment letter','02 Mar 2023','—','Restricted'],
+  ['Practising certificate','Agnes Mbewe','Training / certification','20 Mar 2025','31 Dec 2026','Standard'],
+  ['National ID — copy','Samuel Zimba','Identification','11 Apr 2023','—','Restricted'],
+  ['Driving licence (field work)','Isaac Mponda','Identification','30 May 2024','14 Mar 2027','Standard'],
+  ['Role assignment record','Kondwani Msiska','Role assignment','19 Aug 2024','—','Restricted'],
+  ['Credit analysis training','Memory Nkhoma','Training / certification','14 Sep 2026','14 Sep 2027','Standard'],
+  ['Employment contract','Blessings Tembo','Employment','08 Jan 2024','—','Restricted'],
+  ['Collections certification','Samuel Zimba','Training / certification','02 Jul 2024','31 Jan 2027','Standard'],
+  ['Medical cover enrolment','Grace Mtemang\'ombe','Employment','19 Jun 2023','30 Jun 2027','Standard']
+].map(([name,staff,type,uploaded,expiry,access])=>({name,staff,type,uploaded,expiry,access}));
+
+/* staff notification history */
+let CM_HISTORY = [
+  ['Permission change notice','Individual · T. Nkhoma','30 Oct 2026 09:12','Delivered'],
+  ['Month-end close reminder','Department · Finance','29 Oct 2026 16:20','Delivered'],
+  ['Security alert · unusual sign-in','Security · All staff','29 Oct 2026 08:15','Delivered'],
+  ['New collection assignment','Task · S. Zimba','28 Oct 2026 14:02','Read'],
+  ['Branch performance review','Role · Branch Manager','27 Oct 2026 10:00','Delivered'],
+  ['Account suspended','Individual · K. Msiska','26 Oct 2026 15:40','Delivered']
+];
+const CM_STATUS = [['Staff dashboard',248,244,4],['Email',186,181,5],['SMS',42,40,2]];
+
+/* security alerts */
+const SEC_ALERTS = [
+  ['5 failed sign-ins · L. Chirwa','06:58 · 41.87.112.8','High'],
+  ['Account locked · A. Jimu','28 Oct 19:22 · 6 attempts','High'],
+  ['Release attempt without authorization · K. Msiska','27 Oct 16:44','Critical'],
+  ['New device sign-in · P. Kamoto','27 Oct 07:12 · Android','Normal'],
+  ['Suspended account sign-in attempt · K. Msiska','26 Oct 15:40','High']
+];
+
+/* closure requests */
+let CLOSURE = [
+  ['CLS-004','Kondwani Msiska','Deactivate account','Repeated policy breaches','Pending approval'],
+  ['CLS-003','Fatima Salimu','Deactivate account','Resigned — 12 Sep 2026','Approved'],
+  ['CLS-002','Joseph Mwale','Transfer branch','Mzuzu to Lilongwe City','Approved'],
+  ['CLS-001','Henry Chikafa','Deactivate account','Contract ended','Completed']
+];
+const CL_TRAIL = [
+  ['30 Oct 2026 09:14','Kondwani Msiska','Deactivate','Policy breach','Requested'],
+  ['12 Sep 2026 11:30','Fatima Salimu','Deactivate','Resignation','Approved · access revoked'],
+  ['05 Sep 2026 09:00','Joseph Mwale','Transfer branch','Relocation','Completed'],
+  ['25 Aug 2026 16:20','Henry Chikafa','Deactivate','Contract ended','Completed · records preserved']
+];
+
+/* assignment history */
+const ASSIGN_HISTORY = [
+  ['30 Oct 2026 09:20','TSK-1104','Reassigned to Peter Kachale','C. Mwale'],
+  ['30 Oct 2026 08:58','TSK-1101','Assigned to Tadala Nkhoma','T. Phiri'],
+  ['29 Oct 2026 16:05','TSK-1105','Completed by Esther Kamanga','System'],
+  ['29 Oct 2026 14:02','TSK-1103','Reassigned to Samuel Zimba','C. Mwale'],
+  ['28 Oct 2026 15:40','TSK-1108','Assigned to Alfred Jimu','S. Zimba']
+];
+
+/* ============================================================
+   SHARED BITS
+   ============================================================ */
+function statusChip(s){
+  const m = {Active:'st-ok', Inactive:'st-canc', Suspended:'st-fail', Locked:'st-rev', Pending:'st-await'};
+  return `<span class="chip ${m[s.status]||'st-canc'}">${s.status}</span>`;
+}
+const roleColor = r => ROLE_COLORS[(ROLES.find(x=>x.name===r)||{}).level] || '#5A6172';
+const staffBy = id => STAFF.find(s=>s.id===id);
+const avTone = i => ['','blue','green','purple','gray'][i%5];
+const kv = (k,v) => `<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`;
+function permissionCount(role){
+  const p = PERMS[role] || [];
+  return p.reduce((a,row)=>a+row.reduce((x,y)=>x+y,0),0) + ' of ' + (PERM_MODULES.length*4);
+}
+
+/* ============================================================
+   SECTION 1 · OVERVIEW
+   ============================================================ */
+function renderOverview(){
+  const total = STAFF.length;
+  const active = STAFF.filter(s=>s.status==='Active').length;
+  const inactive = STAFF.filter(s=>s.status==='Inactive').length;
+  const suspended = STAFF.filter(s=>s.status==='Suspended').length;
+  const locked = STAFF.filter(s=>s.status==='Locked').length;
+  const pending = INVITES.filter(i=>i[6]==='Pending').length;
+
+  el('bandStaff').textContent = total;
+  el('bandActive').textContent = active;
+  el('bandInvites').textContent = pending;
+  el('bandAlerts').textContent = SEC_ALERTS.length;
+  el('alertCount').textContent = SEC_ALERTS.length;
+
+  const tiles = [
+    ['Total Staff Members', total, 'All accounts on the platform', 'users', 'b', 'on record'],
+    ['Active Staff Members', active, 'Signed in and enabled', 'check', 'g', 'active'],
+    ['Inactive Staff Members', inactive, 'No recent activity', 'card', 'p', 'dormant'],
+    ['Suspended Accounts', suspended + locked, `${suspended} suspended · ${locked} locked`, 'alert', 'r', 'restricted'],
+    ['Pending Invitations', pending, 'Awaiting registration', 'doc', 'p', 'invited']
+  ];
+  el('ovTiles').innerHTML = tiles.map(([l,v,f,ic,tone,tag])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div>
+        <div class="stat-ic ${tone}">${ICONS[ic]}</div></div>
+      <div class="stat-val">${nf(v)}</div>
+      <div class="stat-foot"><span class="badge ${tag==='restricted'?'b-rev':tag==='active'?'b-appr':tag==='invited'?'b-gray':'b-pend'}">${tag}</span></div>
+      <div class="tiny muted" style="margin-top:4px">${f}</div>
+    </div>`).join('');
+
+  mkHBars(el('ovRoles'), ROLES.map(r=>({
+    label:r.name.length>22 ? r.name.slice(0,21)+'…' : r.name,
+    value:STAFF.filter(s=>s.role===r.name && s.status!=='Inactive').length,
+    color:roleColor(r.name)
+  })).filter(r=>r.value>0).sort((a,b)=>b.value-a.value));
+
+  mkHBars(el('ovDepts'), DEPTS.map(d=>({
+    label:d.name, value:STAFF.filter(s=>s.dept===d.name).length, color:'#C9A227'
+  })).sort((a,b)=>b.value-a.value));
+
+  el('ovRecent').innerHTML = STAFF.slice().sort((a,b)=>a.joined<b.joined?1:-1).slice(0,4).map((s,i)=>`
+    <div class="li"><div class="sav ${avTone(i)}">${initials(s.name)}</div>
+      <div><div class="t1">${s.name}</div><div class="t2">${s.role} · ${s.branch} · joined ${s.joined}</div></div>
+      <div class="amt">${statusChip(s)}</div></div>`).join('');
+
+  el('ovAlerts').innerHTML = SEC_ALERTS.map(([t,s,lv])=>`
+    <div class="li"><div class="sav red">!</div>
+      <div><div class="t1">${t}</div><div class="t2">${s}</div></div>
+      <div class="amt"><span class="chip ${lv==='Critical'?'st-fail':'st-await'}">${lv}</span></div></div>`).join('');
+
+  el('ovActivity').innerHTML = AUDIT.slice(0,8).map(a=>`
+    <tr><td class="tiny muted" style="white-space:nowrap">${a.time}</td>
+      <td class="tiny" style="font-weight:600;white-space:nowrap">${a.staff}</td>
+      <td class="tiny">${a.cat}</td>
+      <td class="tiny muted">${a.record}</td>
+      <td><span class="chip ${a.result==='Success'?'st-ok':'st-fail'}">${a.result}</span></td></tr>`).join('');
+}
+
+const ICONS = {
+  doc:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/></svg>',
+  alert:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17.5h.01"/></svg>',
+  check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 13 5 5L21 5"/></svg>',
+  card:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.4"/></svg>',
+  users:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.4a3.2 3.2 0 0 1 0 6.2M18.6 20a6.2 6.2 0 0 0-3-5.2"/></svg>'
+};
+
+/* ============================================================
+   SECTION 2 · ALL STAFF MEMBERS
+   ============================================================ */
+function dirFiltered(){
+  const by = el('dirSearchBy').value;
+  const q = (el('dirSearch').value||'').toLowerCase().trim();
+  const role = el('dirRole').value, st = el('dirStatus').value;
+  const dept = el('dirDept').value, branch = el('dirBranch').value;
+  return STAFF.filter(s=>{
+    if(q){
+      const field = by==='name' ? s.name : by==='username' ? s.user
+        : by==='phone' ? s.phone : by==='email' ? s.email : s.id;
+      if(!String(field).toLowerCase().includes(q)) return false;
+    }
+    if(role && s.role!==role) return false;
+    if(st && s.status!==st) return false;
+    if(dept && s.dept!==dept) return false;
+    if(branch && s.branch!==branch) return false;
+    return true;
+  }).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+function renderDirectory(){
+  const rows = dirFiltered();
+  const pages = Math.max(1, Math.ceil(rows.length/S.size));
+  if(S.page>pages) S.page = pages;
+  const slice = rows.slice((S.page-1)*S.size, S.page*S.size);
+  el('dirCount').textContent = rows.length + ' staff';
+  el('dirBody').innerHTML = slice.length ? slice.map((s,i)=>`
+    <tr>
+      <td><input type="checkbox" data-pick="${s.id}" ${S.selected.has(s.id)?'checked':''} /></td>
+      <td class="tiny" style="font-weight:700">${s.id}</td>
+      <td><div class="who"><div class="sav ${avTone(i)}">${initials(s.name)}</div>
+        <div><div class="nm">${s.name}</div><div class="id">@${s.user}</div></div></div></td>
+      <td class="tiny">${s.role}</td>
+      <td class="tiny">${s.dept}</td>
+      <td class="tiny">${s.branch}</td>
+      <td>${statusChip(s)}</td>
+      <td class="tiny muted">${s.lastLogin.replace(' 2026','')}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" data-act="profile" data-id="${s.id}">Profile</button>
+        <button class="btn btn-ghost btn-sm" data-act="edit-staff" data-id="${s.id}">Edit</button>
+        <button class="btn btn-ghost btn-sm tick" data-act="toggle-status" data-id="${s.id}"
+          title="${s.status==='Active'?'Suspend account':'Activate account'}">${s.status==='Active'?'⏻':'▶'}</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="9"><div class="empty">No staff match these filters.</div></td></tr>`;
+
+  el('dirPager').innerHTML = `
+    <span>${rows.length} record${rows.length===1?'':'s'} · page ${S.page} of ${pages}</span>
+    <button data-act="dir-prev" ${S.page<=1?'disabled':''}>Prev</button>
+    <button data-act="dir-next" ${S.page>=pages?'disabled':''}>Next</button>`;
+}
+
+function editStaff(id){
+  const s = staffBy(id);
+  openModal('Edit staff details', `${s.id} · ${s.name}`, `
+    <div class="form-grid">
+      <div class="fg"><label>Full name</label><input id="esName" value="${s.name}" /></div>
+      <div class="fg"><label>Username</label><input id="esUser" value="${s.user}" /></div>
+      <div class="fg"><label>Email</label><input id="esEmail" value="${s.email}" /></div>
+      <div class="fg"><label>Phone</label><input id="esPhone" value="${s.phone}" /></div>
+      <div class="fg"><label>Role</label><select id="esRole">${ROLES.map(r=>`<option ${r.name===s.role?'selected':''}>${r.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Department</label><select id="esDept">${DEPTS.map(d=>`<option ${d.name===s.dept?'selected':''}>${d.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Branch</label><select id="esBranch">${BRANCHES.map(b=>`<option ${b.name===s.branch?'selected':''}>${b.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Reporting manager</label><select id="esMgr">${['—',...STAFF.map(x=>x.name)].map(m=>`<option ${m===s.manager?'selected':''}>${m}</option>`).join('')}</select></div>
+      <div class="fg"><label>Staff identification number</label><input id="esIdNo" value="${s.idno}" /></div>
+      <div class="fg"><label>Account status</label><select id="esStatus">${['Active','Inactive','Suspended','Locked','Pending']
+        .map(x=>`<option ${x===s.status?'selected':''}>${x}</option>`).join('')}</select></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save changes', cls:'btn-gold', act:()=>{
+        s.name = el('esName').value; s.user = el('esUser').value; s.email = el('esEmail').value;
+        s.phone = el('esPhone').value; s.role = el('esRole').value; s.dept = el('esDept').value;
+        s.branch = el('esBranch').value; s.manager = el('esMgr').value; s.idno = el('esIdNo').value;
+        s.status = el('esStatus').value;
+        AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Staff Record', record:s.id,
+          detail:'Staff details updated', ip:'196.44.21.4', result:'Success'});
+        closeModal(); renderAll(); toast('Staff details saved','ok');
+     }}]);
+}
+
+/* ============================================================
+   SECTION 3 · ADD NEW STAFF MEMBER
+   ============================================================ */
+function renderAddStaff(){
+  el('nsRole').innerHTML = ROLES.map(r=>`<option>${r.name}</option>`).join('');
+  el('nsDept').innerHTML = DEPTS.map(d=>`<option>${d.name}</option>`).join('');
+  el('nsBranch').innerHTML = BRANCHES.map(b=>`<option>${b.name}</option>`).join('');
+  el('nsManager').innerHTML = ['—',...STAFF.filter(s=>s.status==='Active').map(s=>s.name)]
+    .map(m=>`<option>${m}</option>`).join('');
+  renderRegRecord();
+}
+
+function renderRegRecord(){
+  const role = el('nsRole').value, dept = el('nsDept').value, branch = el('nsBranch').value;
+  const rows = [
+    ['Registration date', TODAY],
+    ['Registered by', 'Chikondi Mwale · Super Admin'],
+    ['Staff ID', 'STF-' + String(S.seq+1).padStart(3,'0')],
+    ['Username', el('nsUser').value || '—'],
+    ['Staff number', el('nsIdNo').value || '—'],
+    ['Role / department', role + ' · ' + dept],
+    ['Branch', branch],
+    ['Reporting manager', el('nsManager').value || '—'],
+    ['Initial status', el('nsStatus').value],
+    ['Invitation', el('nsInvite').checked ? 'Sent by email' : 'Not sent'],
+    ['MFA', el('nsMfa').checked ? 'Enforced' : 'Optional'],
+    ['Password', 'Temporary · change at first login']
+  ];
+  el('regRecord').innerHTML = rows.map(([k,v])=>kv(k,v)).join('');
+
+  const mods = PERM_MODULES.map((m,i)=>({m, p:(PERMS[role]||[])[i]||[0,0,0,0]})).filter(x=>x.p[0]);
+  el('accessSummary').innerHTML =
+    `<div class="kv"><span class="k">Permissions</span><span class="v">${permissionCount(role)}</span></div>
+     <div class="taglist">${mods.map(x=>`<span class="ptag">${x.m}</span>`).join('') || '<span class="tiny muted">No access</span>'}</div>
+     <div class="tiny muted" style="margin-top:8px">${(ROLES.find(r=>r.name===role)||{}).restrict || ''}</div>`;
+}
+
+function createStaff(){
+  const name = el('nsName').value.trim(), user = el('nsUser').value.trim(),
+        phone = el('nsPhone').value.trim(), idno = el('nsIdNo').value.trim();
+  if(!name || !user || !phone || !idno) return toast('Full name, username, phone and staff number are required','err');
+  const id = 'STF-' + String(++S.seq).padStart(3,'0');
+  const s = addStaff({id, name, user, email: el('nsEmail').value.trim() || '—',
+    phone, role: el('nsRole').value, dept: el('nsDept').value, branch: el('nsBranch').value,
+    manager: el('nsManager').value, status: el('nsStatus').value==='Pending invitation' ? 'Pending' : el('nsStatus').value,
+    idno, joined:'2026-10-30', lastLogin:'—', mfa: el('nsMfa').checked,
+    nid:'NID-'+(300000+S.seq*137), dob:'1990-04-12', address:'Private Bag 200, Malawi', sessions:0});
+  if(el('nsInvite').checked && s.status!=='Inactive'){
+    INVITES.unshift([name, s.email==='—' ? '—' : s.email, s.role, s.dept, TODAY, '6 Nov 2026', 'Pending']);
+  }
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:id,
+    detail:'Staff account created · ' + s.role, ip:'196.44.21.4', result:'Success'});
+  el('addBadge').textContent = 'Created';
+  el('createMsg').textContent = `${id} created · ${name}`;
+  ['nsName','nsUser','nsEmail','nsPhone','nsIdNo'].forEach(i=>el(i).value='');
+  renderAll();
+  toast(`${name} added as ${s.role}`, 'ok');
+}
+
+/* ============================================================
+   SECTION 4 · STAFF PROFILE MANAGEMENT
+   ============================================================ */
+function renderProfile(){
+  const s = staffBy(S.profile) || STAFF[0];
+  el('profSelect').innerHTML = STAFF.map(x=>`<option value="${x.id}" ${x.id===s.id?'selected':''}>${x.name} · ${x.role}</option>`).join('');
+  const mods = PERM_MODULES.filter((m,i)=>((PERMS[s.role]||[])[i]||[0])[0]);
+  const acts = AUDIT.filter(a=>a.staff===s.name).slice(0,5);
+  const tasks = TASKS.filter(t=>t.staff===s.name);
+
+  el('profileWrap').innerHTML = `
+  <div class="card panel" style="margin-bottom:13px">
+    <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+      <div class="sav lg">${initials(s.name)}</div>
+      <div style="flex:1;min-width:220px">
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">${s.name}</div>
+        <div class="tiny muted" style="margin-top:2px">${s.role} · ${s.dept} · ${s.branch}</div>
+        <div style="display:flex;gap:7px;margin-top:8px;flex-wrap:wrap">
+          ${statusChip(s)}
+          <span class="chip st-proc">${s.id}</span>
+          <span class="chip ${s.mfa?'st-ok':'st-await'}">${s.mfa?'MFA enabled':'MFA off'}</span>
+          <span class="chip st-auth">${tasks.filter(t=>t.status!=='Completed').length} open tasks</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="tiny muted">Last login</div>
+        <div style="font-size:12.5px;font-weight:700">${s.lastLogin}</div>
+        <div class="tiny muted" style="margin-top:6px">Account created</div>
+        <div style="font-size:12.5px;font-weight:700">${s.joined}</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g3">
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Personal Information</div>
+        <div class="panel-sub">Identity on record</div></div></div>
+      ${kv('Full name', s.name)}${kv('Date of birth', s.dob)}${kv('National ID', s.nid)}
+      ${kv('Gender', '—')}${kv('Next of kin', 'On confidential file')}
+    </div>
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Staff Identification</div>
+        <div class="panel-sub">Payroll and HR references</div></div></div>
+      ${kv('Staff ID', s.id)}${kv('Staff number', s.idno)}${kv('Payroll grade', 'G'+(3+ +s.id.slice(4)%5))}
+      ${kv('Contract type', s.role==='Intern / Trainee' ? 'Internship' : 'Permanent')}${kv('Probation', 'Completed')}
+    </div>
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Contact Information</div>
+        <div class="panel-sub">How to reach this officer</div></div></div>
+      ${kv('Phone', s.phone)}${kv('Email', s.email)}${kv('Address', s.address)}
+      ${kv('Branch', s.branch)}${kv('Emergency contact', 'On confidential file')}
+    </div>
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Employment Information</div>
+        <div class="panel-sub">Position and reporting line</div></div></div>
+      ${kv('Role', s.role)}${kv('Department', s.dept)}${kv('Branch', s.branch)}
+      ${kv('Reporting manager', s.manager)}${kv('Joined', s.joined)}
+    </div>
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Assigned Role &amp; Permissions</div>
+        <div class="panel-sub">${permissionCount(s.role)} permissions</div></div></div>
+      ${kv('Role', s.role)}${kv('Access level', (ROLES.find(r=>r.name===s.role)||{}).level||'—')}
+      <div class="tiny muted" style="margin-top:8px">Modules</div>
+      <div class="taglist">${mods.map(m=>`<span class="ptag">${m}</span>`).join('')||'<span class="tiny muted">None</span>'}</div>
+      <div class="tiny muted" style="margin-top:8px">${(ROLES.find(r=>r.name===s.role)||{}).restrict||''}</div>
+    </div>
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Account &amp; Session</div>
+        <div class="panel-sub">Security state</div></div></div>
+      ${kv('Account status', statusChip(s))}${kv('Created', s.joined)}${kv('Last login', s.lastLogin)}
+      ${kv('Failed attempts', s.fails)}${kv('Active sessions', s.sessions)}
+      ${kv('Multi-factor', s.mfa?'Enabled':'Disabled')}
+    </div>
+  </div>
+  <div class="card panel" style="margin-top:13px">
+    <div class="panel-head"><div><div class="panel-title">Staff Activity History</div>
+      <div class="panel-sub">Latest actions by ${s.name}</div></div>
+      <button class="btn btn-ghost btn-sm" data-act="open-audit" data-id="${s.id}">Full activity log</button></div>
+    <div class="tblwrap" style="max-height:280px">
+      <table class="tbl2"><thead><tr><th>Time</th><th>Activity</th><th>Record</th><th>Detail</th><th>Result</th></tr></thead>
+        <tbody>${acts.length ? acts.map(a=>`<tr><td class="tiny muted">${a.time}</td><td class="tiny">${a.cat}</td>
+          <td class="tiny muted">${a.record}</td><td class="tiny muted">${a.detail}</td>
+          <td><span class="chip ${a.result==='Success'?'st-ok':'st-fail'}">${a.result}</span></td></tr>`).join('')
+          : `<tr><td colspan="5"><div class="empty">No recorded activity for this staff member in the sample window.</div></td></tr>`}</tbody></table>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   SECTION 5 · STAFF ROLES & DESIGNATIONS
+   ============================================================ */
+function renderRoles(){
+  el('roleCount').textContent = ROLES.length + ' roles';
+  el('roleGrid').innerHTML = ROLES.map((r,i)=>`
+    <div class="rcard" data-act="edit-role" data-idx="${i}">
+      <div class="rh"><div class="ric" style="background:${roleColor(r.name)}1A;color:${roleColor(r.name)}">◇</div>
+        <div class="rn">${r.name}</div></div>
+      <div class="rd">${r.desc}</div>
+      <div class="rrow"><span>Level</span><b>${r.level}</b></div>
+      <div class="rrow"><span>Staff assigned</span><b>${STAFF.filter(s=>s.role===r.name).length}</b></div>
+      <div class="rrow"><span>Permissions</span><b>${permissionCount(r.name)}</b></div>
+      <div class="rrow"><span>${r.code}</span><b>${r.custom?'Custom role':'Standard role'}</b></div>
+    </div>`).join('');
+
+  el('assignStaff').innerHTML = STAFF.map(s=>`<option value="${s.id}">${s.name} · ${s.role}</option>`).join('');
+  el('assignRole').innerHTML = ROLES.map(r=>`<option>${r.name}</option>`).join('');
+
+  el('roleRestrictions').innerHTML = ROLES.filter(r=>r.restrict).slice(0,7).map(r=>`
+    <div class="setrow"><div><div class="sk">${r.name}</div><div class="ss">${r.restrict}</div></div>
+      <div class="sv"><span class="chip ${r.custom?'st-proc':'st-canc'}">${r.custom?'Custom':'Standard'}</span></div></div>`).join('');
+}
+
+function editRole(i){
+  const r = ROLES[i];
+  openModal(i<0 ? 'Create custom staff role' : 'Edit role details', r ? `${r.code} · ${r.level}` : 'New designation', `
+    <div class="form-grid">
+      <div class="fg"><label>Role name</label><input id="erName" value="${r?r.name:''}" /></div>
+      <div class="fg"><label>Role code</label><input id="erCode" value="${r?r.code:''}" /></div>
+      <div class="fg"><label>Access level</label><select id="erLevel">${['System','Management','Credit','Finance','Operations','Governance']
+        .map(l=>`<option ${r&&r.level===l?'selected':''}>${l}</option>`).join('')}</select></div>
+      <div class="fg"><label>Type</label><select id="erCustom"><option value="0" ${r&&!r.custom?'selected':''}>Standard</option>
+        <option value="1" ${r&&r.custom?'selected':''}>Custom</option></select></div>
+      <div class="fg" style="grid-column:1/-1"><label>Description</label><input id="erDesc" value="${r?r.desc:''}" /></div>
+      <div class="fg" style="grid-column:1/-1"><label>Role restriction</label><input id="erRestrict" value="${r?r.restrict:''}" /></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label: i<0?'Create role':'Save role', cls:'btn-gold', act:()=>{
+        const name = el('erName').value.trim();
+        if(!name) return toast('Role name is required','err');
+        if(i<0){
+          ROLES.push({name, code:el('erCode').value||'CSTM', level:el('erLevel').value,
+            desc:el('erDesc').value, custom:el('erCustom').value==='1', restrict:el('erRestrict').value});
+          PERMS[name] = PERM_MODULES.map(()=>[1,0,0,0]);
+          toast(`Role “${name}” created`,'ok');
+        } else {
+          const old = r.name;
+          Object.assign(r,{name, code:el('erCode').value, level:el('erLevel').value,
+            desc:el('erDesc').value, custom:el('erCustom').value==='1', restrict:el('erRestrict').value});
+          if(old!==name && PERMS[old]){ PERMS[name]=PERMS[old]; delete PERMS[old];
+            STAFF.forEach(s=>{ if(s.role===old) s.role=name; }); }
+          toast('Role updated','ok');
+        }
+        closeModal(); renderAll();
+     }}]);
+}
+
+function assignRole(){
+  const s = staffBy(el('assignStaff').value); if(!s) return;
+  const role = el('assignRole').value, old = s.role;
+  s.role = role;
+  PERM_CHANGES.unshift([`${TODAY} ${stamp()}`, 'Chikondi Mwale', role, `${s.name} moved from ${old} to ${role}`, 'Super Admin']);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Permission Change', record:s.id,
+    detail:`Role changed ${old} → ${role}`, ip:'196.44.21.4', result:'Success'});
+  CM_HISTORY.unshift(['Role assignment updated', `Individual · ${s.name}`, TODAY+' '+stamp(), 'Delivered']);
+  el('assignMsg').textContent = `${s.name} → ${role}`;
+  renderAll(); toast(`${s.name} is now ${role}`, 'ok');
+}
+
+/* ============================================================
+   SECTION 6 · PERMISSIONS & ACCESS CONTROL
+   ============================================================ */
+function renderPermissions(){
+  const role = S.permRole;
+  el('permRoleSel').innerHTML = ROLES.map(r=>`<option ${r.name===role?'selected':''}>${r.name}</option>`).join('');
+  el('permSub').textContent = `${role} · ${permissionCount(role)} permissions`;
+  const p = PERMS[role] || PERM_MODULES.map(()=>[0,0,0,0]);
+  el('permBody').innerHTML = PERM_MODULES.map((m,i)=>`
+    <tr><td>${m}</td>${[0,1,2,3].map(c=>
+      `<td><input type="checkbox" data-perm="${i},${c}" ${p[i]&&p[i][c]?'checked':''} ${role==='Super Admin'?'disabled':''} /></td>`).join('')}</tr>`).join('');
+
+  el('permSensitive').innerHTML = [
+    ['Approve loans above MK 5,000,000','Requires a second approver'],
+    ['Authorize disbursement releases','Approval-gated, dual control'],
+    ['Reverse or adjust posted repayments','Audit reason mandatory'],
+    ['Change loan terms or interest','System settings permission required'],
+    ['Export financial data','Logged and rate-limited'],
+    ['Delete financial records','Prohibited — archive only'],
+    ['Edit staff roles and permissions','Administrator and above'],
+    ['View customer identity documents','Confidential access logged']
+  ].map(([t,s])=>`<div class="check"><div class="ck n">🔒</div><div><b>${t}</b><div class="tiny muted">${s}</div></div></div>`).join('');
+
+  el('permChanges').innerHTML = PERM_CHANGES.slice(0,5).map(([t,who,role2,what,by])=>`
+    <div class="li"><div class="sav purple">${initials(who)}</div>
+      <div><div class="t1">${what}</div><div class="t2">${who} · ${role2} · ${t} · approved by ${by}</div></div></div>`).join('');
+}
+
+function savePermissions(){
+  const rows = [...document.querySelectorAll('[data-perm]')];
+  PERMS[S.permRole] = PERM_MODULES.map((_,i)=>[0,1,2,3].map(c=>{
+    const cb = rows.find(r=>r.dataset.perm===`${i},${c}`);
+    return cb && cb.checked ? 1 : 0;
+  }));
+  PERM_CHANGES.unshift([`${TODAY} ${stamp()}`, 'Chikondi Mwale', S.permRole, 'Permission matrix saved', 'Super Admin']);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Permission Change', record:S.permRole,
+    detail:'Permission matrix updated', ip:'196.44.21.4', result:'Success'});
+  renderAll(); toast(`Permissions saved for ${S.permRole}`, 'ok');
+}
+
+/* ============================================================
+   SECTION 7 · ACCOUNT STATUS & SECURITY
+   ============================================================ */
+function renderStatus(){
+  const active = STAFF.filter(s=>s.status==='Active').length;
+  const inactive = STAFF.filter(s=>s.status==='Inactive').length;
+  const susp = STAFF.filter(s=>s.status==='Suspended').length;
+  const locked = STAFF.filter(s=>s.status==='Locked').length;
+  el('statusCount').textContent = STAFF.length + ' accounts';
+  const tiles = [
+    ['Active accounts', active, 'Full access', '#157A50','var(--green-soft)','check'],
+    ['Inactive accounts', inactive, 'Access disabled', '#5A6172','#F1F2F6','card'],
+    ['Suspended', susp, 'Temporarily blocked', '#B32C2C','var(--red-soft)','alert'],
+    ['Locked', locked, 'Failed sign-in lockout', '#8A6D0F','var(--amber-soft)','alert'],
+    ['Failed attempts', STAFF.reduce((a,s)=>a+s.fails,0), 'Across all accounts', '#2456C4','var(--blue-soft)','doc']
+  ];
+  el('statusTiles').innerHTML = tiles.map(([l,v,s,c,bg,ic])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div>
+        <div class="stat-ic" style="background:${bg};color:${c}">${ICONS[ic]}</div></div>
+      <div class="stat-val">${v}</div><div class="stat-foot">${s}</div></div>`).join('');
+
+  el('statusBody').innerHTML = STAFF.slice().sort((a,b)=>a.status.localeCompare(b.status)).map(s=>{
+    const btns = {
+      Active:'<button class="btn btn-ghost btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Suspended">Suspend</button>' +
+             '<button class="btn btn-ghost btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Locked">Lock</button>',
+      Inactive:'<button class="btn btn-green btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Active">Activate</button>',
+      Suspended:'<button class="btn btn-green btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Active">Restore</button>',
+      Locked:'<button class="btn btn-green btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Active">Unlock</button>',
+      Pending:'<button class="btn btn-green btn-sm" data-act="set-status" data-id="'+s.id+'" data-st="Active">Activate</button>'
+    }[s.status] || '';
+    return `<tr>
+      <td><div class="who"><div class="sav">${initials(s.name)}</div>
+        <div><div class="nm">${s.name}</div><div class="id">${s.role}</div></div></div></td>
+      <td>${statusChip(s)}</td>
+      <td class="tiny muted">${s.lastLogin.replace(' 2026','')}</td>
+      <td class="num" style="color:${s.fails>2?'#B32C2C':'#4A5160'};font-weight:${s.fails>2?'800':'600'}">${s.fails}</td>
+      <td style="white-space:nowrap">${btns}
+        <button class="btn btn-ghost btn-sm" data-act="force-reset" data-id="${s.id}">Reset</button>
+        <button class="btn btn-ghost btn-sm" data-act="revoke-sessions" data-id="${s.id}">Sessions</button></td>
+    </tr>`;
+  }).join('');
+
+  el('suspiciousList').innerHTML = [
+    ['L. Chirwa','5 failed sign-ins · 41.87.112.8','30 Oct 06:58','Reviewed'],
+    ['A. Jimu','6 failed sign-ins · account locked','28 Oct 19:22','Pending review'],
+    ['K. Msiska','Sign-in attempt on suspended account','26 Oct 15:40','Pending review'],
+    ['P. Kamoto','New device · Android · Lilongwe','27 Oct 07:12','Verified'],
+    ['Unknown','Attempted sign-in with invalid username','25 Oct 22:14','Blocked']
+  ].map(([who,what,when,st])=>`
+    <div class="li"><div class="sav red">!</div>
+      <div><div class="t1">${what}</div><div class="t2">${who} · ${when}</div></div>
+      <div class="amt"><span class="chip ${st==='Pending review'?'st-await':st==='Blocked'?'st-fail':'st-ok'}">${st}</span></div></div>`).join('');
+
+  el('statusLog').innerHTML = AUDIT.filter(a=>a.cat==='Status Change'||a.cat==='Permission Change').slice(0,6).map(a=>`
+    <tr><td class="tiny muted">${a.time}</td><td class="tiny">${a.record}</td>
+      <td class="tiny">${a.detail}</td><td class="tiny muted">${a.staff}</td></tr>`).join('');
+}
+
+function setStatus(id, st){
+  const s = staffBy(id); if(!s) return;
+  const old = s.status;
+  s.status = st;
+  s.sessions = st==='Active' ? 1 : 0;
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+    detail:`${old} → ${st}`, ip:'196.44.21.4', result:'Success'});
+  CM_HISTORY.unshift([`Account ${st.toLowerCase()}`, `Individual · ${s.name}`, TODAY+' '+stamp(), 'Delivered']);
+  renderAll();
+  toast(`${s.name}: ${old} → ${st}`, st==='Active'?'ok':'info');
+}
+
+/* ============================================================
+   SECTION 8 · PASSWORD & AUTHENTICATION
+   ============================================================ */
+function renderPassword(){
+  el('pwStaff').innerHTML = STAFF.map(s=>`<option value="${s.id}">${s.name} · @${s.user}</option>`).join('');
+
+  el('pwPolicy').innerHTML = [
+    ['Minimum length','12 characters',true],
+    ['Complexity','Upper, lower, number and symbol',true],
+    ['Expiry','90 days',true],
+    ['Reuse','Last 5 passwords blocked',true],
+    ['Failed attempt limit','5 attempts, then 30 minute lockout',true],
+    ['Session timeout','20 minutes idle',true],
+    ['Multi-factor authentication','Required for administrators',true],
+    ['Self-service reset','Email link, 30 minute expiry',true]
+  ].map(([k,v])=>`<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+
+  el('authEvents').innerHTML = [
+    ['09:38','Chikondi Mwale','Password sign-in','Success'],
+    ['09:20','Peter Kamoto','Password sign-in · MFA','Success'],
+    ['09:12','Linda Chirwa','Password sign-in','Success'],
+    ['07:35','Linda Chirwa','5 failed attempts','Blocked'],
+    ['07:12','Peter Kamoto','New device challenge','Success'],
+    ['06:58','Unknown','Invalid username','Blocked']
+  ].map(([t,s,e,r])=>`<tr><td class="tiny muted">${t}</td><td class="tiny">${s}</td>
+    <td class="tiny">${e}</td><td><span class="chip ${r==='Success'?'st-ok':'st-fail'}">${r}</span></td></tr>`).join('');
+
+  el('sessionRules').innerHTML = [
+    ['Idle timeout','20 minutes'],['Absolute session','8 hours'],
+    ['Concurrent sessions','3 devices maximum'],['Failed attempts','5 then 30 minute lockout'],
+    ['MFA requirement','Administrators and approvers'],['Remembered devices','30 days']
+  ].map(([k,v])=>`<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+
+  el('recoverySteps').innerHTML = [
+    'Identity verified by an administrator (staff number and national ID).',
+    'Administrator initiates the reset — the password is never shown or reused.',
+    'A single-use link or temporary credential is issued, expiring in 30 minutes.',
+    'Multi-factor device is re-enrolled if required.',
+    'Reset event, actor and time are written to the authentication log.'
+  ].map((t,i)=>`<div class="check"><div class="ck y">${i+1}</div><div><b>${t}</b></div></div>`).join('');
+}
+
+function applyPwAction(){
+  const s = staffBy(el('pwStaff').value), act = el('pwAction').value;
+  if(!s) return;
+  if(act.includes('Revoke')){
+    s.sessions = 0;
+    AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+      detail:'All active sessions revoked', ip:'196.44.21.4', result:'Success'});
+    toast(`Sessions revoked for ${s.name}`,'info');
+  } else {
+    s.fails = 0;
+    if(s.status==='Locked') s.status='Active';
+    AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+      detail:act, ip:'196.44.21.4', result:'Success'});
+    toast(`${act} · ${s.name}`,'ok');
+  }
+  el('pwMsg').textContent = `${act} applied`;
+  renderAll();
+}
+
+/* ============================================================
+   SECTION 9 · ASSIGNMENTS & WORKLOAD
+   ============================================================ */
+function renderAssignments(){
+  const open = TASKS.filter(t=>t.status==='Pending').length;
+  const prog = TASKS.filter(t=>t.status==='In Progress').length;
+  const over = TASKS.filter(t=>t.status==='Overdue').length;
+  const done = TASKS.filter(t=>t.status==='Completed').length;
+  el('taskCount').textContent = (open+prog+over) + ' open';
+
+  const tiles = [
+    ['Pending tasks', open, 'Not started', '#8A6D0F','var(--amber-soft)','card'],
+    ['In progress', prog, 'Being worked', '#2456C4','var(--blue-soft)','doc'],
+    ['Overdue', over, 'Past the due date', '#B32C2C','var(--red-soft)','alert'],
+    ['Completed', done, 'Closed this week', '#157A50','var(--green-soft)','check'],
+    ['Reassignments', ASSIGN_HISTORY.filter(h=>/Reassigned/.test(h[2])).length, 'Last 7 days', '#5A3FCB','var(--purple-soft)','users']
+  ];
+  el('taskTiles').innerHTML = tiles.map(([l,v,s,c,bg,ic])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div>
+        <div class="stat-ic" style="background:${bg};color:${c}">${ICONS[ic]}</div></div>
+      <div class="stat-val">${v}</div><div class="stat-foot">${s}</div></div>`).join('');
+
+  const filter = el('taskFilter').value;
+  const rows = TASKS.filter(t=>!filter || t.status===filter);
+  el('taskBody').innerHTML = rows.length ? rows.map(t=>`
+    <tr>
+      <td class="tiny" style="font-weight:700">${t.ref}</td>
+      <td class="msg"><div class="tiny" style="font-weight:600">${t.title}</div>
+        <div class="tiny muted">${t.type}</div></td>
+      <td class="tiny">${t.staff}</td>
+      <td><span class="chip ${t.priority==='High'?'st-fail':t.priority==='Low'?'st-canc':'st-auth'}">${t.priority}</span></td>
+      <td class="tiny muted">${t.due.replace(' 2026','')}</td>
+      <td><span class="chip ${t.status==='Completed'?'st-ok':t.status==='Overdue'?'st-fail':t.status==='In Progress'?'st-proc':'st-await'}">${t.status}</span></td>
+      <td style="white-space:nowrap">
+        ${t.status!=='Completed' ? `<button class="btn btn-ghost btn-sm" data-act="complete-task" data-ref="${t.ref}">Complete</button>` : ''}
+        <button class="btn btn-ghost btn-sm" data-act="reassign-task" data-ref="${t.ref}">Reassign</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No tasks in this state.</div></td></tr>`;
+
+  const byStaff = {};
+  TASKS.filter(t=>t.status!=='Completed').forEach(t=>{ byStaff[t.staff]=(byStaff[t.staff]||0)+1; });
+  mkHBars(el('workload'), Object.entries(byStaff).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({
+    label:n, value:v, color: v>2 ? '#D93F3F' : v>1 ? '#E08C1E' : '#1E9E6A'
+  })));
+
+  el('assignHistory').innerHTML = ASSIGN_HISTORY.map(([t,ref,what,by])=>`
+    <div class="li"><div class="sav blue">⇄</div>
+      <div><div class="t1">${what}</div><div class="t2">${ref} · ${t} · ${by}</div></div></div>`).join('');
+}
+
+function completeTask(ref){
+  const t = TASKS.find(x=>x.ref===ref); if(!t) return;
+  t.status = 'Completed';
+  ASSIGN_HISTORY.unshift([`${TODAY} ${stamp()}`, ref, `Completed by ${t.staff}`, 'System']);
+  AUDIT.unshift({time:stamp(), staff:t.staff, cat:'Assignment', record:ref, detail:'Task completed',
+    ip:'196.44.21.14', result:'Success'});
+  renderAll(); toast(`${ref} completed`, 'ok');
+}
+
+function reassignTask(ref){
+  const t = TASKS.find(x=>x.ref===ref); if(!t) return;
+  openModal('Reassign task', `${ref} · ${t.title}`, `
+    <div class="form-grid">
+      <div class="fg" style="grid-column:1/-1"><label>Assign to</label>
+        <select id="raStaff">${STAFF.filter(s=>s.status==='Active').map(s=>`<option ${s.name===t.staff?'selected':''}>${s.name} · ${s.role}</option>`).join('')}</select></div>
+      <div class="fg"><label>Priority</label><select id="raPriority">${['Low','Normal','High']
+        .map(p=>`<option ${p===t.priority?'selected':''}>${p}</option>`).join('')}</select></div>
+      <div class="fg"><label>Due date</label><input id="raDue" value="${t.due}" /></div>
+      <div class="fg" style="grid-column:1/-1"><label>Note</label><input id="raNote" placeholder="Reason for reassignment" /></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Reassign', cls:'btn-gold', act:()=>{
+        const next = el('raStaff').value.split(' · ')[0];
+        ASSIGN_HISTORY.unshift([`${TODAY} ${stamp()}`, ref, `Reassigned to ${next}`, 'C. Mwale']);
+        t.staff = next; t.priority = el('raPriority').value; t.due = el('raDue').value;
+        if(t.status==='Overdue') t.status = 'Pending';
+        AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Assignment', record:ref,
+          detail:'Reassigned to ' + next, ip:'196.44.21.4', result:'Success'});
+        CM_HISTORY.unshift(['New task assignment', `Individual · ${next}`, TODAY+' '+stamp(), 'Delivered']);
+        closeModal(); renderAll(); toast(`${ref} reassigned to ${next}`, 'ok');
+     }}]);
+}
+
+function openAssignModal(){
+  openModal('Assign task', 'Route work to an officer', `
+    <div class="form-grid">
+      <div class="fg"><label>Task type</label><select id="naType">
+        <option>Loan Application</option><option>Customer Account</option><option>Collection Case</option>
+        <option>Repayment Verification</option><option>Disbursement</option><option>Support Case</option></select></div>
+      <div class="fg"><label>Priority</label><select id="naPriority"><option>Normal</option><option>High</option><option>Low</option></select></div>
+      <div class="fg" style="grid-column:1/-1"><label>Title / reference</label><input id="naTitle" placeholder="e.g. Review LN-2026-1851" /></div>
+      <div class="fg"><label>Assign to</label><select id="naStaff">${STAFF.filter(s=>s.status==='Active')
+        .map(s=>`<option>${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Due date</label><input id="naDue" value="2 Nov 2026" /></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Assign task', cls:'btn-gold', act:()=>{
+        const title = el('naTitle').value.trim() || 'Unnamed task';
+        const ref = 'TSK-' + (1117 + TASKS.length-16);
+        TASKS.unshift({ref, type:el('naType').value, title, staff:el('naStaff').value,
+          priority:el('naPriority').value, due:el('naDue').value, status:'Pending', created:TODAY});
+        ASSIGN_HISTORY.unshift([`${TODAY} ${stamp()}`, ref, `Assigned to ${el('naStaff').value}`, 'C. Mwale']);
+        closeModal(); renderAll(); toast(`Task ${ref} assigned`, 'ok');
+     }}]);
+}
+
+/* ============================================================
+   SECTION 10 · PERFORMANCE & PRODUCTIVITY
+   ============================================================ */
+function renderPerformance(){
+  const f = PERF_SCALE[S.perfPeriod] || 1;
+  const staffPerf = STAFF.map(s=>{
+    const p = PERF[s.id] || [0,0,0,0,0,0,0,0,0];
+    return {s, rev:Math.round(p[0]*f), dec:Math.round(p[1]*f), loans:Math.round(p[2]*f),
+      disb:Math.round(p[3]*f), rep:Math.round(p[4]*f), coll:Math.round(p[5]*f),
+      cases:Math.round(p[6]*f), open:TASKS.filter(t=>t.staff===s.name && t.status!=='Completed').length,
+      hrs:p[8]};
+  });
+  const sum = k => staffPerf.reduce((a,x)=>a+x[k],0);
+
+  const periodLabel = {Month:'This month', Quarter:'This quarter', Year:'This year'}[S.perfPeriod];
+  el('perfPeriodBadge').textContent = periodLabel;
+  if(el('perfPeriodBadge2')) el('perfPeriodBadge2').textContent = periodLabel;
+  const tiles = [
+    ['Applications Reviewed', sum('rev'), 'Credit pipeline', '#2456C4','var(--blue-soft)','doc'],
+    ['Approved / Rejected', sum('dec'), 'Committee decisions', '#8A6D0F','var(--amber-soft)','check'],
+    ['Loans Processed', sum('loans'), 'Moved to active', '#157A50','var(--green-soft)','check'],
+    ['Disbursements', sum('disb'), 'Authorized releases', '#5A3FCB','var(--purple-soft)','card'],
+    ['Repayments Verified', sum('rep'), 'Posted and confirmed', '#157A50','var(--green-soft)','check']
+  ];
+  el('perfTiles').innerHTML = tiles.map(([l,v,s,c,bg,ic])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div>
+        <div class="stat-ic" style="background:${bg};color:${c}">${ICONS[ic]}</div></div>
+      <div class="stat-val">${nf(v)}</div><div class="stat-foot">${s}</div></div>`).join('');
+
+  el('perfBody').innerHTML = staffPerf.filter(x=>x.rev||x.dec||x.loans||x.disb||x.rep||x.coll||x.cases)
+    .sort((a,b)=>(b.rev+b.disb+b.rep+b.coll+b.cases)-(a.rev+a.disb+a.rep+a.coll+a.cases))
+    .map(x=>`<tr>
+      <td class="tiny" style="font-weight:600;white-space:nowrap">${x.s.name}</td>
+      <td class="num">${x.rev}</td><td class="num">${x.dec}</td><td class="num">${x.loans}</td>
+      <td class="num">${x.disb}</td><td class="num">${x.rep}</td><td class="num">${x.coll}</td>
+      <td class="num">${x.cases}</td>
+      <td class="num" style="color:${x.open>1?'#B32C2C':'#4A5160'};font-weight:700">${x.open}</td>
+      <td class="num">${x.hrs ? x.hrs.toFixed(1) : '—'}</td></tr>`).join('');
+
+  mkHBars(el('perfTimes'), [
+    {label:'Application review', value:11.4, color:'#2F6FED', display:'11.4 h'},
+    {label:'Approval decision', value:18.2, color:'#C9A227', display:'18.2 h'},
+    {label:'Repayment check', value:5.9, color:'#1E9E6A', display:'5.9 h'},
+    {label:'Disbursement', value:7.6, color:'#7C5CF0', display:'7.6 h'},
+    {label:'Support case', value:6.1, color:'#E08C1E', display:'6.1 h'},
+    {label:'Collection follow-up', value:22.6, color:'#D93F3F', display:'22.6 h'}
+  ], {max:26});
+
+  mkHBars(el('perfCollection'), Object.entries(COLLECTION_RATE).map(([id,v])=>({
+    label:(staffBy(id)||{}).name||id, value:v, color: v>80?'#1E9E6A':v>70?'#C9A227':'#D93F3F', display:v+'%'
+  })), {max:100});
+}
+
+/* ============================================================
+   SECTION 11 · ACTIVITY & AUDIT LOGS
+   ============================================================ */
+function auditFiltered(){
+  const q = (el('audSearch').value||'').toLowerCase();
+  const cat = el('audCat').value, who = el('audStaff').value;
+  return AUDIT.filter(a=>{
+    if(q && !(a.staff+a.record+a.detail+a.cat).toLowerCase().includes(q)) return false;
+    if(cat && a.cat!==cat) return false;
+    if(who && a.staff!==who) return false;
+    return true;
+  });
+}
+function renderAudit(){
+  const rows = auditFiltered();
+  const pages = Math.max(1, Math.ceil(rows.length/S.auditSize));
+  if(S.auditPage>pages) S.auditPage = pages;
+  const slice = rows.slice((S.auditPage-1)*S.auditSize, S.auditPage*S.auditSize);
+  el('audBody').innerHTML = slice.length ? slice.map(a=>`
+    <tr><td class="tiny muted" style="white-space:nowrap">${a.time}</td>
+      <td class="tiny" style="font-weight:600;white-space:nowrap">${a.staff}</td>
+      <td class="tiny">${a.cat}</td>
+      <td class="tiny muted">${a.record}</td>
+      <td class="tiny muted" style="max-width:250px">${a.detail}</td>
+      <td class="tiny muted">${a.ip}</td>
+      <td><span class="chip ${a.result==='Success'?'st-ok':'st-fail'}">${a.result}</span></td></tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No activity matches these filters.</div></td></tr>`;
+  el('audPager').innerHTML = `
+    <span>${rows.length} entries · page ${S.auditPage} of ${pages}</span>
+    <button data-act="aud-prev" ${S.auditPage<=1?'disabled':''}>Prev</button>
+    <button data-act="aud-next" ${S.auditPage>=pages?'disabled':''}>Next</button>`;
+}
+
+/* ============================================================
+   SECTION 12 · DEPARTMENTS & BRANCHES
+   ============================================================ */
+function renderUnits(){
+  el('deptCount').textContent = DEPTS.length;
+  el('branchCount').textContent = BRANCHES.length;
+
+  el('deptBody').innerHTML = DEPTS.map((d,i)=>`
+    <tr><td class="tiny" style="font-weight:600">${d.name}<div class="muted">${d.code}</div></td>
+      <td class="tiny">${d.head}</td>
+      <td class="num">${STAFF.filter(s=>s.dept===d.name).length}</td>
+      <td class="tiny muted">${d.branch}</td>
+      <td><button class="btn btn-ghost btn-sm" data-act="edit-dept" data-idx="${i}">Edit</button></td></tr>`).join('');
+
+  el('branchBody').innerHTML = BRANCHES.map((b,i)=>`
+    <tr><td class="tiny" style="font-weight:600">${b.name}<div class="muted">${b.region}</div></td>
+      <td class="tiny">${b.code}</td>
+      <td class="tiny">${b.manager}</td>
+      <td class="num">${STAFF.filter(s=>s.branch===b.name).length}</td>
+      <td><button class="btn btn-ghost btn-sm" data-act="edit-branch" data-idx="${i}">Edit</button></td></tr>`).join('');
+
+  mkHBars(el('unitChart'), [
+    ...DEPTS.map(d=>({label:d.name, value:STAFF.filter(s=>s.dept===d.name).length, color:'#C9A227'})),
+    ...BRANCHES.map(b=>({label:b.name, value:STAFF.filter(s=>s.branch===b.name).length, color:'#2F6FED'}))
+  ]);
+
+  el('unitReports').innerHTML = [
+    ['Department headcount report','Staff per department with managers'],
+    ['Branch headcount report','Staff per branch with regions'],
+    ['Managerial assignments','Department and branch managers'],
+    ['Role distribution by unit','Roles held in each unit']
+  ].map(([t,s])=>`<div class="setrow"><div><div class="sk">${t}</div><div class="ss">${s}</div></div>
+    <div class="sv"><button class="btn btn-ghost btn-sm" data-act="unit-report" data-ref="${t}">Generate</button></div></div>`).join('');
+}
+
+function editDept(i){
+  const d = i<0 ? {name:'',head:'',branch:BRANCHES[0].name,code:''} : DEPTS[i];
+  openModal(i<0 ? 'Create department' : 'Edit department', d.code||'New unit', `
+    <div class="form-grid">
+      <div class="fg"><label>Department name</label><input id="edName" value="${d.name}" /></div>
+      <div class="fg"><label>Code</label><input id="edCode" value="${d.code}" /></div>
+      <div class="fg"><label>Department manager</label><select id="edHead">${STAFF.map(s=>`<option ${s.name===d.head?'selected':''}>${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Primary branch</label><select id="edBranch">${BRANCHES.map(b=>`<option ${b.name===d.branch?'selected':''}>${b.name}</option>`).join('')}</select></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save', cls:'btn-gold', act:()=>{
+        const rec = {name:el('edName').value.trim()||'Untitled', code:el('edCode').value||'NEW',
+          head:el('edHead').value, branch:el('edBranch').value};
+        if(i<0) DEPTS.push(rec); else DEPTS[i]=rec;
+        closeModal(); renderAll(); toast('Department saved','ok');
+     }}]);
+}
+function editBranch(i){
+  const b = i<0 ? {name:'',code:'',manager:STAFF[0].name,region:'Central'} : BRANCHES[i];
+  openModal(i<0 ? 'Create branch' : 'Edit branch', b.code||'New unit', `
+    <div class="form-grid">
+      <div class="fg"><label>Branch name</label><input id="ebName" value="${b.name}" /></div>
+      <div class="fg"><label>Branch code</label><input id="ebCode" value="${b.code}" /></div>
+      <div class="fg"><label>Branch manager</label><select id="ebManager">${STAFF.map(s=>`<option ${s.name===b.manager?'selected':''}>${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Region</label><select id="ebRegion">${['Central','Northern','Southern']
+        .map(r=>`<option ${r===b.region?'selected':''}>${r}</option>`).join('')}</select></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save', cls:'btn-gold', act:()=>{
+        const rec = {name:el('ebName').value.trim()||'Untitled', code:el('ebCode').value||'NEW',
+          manager:el('ebManager').value, region:el('ebRegion').value};
+        if(i<0) BRANCHES.push(rec); else BRANCHES[i]=rec;
+        closeModal(); renderAll(); toast('Branch saved','ok');
+     }}]);
+}
+
+/* ============================================================
+   SECTION 13 · INVITATIONS & ONBOARDING
+   ============================================================ */
+function renderInvites(){
+  el('invRole').innerHTML = ROLES.map(r=>`<option>${r.name}</option>`).join('');
+  el('invDept').innerHTML = DEPTS.map(d=>`<option>${d.name}</option>`).join('');
+  el('invBranch').innerHTML = BRANCHES.map(b=>`<option>${b.name}</option>`).join('');
+  el('invCount').textContent = INVITES.filter(i=>i[6]==='Pending').length + ' pending';
+
+  el('inviteList').innerHTML = INVITES.length ? INVITES.map((inv,i)=>`
+    <div class="invite">
+      <div class="sav ${inv[6]==='Expired'?'gray':'blue'}">${initials(inv[0])}</div>
+      <div style="flex:1;min-width:0">
+        <div class="it">${inv[0]}</div>
+        <div class="is">${inv[2]} · ${inv[3]} · sent ${inv[4]} · expires ${inv[5]}</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="chip ${inv[6]==='Pending'?'st-await':'st-canc'}">${inv[6]}</span>
+        <button class="btn btn-ghost btn-sm" data-act="resend-invite" data-idx="${i}">Resend</button>
+        <button class="btn btn-ghost btn-sm" data-act="cancel-invite" data-idx="${i}">Cancel</button>
+      </div>
+    </div>`).join('') : '<div class="empty">No invitations outstanding.</div>';
+
+  const pendingStaff = STAFF.filter(s=>s.status==='Pending');
+  el('onboardList').innerHTML = pendingStaff.length ? pendingStaff.map(s=>`
+    <div class="invite"><div class="sav purple">${initials(s.name)}</div>
+      <div style="flex:1"><div class="it">${s.name}</div>
+        <div class="is">${s.role} · invited ${s.joined} · registration incomplete</div></div>
+      <button class="btn btn-gold btn-sm" data-act="complete-onboard" data-id="${s.id}">Complete</button>
+    </div>`).join('')
+    : '<div class="empty">Every invited staff member has completed registration.</div>';
+
+  el('onboardHistory').innerHTML = ONBOARD_HISTORY.map(r=>`
+    <tr><td class="tiny" style="font-weight:600">${r[0]}</td><td class="tiny muted">${r[1]}</td>
+      <td class="tiny muted">${r[2]}</td><td class="tiny">${r[3]}</td><td class="tiny muted">${r[4]}</td>
+      <td class="tiny muted">${r[5]}</td>
+      <td><span class="chip ${r[6]==='Complete'?'st-ok':r[6]==='Awaiting registration'?'st-await':'st-canc'}">${r[6]}</span></td></tr>`).join('');
+}
+
+function sendInvite(){
+  const name = el('invName').value.trim(), email = el('invEmail').value.trim();
+  if(!name || !email) return toast('Name and email are required','err');
+  INVITES.unshift([name, email, el('invRole').value, el('invDept').value, TODAY, '6 Nov 2026', 'Pending']);
+  ONBOARD_HISTORY.unshift([name, TODAY, '—', el('invRole').value, el('invPerms').value, '—', 'Awaiting registration']);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:email,
+    detail:'Staff invitation sent', ip:'196.44.21.4', result:'Success'});
+  el('invName').value=''; el('invEmail').value='';
+  el('invMsg').textContent = `Invitation sent to ${email}`;
+  renderAll(); toast(`Invitation sent to ${name}`,'ok');
+}
+
+/* ============================================================
+   SECTION 14 · STAFF COMMUNICATION
+   ============================================================ */
+function renderComms(){
+  const aud = S.staffAud;
+  const opts = aud==='Individual' ? STAFF.map(s=>s.name)
+    : aud==='Role' ? ROLES.map(r=>r.name)
+    : aud==='Department' ? DEPTS.map(d=>d.name)
+    : aud==='Security' ? ['All staff','Administrators only','Branch managers']
+    : ['All staff','Collections team','Credit team'];
+  el('cmRecipient').innerHTML = opts.map(o=>`<option>${o}</option>`).join('');
+
+  el('cmHistory').innerHTML = CM_HISTORY.map(([t,to,when,st])=>`
+    <div class="li"><div class="sav ${st==='Delivered'?'blue':'green'}">✉</div>
+      <div><div class="t1">${t}</div><div class="t2">${to} · ${when}</div></div>
+      <div class="amt"><span class="chip ${st==='Delivered'||st==='Read'?'st-ok':'st-fail'}">${st}</span></div></div>`).join('');
+
+  el('cmStatus').innerHTML = CM_STATUS.map(([c,s,d,f])=>`
+    <tr><td class="tiny" style="font-weight:600">${c}</td><td class="num">${s}</td>
+      <td class="num">${d}</td><td class="num" style="color:${f?'#B32C2C':'#157A50'}">${f}</td></tr>`).join('');
+}
+
+function sendStaffNotification(){
+  const subj = el('cmSubject').value.trim(), body = el('cmBody').value.trim();
+  if(!subj || !body) return toast('Subject and message are required','err');
+  CM_HISTORY.unshift([subj, `${S.staffAud} · ${el('cmRecipient').value}`, TODAY+' '+stamp(), 'Delivered']);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Notification', record:S.staffAud,
+    detail:'Staff notification: ' + subj, ip:'196.44.21.4', result:'Success'});
+  el('cmSubject').value=''; el('cmBody').value='';
+  el('cmMsg').textContent = 'Notification delivered';
+  renderAll(); toast('Staff notification sent','ok');
+}
+
+/* ============================================================
+   SECTION 15 · DOCUMENTS & EMPLOYMENT RECORDS
+   ============================================================ */
+function renderDocs(){
+  const f = el('docFilter').value;
+  const rows = DOCS.filter(d=>!f || d.type===f);
+  el('docCount').textContent = DOCS.length + ' documents';
+  el('docBody').innerHTML = rows.length ? rows.map((d,i)=>`
+    <tr>
+      <td class="tiny" style="font-weight:600">${d.name}</td>
+      <td class="tiny">${d.staff}</td>
+      <td class="tiny muted">${d.type}</td>
+      <td class="tiny muted">${d.uploaded}</td>
+      <td class="tiny muted">${d.expiry}</td>
+      <td><span class="chip ${d.access==='Restricted'?'st-fail':'st-ok'}">${d.access==='Restricted'?'🔒 Restricted':'Standard'}</span></td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-ghost btn-sm" data-act="view-doc" data-idx="${i}">View</button>
+        <button class="btn btn-ghost btn-sm" data-act="upload-doc" data-idx="${i}">Replace</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No documents of this type.</div></td></tr>`;
+
+  el('docExpiry').innerHTML = [
+    ['Practising certificate · A. Mbewe','Expires 31 Dec 2026','standard'],
+    ['Collections certification · S. Zimba','Expires 31 Jan 2027','standard'],
+    ['Driving licence · I. Mponda','Expires 14 Mar 2027','standard'],
+    ['Medical cover · G. Mtemang\'ombe','Expires 30 Jun 2027','standard']
+  ].map(([t,s])=>`<div class="li"><div class="sav">⏳</div>
+    <div><div class="t1">${t}</div><div class="t2">${s}</div></div></div>`).join('')
+    + `<div class="locked" style="margin-top:9px">Reminders are sent to the staff member and HR 30 days before expiry.</div>`;
+
+  el('docHistory').innerHTML = [
+    ['Role assignment record uploaded','K. Msiska · by L. Chirwa','28 Oct 2026 11:20'],
+    ['View of confidential ID document','T. Nkhoma · by L. Chirwa','27 Oct 2026 15:02'],
+    ['Training certificate uploaded','M. Nkhoma · by M. Chatsika','14 Sep 2026 09:10'],
+    ['Employment contract replaced','B. Tembo · by M. Chatsika','02 Sep 2026 14:44']
+  ].map(([t,s])=>`<div class="li"><div class="sav blue">📄</div>
+    <div><div class="t1">${t}</div><div class="t2">${s}</div></div></div>`).join('');
+}
+
+function uploadDocModal(idx){
+  const d = idx>=0 ? DOCS[idx] : null;
+  openModal(d ? 'Replace document' : 'Upload document', d ? d.name : 'New employment record', `
+    <div class="form-grid">
+      <div class="fg"><label>Document type</label><select id="udType">${['Identification','Employment','Appointment letter',
+        'Role assignment','Training / certification'].map(t=>`<option ${d&&d.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="fg"><label>Staff member</label><select id="udStaff">${STAFF.map(s=>`<option ${d&&d.staff===s.name?'selected':''}>${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Document name</label><input id="udName" value="${d?d.name:''}" placeholder="e.g. Appointment letter" /></div>
+      <div class="fg"><label>Expiry date</label><input id="udExpiry" value="${d&&d.expiry!=='—'?d.expiry:''}" placeholder="— or 31 Dec 2027" /></div>
+      <div class="fg" style="grid-column:1/-1"><label>Access</label><select id="udAccess">
+        <option ${d&&d.access==='Restricted'?'selected':''}>Restricted</option>
+        <option ${d&&d.access==='Standard'?'selected':''}>Standard</option></select>
+        <div class="hint">Restricted documents are visible to HR and compliance only — every view is logged.</div></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save record', cls:'btn-gold', act:()=>{
+        const rec = {name:el('udName').value.trim()||'Untitled document', staff:el('udStaff').value,
+          type:el('udType').value, uploaded:TODAY, expiry:el('udExpiry').value||'—', access:el('udAccess').value};
+        if(idx>=0) DOCS[idx]=rec; else DOCS.unshift(rec);
+        closeModal(); renderAll(); toast('Document record saved','ok');
+     }}]);
+}
+
+/* ============================================================
+   SECTION 16 · STAFF MANAGEMENT REPORTS
+   ============================================================ */
+const REPORTS = [
+  ['Staff Directory Report','All staff with role, department and branch'],
+  ['Active and Inactive Staff Report','Account status breakdown'],
+  ['Staff by Role Report','Headcount per designation'],
+  ['Staff by Department or Branch','Distribution across units'],
+  ['Staff Login Activity Report','Sign-ins, failures and lockouts'],
+  ['Staff Permissions Report','Effective permissions per role'],
+  ['Staff Performance Report','Output and productivity metrics'],
+  ['Workload and Assignment Report','Open tasks per officer'],
+  ['Suspended Accounts Report','Suspended, locked and inactive accounts'],
+  ['Staff Security Report','Alerts, resets and permission changes']
+];
+function renderReports(){
+  el('reportCards').innerHTML = REPORTS.map(([t,s])=>`
+    <div class="card panel" style="padding:13px">
+      <div class="panel-title" style="font-size:12.5px">${t}</div>
+      <div class="panel-sub" style="min-height:30px">${s}</div>
+      <div style="display:flex;gap:6px;margin-top:6px">
+        <button class="btn btn-ghost btn-sm" data-act="report-pdf" data-ref="${t}">PDF</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-xls" data-ref="${t}">Excel</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-csv" data-ref="${t}">CSV</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   SECTION 17 · CLOSURE & TRANSFER
+   ============================================================ */
+function renderClosure(){
+  el('clStaff').innerHTML = STAFF.map(s=>`<option value="${s.id}">${s.name} · ${s.role}</option>`).join('');
+  el('clDept').innerHTML = DEPTS.map(d=>`<option>${d.name}</option>`).join('');
+  el('clBranch').innerHTML = BRANCHES.map(b=>`<option>${b.name}</option>`).join('');
+
+  el('clQueue').innerHTML = CLOSURE.filter(c=>c[4]==='Pending approval').map((c,i)=>`
+    <div class="ann" style="margin-bottom:9px">
+      <div class="anh"><div class="sav red">${initials(c[1])}</div>
+        <div style="flex:1"><div class="ant">${c[1]}</div>
+          <div class="ans">${c[0]} · ${c[2]} · ${c[3]}</div></div>
+        <span class="chip st-await">Pending</span></div>
+      <div style="display:flex;gap:6px;margin-top:9px">
+        <button class="btn btn-gold btn-sm" data-act="approve-closure" data-ref="${c[0]}">Approve deactivation</button>
+        <button class="btn btn-ghost btn-sm" data-act="reject-closure" data-ref="${c[0]}">Reject</button>
+      </div>
+    </div>`).join('') || '<div class="empty">No requests awaiting approval.</div>';
+
+  el('clTrail').innerHTML = CL_TRAIL.map(([t,who,req,reason,outcome])=>`
+    <tr><td class="tiny muted" style="white-space:nowrap">${t}</td>
+      <td class="tiny"><b>${who}</b><div class="muted">${req} · ${reason}</div></td>
+      <td>${(()=>{const [main,...rest]=outcome.split(' · ');
+        return `<span class="chip ${/Completed|Approved/.test(main)?'st-ok':'st-await'}">${main}</span>` +
+          (rest.length ? `<div class="tiny muted" style="margin-top:3px">${rest.join(' · ')}</div>` : '');})()}</td></tr>`).join('');
+}
+
+function submitClosure(){
+  const s = staffBy(el('clStaff').value), type = el('clType').value;
+  const reason = el('clReason').value.trim();
+  if(!reason) return toast('A reason is required','err');
+  const ref = 'CLS-' + String(CLOSURE.length+1).padStart(3,'0');
+  const rec = [ref, s.name, type, reason, 'Pending approval'];
+  CLOSURE.unshift(rec);
+  CL_TRAIL.unshift([`${TODAY} ${stamp()}`, s.name, type, reason, 'Requested']);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+    detail:`${type} requested · ${reason}`, ip:'196.44.21.4', result:'Success'});
+  el('clReason').value='';
+  el('clMsg').textContent = `${ref} submitted for approval`;
+  renderAll(); toast(`${type} request submitted`, 'info');
+}
+
+function approveClosure(ref){
+  const c = CLOSURE.find(x=>x[0]===ref); if(!c) return;
+  const s = STAFF.find(x=>x.name===c[1]);
+  const keepTasks = el('clTasks').checked, revoke = el('clAccess').checked,
+        sessions = el('clSessions').checked, preserve = el('clKeep').checked;
+  c[4] = 'Approved';
+  if(s){
+    if(c[2]==='Deactivate account') s.status = 'Inactive';
+    if(c[2]==='Transfer department') s.dept = el('clDept').value;
+    if(c[2]==='Transfer branch') s.branch = el('clBranch').value;
+    if(sessions) s.sessions = 0;
+    if(!revoke) s.status = s.status==='Inactive' ? 'Active' : s.status;
+  }
+  if(keepTasks && s){
+    const moved = TASKS.filter(t=>t.staff===s.name && t.status!=='Completed');
+    moved.forEach(t=>{ t.staff = staffBy('STF-002').name; });
+    if(moved.length) ASSIGN_HISTORY.unshift([`${TODAY} ${stamp()}`, '—',
+      `${moved.length} tasks reassigned from ${s.name}`, 'C. Mwale']);
+  }
+  CL_TRAIL.unshift([`${TODAY} ${stamp()}`, c[1], c[2], c[3],
+    `Approved${preserve?' · records preserved':''}${sessions?' · sessions revoked':''}`]);
+  AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s?s.id:'—',
+    detail:`${c[2]} approved for ${c[1]}`, ip:'196.44.21.4', result:'Success'});
+  renderAll(); toast(`${c[2]} approved for ${c[1]}`, 'ok');
+}
+
+/* ============================================================
+   SECTION 18 · SETTINGS
+   ============================================================ */
+function field(title, sub, html){
+  return `<div class="setrow"><div><div class="sk">${title}</div><div class="ss">${sub}</div></div>
+    <div class="sv">${html}</div></div>`;
+}
+function row(title, sub, on){
+  return field(title, sub, `<button class="toggle ${on?'on':''}" data-act="toggle"></button>`);
+}
+const num = v => `<input type="number" value="${v}" />`;
+const sel = (opts, cur) => `<select>${opts.map(o=>`<option ${o===cur?'selected':''}>${o}</option>`).join('')}</select>`;
+
+function renderSettings(){
+  el('setAccount').innerHTML =
+    row('Staff accounts created by administrators','Only Administrator and above can add staff',true) +
+    field('Username format','How usernames are generated', sel(['first.last','f.last','firstinitial+lastname'],'f.last')) +
+    field('Minimum username length','Characters', num(5)) +
+    row('Unique email address required','One account per email address',true) +
+    row('Staff number mandatory','Identification cannot be skipped',true) +
+    field('Invitation validity','Days before the link expires', num(7)) +
+    row('Auto-send invitation on creation','Sends credentials by email',true);
+
+  el('setSecurity').innerHTML =
+    field('Minimum password length','Characters', num(12)) +
+    field('Password expiry','Days', num(90)) +
+    field('Login attempt limit','Attempts before lockout', num(5)) +
+    field('Lockout duration','Minutes', num(30)) +
+    field('Session timeout','Idle minutes', num(20)) +
+    row('Require multi-factor authentication','Administrators and approvers',true) +
+    row('Block sign-in on suspended accounts','Immediate enforcement',true);
+
+  el('setRoles').innerHTML =
+    field('Default role for new staff','Applied when none is chosen', sel(ROLES.map(r=>r.name),'Data Entry Clerk')) +
+    row('Role defaults assign view-only access','Create, edit and delete granted separately',false) +
+    row('Custom roles allowed','Administrators may define new roles',true) +
+    row('Role change requires notification','Staff are told when their role changes',true) +
+    field('Default permission template','Starting point for custom roles', sel(['View only','Role defaults','Full access'],'Role defaults'));
+
+  el('setAudit').innerHTML =
+    row('Approval required for deactivation','Two-person rule',true) +
+    row('Approval required for bulk permission changes','Above 5 accounts',true) +
+    row('Automatic suspension after repeated failures','5 failed sign-ins',true) +
+    field('Audit log retention','Months', sel(['24 months','60 months','84 months'],'60 months')) +
+    row('Notify administrators of security events','Email and dashboard',true) +
+    row('Notify staff of permission changes','Immediate notification',true);
+}
+
+/* ============================================================
+   MODAL / EXPORT UTILITIES
+   ============================================================ */
+function openModal(title, sub, body, actions=[]){
+  el('modalTitle').textContent = title;
+  el('modalSub').textContent = sub;
+  el('modalBody').innerHTML = body;
+  el('modalFoot').innerHTML = '';
+  actions.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = 'btn ' + (a.cls||'btn-ghost');
+    b.textContent = a.label;
+    b.onclick = a.act==='close' ? closeModal : a.act;
+    el('modalFoot').appendChild(b);
+  });
+  el('modal').classList.add('on');
+}
+function closeModal(){ el('modal').classList.remove('on'); }
+
+function exportCSV(rows, name){
+  const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+  toast('Export ready · ' + name, 'ok');
+}
+function staffCSV(rows, name){
+  exportCSV([['Staff ID','Name','Username','Role','Department','Branch','Status','Joined','Last login'],
+    ...rows.map(s=>[s.id,s.name,s.user,s.role,s.dept,s.branch,s.status,s.joined,s.lastLogin])], name);
+}
+
+/* ============================================================
+   EVENT DELEGATION
+   ============================================================ */
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-act]');
+  if(!t) return;
+  const act = t.dataset.act, id = t.dataset.id, ref = t.dataset.ref, idx = +t.dataset.idx;
+  switch(act){
+    case 'profile': S.profile = id; renderProfile();
+      document.getElementById('s4').scrollIntoView({behavior:'smooth'}); break;
+    case 'edit-staff': editStaff(id); break;
+    case 'toggle-status': {
+      const s = staffBy(id);
+      setStatus(id, s.status==='Active' ? 'Suspended' : 'Active'); break; }
+    case 'set-status': setStatus(id, t.dataset.st); break;
+    case 'dir-prev': S.page = Math.max(1, S.page-1); renderDirectory(); break;
+    case 'dir-next': S.page++; renderDirectory(); break;
+    case 'aud-prev': S.auditPage = Math.max(1, S.auditPage-1); renderAudit(); break;
+    case 'aud-next': S.auditPage++; renderAudit(); break;
+    case 'open-audit': {
+      const s = staffBy(id);
+      el('audStaff').value = s ? s.name : '';
+      el('audSearch').value = ''; el('audCat').value = ''; S.auditPage = 1; renderAudit();
+      document.getElementById('s11').scrollIntoView({behavior:'smooth'}); break; }
+    case 'edit-role': editRole(idx); break;
+    case 'force-reset': {
+      const s = staffBy(id);
+      s.fails = 0; if(s.status==='Locked') s.status = 'Active';
+      AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+        detail:'Password reset forced · change at next login', ip:'196.44.21.4', result:'Success'});
+      renderAll(); toast(`Password reset forced for ${s.name}`,'ok'); break; }
+    case 'revoke-sessions': {
+      const s = staffBy(id); s.sessions = 0;
+      AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+        detail:'Active sessions revoked', ip:'196.44.21.4', result:'Success'});
+      renderAll(); toast(`Sessions revoked for ${s.name}`,'info'); break; }
+    case 'complete-task': completeTask(ref); break;
+    case 'reassign-task': reassignTask(ref); break;
+    case 'resend-invite': {
+      const inv = INVITES[idx];
+      inv[4] = TODAY; inv[6] = 'Pending';
+      renderInvites(); toast(`Invitation resent to ${inv[0]}`,'ok'); break; }
+    case 'cancel-invite': {
+      const inv = INVITES.splice(idx,1)[0];
+      ONBOARD_HISTORY.unshift([inv[0], inv[4], '—', inv[2], '—', '—', 'Cancelled']);
+      renderAll(); toast(`Invitation for ${inv[0]} cancelled`,'info'); break; }
+    case 'complete-onboard': {
+      const s = staffBy(id);
+      s.status = 'Active'; s.lastLogin = TODAY+' '+stamp(); s.sessions = 1;
+      ONBOARD_HISTORY.unshift([s.name, s.joined, TODAY, s.role, 'Role defaults', TODAY, 'Complete']);
+      AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Status Change', record:s.id,
+        detail:'Onboarding completed · account activated', ip:'196.44.21.4', result:'Success'});
+      renderAll(); toast(`${s.name} activated`,'ok'); break; }
+    case 'view-doc': {
+      const d = DOCS[idx];
+      const restricted = d.access==='Restricted';
+      openModal(d.name, `${d.staff} · ${d.type}`, `
+        <div class="preview" style="min-height:170px">
+          <div class="phead"><span>GOLDEN FINANCIAL SERVICES</span><span>${restricted?'RESTRICTED':'STANDARD'}</span></div>
+          <div class="pbody"><div class="psub">${d.name}</div>
+            <div style="color:#C7CBD4">${restricted
+              ? 'Confidential employment record. Access is limited to HR and compliance; this view has been logged.'
+              : 'Document preview · uploaded '+d.uploaded+'.'}</div>
+            <div class="tiny" style="color:#7A808D;margin-top:10px">Expiry: ${d.expiry} · Access: ${d.access}</div>
+          </div></div>`,
+        [{label:'Close', cls:'btn-ghost', act:'close'}]);
+      if(restricted){
+        AUDIT.unshift({time:stamp(), staff:'Chikondi Mwale', cat:'Document', record:d.staff,
+          detail:'Viewed restricted document: ' + d.name, ip:'196.44.21.4', result:'Success'});
+        renderAudit();
+      }
+      break; }
+    case 'upload-doc': uploadDocModal(idx); break;
+    case 'report-pdf': toast(`${ref} · PDF generated`, 'ok'); break;
+    case 'report-xls': toast(`${ref} · Excel generated`, 'ok'); break;
+    case 'report-csv': staffCSV(dirFiltered(), ref.toLowerCase().replace(/[^a-z]+/g,'-')+'.csv'); break;
+    case 'unit-report': toast(`${ref} generated`, 'ok'); break;
+    case 'perf-pdf': toast('Performance report · PDF generated','ok'); break;
+    case 'perf-xls': toast('Performance report · Excel generated','ok'); break;
+    case 'perf-csv': staffCSV(STAFF, 'golden-staff-performance.csv'); break;
+    case 'edit-dept': editDept(idx); break;
+    case 'edit-branch': editBranch(idx); break;
+    case 'approve-closure': approveClosure(ref); break;
+    case 'reject-closure': {
+      const c = CLOSURE.find(x=>x[0]===ref); if(c){ c[4] = 'Rejected';
+        CL_TRAIL.unshift([`${TODAY} ${stamp()}`, c[1], c[2], c[3], 'Rejected']);
+        renderClosure(); toast('Request rejected','info'); }
+      break; }
+    case 'toggle': t.classList.toggle('on'); break;
+  }
+});
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+el('modalClose').onclick = closeModal;
+el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
+
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', e=>{
+    const p = item.dataset.page;
+    if(['dashboard','disbursements','notifications','staff'].includes(p)) return;
+    e.preventDefault(); toast('This module is queued for build.','info');
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+const secs=[...document.querySelectorAll('.sec')], chips=[...document.querySelectorAll('.snav')];
+const spy=()=>{ let cur=secs[0]; for(const s of secs) if(s.getBoundingClientRect().top<=150) cur=s;
+  chips.forEach(c=>c.classList.toggle('on', c.getAttribute('href')==='#'+cur.id)); };
+window.addEventListener('scroll', spy, {passive:true});
+chips.forEach(c=>c.addEventListener('click', e=>{
+  e.preventDefault();
+  const t=document.querySelector(c.getAttribute('href'));
+  if(t) window.scrollTo({top:t.offsetTop-112, behavior:'smooth'});
+}));
+
+/* section 2 */
+['dirSearchBy','dirSearch','dirRole','dirStatus','dirDept','dirBranch'].forEach(id=>{
+  const h=()=>{
+    if(id==='dirSearchBy'){
+      const labels={name:'Search by full name…',username:'Search by username…',phone:'Search by phone number…',
+        email:'Search by email address…',id:'Search by staff ID…'};
+      el('dirSearch').placeholder = labels[el('dirSearchBy').value];
+    }
+    S.page = 1; renderDirectory();
+  };
+  el(id).addEventListener('input', h); el(id).addEventListener('change', h);
+});
+el('dirReset').onclick = ()=>{
+  ['dirSearch'].forEach(i=>el(i).value='');
+  ['dirRole','dirStatus','dirDept','dirBranch'].forEach(i=>el(i).value='');
+  S.page = 1; renderDirectory();
+};
+el('dirExport').onclick = ()=> staffCSV(dirFiltered(), 'golden-staff-directory.csv');
+el('exportStaff').onclick = ()=> staffCSV(STAFF, 'golden-staff-directory.csv');
+document.addEventListener('change', e=>{
+  const cb = e.target.closest('[data-pick]');
+  if(!cb) return;
+  if(cb.checked) S.selected.add(cb.dataset.pick); else S.selected.delete(cb.dataset.pick);
+});
+el('dirSelAll').addEventListener('change', e=>{
+  const rows = dirFiltered().slice((S.page-1)*S.size, S.page*S.size);
+  if(e.target.checked) rows.forEach(s=>S.selected.add(s.id)); else S.selected.clear();
+  renderDirectory();
+});
+
+/* section 3 */
+el('genPass').onclick = ()=>{
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';
+  let p=''; for(let i=0;i<14;i++) p+=chars[Math.floor(Math.random()*chars.length)];
+  el('nsPass').value = p;
+  el('passHint').textContent = 'Temporary password generated · shared once with the staff member';
+};
+el('copyPass').onclick = ()=>{
+  if(!el('nsPass').value || el('nsPass').value.includes('•')) return toast('Generate a password first','err');
+  navigator.clipboard?.writeText(el('nsPass').value);
+  toast('Temporary password copied','info');
+};
+['nsName','nsUser','nsEmail','nsPhone','nsIdNo','nsRole','nsDept','nsBranch','nsManager','nsStatus']
+  .forEach(id=>{ el(id).addEventListener('input', ()=>{ el('addBadge').textContent='Draft'; renderRegRecord(); });
+                el(id).addEventListener('change', ()=>{ el('addBadge').textContent='Draft'; renderRegRecord(); }); });
+['nsInvite','nsMfa'].forEach(id=>el(id).addEventListener('change', renderRegRecord));
+el('createStaff').onclick = createStaff;
+el('clearStaff').onclick = ()=>{
+  ['nsName','nsUser','nsEmail','nsPhone','nsIdNo'].forEach(i=>el(i).value='');
+  el('nsPass').value='••••••••••••'; el('createMsg').textContent='';
+  el('passHint').textContent='Temporary password · must be changed at first login';
+  el('addBadge').textContent='Draft'; renderRegRecord();
+};
+el('quickAdd').onclick = ()=> document.getElementById('s3').scrollIntoView({behavior:'smooth'});
+
+/* section 4 */
+el('profSelect').addEventListener('change', e=>{ S.profile = e.target.value; renderProfile(); });
+el('profEdit').onclick = ()=> editStaff(S.profile);
+
+/* section 5 */
+el('newRole').onclick = ()=> editRole(-1);
+el('assignRoleBtn').onclick = assignRole;
+
+/* section 6 */
+el('permRoleSel').addEventListener('change', e=>{ S.permRole = e.target.value; renderPermissions(); });
+el('savePerms').onclick = savePermissions;
+el('permAll').onclick = ()=>{ document.querySelectorAll('[data-perm]').forEach(c=>{ if(!c.disabled) c.checked = true; }); };
+el('permNone').onclick = ()=>{ document.querySelectorAll('[data-perm]').forEach(c=>{ if(!c.disabled) c.checked = false; }); };
+el('permView').onclick = ()=>{
+  document.querySelectorAll('[data-perm]').forEach(c=>{
+    const [,col] = c.dataset.perm.split(',');
+    if(!c.disabled) c.checked = col==='0';
+  });
+};
+
+/* section 8 */
+el('pwGo').onclick = applyPwAction;
+
+/* section 9 */
+el('taskFilter').addEventListener('change', renderAssignments);
+el('openAssign').onclick = openAssignModal;
+
+/* section 10 */
+document.querySelectorAll('#perfPeriod button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#perfPeriod button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); S.perfPeriod = b.dataset.p; renderPerformance();
+  });
+});
+
+/* section 11 */
+['audSearch','audCat','audStaff'].forEach(id=>{
+  const h=()=>{ S.auditPage=1; renderAudit(); };
+  el(id).addEventListener('input', h); el(id).addEventListener('change', h);
+});
+el('audReset').onclick = ()=>{ el('audSearch').value=''; el('audCat').value=''; el('audStaff').value='';
+  S.auditPage=1; renderAudit(); };
+el('auditExport').onclick = ()=> exportCSV([['Time','Staff','Activity','Record','Detail','IP','Result'],
+  ...auditFiltered().map(a=>[a.time,a.staff,a.cat,a.record,a.detail,a.ip,a.result])], 'golden-staff-activity.csv');
+
+/* section 12 */
+el('newDept').onclick = ()=> editDept(-1);
+el('newBranch').onclick = ()=> editBranch(-1);
+
+/* section 13 */
+el('sendInvite').onclick = sendInvite;
+el('inviteBtn').onclick = ()=> document.getElementById('s13').scrollIntoView({behavior:'smooth'});
+el('quickInvite').onclick = ()=> document.getElementById('s13').scrollIntoView({behavior:'smooth'});
+
+/* section 14 */
+document.querySelectorAll('#staffAudSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#staffAudSeg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); S.staffAud = b.dataset.aud; renderComms();
+  });
+});
+el('cmSend').onclick = sendStaffNotification;
+
+/* section 15 */
+el('docFilter').addEventListener('change', renderDocs);
+el('uploadDoc').onclick = ()=> uploadDocModal(-1);
+
+/* section 17 */
+el('clSubmit').onclick = submitClosure;
+
+/* section 18 */
+el('setSave').onclick = ()=> toast('Staff management settings saved','ok');
+el('setReset').onclick = ()=>{ renderSettings(); toast('Changes discarded','info'); };
+
+/* misc */
+el('recentAll').onclick = ()=> document.getElementById('s2').scrollIntoView({behavior:'smooth'});
+el('bellBtn').onclick = ()=> document.getElementById('s1').scrollIntoView({behavior:'smooth'});
+el('globalSearch').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){
+    el('dirSearchBy').value = 'name'; el('dirSearch').value = e.target.value;
+    S.page = 1; renderDirectory();
+    document.getElementById('s2').scrollIntoView({behavior:'smooth'});
+  }
+});
+
+/* boot */
+function renderAll(){
+  renderOverview(); renderDirectory(); renderAddStaff(); renderProfile(); renderRoles();
+  renderPermissions(); renderStatus(); renderPassword(); renderAssignments(); renderPerformance();
+  renderAudit(); renderUnits(); renderInvites(); renderComms(); renderDocs(); renderReports();
+  renderClosure(); renderSettings();
+}
+
+window.STAFF_APP = {STAFF, ROLES, PERMS, DEPTS, BRANCHES, TASKS, AUDIT, INVITES, DOCS,
+  CM_HISTORY, CLOSURE, S, renderAll, dirFiltered};
+
+/* populate static selects */
+el('dirRole').innerHTML = '<option value="">All roles</option>' +
+  ROLES.map(r=>`<option>${r.name}</option>`).join('');
+el('dirDept').innerHTML = '<option value="">All departments</option>' +
+  DEPTS.map(d=>`<option>${d.name}</option>`).join('');
+el('dirBranch').innerHTML = '<option value="">All branches</option>' +
+  BRANCHES.map(b=>`<option>${b.name}</option>`).join('');
+el('audStaff').innerHTML = '<option value="">All staff</option>' +
+  STAFF.map(s=>`<option>${s.name}</option>`).join('');
+
+renderAll();
+spy();
+</script>
+</body>
+</html>

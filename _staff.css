@@ -1,0 +1,104 @@
+  /* ===================== STAFF MANAGEMENT MODULE ===================== */
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:10px}
+  .scard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;cursor:pointer}
+  .scard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .scard .sh{display:flex;gap:9px;align-items:center}
+  .scard .sn{font-size:12px;font-weight:700;line-height:1.25}
+  .scard .sr{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .scard .sf{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:10.5px;color:var(--muted)}
+
+  .sav{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 34px;
+    font-size:11.5px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark);letter-spacing:.3px}
+  .sav.lg{width:54px;height:54px;border-radius:15px;font-size:17px}
+  .sav.blue{background:#EAF1FE;color:#2456C4}
+  .sav.green{background:#E8F6EF;color:#157A50}
+  .sav.red{background:#FDEDED;color:#B32C2C}
+  .sav.purple{background:#F1EDFE;color:#5A3FCB}
+  .sav.gray{background:#F1F2F6;color:#5A6172}
+
+  .meter{height:7px;border-radius:20px;background:#EEF0F4;overflow:hidden;flex:1}
+  .meter i{display:block;height:100%;border-radius:20px;background:var(--gold)}
+  .meter.green i{background:#1E9E6A}
+  .meter.red i{background:#D93F3F}
+  .meter.blue i{background:#2F6FED}
+
+  .perm-tbl{width:100%;border-collapse:separate;border-spacing:0}
+  .perm-tbl th{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);
+    font-weight:800;text-align:center;padding:8px 6px;border-bottom:1px solid var(--line);background:#FAFBFC}
+  .perm-tbl th:first-child{text-align:left}
+  .perm-tbl td{padding:7px 6px;border-bottom:1px solid #F1F2F6;font-size:11px;text-align:center}
+  .perm-tbl td:first-child{text-align:left;font-weight:600}
+  .perm-tbl tr:hover td{background:#FCFAF2}
+  .perm-tbl input[type=checkbox]{width:14px;height:14px;accent-color:var(--gold-dark);cursor:pointer}
+
+  .docrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed #EDEFF4}
+  .docrow:last-child{border-bottom:0}
+  .docrow .dic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;
+    background:var(--gold-soft);color:var(--gold-dark);font-size:12px}
+  .docrow .dt{font-size:11.5px;font-weight:700}
+  .docrow .ds{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  .invite{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed #EDEFF4}
+  .invite:last-child{border-bottom:0}
+  .invite .it{font-size:11.5px;font-weight:700}
+  .invite .is{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  .taglist{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+  .ptag{font-size:9.5px;font-weight:700;background:#F1F2F6;color:#4A5160;border-radius:20px;padding:2px 8px}
+
+  .stateline{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:6px}
+
+  /* directory table: keep action buttons inside the frame */
+  #dirBody td, #dirBody th{white-space:nowrap}
+  #dirBody .msg{white-space:normal;max-width:190px}
+  #dirBody .btn-sm{padding:4px 8px;font-size:10.5px}
+  #dirBody .tick{padding:4px 7px;font-size:12px;line-height:1}
+  .setrow .sv input[type=text], .setrow .sv input[type=number], .setrow .sv select{
+    border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px;background:#fff}
+  .setrow .sv input[type=number]{width:78px;text-align:right}
+  .auto-name b{display:block;font-size:11.5px;font-weight:700}
+  .auto-name span{font-size:10px;color:var(--muted);font-weight:700}
+  .nitem{display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;cursor:pointer;transition:.14s}
+  .nitem:last-child{border-bottom:0}
+  .nitem:hover{background:#FCFAF2}
+  .nitem .nic{width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800}
+  .nitem .nt{font-size:12px;font-weight:700;line-height:1.3}
+  .nitem .nb{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .nitem .nm2{font-size:10px;color:var(--muted-2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .preview{background:#0F1115;border-radius:14px;padding:12px;color:#fff;min-height:190px;display:flex;flex-direction:column}
+  .preview .phead{display:flex;justify-content:space-between;font-size:10px;color:#9AA0AC;padding-bottom:8px;
+    border-bottom:1px solid #23262E;margin-bottom:10px}
+  .preview .pbody{background:#1B1F27;border-radius:10px;padding:11px 12px;font-size:12px;line-height:1.55;flex:1}
+  .preview .psub{font-weight:700;font-size:12px;margin-bottom:4px;color:#E8C860}
+  .preview .pfoot{font-size:9.5px;color:#7A808D;margin-top:8px;display:flex;justify-content:space-between}
+  .locked{display:flex;align-items:center;gap:8px;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160}
+  .segbar{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px}
+  .segbar button{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .segbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+  .charline{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+
+  /* role cards (§5) */
+  .rcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s;cursor:pointer}
+  .rcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .rcard .rh{display:flex;align-items:center;gap:8px}
+  .rcard .ric{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 26px;font-size:12px;font-weight:800}
+  .rcard .rn{font-size:12px;font-weight:700;line-height:1.25}
+  .rcard .rd{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.4;min-height:28px}
+  .rcard .rrow{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:6px}
+  .rcard .rrow b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* option checkboxes must not squeeze their labels */
+  .form-grid label.tiny, .optlab{white-space:nowrap}
+
+  /* invitation rows stay on one line per element */
+  .invite .chip, .invite .btn{white-space:nowrap;flex:0 0 auto}
+  .invite .is{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .invite > div:nth-child(2){min-width:0}
+
+  /* wide tables inside full-width panels */
+  #statusBody td, #statusBody th, #taskBody td, #taskBody th,
+  #perfBody td, #perfBody th, #docBody td, #docBody th{white-space:nowrap}
+  #taskBody .msg, #docBody .msg{white-space:normal;max-width:230px}

@@ -1,0 +1,300 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Disbursements</div>
+      <div class="page-sub">Fund release, authorization, verification and reconciliation · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search loan, customer, disbursement ref…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="Notifications" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold" id="quickPrepare">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+      New Disbursement
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Approved Loans</a>
+    <a class="snav" href="#s3">3 · Preparation</a>
+    <a class="snav" href="#s4">4 · Authorization</a>
+    <a class="snav" href="#s5">5 · Record</a>
+    <a class="snav" href="#s6">6 · Register</a>
+    <a class="snav" href="#s7">7 · Methods</a>
+    <a class="snav" href="#s8">8 · Verification</a>
+    <a class="snav" href="#s9">9 · Status</a>
+    <a class="snav" href="#s10">10 · Failed</a>
+    <a class="snav" href="#s11">11 · Fees</a>
+    <a class="snav" href="#s12">12 · Activation</a>
+    <a class="snav" href="#s13">13 · Documents</a>
+    <a class="snav" href="#s14">14 · Reconciliation</a>
+    <a class="snav" href="#s15">15 · Reports</a>
+    <a class="snav" href="#s16">16 · Notifications</a>
+    <a class="snav" href="#s17">17 · Audit</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Disbursement Control Centre</h1>
+        <p>Prepare · authorize · release · verify · reconcile — Lilongwe Head Office</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandTotal">MK 63.4M</b><span>Disbursed today</span></div>
+        <div class="band-stat"><b id="bandAwait">27</b><span>Awaiting release</span></div>
+        <div class="band-stat"><b id="bandAuth">9</b><span>Pending authorization</span></div>
+        <div class="band-stat"><b id="bandFail">6</b><span>Failed / exceptions</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="runRecon">Run reconciliation</button>
+        <button class="btn btn-gold btn-sm" id="quickDisburse">Record disbursement</button>
+      </div>
+    </div>
+
+    <!-- ===== 1 · OVERVIEW ===== -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Disbursements Overview</h2><p>Position for 30 October 2026 · updated 09:45 CAT</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+      <div class="grid g4" id="ovTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div>
+          <div class="panel-title">Recent Disbursement Activities</div>
+          <div class="panel-sub">Latest movements across preparation, authorization and release</div>
+        </div><button class="btn btn-ghost btn-sm" id="actAll">Audit trail</button></div>
+        <div class="tbl-wrap" style="margin-top:6px">
+          <table><thead><tr><th>Time</th><th>Reference</th><th>Activity</th><th>Handled by</th><th class="num">Amount</th><th>Status</th></tr></thead>
+          <tbody id="ovActivity"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2 · APPROVED LOANS AWAITING DISBURSEMENT ===== -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Approved Loans Awaiting Disbursement</h2>
+          <p>Verify eligibility, deductions and requirements before preparing a release</p></div>
+        <div class="sec-tools"><span class="count-pill" id="apprCount">0 loans</span></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="apprSearch" placeholder="Search customer, account no. or application no…" />
+          </div>
+          <div class="fld"><select id="apprElig">
+            <option value="">All eligibility</option>
+            <option value="ready">Ready to disburse</option>
+            <option value="missing">Missing requirements</option>
+          </select></div>
+          <div class="fld"><select id="apprProduct">
+            <option value="">All products</option>
+            <option>Business Growth</option><option>Salary Advance</option><option>Agri Input Loan</option>
+            <option>Group Loan</option><option>Asset Finance</option><option>Emergency Loan</option>
+          </select></div>
+          <button class="btn btn-ghost btn-sm" id="apprClear">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2">
+            <thead><tr>
+              <th>Application</th><th>Customer</th><th class="num">Approved</th><th>Rate</th><th>Term</th>
+              <th class="num">Fees</th><th class="num">Net payable</th><th>Eligibility</th><th></th>
+            </tr></thead>
+            <tbody id="apprBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3 · PREPARATION ===== -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Disbursement Preparation</h2>
+          <p>Build the disbursement instruction and submit it for authorization</p></div>
+        <div class="sec-tools"><span class="badge b-pend" id="prepBadge">Draft</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Preparation Form</div>
+            <div class="panel-sub">All fields marked * are required</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1">
+              <label>Select approved loan *</label>
+              <select id="prepLoan"><option value="">— choose an approved loan —</option></select>
+              <div class="hint" id="prepHint">Only loans approved by the credit committee appear here.</div>
+            </div>
+            <div class="fg"><label>Customer</label><input id="prepCust" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Account number</label><input id="prepAcct" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Approved amount (MK)</label><input id="prepAmount" readonly /></div>
+            <div class="fg"><label>Interest rate</label><input id="prepRate" readonly /></div>
+            <div class="fg"><label>Loan term</label><input id="prepTerm" readonly /></div>
+            <div class="fg"><label>Net amount payable (MK)</label><input id="prepNet" readonly /></div>
+            <div class="fg"><label>Disbursement method *</label>
+              <select id="prepMethod"><option value="">Select method</option>
+                <option>Bank Transfer</option><option>Airtel Money</option><option>TNM Mpamba</option>
+                <option>Cash</option><option>Cheque</option></select></div>
+            <div class="fg"><label>Disbursement reference *</label>
+              <input id="prepRef" placeholder="DIS-2026-XXXX" />
+              <div class="hint">Format: DIS-YYYY-NNNN (auto-suggested)</div></div>
+            <div class="fg" style="grid-column:1/-1"><label>Preparation notes</label>
+              <textarea id="prepNotes" rows="2" placeholder="e.g. customer to collect cheque at Lilongwe branch"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="prepSubmit">Submit for authorization</button>
+            <button class="btn btn-ghost" id="prepClearBtn">Clear form</button>
+            <span class="tiny muted" id="prepMsg"></span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Eligibility &amp; Requirements</div>
+              <div class="panel-sub">Verified against the approved application</div></div></div>
+            <div id="prepChecks" style="margin-top:6px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Net Payable Calculation</div>
+              <div class="panel-sub">Approved amount less deductions</div></div></div>
+            <div class="stmt" id="prepSummary"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4 · AUTHORIZATION ===== -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Disbursement Approval &amp; Authorization</h2>
+          <p>Second-line control · approval limits enforced by role</p></div>
+        <div class="sec-tools"><span class="count-pill" id="authCount">0 pending</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Authorization Requests</div>
+            <div class="panel-sub">Approve, reject or return each request</div></div></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr>
+              <th>Reference</th><th>Customer</th><th class="num">Amount</th><th class="num">Net</th><th>Method</th><th>Prepared by</th><th></th>
+            </tr></thead><tbody id="authBody"></tbody></table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">My Approval Limits</div>
+              <div class="panel-sub">Role: System Administrator</div></div></div>
+            <div class="stmt" id="authLimits"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Authorization History</div>
+              <div class="panel-sub">Most recent decisions</div></div></div>
+            <div class="list" id="authHist"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5 · RECORD NEW DISBURSEMENT ===== -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Record New Disbursement</h2>
+          <p>Capture the actual fund release against an authorized loan</p></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Release Details</div>
+            <div class="panel-sub">Only authorized disbursements can be recorded</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Select authorized disbursement *</label>
+              <select id="recSel"><option value="">— choose an authorized disbursement —</option></select></div>
+            <div class="fg"><label>Customer &amp; loan</label><input id="recCust" readonly placeholder="Auto-filled" /></div>
+            <div class="fg"><label>Amount to disburse (MK) *</label><input id="recAmount" type="number" /></div>
+            <div class="fg"><label>Disbursement date *</label><input id="recDate" type="date" value="2026-10-30" /></div>
+            <div class="fg"><label>Payment method *</label>
+              <select id="recMethod"><option>Bank Transfer</option><option>Airtel Money</option>
+                <option>TNM Mpamba</option><option>Cash</option><option>Cheque</option></select></div>
+            <div class="fg"><label>Transaction reference *</label><input id="recTxn" placeholder="e.g. FT2610308841" /></div>
+            <div class="fg"><label>Bank / wallet details</label><input id="recBank" placeholder="Account or wallet number" /></div>
+            <div class="fg" style="grid-column:1/-1"><label>Payment evidence</label>
+              <div class="fld" style="justify-content:space-between">
+                <span class="tiny muted" id="recFileName">No file selected</span>
+                <button class="btn btn-ghost btn-sm" id="recUpload">Choose file</button>
+              </div>
+              <div class="hint">PDF, JPG or PNG · max 5 MB (proof of payment / slip)</div></div>
+            <div class="fg" style="grid-column:1/-1"><label>Disbursement notes</label>
+              <textarea id="recNotes" rows="2" placeholder="Optional remarks for the release"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="recSubmit">Submit disbursement record</button>
+            <button class="btn btn-ghost" id="recClear">Clear</button>
+            <span class="tiny muted" id="recMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Ready to Release</div>
+              <div class="panel-sub">Authorized and not yet released</div></div></div>
+            <div class="list" id="recReady"></div>
+          </div>
+          <div class="note gold">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Recorded disbursements move to <b>Processing</b> and must be confirmed under
+              <b>Verification</b> before the loan account can be activated.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6 · ALL DISBURSEMENTS ===== -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>All Disbursements</h2><p>Complete disbursement register with filters and exports</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="regPrint">Print</button>
+          <button class="btn btn-ghost btn-sm" id="regExport">Export CSV</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="regSearch" placeholder="Customer, account, loan or disbursement ref…" />
+          </div>
+          <div class="fld"><span class="tiny muted">From</span><input id="regFrom" type="date" /></div>
+          <div class="fld"><span class="tiny muted">To</span><input id="regTo" type="date" /></div>
+          <div class="fld"><select id="regMethod"><option value="">All methods</option>
+            <option>Bank Transfer</option><option>Airtel Money</option><option>TNM Mpamba</option>
+            <option>Cash</option><option>Cheque</option></select></div>
+          <div class="fld"><select id="regStatus"><option value="">All statuses</option>
+            <option>Draft</option><option>Awaiting authorization</option><option>Authorized</option>
+            <option>Processing</option><option>Awaiting confirmation</option><option>Successful</option>
+            <option>Failed</option><option>Rejected</option><option>Cancelled</option><option>Reversed</option>
+          </select></div>
+          <div class="fld"><select id="regOfficer"><option value="">All officers</option>
+            <option>T. Phiri</option><option>L. Chirwa</option><option>S. Zimba</option>
+            <option>A. Mbewe</option><option>G. Mtemang'ombe</option><option>C. Mwale</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="regReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr>
+            <th>Reference</th><th>Date</th><th>Customer</th><th>Loan</th><th class="num">Amount</th>
+            <th class="num">Net</th><th>Method</th><th>Officer</th><th>Status</th><th></th>
+          </tr></thead><tbody id="regBody"></tbody></table>
+        </div>
+        <div class="pager" id="regPager"></div>
+      </div>
+    </section>

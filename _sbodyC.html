@@ -1,0 +1,242 @@
+
+    <!-- 13 -->
+    <section class="sec" id="s13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Staff Invitations &amp; Onboarding</h2><p>Invite, resend, cancel and complete registration</p></div>
+        <div class="sec-tools"><span class="count-pill" id="invCount">0 pending</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Invite New Staff</div>
+            <div class="panel-sub">The invitation email expires in 7 days</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Full name *</label><input id="invName" placeholder="e.g. Chisomo Phiri" /></div>
+            <div class="fg"><label>Email address *</label><input id="invEmail" placeholder="name@goldenfs.mw" /></div>
+            <div class="fg"><label>Initial role *</label><select id="invRole"></select></div>
+            <div class="fg"><label>Department</label><select id="invDept"></select></div>
+            <div class="fg"><label>Branch</label><select id="invBranch"></select></div>
+            <div class="fg"><label>Initial permissions</label><select id="invPerms">
+              <option>Role defaults</option><option>Role defaults + read-only finance</option>
+              <option>Minimum access</option></select></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="sendInvite">Send invitation</button>
+            <span class="tiny muted" id="invMsg"></span>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Invitations</div>
+            <div class="panel-sub">Resend or cancel any invitation</div></div></div>
+          <div id="inviteList" style="margin-top:4px"></div>
+          <div class="panel-head" style="margin-top:12px"><div>
+            <div class="panel-title">Onboarding Completion</div>
+            <div class="panel-sub">Account activation status</div></div></div>
+          <div id="onboardList"></div>
+        </div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Onboarding History</div>
+          <div class="panel-sub">Registration, initial role and activation record</div></div></div>
+        <div class="tblwrap" style="max-height:280px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th>Invited</th><th>Registered</th>
+            <th>Initial role</th><th>Initial permissions</th><th>Activated</th><th>Status</th></tr></thead>
+            <tbody id="onboardHistory"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Staff Communication &amp; Notifications</h2><p>Individual, role-based, department and security messaging</p></div>
+        <div class="sec-tools"><span class="badge b-gray">Delivery tracked</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compose Staff Notification</div>
+            <div class="panel-sub">Delivered to the staff dashboard and email</div></div></div>
+          <div class="segbar" id="staffAudSeg" style="margin-top:6px">
+            <button class="on" data-aud="Individual">Individual</button>
+            <button data-aud="Role">Role-based</button>
+            <button data-aud="Department">Department</button>
+            <button data-aud="Security">Security alert</button>
+            <button data-aud="Task">Task assignment</button>
+          </div>
+          <div class="form-grid" style="margin-top:10px">
+            <div class="fg"><label>Recipient</label><select id="cmRecipient"><option>—</option></select></div>
+            <div class="fg"><label>Priority</label><select id="cmPriority">
+              <option>Normal</option><option>High</option><option>Low</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Subject *</label>
+              <input id="cmSubject" placeholder="e.g. New approval permissions granted" /></div>
+            <div class="fg" style="grid-column:1/-1"><label>Message *</label>
+              <textarea id="cmBody" rows="4" placeholder="Type the message…"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="cmSend">Send notification</button>
+            <span class="tiny muted" id="cmMsg"></span>
+          </div>
+          <div class="locked" style="margin-top:10px">Permission changes, suspensions and security alerts are also sent automatically.</div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Staff Notification History</div>
+              <div class="panel-sub">Sent to staff members</div></div></div>
+            <div id="cmHistory" style="margin-top:4px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Notification Delivery Status</div>
+              <div class="panel-sub">Per channel</div></div></div>
+            <div class="tblwrap" style="max-height:210px">
+              <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Sent</th>
+                <th class="num">Delivered</th><th class="num">Failed</th></tr></thead><tbody id="cmStatus"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Staff Documents &amp; Employment Records</h2><p>Identity, employment, training and restricted records</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="uploadDoc">Upload document</button>
+          <span class="count-pill" id="docCount">0 documents</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Document Register</div>
+          <div class="panel-sub">Filter by document type · restricted records are access-logged</div></div>
+          <div class="fld"><select id="docFilter" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option value="">All documents</option><option>Identification</option><option>Employment</option>
+            <option>Appointment letter</option><option>Role assignment</option><option>Training / certification</option></select></div></div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2"><thead><tr><th>Document</th><th>Staff</th><th>Type</th>
+            <th>Uploaded</th><th>Expiry</th><th>Access</th><th>Actions</th></tr></thead><tbody id="docBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Expiry Reminders</div>
+            <div class="panel-sub">Documents needing renewal</div></div></div>
+          <div id="docExpiry"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document History</div>
+            <div class="panel-sub">Uploads, views and access</div></div></div>
+          <div id="docHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Staff Management Reports</h2><p>Directory, access, performance and security reporting</p></div>
+        <div class="sec-tools"><span class="badge b-gray">10 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards"></div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Staff Account Closure &amp; Transfer</h2><p>Deactivation, transfers, task reassignment and access revocation</p></div>
+        <div class="sec-tools"><span class="badge b-rev">Approval required</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Request Deactivation or Transfer</div>
+            <div class="panel-sub">Sensitive — reviewed by an administrator</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Staff member *</label><select id="clStaff"></select></div>
+            <div class="fg"><label>Request type *</label><select id="clType">
+              <option>Deactivate account</option><option>Transfer department</option><option>Transfer branch</option></select></div>
+            <div class="fg"><label>New department</label><select id="clDept"></select></div>
+            <div class="fg"><label>New branch</label><select id="clBranch"></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Reason for deactivation / transfer *</label>
+              <textarea id="clReason" rows="3" placeholder="Record the reason — retained in the closure audit trail"></textarea></div>
+            <div class="fg" style="grid-column:1/-1"><label>On approval</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clTasks" checked /> Reassign outstanding tasks</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clAccess" checked /> Revoke system access</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clSessions" checked /> Revoke active sessions</label>
+                <label class="tiny" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="clKeep" checked /> Preserve historical records</label>
+              </div></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-red" id="clSubmit">Submit request</button>
+            <span class="tiny muted" id="clMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Approval Queue</div>
+              <div class="panel-sub">Deactivation requests awaiting approval</div></div></div>
+            <div id="clQueue"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Closure Audit Trail</div>
+              <div class="panel-sub">Requests, approvals and revocations</div></div></div>
+            <div class="tblwrap" style="max-height:250px">
+              <table class="tbl2"><thead><tr><th>Time</th><th>Staff &amp; request</th>
+                <th>Outcome</th></tr></thead><tbody id="clTrail"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Staff Management Settings</h2><p>Account rules, security policy, invitation and audit settings</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="setReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="setSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Creation &amp; Invitations</div>
+            <div class="panel-sub">Rules applied when adding staff</div></div></div>
+          <div id="setAccount"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password &amp; Login Security</div>
+            <div class="panel-sub">Policy and session rules</div></div></div>
+          <div id="setSecurity"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Roles &amp; Default Permissions</div>
+            <div class="panel-sub">Applied to new accounts</div></div></div>
+          <div id="setRoles"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspension, Audit &amp; Approvals</div>
+            <div class="panel-sub">Escalation and retention</div></div></div>
+          <div id="setAudit"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Creating staff, changing status, assigning tasks and roles, resetting passwords and
+        processing closures all update the in-page state, so the access-control lifecycle can be walked end to end.
+        Passwords are never displayed.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

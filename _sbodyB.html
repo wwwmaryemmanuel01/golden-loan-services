@@ -1,0 +1,231 @@
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Staff Account Status &amp; Security</h2><p>Activate, deactivate, suspend, lock and monitor sign-in behaviour</p></div>
+        <div class="sec-tools"><span class="count-pill" id="statusCount">0 accounts</span></div>
+      </div>
+      <div class="grid5" id="statusTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Account Controls</div>
+          <div class="panel-sub">Every action is recorded in the status change log</div></div>
+          <span class="badge b-gray">Two-person rule on deactivation</span></div>
+        <div class="tblwrap" style="max-height:430px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th>Role</th><th>Status</th><th>Last login</th>
+            <th class="num">Failed logins</th><th>Controls</th></tr></thead><tbody id="statusBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed &amp; Suspicious Sign-ins</div>
+            <div class="panel-sub">Review before unlocking</div></div></div>
+          <div id="suspiciousList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Status Change Log</div>
+            <div class="panel-sub">Immutable record</div></div></div>
+          <div class="tblwrap" style="max-height:260px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Change</th><th>By</th></tr></thead>
+              <tbody id="statusLog"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Staff Password &amp; Authentication Management</h2><p>Policies, reset procedures, MFA and authentication events</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Policy enforced</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password Policy</div>
+            <div class="panel-sub">Applied to every staff account</div></div></div>
+          <div id="pwPolicy"></div>
+          <div class="locked" style="margin-top:10px">🔒 Existing passwords are never displayed, exported or recoverable — only reset.</div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reset &amp; Session Controls</div>
+            <div class="panel-sub">Initiate a reset or end sessions</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Staff member</label><select id="pwStaff"></select></div>
+            <div class="fg"><label>Action</label><select id="pwAction">
+              <option>Initiate password reset</option><option>Force change at next login</option>
+              <option>Enable multi-factor authentication</option><option>Reset MFA device</option>
+              <option>Revoke all active sessions</option><option>Send recovery instructions</option></select></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-dark btn-sm" id="pwGo">Apply</button>
+            <span class="tiny muted" id="pwMsg"></span></div>
+          <div class="panel-head" style="margin-top:12px"><div><div class="panel-title">Authentication Events</div>
+            <div class="panel-sub">Last 24 hours</div></div></div>
+          <div class="tblwrap" style="max-height:240px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Event</th><th>Result</th></tr></thead>
+              <tbody id="authEvents"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Session &amp; Attempt Rules</div>
+            <div class="panel-sub">Enforced platform-wide</div></div></div>
+          <div id="sessionRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recovery Procedures</div>
+            <div class="panel-sub">Defined steps when access is lost</div></div></div>
+          <div id="recoverySteps"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Staff Assignments &amp; Workload</h2><p>Task allocation across applications, accounts, collections and verifications</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="openAssign">Assign task</button>
+          <span class="count-pill" id="taskCount">0 open</span></div>
+      </div>
+      <div class="grid5" id="taskTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Assigned Tasks</div>
+          <div class="panel-sub">Pending, in progress and completed</div></div>
+          <div class="fld"><select id="taskFilter" style="border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px">
+            <option value="">All tasks</option><option>Pending</option><option>In Progress</option>
+            <option>Overdue</option><option>Completed</option></select></div></div>
+        <div class="tblwrap" style="max-height:430px">
+          <table class="tbl2"><thead><tr><th>Reference</th><th>Task</th><th>Assigned to</th>
+            <th>Priority</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead><tbody id="taskBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Workload Monitor</div>
+            <div class="panel-sub">Open tasks per officer</div></div></div>
+          <div id="workload" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Assignment History</div>
+            <div class="panel-sub">Assignments and reassignments</div></div></div>
+          <div id="assignHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Staff Performance &amp; Productivity</h2><p>Output metrics, completion times and collection performance</p></div>
+        <div class="sec-tools">
+          <div class="segbar" id="perfPeriod"><button class="on" data-p="Month">This month</button>
+            <button data-p="Quarter">Quarter</button><button data-p="Year">Year</button></div>
+        </div>
+      </div>
+      <div class="grid5" id="perfTiles" style="margin-bottom:13px"></div>
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="panel-head"><div><div class="panel-title">Staff Productivity</div>
+          <div class="panel-sub">Applications, loans, collections and cases by officer</div></div>
+          <span class="badge b-gray" id="perfPeriodBadge2">This month</span></div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2"><thead><tr><th>Staff</th><th class="num">Reviewed</th><th class="num">Decisions</th>
+            <th class="num">Loans</th><th class="num">Disb.</th><th class="num">Repayments</th>
+            <th class="num">Collections</th><th class="num">Cases</th><th class="num">Open</th>
+            <th class="num">Avg hrs</th></tr></thead><tbody id="perfBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Task Completion Times</div>
+            <div class="panel-sub">Average hours per task type</div></div></div>
+          <div id="perfTimes" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Performance</div>
+            <div class="panel-sub">Recovery rate by officer · %</div></div></div>
+          <div id="perfCollection" style="margin-top:12px"></div>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Performance Reports</div>
+          <div class="panel-sub">Generated from the reporting period selected above</div></div>
+          <span class="badge b-gray" id="perfPeriodBadge">This month</span></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-ghost btn-sm" data-act="perf-pdf">Performance report · PDF</button>
+          <button class="btn btn-ghost btn-sm" data-act="perf-xls">Performance report · Excel</button>
+          <button class="btn btn-ghost btn-sm" data-act="perf-csv">Performance report · CSV</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Staff Activity &amp; Audit Logs</h2><p>Every staff action, recorded and exportable</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="auditExport">Export activity logs</button></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="audSearch" placeholder="Staff, reference, customer or detail…" />
+          </div>
+          <div class="fld"><select id="audCat"><option value="">All activity types</option>
+            <option>Login</option><option>Customer Record</option><option>Loan Application</option>
+            <option>Loan Approval</option><option>Disbursement</option><option>Repayment</option>
+            <option>Collection</option><option>Report Access</option><option>Permission Change</option>
+            <option>Status Change</option></select></div>
+          <div class="fld"><select id="audStaff"><option value="">All staff</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="audReset">Reset</button>
+        </div>
+        <div class="tblwrap" style="max-height:480px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Staff</th><th>Activity</th><th>Record</th>
+            <th>Detail</th><th>IP address</th><th>Result</th></tr></thead><tbody id="audBody"></tbody></table>
+        </div>
+        <div class="pager" id="audPager"></div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="sec" id="s12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Departments &amp; Branches</h2><p>Structure, managers and headcount</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="newDept">Create department</button>
+          <button class="btn btn-ghost btn-sm" id="newBranch">Create branch</button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Department Directory</div>
+            <div class="panel-sub">Create and edit departments, assign managers</div></div>
+            <span class="count-pill" id="deptCount">0</span></div>
+          <div class="tblwrap" style="max-height:400px">
+            <table class="tbl2"><thead><tr><th>Department</th><th>Manager</th><th class="num">Staff</th>
+              <th>Branch</th><th></th></tr></thead><tbody id="deptBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Branch Directory</div>
+            <div class="panel-sub">Create and edit branches</div></div>
+            <span class="count-pill" id="branchCount">0</span></div>
+          <div class="tblwrap" style="max-height:400px">
+            <table class="tbl2"><thead><tr><th>Branch</th><th>Code</th><th>Manager</th>
+              <th class="num">Staff</th><th></th></tr></thead><tbody id="branchBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff by Department or Branch</div>
+            <div class="panel-sub">Headcount per unit</div></div></div>
+          <div id="unitChart" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Department &amp; Branch Reports</div>
+            <div class="panel-sub">Headcount, roles and cost centres</div></div></div>
+          <div id="unitReports"></div>
+        </div>
+      </div>
+    </section>

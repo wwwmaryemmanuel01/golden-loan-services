@@ -1,0 +1,78 @@
+  /* ===================== NOTIFICATIONS MODULE ===================== */
+  .nlist{display:flex;flex-direction:column}
+  .nitem{display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;cursor:pointer;transition:.14s}
+  .nitem:last-child{border-bottom:0}
+  .nitem:hover{background:#FCFAF2}
+  .nitem.unread{background:#FFFDF6}
+  .nitem .nic{width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800}
+  .nitem .nt{font-size:12px;font-weight:700;line-height:1.3;display:flex;align-items:center;gap:6px}
+  .nitem .nb{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .nitem .nm2{font-size:10px;color:var(--muted-2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .udot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:0 0 6px;display:inline-block}
+
+  /* notification-type cards */
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(208px,1fr));gap:10px;margin-top:10px}
+  .tcard{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;transition:.15s;cursor:pointer}
+  .tcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .tcard .th{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+  .tcard .ti{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:0 0 24px;font-size:11px}
+  .tcard .tn{font-size:11.5px;font-weight:700;line-height:1.25;color:#2B303B}
+  .tcard .tc{font-size:10px;color:var(--muted);margin-top:4px}
+  .tcard .tb{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px}
+  .tcard .tn2{font-weight:800;font-variant-numeric:tabular-nums}
+
+  /* message preview */
+  .preview{background:#0F1115;border-radius:14px;padding:12px;color:#fff;min-height:210px;display:flex;flex-direction:column}
+  .preview .phead{display:flex;justify-content:space-between;font-size:10px;color:#9AA0AC;padding-bottom:8px;
+    border-bottom:1px solid #23262E;margin-bottom:10px}
+  .preview .pbody{background:#1B1F27;border-radius:10px;padding:11px 12px;font-size:12px;line-height:1.55;flex:1}
+  .preview .psub{font-weight:700;font-size:12px;margin-bottom:4px;color:#E8C860}
+  .preview .pfoot{font-size:9.5px;color:#7A808D;margin-top:8px;display:flex;justify-content:space-between}
+
+  /* channel cards */
+  .chgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin-top:10px}
+  .grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+  .chcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+  .chcard .chh{display:flex;align-items:center;gap:8px}
+  .chcard .chi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:13px}
+  .chcard .chv{display:flex;justify-content:space-between;font-size:11px;margin-top:9px}
+  .chcard .chv b{font-variant-numeric:tabular-nums}
+
+  /* template cards */
+  .tpl{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fff}
+  .tpl.off{opacity:.62}
+  .tpl .tph{display:flex;align-items:flex-start;gap:8px}
+  .tpl .tpt{font-size:12px;font-weight:700;line-height:1.3}
+  .tpl .tps{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .tpl .tpbody{font-size:11px;color:#4A5160;background:#F7F8FA;border-radius:8px;padding:8px 9px;margin-top:8px;
+    line-height:1.5;max-height:74px;overflow:hidden}
+  .tpl .tpfoot{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+
+  /* announcements */
+  .ann{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fff}
+  .ann .anh{display:flex;align-items:flex-start;gap:9px}
+  .ann .ant{font-size:12.5px;font-weight:700}
+  .ann .ans{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .ann .anb{font-size:11.5px;color:#4A5160;margin-top:7px;line-height:1.5}
+
+  /* misc */
+  .segbar{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px}
+  .segbar button{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .segbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .cnt{font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark);border-radius:20px;padding:2px 7px}
+  .charline{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+  .locked{display:flex;align-items:center;gap:8px;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160}
+
+  /* register table: keep action buttons inside the frame */
+  #allBody td, #allBody th{white-space:nowrap}
+  #allBody .msg{white-space:normal;max-width:230px}
+  #allBody .btn-sm{padding:4px 8px;font-size:10.5px}
+  #allBody .tick{padding:4px 7px;font-size:12px;line-height:1}
+  .setrow .sv input[type=text], .setrow .sv input[type=number], .setrow .sv select{
+    border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px;background:#fff}
+  .setrow .sv input[type=number]{width:78px;text-align:right}
+  .auto-name b{display:block;font-size:11.5px;font-weight:700}
+  .auto-name span{font-size:10px;color:var(--muted);font-weight:700}

@@ -1,0 +1,194 @@
+
+    <!-- 14 -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Announcements &amp; Broadcasts</h2><p>Targeted notices with read tracking</p></div>
+        <div class="sec-tools"><span class="count-pill" id="annCount">0 published</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Create Announcement</div>
+            <div class="panel-sub">Broadcast to staff, roles or customer groups</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Title *</label>
+              <input id="annTitle" placeholder="e.g. Month-end closure on 31 October" /></div>
+            <div class="fg"><label>Audience *</label>
+              <select id="annAudience"><option>All staff</option><option>Selected roles</option>
+                <option>All customers</option><option>Customer group</option></select></div>
+            <div class="fg"><label>Roles / group</label>
+              <select id="annTarget"><option>All</option><option>Loan Officers</option>
+                <option>Collections Officers</option><option>Cashiers</option>
+                <option>Active borrowers</option><option>Customers in arrears</option></select></div>
+            <div class="fg"><label>Priority</label>
+              <select id="annPriority"><option>Normal</option><option>High</option><option>Low</option></select></div>
+            <div class="fg"><label>Publish</label>
+              <select id="annWhen"><option>Immediately</option><option>Schedule</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Announcement *</label>
+              <textarea id="annBody" rows="4" placeholder="Write the announcement…"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="publishAnn">Publish announcement</button>
+            <button class="btn btn-ghost" id="clearAnn">Clear</button>
+            <span class="tiny muted" id="annMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Published Announcements</div>
+              <div class="panel-sub">Read status by audience</div></div></div>
+            <div class="nlist" id="annList" style="margin-top:4px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Notification Preferences</h2><p>Recipient-level channel choices, quiet hours and consent</p></div>
+        <div class="sec-tools"><button class="btn btn-gold btn-sm" id="savePrefs">Save preferences</button></div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Preferences</div>
+            <div class="panel-sub">Default opt-in for all borrowers</div></div></div>
+          <div id="prefCustomer"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Preferences</div>
+            <div class="panel-sub">Default for internal users</div></div></div>
+          <div id="prefStaff"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Consent &amp; Opt-Out</div>
+            <div class="panel-sub">Regulatory and marketing consent</div></div></div>
+          <div id="prefConsent"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Mandatory Security Alerts</div>
+            <div class="panel-sub">Cannot be disabled</div></div><span class="badge b-rev">Locked</span></div>
+          <div id="prefLocked"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Notification Reports &amp; Analytics</h2><p>Volume, delivery performance and channel cost</p></div>
+        <div class="sec-tools"><span class="badge b-gray">12 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards" style="margin-bottom:13px"></div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notifications by Category</div>
+            <div class="panel-sub">This month · count</div></div></div>
+          <div id="chCategory" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notifications by Channel</div>
+            <div class="panel-sub">Share of volume</div></div></div>
+          <div id="chChannel" style="display:flex;gap:16px;align-items:center;justify-content:center;margin-top:8px;flex-wrap:wrap"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery Success Rate</div>
+            <div class="panel-sub">Last 10 days · %</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chSuccess" viewBox="0 0 640 210"></svg></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Notification Volume</div>
+            <div class="panel-sub">Sent vs failed · last 10 days</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chVolume" viewBox="0 0 640 210"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Notification Audit &amp; Security</h2><p>Who created, edited and sent what — immutable trail</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="auditExport">Export audit</button></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="auditSearch" placeholder="Reference, user, recipient or action…" />
+          </div>
+          <div class="fld"><select id="auditAction"><option value="">All actions</option>
+            <option>Created</option><option>Sent</option><option>Modified</option><option>Broadcast</option>
+            <option>Archived</option><option>Blocked</option><option>Retried</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="auditReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Action</th><th>User</th>
+            <th>Detail</th><th>IP</th><th>Outcome</th></tr></thead><tbody id="auditBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unauthorized Sending Attempts</div>
+            <div class="panel-sub">Blocked by policy</div></div><span class="badge b-rev">2</span></div>
+          <div class="nlist" id="auditBlocked"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Sensitive Information Access</div>
+            <div class="panel-sub">Message content viewed by administrators</div></div></div>
+          <div class="nlist" id="auditSensitive"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Notification Settings</h2><p>Categories, providers, limits, retention and permissions</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="settingsReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="settingsSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Categories &amp; Defaults</div>
+            <div class="panel-sub">Enable or disable notification categories</div></div></div>
+          <div id="setCategories"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Priority &amp; Reminder Rules</div>
+            <div class="panel-sub">Escalation and reminder timing</div></div></div>
+          <div id="setPriority"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery &amp; Limits</div>
+            <div class="panel-sub">Retries, daily caps and retention</div></div></div>
+          <div id="setDelivery"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Providers &amp; Permissions</div>
+            <div class="panel-sub">SMS, email and access control</div></div></div>
+          <div id="setProviders"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Sending, retrying, archiving, templates, automations and broadcasts all update the
+        in-page state so the delivery lifecycle can be walked end to end.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

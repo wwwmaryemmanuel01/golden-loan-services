@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<title>Notifications — GOLDEN FINANCIAL SERVICES</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+
+  /* ===================== MODULE PAGE ADDITIONS ===================== */
+  .modband{background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);color:#fff;
+    border-radius:16px;padding:16px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:center;
+    flex-wrap:wrap;box-shadow:0 10px 30px rgba(16,18,24,.18)}
+  .modband h1{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .modband p{font-size:11.5px;color:#B9BFCB;margin-top:3px}
+  .modband .mb-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .modband > div:first-child{flex:0 1 auto;min-width:0}
+  .band-stats{display:flex;gap:0;align-items:center;flex-wrap:nowrap;flex:0 0 auto;margin-left:4px}
+  .band-stat{display:flex;flex-direction:column;gap:2px;padding-left:16px;border-left:1px solid #2E3340;white-space:nowrap;flex:0 0 auto}
+  .band-stat b{font-size:15px;font-variant-numeric:tabular-nums}
+  .band-stat span{font-size:10px;color:#9AA0AC;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .fld{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:9px;padding:7px 10px;font-size:12px;min-width:0}
+  .fld:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fld input,.fld select{border:0;outline:none;background:transparent;font-family:inherit;
+    font-size:12px;color:var(--ink);min-width:0}
+  .fld input::placeholder{color:#9AA0AC}
+  .fld.search{flex:1 1 240px;max-width:340px}
+  .fld.search input{width:100%}
+  .fld select{cursor:pointer}
+  .count-pill{font-size:10.5px;font-weight:800;color:var(--gold-dark);background:var(--gold-soft);
+    border-radius:20px;padding:3px 8px;white-space:nowrap}
+
+  /* dense table */
+  .tbl2{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl2 thead th{position:sticky;top:0;background:#fff;text-align:left;font-size:9.5px;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--muted-2);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line);
+    white-space:nowrap;z-index:2}
+  .tbl2 td{padding:8px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  .tbl2 tbody tr:hover{background:#FCFAF2}
+  .tbl2 tr.sel{background:var(--gold-soft)}
+  .tbl2 .mono{font-variant-numeric:tabular-nums;font-weight:700}
+  .tbl2 th.num,.tbl2 td.num{text-align:right}
+  .tblwrap{max-height:560px;overflow:auto;margin-top:8px;border-radius:10px;border:1px solid var(--line-2)}
+
+  /* status chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .st-draft{background:#F1F2F6;color:#5A6172}
+  .st-await{background:var(--amber-soft);color:#9A6A0D}
+  .st-auth{background:var(--blue-soft);color:#2456C4}
+  .st-proc{background:var(--purple-soft);color:#5A3FCB}
+  .st-conf{background:#E6F1FE;color:#1E5FBF}
+  .st-ok{background:var(--green-soft);color:#157A50}
+  .st-fail{background:var(--red-soft);color:#B32C2C}
+  .st-rej{background:#FBE7E7;color:#962626}
+  .st-canc{background:#EEF0F4;color:#616B7C}
+  .st-rev{background:#F6E7EA;color:#8E2F45}
+
+  /* forms */
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:10px}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .form-grid.one{grid-template-columns:1fr}
+  .fg{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fg label{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#5A6172}
+  .fg input,.fg select,.fg textarea{border:1px solid var(--line);border-radius:9px;padding:8px 10px;
+    font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(201,162,39,.12)}
+  .fg input[readonly]{background:#F7F8FA;color:#4A5160}
+  .fg .hint{font-size:10px;color:var(--muted);margin-top:1px}
+  .form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:#1B1F27}
+  .btn-red{background:#FDECEC;color:#B32C2C;border-color:#F6D5D5}
+  .btn-red:hover{background:#FBDCDC}
+  .btn-green{background:#E7F6EF;color:#157A50;border-color:#CFECE0}
+  .btn-green:hover{background:#D9F1E6}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* checklist */
+  .check{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed #EDEFF4;font-size:12px}
+  .check:last-child{border-bottom:0}
+  .check .ck{width:16px;height:16px;flex:0 0 16px;border-radius:5px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;margin-top:1px}
+  .check .ck.y{background:var(--green-soft);color:#157A50}
+  .check .ck.n{background:var(--red-soft);color:#B32C2C}
+  .check .ck.w{background:var(--amber-soft);color:#9A6A0D}
+  .check b{font-weight:600}
+  .check span.s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* method cards */
+  .methodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:10px}
+  .method{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;transition:.15s}
+  .method:hover{border-color:var(--gold)}
+  .method-top{display:flex;align-items:center;gap:8px}
+  .method .mi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:12px}
+  .method-top > div:nth-child(2){flex:1;min-width:0}
+  .method b{font-size:12px;line-height:1.25;display:block}
+  .method .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .method .mv{display:flex;justify-content:space-between;margin-top:9px;font-size:11px}
+  .method .mv b{font-variant-numeric:tabular-nums}
+
+  /* toggle */
+  .toggle{position:relative;width:36px;height:20px;border-radius:20px;background:#D8DCE4;cursor:pointer;
+    border:0;transition:.18s;flex:0 0 36px}
+  .toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+    background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .toggle.on{background:var(--gold)}
+  .toggle.on::after{transform:translateX(16px)}
+
+  /* settings rows */
+  .setrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed #EDEFF4}
+  .setrow:last-child{border-bottom:0}
+  .setrow .sk{font-size:12px;font-weight:600;color:#2B303B}
+  .setrow .ss{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .setrow .sv{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .setrow input[type=number],.setrow input[type=text],.setrow select{border:1px solid var(--line);
+    border-radius:8px;padding:5px 8px;font-size:11.5px;font-family:inherit;width:110px;text-align:right}
+
+  /* timeline */
+  .tl{position:relative;margin-top:10px;padding-left:16px}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 12px 0}
+  .tl-item::before{content:"";position:absolute;left:-15px;top:3px;width:7px;height:7px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px #fff}
+  .tl-item b{font-size:11.5px;font-weight:700}
+  .tl-item span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+  /* documents */
+  .doc{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .doc:last-child{border-bottom:0}
+  .doc .di{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:var(--gold-dark);
+    display:grid;place-items:center;flex:0 0 28px}
+  .doc .dn{font-size:11.5px;font-weight:600}
+  .doc .ds{font-size:10px;color:var(--muted);margin-top:1px}
+  .doc .da{margin-left:auto;display:flex;gap:5px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,17,21,.5);backdrop-filter:blur(3px);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .modal.on{display:flex}
+  .modal-card{background:#fff;border-radius:16px;width:100%;max-width:720px;box-shadow:0 24px 60px rgba(0,0,0,.3);
+    animation:pop .16s ease}
+  @keyframes pop{from{transform:translateY(8px);opacity:.6}to{transform:none;opacity:1}}
+  .modal-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .modal-head h3{font-size:14.5px;font-weight:800}
+  .modal-head p{font-size:11px;color:var(--muted);margin-top:2px}
+  .modal-body{padding:16px 18px}
+  .modal-foot{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;
+    flex-wrap:wrap;background:#FCFCFD;border-radius:0 0 16px 16px}
+  .x{border:0;background:#F1F2F6;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;
+    color:#4A5160;margin-left:auto;display:grid;place-items:center}
+
+  /* toast */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px}
+  .toast{background:var(--ink);color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:center;
+    animation:slide .2s ease;max-width:340px}
+  .toast.ok{border-left:3px solid var(--green)}
+  .toast.err{border-left:3px solid var(--red)}
+  .toast.info{border-left:3px solid var(--gold)}
+  @keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+  /* misc */
+  .split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:13px;align-items:start}
+  .split > *{min-width:0}
+  .grid > *{min-width:0}
+  .split.even{grid-template-columns:1fr 1fr}
+  .split.rev{grid-template-columns:1fr 1.5fr}
+  .note{display:flex;gap:9px;align-items:flex-start;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160;line-height:1.5}
+  .note.gold{background:#FFF9E8;border-color:#F2E3B0;color:#7A5C08}
+  .note.red{background:#FDF0F0;border-color:#F6D5D5;color:#8E2F2F}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:7px 0;
+    border-bottom:1px dashed #EDEFF4}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--muted);font-weight:600}
+  .kv .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .kv .v.big{font-size:13.5px}
+  .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .mini-stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .mini-stat b{display:block;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+  .mini-stat span{font-size:10.5px;color:var(--muted);font-weight:600}
+  .pager{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:10px;font-size:11.5px;color:var(--muted)}
+  .pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;cursor:pointer;
+    font-size:11.5px;font-family:inherit;color:#3A3F4A}
+  .pager button:hover{border-color:var(--gold)}
+  .pager button:disabled{opacity:.45;cursor:not-allowed}
+  .empty{padding:26px 10px;text-align:center;font-size:12px;color:var(--muted)}
+  .sec{margin-bottom:22px}
+  @media(max-width:1120px){
+    .split,.split.even,.split.rev{grid-template-columns:1fr}
+    .form-grid,.form-grid.three{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .modband{padding:14px}
+  }
+
+  /* ===================== NOTIFICATIONS MODULE ===================== */
+  .nlist{display:flex;flex-direction:column}
+  .nitem{display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;cursor:pointer;transition:.14s}
+  .nitem:last-child{border-bottom:0}
+  .nitem:hover{background:#FCFAF2}
+  .nitem.unread{background:#FFFDF6}
+  .nitem .nic{width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800}
+  .nitem .nt{font-size:12px;font-weight:700;line-height:1.3;display:flex;align-items:center;gap:6px}
+  .nitem .nb{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .nitem .nm2{font-size:10px;color:var(--muted-2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .udot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:0 0 6px;display:inline-block}
+
+  /* notification-type cards */
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(208px,1fr));gap:10px;margin-top:10px}
+  .tcard{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;transition:.15s;cursor:pointer}
+  .tcard:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .tcard .th{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+  .tcard .ti{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:0 0 24px;font-size:11px}
+  .tcard .tn{font-size:11.5px;font-weight:700;line-height:1.25;color:#2B303B}
+  .tcard .tc{font-size:10px;color:var(--muted);margin-top:4px}
+  .tcard .tb{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px}
+  .tcard .tn2{font-weight:800;font-variant-numeric:tabular-nums}
+
+  /* message preview */
+  .preview{background:#0F1115;border-radius:14px;padding:12px;color:#fff;min-height:210px;display:flex;flex-direction:column}
+  .preview .phead{display:flex;justify-content:space-between;font-size:10px;color:#9AA0AC;padding-bottom:8px;
+    border-bottom:1px solid #23262E;margin-bottom:10px}
+  .preview .pbody{background:#1B1F27;border-radius:10px;padding:11px 12px;font-size:12px;line-height:1.55;flex:1}
+  .preview .psub{font-weight:700;font-size:12px;margin-bottom:4px;color:#E8C860}
+  .preview .pfoot{font-size:9.5px;color:#7A808D;margin-top:8px;display:flex;justify-content:space-between}
+
+  /* channel cards */
+  .chgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin-top:10px}
+  .grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+  .chcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+  .chcard .chh{display:flex;align-items:center;gap:8px}
+  .chcard .chi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 30px;font-size:13px}
+  .chcard .chv{display:flex;justify-content:space-between;font-size:11px;margin-top:9px}
+  .chcard .chv b{font-variant-numeric:tabular-nums}
+
+  /* template cards */
+  .tpl{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fff}
+  .tpl.off{opacity:.62}
+  .tpl .tph{display:flex;align-items:flex-start;gap:8px}
+  .tpl .tpt{font-size:12px;font-weight:700;line-height:1.3}
+  .tpl .tps{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .tpl .tpbody{font-size:11px;color:#4A5160;background:#F7F8FA;border-radius:8px;padding:8px 9px;margin-top:8px;
+    line-height:1.5;max-height:74px;overflow:hidden}
+  .tpl .tpfoot{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+
+  /* announcements */
+  .ann{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fff}
+  .ann .anh{display:flex;align-items:flex-start;gap:9px}
+  .ann .ant{font-size:12.5px;font-weight:700}
+  .ann .ans{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .ann .anb{font-size:11.5px;color:#4A5160;margin-top:7px;line-height:1.5}
+
+  /* misc */
+  .segbar{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px}
+  .segbar button{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .segbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .cnt{font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark);border-radius:20px;padding:2px 7px}
+  .charline{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+  .locked{display:flex;align-items:center;gap:8px;background:#F7F8FA;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;font-size:11px;color:#4A5160}
+
+  /* register table: keep action buttons inside the frame */
+  #allBody td, #allBody th{white-space:nowrap}
+  #allBody .msg{white-space:normal;max-width:230px}
+  #allBody .btn-sm{padding:4px 8px;font-size:10.5px}
+  #allBody .tick{padding:4px 7px;font-size:12px;line-height:1}
+  .setrow .sv input[type=text], .setrow .sv input[type=number], .setrow .sv select{
+    border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:11.5px;background:#fff}
+  .setrow .sv input[type=number]{width:78px;text-align:right}
+  .auto-name b{display:block;font-size:11.5px;font-weight:700}
+  .auto-name span{font-size:10px;color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">GF</div>
+    <div>
+      <div class="brand-name">GOLDEN FINANCIAL<br>SERVICES</div>
+      <div class="brand-sub">ADMIN PORTAL</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item" data-page="dashboard" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Lending</div>
+    <a class="nav-item" data-page="applications" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
+      Loan Applications <span class="pill gold">18</span>
+    </a>
+    <a class="nav-item" data-page="loans" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
+      Loan Portfolio
+    </a>
+    <a class="nav-item" data-page="repayments" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+      Repayments
+    </a>
+    <a class="nav-item" data-page="collections" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
+      Collections &amp; Arrears <span class="pill red">142</span>
+    </a>
+    <div class="nav-label">Customers</div>
+    <a class="nav-item" data-page="clients" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
+      Clients (KYC)
+    </a>
+    <a class="nav-item" data-page="guarantors" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      Guarantors &amp; Collateral
+    </a>
+    <div class="nav-label">Finance</div>
+    <a class="nav-item" data-page="disbursements" href="disbursements.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+      Disbursements
+    </a>
+    <a class="nav-item" data-page="transactions" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+      Transactions
+    </a>
+    <a class="nav-item" data-page="reports" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Reports &amp; Analytics
+    </a>
+    <div class="nav-label">Communication</div>
+    <a class="nav-item active" data-page="notifications" href="notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      Notifications
+    </a>
+    <div class="nav-label">System</div>
+    <a class="nav-item" data-page="staff" href="staff.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+      Staff &amp; Users
+    </a>
+    <a class="nav-item" data-page="settings" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1.2Z"/></svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="avatar">CM</div>
+    <div>
+      <div class="sf-name">Chikondi Mwale</div>
+      <div class="sf-role">System Administrator</div>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Notifications</div>
+      <div class="page-sub">Message centre · delivery tracking · templates · broadcasts · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search notifications, recipients, references…" id="globalSearch" />
+    </div>
+    <button class="icon-btn" title="All notifications" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export
+    </button>
+    <button class="btn btn-gold" id="quickSend">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+      Send Notification
+    </button>
+  </header>
+
+  <div class="subnav" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · All</a>
+    <a class="snav" href="#s3">3 · Customer</a>
+    <a class="snav" href="#s4">4 · Staff</a>
+    <a class="snav" href="#s5">5 · Loan Alerts</a>
+    <a class="snav" href="#s6">6 · Repayment</a>
+    <a class="snav" href="#s7">7 · Disbursement</a>
+    <a class="snav" href="#s8">8 · System</a>
+    <a class="snav" href="#s9">9 · Send</a>
+    <a class="snav" href="#s10">10 · Channels</a>
+    <a class="snav" href="#s11">11 · Templates</a>
+    <a class="snav" href="#s12">12 · Scheduled</a>
+    <a class="snav" href="#s13">13 · Delivery</a>
+    <a class="snav" href="#s14">14 · Announcements</a>
+    <a class="snav" href="#s15">15 · Preferences</a>
+    <a class="snav" href="#s16">16 · Reports</a>
+    <a class="snav" href="#s17">17 · Audit</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Notification Centre</h1>
+        <p>Customer, staff and system messaging across SMS, email, in-app and portal channels</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandTotal">248</b><span>Total sent</span></div>
+        <div class="band-stat"><b id="bandUnread">37</b><span>Unread</span></div>
+        <div class="band-stat"><b id="bandFailed">5</b><span>Failed</span></div>
+        <div class="band-stat"><b id="bandRate">96.8%</b><span>Delivery rate</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="markAllRead">Mark all read</button>
+        <button class="btn btn-gold btn-sm" id="quickAnnounce">New announcement</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Notifications Overview</h2><p>Message volume and delivery health · 30 October 2026</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+      <div class="grid g3" id="ovTiles" style="margin-bottom:13px"></div>
+      <div class="card panel">
+        <div class="panel-head"><div>
+          <div class="panel-title">Recent Notification Activities</div>
+          <div class="panel-sub">Latest messages across all channels</div>
+        </div><button class="btn btn-ghost btn-sm" id="actAll">View register</button></div>
+        <div class="tblwrap" style="max-height:330px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Recipient</th><th>Message</th>
+            <th>Channel</th><th>Status</th></tr></thead><tbody id="ovActivity"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>All Notifications</h2><p>Complete register with search, filters and bulk actions</p></div>
+        <div class="sec-tools"><span class="count-pill" id="allCount">0 notifications</span></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Recipient, subject, body or reference…" />
+          </div>
+          <div class="fld"><span class="tiny muted">From</span><input id="fltFrom" type="date" /></div>
+          <div class="fld"><span class="tiny muted">To</span><input id="fltTo" type="date" /></div>
+          <div class="fld"><select id="fltType"><option value="">All types</option>
+            <option>Customer</option><option>Staff</option><option>Loan</option>
+            <option>Repayment</option><option>Disbursement</option><option>System</option></select></div>
+          <div class="fld"><select id="fltChannel"><option value="">All channels</option>
+            <option>In-App</option><option>SMS</option><option>Email</option>
+            <option>Customer Portal</option><option>Staff Dashboard</option></select></div>
+          <div class="fld"><select id="fltStatus"><option value="">All statuses</option>
+            <option>Pending</option><option>Queued</option><option>Sent</option><option>Delivered</option>
+            <option>Failed</option><option>Unread</option><option>Read</option><option>Archived</option></select></div>
+          <div class="fld"><select id="fltRecipient"><option value="">All recipients</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="fltReset">Reset</button>
+        </div>
+        <div class="filters" style="margin-top:8px">
+          <span class="tiny muted">Bulk:</span>
+          <button class="btn btn-ghost btn-sm" id="bulkRead">Mark read</button>
+          <button class="btn btn-ghost btn-sm" id="bulkUnread">Mark unread</button>
+          <button class="btn btn-ghost btn-sm" id="bulkArchive">Archive</button>
+          <button class="btn btn-ghost btn-sm" id="bulkExport">Export CSV</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr>
+            <th style="width:26px"><input type="checkbox" id="selAll" /></th>
+            <th>Reference</th><th>Recipient</th><th>Message</th><th>Category</th><th>Channel</th><th>Status</th><th>Time</th><th>Actions</th>
+          </tr></thead><tbody id="allBody"></tbody></table>
+        </div>
+        <div class="pager" id="allPager"></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Customer Notifications</h2><p>Lifecycle messaging to borrowers — 12 approved types</p></div>
+        <div class="sec-tools"><span class="count-pill" id="custCount">0 sent</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Message Types</div>
+          <div class="panel-sub">Click a type to open a pre-filled message</div></div></div>
+        <div class="tgrid" id="custTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent Customer Notifications</div>
+          <div class="panel-sub">Last messages delivered to customers</div></div></div>
+        <div class="nlist" id="custList"></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Staff Notifications</h2><p>Operational alerts to officers, cashiers and administrators</p></div>
+        <div class="sec-tools"><span class="count-pill" id="staffCount">0 sent</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Message Types</div>
+          <div class="panel-sub">Internal alerts and assignments</div></div></div>
+        <div class="tgrid" id="staffTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent Staff Notifications</div>
+          <div class="panel-sub">Latest internal alerts</div></div></div>
+        <div class="nlist" id="staffList"></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Loan &amp; Application Alerts</h2><p>Pipeline notifications across the credit lifecycle</p></div>
+        <div class="sec-tools"><span class="count-pill" id="loanCount">0 sent</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Loan Alert Types</div>
+          <div class="panel-sub">Triggered by application and loan status changes</div></div></div>
+        <div class="tgrid" id="loanTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent Loan Alerts</div>
+          <div class="panel-sub">Latest application and loan events</div></div></div>
+        <div class="nlist" id="loanList"></div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Repayment &amp; Collection Alerts</h2><p>Reminders, arrears and recovery notifications</p></div>
+        <div class="sec-tools"><span class="count-pill" id="repayCount">0 sent</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Repayment Alert Types</div>
+          <div class="panel-sub">Automated and manual collection messaging</div></div></div>
+        <div class="tgrid" id="repayTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent Repayment Alerts</div>
+          <div class="panel-sub">Latest reminders and arrears notices</div></div></div>
+        <div class="nlist" id="repayList"></div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Disbursement Notifications</h2><p>Alerts tied to the disbursement workflow</p></div>
+        <div class="sec-tools"><span class="count-pill" id="disbCount">0 sent</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Disbursement Alert Types</div>
+          <div class="panel-sub">Authorization, release and reconciliation messages</div></div></div>
+        <div class="tgrid" id="disbTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent Disbursement Notifications</div>
+          <div class="panel-sub">Latest release messages</div></div></div>
+        <div class="nlist" id="disbList"></div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>System &amp; Security Alerts</h2><p>Platform health, access control and infrastructure events</p></div>
+        <div class="sec-tools"><span class="count-pill" id="sysCount">0 sent</span>
+          <span class="badge b-rev">2 critical</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security &amp; System Types</div>
+          <div class="panel-sub">Always delivered — cannot be unsubscribed</div></div></div>
+        <div class="tgrid" id="sysTypes"></div>
+      </div>
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Recent System Alerts</div>
+          <div class="panel-sub">Latest security and infrastructure messages</div></div></div>
+        <div class="nlist" id="sysList"></div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Send Manual Notification</h2><p>Compose and deliver a message to a customer, staff member or group</p></div>
+        <div class="sec-tools"><span class="badge b-pend" id="sendBadge">Draft</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compose</div>
+            <div class="panel-sub">Sender and time are recorded automatically</div></div></div>
+
+          <div style="margin-top:10px">
+            <div class="segbar" id="audienceSeg">
+              <button class="on" data-aud="Customer">Customer</button>
+              <button data-aud="Staff">Staff</button>
+              <button data-aud="Group">Customer group</button>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Recipient *</label>
+              <select id="sendRecipient"></select>
+              <div class="hint" id="recipientHint">Individual customer with a verified contact number.</div>
+            </div>
+            <div class="fg"><label>Channel *</label>
+              <select id="sendChannel"><option>In-App</option><option>SMS</option><option>Email</option>
+                <option>Customer Portal</option><option>Staff Dashboard</option></select></div>
+            <div class="fg"><label>Priority</label>
+              <select id="sendPriority"><option>Normal</option><option>High</option><option>Low</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Insert approved template</label>
+              <select id="sendTemplate"><option value="">— choose a template —</option></select>
+              <div class="hint">Templates insert pre-approved wording with merge fields.</div></div>
+            <div class="fg" style="grid-column:1/-1"><label>Subject *</label>
+              <input id="sendSubject" placeholder="e.g. Your loan has been approved" />
+            </div>
+            <div class="fg" style="grid-column:1/-1"><label>Message *</label>
+              <textarea id="sendBody" rows="5" placeholder="Type your message…"></textarea>
+              <div class="charline"><span>SMS: <b id="smsSegments">0 / 160 (1 segment)</b></span>
+                <span>Email / in-app: no limit</span></div>
+            </div>
+            <div class="fg"><label>Send</label>
+              <select id="sendWhen"><option>Immediately</option><option>Schedule for later</option></select></div>
+            <div class="fg"><label>Schedule date &amp; time</label>
+              <input id="sendAt" type="datetime-local" value="2026-10-30T14:00" disabled /></div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-gold" id="sendBtn">Send notification</button>
+            <button class="btn btn-ghost" id="previewBtn">Preview</button>
+            <button class="btn btn-ghost" id="clearSend">Clear</button>
+            <span class="tiny muted" id="sendMsg"></span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Live Preview</div>
+              <div class="panel-sub" id="previewChannelSub">SMS preview · 160 characters per segment</div></div></div>
+            <div class="preview" style="margin-top:10px">
+              <div class="phead"><span id="pvFrom">GOLDEN FS</span><span id="pvChannel">SMS</span></div>
+              <div class="pbody">
+                <div class="psub" id="pvSubject">Your subject appears here</div>
+                <div id="pvBody" style="white-space:pre-wrap;color:#C7CBD4">Your message will appear here as the recipient sees it.</div>
+              </div>
+              <div class="pfoot"><span id="pvTo">To: —</span><span id="pvTime">—</span></div>
+            </div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Send Summary</div>
+              <div class="panel-sub">Checks applied before delivery</div></div></div>
+            <div id="sendChecks" style="margin-top:6px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Notification Channels</h2><p>Availability, delivery performance and usage by channel</p></div>
+        <div class="sec-tools"><span class="badge b-appr">5 channels</span></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Channel Status</div>
+          <div class="panel-sub">Toggle a channel to suspend delivery</div></div></div>
+        <div class="chgrid" id="channelCards"></div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Channel Usage Summary</div>
+            <div class="panel-sub">Messages sent · this month</div></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Sent</th><th class="num">Delivered</th>
+              <th class="num">Failed</th><th class="num">Success</th><th class="num">Cost</th></tr></thead>
+              <tbody id="channelUsage"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Delivery Handling</div>
+            <div class="panel-sub">Applied per channel</div></div></div>
+          <div class="checklist" id="channelFailures"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Notification Templates</h2><p>Approved wording with merge fields, versioned and activatable</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="newTemplate">New template</button>
+          <span class="count-pill" id="tplCount">0 active</span>
+        </div>
+      </div>
+      <div class="grid g3" id="templateGrid"></div>
+    </section>
+
+    <!-- 12 -->
+    <section class="sec" id="s12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Scheduled &amp; Automated Notifications</h2><p>Reminder engines, follow-ups and scheduled announcements</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="automationSettings">Sending times</button></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Automations</div>
+            <div class="panel-sub">Pause or resume any rule</div></div></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr><th>Automation</th><th>Frequency</th>
+              <th>Next run</th><th class="num">Sent</th><th></th></tr></thead><tbody id="automationBody"></tbody></table>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Sending Window</div>
+              <div class="panel-sub">Reminders are sent within quiet hours rules</div></div></div>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr">
+              <div class="fg"><label>Sending starts</label><input type="time" value="08:00" /></div>
+              <div class="fg"><label>Sending stops</label><input type="time" value="18:00" /></div>
+              <div class="fg"><label>Reminder days before due</label><input type="number" value="3" /></div>
+              <div class="fg"><label>Repeat frequency (hours)</label><input type="number" value="24" /></div>
+            </div>
+            <div class="form-actions"><button class="btn btn-dark btn-sm" id="saveWindow">Apply window</button></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Automation History</div>
+              <div class="panel-sub">Last runs</div></div></div>
+            <div class="nlist" id="automationHistory"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Notification Delivery Tracking</h2><p>Queue state, provider responses and retry control</p></div>
+        <div class="sec-tools"><span class="count-pill" id="queueCount">0 in queue</span></div>
+      </div>
+      <div class="grid5" id="deliveryTiles" style="margin-bottom:13px"></div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery Errors</div>
+            <div class="panel-sub">Provider responses and retry eligibility</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Reference</th><th>Recipient</th>
+              <th>Provider response</th><th></th></tr></thead><tbody id="deliveryBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery History by Recipient</div>
+            <div class="panel-sub">Latest activity per recipient</div></div></div>
+          <div class="nlist" id="deliveryHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Announcements &amp; Broadcasts</h2><p>Targeted notices with read tracking</p></div>
+        <div class="sec-tools"><span class="count-pill" id="annCount">0 published</span></div>
+      </div>
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Create Announcement</div>
+            <div class="panel-sub">Broadcast to staff, roles or customer groups</div></div></div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Title *</label>
+              <input id="annTitle" placeholder="e.g. Month-end closure on 31 October" /></div>
+            <div class="fg"><label>Audience *</label>
+              <select id="annAudience"><option>All staff</option><option>Selected roles</option>
+                <option>All customers</option><option>Customer group</option></select></div>
+            <div class="fg"><label>Roles / group</label>
+              <select id="annTarget"><option>All</option><option>Loan Officers</option>
+                <option>Collections Officers</option><option>Cashiers</option>
+                <option>Active borrowers</option><option>Customers in arrears</option></select></div>
+            <div class="fg"><label>Priority</label>
+              <select id="annPriority"><option>Normal</option><option>High</option><option>Low</option></select></div>
+            <div class="fg"><label>Publish</label>
+              <select id="annWhen"><option>Immediately</option><option>Schedule</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Announcement *</label>
+              <textarea id="annBody" rows="4" placeholder="Write the announcement…"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="publishAnn">Publish announcement</button>
+            <button class="btn btn-ghost" id="clearAnn">Clear</button>
+            <span class="tiny muted" id="annMsg"></span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Published Announcements</div>
+              <div class="panel-sub">Read status by audience</div></div></div>
+            <div class="nlist" id="annList" style="margin-top:4px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="sec" id="s15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Notification Preferences</h2><p>Recipient-level channel choices, quiet hours and consent</p></div>
+        <div class="sec-tools"><button class="btn btn-gold btn-sm" id="savePrefs">Save preferences</button></div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Preferences</div>
+            <div class="panel-sub">Default opt-in for all borrowers</div></div></div>
+          <div id="prefCustomer"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Preferences</div>
+            <div class="panel-sub">Default for internal users</div></div></div>
+          <div id="prefStaff"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Consent &amp; Opt-Out</div>
+            <div class="panel-sub">Regulatory and marketing consent</div></div></div>
+          <div id="prefConsent"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Mandatory Security Alerts</div>
+            <div class="panel-sub">Cannot be disabled</div></div><span class="badge b-rev">Locked</span></div>
+          <div id="prefLocked"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Notification Reports &amp; Analytics</h2><p>Volume, delivery performance and channel cost</p></div>
+        <div class="sec-tools"><span class="badge b-gray">12 reports</span></div>
+      </div>
+      <div class="grid g4" id="reportCards" style="margin-bottom:13px"></div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notifications by Category</div>
+            <div class="panel-sub">This month · count</div></div></div>
+          <div id="chCategory" style="margin-top:12px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notifications by Channel</div>
+            <div class="panel-sub">Share of volume</div></div></div>
+          <div id="chChannel" style="display:flex;gap:16px;align-items:center;justify-content:center;margin-top:8px;flex-wrap:wrap"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery Success Rate</div>
+            <div class="panel-sub">Last 10 days · %</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chSuccess" viewBox="0 0 640 210"></svg></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Notification Volume</div>
+            <div class="panel-sub">Sent vs failed · last 10 days</div></div></div>
+          <div class="chart-wrap"><svg class="chart" id="chVolume" viewBox="0 0 640 210"></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Notification Audit &amp; Security</h2><p>Who created, edited and sent what — immutable trail</p></div>
+        <div class="sec-tools"><button class="btn btn-ghost btn-sm" id="auditExport">Export audit</button></div>
+      </div>
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="auditSearch" placeholder="Reference, user, recipient or action…" />
+          </div>
+          <div class="fld"><select id="auditAction"><option value="">All actions</option>
+            <option>Created</option><option>Sent</option><option>Modified</option><option>Broadcast</option>
+            <option>Archived</option><option>Blocked</option><option>Retried</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="auditReset">Reset</button>
+        </div>
+        <div class="tblwrap">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Action</th><th>User</th>
+            <th>Detail</th><th>IP</th><th>Outcome</th></tr></thead><tbody id="auditBody"></tbody></table>
+        </div>
+      </div>
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unauthorized Sending Attempts</div>
+            <div class="panel-sub">Blocked by policy</div></div><span class="badge b-rev">2</span></div>
+          <div class="nlist" id="auditBlocked"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Sensitive Information Access</div>
+            <div class="panel-sub">Message content viewed by administrators</div></div></div>
+          <div class="nlist" id="auditSensitive"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Notification Settings</h2><p>Categories, providers, limits, retention and permissions</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="settingsReset">Discard</button>
+          <button class="btn btn-gold btn-sm" id="settingsSave">Save settings</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Categories &amp; Defaults</div>
+            <div class="panel-sub">Enable or disable notification categories</div></div></div>
+          <div id="setCategories"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Priority &amp; Reminder Rules</div>
+            <div class="panel-sub">Escalation and reminder timing</div></div></div>
+          <div id="setPriority"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery &amp; Limits</div>
+            <div class="panel-sub">Retries, daily caps and retention</div></div></div>
+          <div id="setDelivery"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Providers &amp; Permissions</div>
+            <div class="panel-sub">SMS, email and access control</div></div></div>
+          <div id="setProviders"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Sending, retrying, archiving, templates, automations and broadcasts all update the
+        in-page state so the delivery lifecycle can be walked end to end.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   GOLDEN FINANCIAL SERVICES · NOTIFICATIONS MODULE
+   ============================================================ */
+const el = id => document.getElementById(id);
+const nf = n => Math.round(n).toLocaleString('en-US');
+const mk = n => 'MK ' + nf(n);
+const initials = s => String(s).split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const stamp = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+
+function toast(msg, type='ok'){
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<span>${type==='err'?'⚠':type==='info'?'ℹ':'✓'}</span><div>${msg}</div>`;
+  el('toasts').appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(16px)';t.style.transition='.25s';},2600);
+  setTimeout(()=>t.remove(),3000);
+}
+
+const CH_COLORS = {'In-App':'#2F6FED','SMS':'#C9A227','Email':'#1E9E6A','Customer Portal':'#7C5CF0','Staff Dashboard':'#E08C1E'};
+const CAT_COLORS = {Customer:'#2F6FED',Staff:'#7C5CF0',Loan:'#C9A227',Repayment:'#1E9E6A',Disbursement:'#E08C1E',System:'#D93F3F'};
+const CAT_ICON = {Customer:'👤',Staff:'👔',Loan:'📄',Repayment:'💳',Disbursement:'💸',System:'🛡'};
+
+function statusChip(n){
+  if(n.archived) return '<span class="chip st-canc">Archived</span>';
+  if(n.status==='Failed') return '<span class="chip st-fail">Failed</span>';
+  if(n.status==='Pending') return '<span class="chip st-await">Pending</span>';
+  if(n.status==='Queued') return '<span class="chip st-proc">Queued</span>';
+  if(n.status==='Sent') return '<span class="chip st-auth">Sent</span>';
+  return n.read ? '<span class="chip st-ok">Read</span>' : '<span class="chip st-conf">Unread</span>';
+}
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const TYPES = {
+  Customer: [
+    ['Loan Application Received','Your application LN-2026-#### was received'],
+    ['Application Approved','Congratulations — your loan is approved'],
+    ['Application Rejected','Update on your loan application'],
+    ['Additional Documents Required','We need one more document'],
+    ['Loan Disbursement Confirmation','Funds have been released'],
+    ['Repayment Due Reminder','Your instalment is due in 3 days'],
+    ['Overdue Payment Alert','Your account is past due'],
+    ['Payment Received Confirmation','We have received your payment'],
+    ['Loan Settlement Confirmation','Your loan is fully settled'],
+    ['Account Registration Confirmation','Welcome to Golden Financial Services'],
+    ['Password Reset Notification','Reset your portal password'],
+    ['Account Security Alert','New sign-in to your account']
+  ],
+  Staff: [
+    ['New Loan Application Alert','A new application needs screening'],
+    ['Applications Awaiting Review','3 applications in your queue'],
+    ['Loan Approval Request','Credit committee decision required'],
+    ['Disbursement Authorization Request','Release awaiting your approval'],
+    ['Repayment Verification Request','Confirm a posted repayment'],
+    ['Overdue Account Alert','5 accounts moved to arrears'],
+    ['Assigned Collection Task','New follow-up assigned'],
+    ['Customer Support Request','Customer raised a query'],
+    ['System Announcement','Internal notice for all staff'],
+    ['Staff Account Security Alert','Unusual sign-in detected']
+  ],
+  Loan: [
+    ['New Loan Application','Application submitted at branch'],
+    ['Application Pending Review','Awaiting first review'],
+    ['Incomplete Application','Missing mandatory fields'],
+    ['Awaiting Documents','Documents outstanding'],
+    ['Application Approved','Approved by credit committee'],
+    ['Application Rejected','Rejected — affordability'],
+    ['Approval Deadline Reminder','Decision due in 24 hours'],
+    ['Disbursement Pending','Approved but not released'],
+    ['Loan Status Change','Status moved to active'],
+    ['Loan Maturity Reminder','Final instalment approaching']
+  ],
+  Repayment: [
+    ['Upcoming Repayment Reminder','Instalment due in 3 days'],
+    ['Payment Due Today','Instalment due today'],
+    ['Missed Payment Alert','No payment received'],
+    ['Overdue Repayment Notification','Account 30+ days past due'],
+    ['Partial Payment Alert','Instalment partially paid'],
+    ['Payment Verification Request','Confirm the posted amount'],
+    ['Unallocated Payment Alert','Receipt not matched to a loan'],
+    ['Failed Payment Notification','Direct debit declined'],
+    ['Collection Follow-Up Reminder','Field visit scheduled'],
+    ['Promised Payment Reminder','Promised date is tomorrow'],
+    ['Loan Settlement Notification','Loan closed in full']
+  ],
+  Disbursement: [
+    ['Disbursement Awaiting Authorization','Second-line approval required'],
+    ['Disbursement Approved','Cleared for release'],
+    ['Disbursement Processing','Funds with the payment channel'],
+    ['Successful Disbursement','Customer confirmed receipt'],
+    ['Failed Disbursement','Release failed at the bank'],
+    ['Disbursement Confirmation Required','Verify the payment'],
+    ['Missing Disbursement Information','Recipient details incomplete'],
+    ['Disbursement Reconciliation Alert','Variance detected'],
+    ['Disbursement Cancellation','Release cancelled']
+  ],
+  System: [
+    ['Failed Login Attempts','5 failed sign-ins on one account'],
+    ['Suspicious Login Activity','New device or location'],
+    ['Unauthorized Access Attempt','Role-restricted page requested'],
+    ['Account Lockout Alert','Account locked after retries'],
+    ['Staff Permission Change','Role updated'],
+    ['Administrator Activity Alert','Sensitive action performed'],
+    ['Database Connection Problem','Connection pool exhausted'],
+    ['Supabase Connection Status','Realtime channel restored'],
+    ['System Error','Unhandled exception in posting service'],
+    ['Backup Status Alert','Nightly backup completed'],
+    ['Integration Failure Alert','Mobile money callback timeout'],
+    ['Maintenance Notification','Planned downtime on 31 Oct']
+  ]
+};
+
+const RECIPIENTS = {
+  Customer: ['Thokozani Banda','Grace Mvula','Peter Kachale','Memory Nkhoma','Yamikani Gondwe',
+    'Esther Kamanga','Isaac Mponda','Fatima Salimu','Rose Chikopa','Kondwani Msiska',
+    'Blessings Tembo','Chimwemwe Zulu','Mercy Chatsika','Alfred Jimu','Sarah Kaunda'],
+  Staff: ['Chikondi Mwale','Thoko Phiri','Linda Chirwa','Samuel Zimba','Agnes Mbewe',
+    'Grace Mtemang\'ombe','Peter Kamoto','Joseph Mwale'],
+  Group: ['All active borrowers','Customers in arrears','Customers with loans due this week',
+    'New customers (last 30 days)','All staff — Lilongwe branch','Loan officers','Collections team']
+};
+
+let NTF = [];
+const S = {seq: 10331, audit: [], selected: new Set(), page: 1, size: 9, audience:'Customer'};
+
+function addN(o){
+  const base = {archived:false, read:true, priority:'Normal', attempts:1, provider:'', template:'', sender:'System',
+    readCount:0, audience:0};
+  NTF.unshift(Object.assign(base, o));
+  return NTF[0];
+}
+
+/* seed notifications */
+const seed = [
+  ['Customer','Loan Disbursement Confirmation','Thokozani Banda','SMS','Delivered',false,'High','09:42',
+   'Funds released','MK 2,412,500 has been sent to your Airtel Money wallet for loan LN-2026-1842.','AM-99213'],
+  ['Staff','Disbursement Authorization Request','Chikondi Mwale','Staff Dashboard','Delivered',false,'High','09:41',
+   'Release awaiting approval','DIS-2026-1041 for MK 868,500 is awaiting your authorization.',''],
+  ['Customer','Repayment Due Reminder','Grace Mvula','SMS','Delivered',true,'Normal','09:15',
+   'Instalment due in 3 days','Your instalment of MK 106,400 is due on 2 Nov 2026 for loan LN-2026-1839.','AM-99188'],
+  ['Staff','Overdue Account Alert','Samuel Zimba','In-App','Delivered',false,'Normal','09:02',
+   '5 accounts moved to arrears','Five accounts in your portfolio crossed 30 days past due overnight.',''],
+  ['System','Backup Status Alert','Administrator','Email','Delivered',true,'Low','08:05',
+   'Nightly backup completed','Database backup completed successfully at 02:00 CAT. 4.2 GB archived.','SG-77120'],
+  ['Customer','Payment Received Confirmation','Rose Chikopa','SMS','Delivered',true,'Normal','08:44',
+   'Payment received','We have received MK 320,000 towards loan LN-2026-1812. Thank you.','AM-99140'],
+  ['Repayment','Overdue Repayment Notification','Blessings Tembo','SMS','Failed',false,'High','08:22',
+   'Account past due','Your account is 3 days past due. Please settle MK 240,000 to avoid penalties.','AM-ERR-7741'],
+  ['Loan','Application Approved','Memory Nkhoma','In-App','Delivered',true,'Normal','08:10',
+   'Application approved','Loan application LN-2026-1831 has been approved for MK 450,000.',''],
+  ['Customer','Application Rejected','Daniel Kaunda','SMS','Delivered',true,'Normal','07:58',
+   'Update on your application','We regret that LN-2026-1834 was not approved. Call 111 to discuss options.','AM-99077'],
+  ['System','Failed Login Attempts','Administrator','Email','Delivered',false,'High','07:35',
+   '5 failed sign-in attempts','Account l.chirwa@goldenfs.mw has 5 failed sign-in attempts from 41.87.112.8.','SG-77088'],
+  ['Staff','Applications Awaiting Review','Thoko Phiri','Staff Dashboard','Delivered',true,'Normal','07:20',
+   '3 applications in your queue','You have 3 applications awaiting review, oldest submitted 27 Oct.',''],
+  ['Disbursement','Successful Disbursement','Kondwani Msiska','SMS','Delivered',true,'Normal','29 Oct 16:40',
+   'Disbursement confirmed','MK 868,500 has been transferred to your bank account for loan LN-2026-1810.','FT2610297712'],
+  ['Customer','Additional Documents Required','Peter Kachale','Email','Delivered',false,'High','29 Oct 15:12',
+   'One document needed','Please upload a recent payslip to complete your loan application.','EM-44821'],
+  ['Repayment','Collection Follow-Up Reminder','Samuel Zimba','In-App','Delivered',true,'Normal','29 Oct 14:02',
+   'Field visit scheduled','Visit for Mercy Chatsika (42 days overdue) scheduled for 30 Oct, 10:00.',''],
+  ['Loan','Disbursement Pending','Chikondi Mwale','In-App','Delivered',true,'Normal','29 Oct 11:30',
+   'Approved loan not released','27 approved loans are awaiting disbursement.',''],
+  ['Customer','Account Registration Confirmation','Sarah Kaunda','SMS','Delivered',true,'Normal','29 Oct 09:05',
+   'Welcome to Golden FS','Your customer account CUS-003501 is active. Dial *247# to manage your loan.','AM-98703'],
+  ['System','Integration Failure Alert','Administrator','Email','Delivered',false,'High','29 Oct 08:15',
+   'Mobile money callback timeout','Airtel Money callback timed out 3 times between 08:02 and 08:14.','SG-77041'],
+  ['Staff','Staff Account Security Alert','Linda Chirwa','Email','Delivered',true,'High','28 Oct 17:44',
+   'New sign-in detected','A new sign-in to your account was detected from Android · Blantyre.','EM-44790'],
+  ['Customer','Loan Settlement Confirmation','Alfred Jimu','SMS','Delivered',true,'Normal','28 Oct 16:10',
+   'Loan fully settled','Congratulations — loan LN-2025-0541 is fully repaid and closed.','AM-98552'],
+  ['Repayment','Partial Payment Alert','Esther Kamanga','In-App','Delivered',true,'Normal','28 Oct 13:22',
+   'Partial payment received','MK 96,000 of the MK 150,000 instalment was received. Balance carried forward.',''],
+  ['Disbursement','Disbursement Reconciliation Alert','Chikondi Mwale','Staff Dashboard','Delivered',true,'High','28 Oct 11:05',
+   'Reconciliation variance','Airtel Money wallet debits are MK 150,000 lower than authorized releases.',''],
+  ['Customer','Account Security Alert','Fatima Salimu','SMS','Delivered',true,'High','28 Oct 09:30',
+   'New sign-in to your account','A new sign-in to your customer portal was detected. If this was not you, call 111.','AM-98440'],
+  ['Loan','Loan Maturity Reminder','Isaac Mponda','SMS','Delivered',true,'Normal','27 Oct 15:00',
+   'Final instalment approaching','Your final instalment of MK 412,000 is due on 30 Nov 2026.','AM-98311'],
+  ['Staff','System Announcement','All staff','Staff Dashboard','Delivered',true,'Normal','27 Oct 10:00',
+   'Month-end close on 31 Oct','The system will be read-only from 18:00 on 31 October for month-end close.',''],
+  ['System','Supabase Connection Status','Administrator','In-App','Delivered',true,'Low','27 Oct 07:12',
+   'Realtime channel restored','Supabase realtime connectivity was restored after a 42 second interruption.',''],
+  ['Repayment','Failed Payment Notification','Blessings Tembo','SMS','Failed',true,'High','26 Oct 17:40',
+   'Payment could not be collected','Your instalment could not be collected. Please ensure your wallet is funded.','AM-ERR-7702'],
+  ['Customer','Password Reset Notification','Memory Nkhoma','Email','Delivered',true,'High','26 Oct 12:18',
+   'Reset your password','Use the link to reset your portal password. The link expires in 30 minutes.','EM-44612'],
+  ['Loan','Approval Deadline Reminder','Credit Committee','Staff Dashboard','Delivered',true,'High','26 Oct 09:00',
+   'Decision due in 24 hours','3 applications reach their approval deadline tomorrow.',''],
+  ['Disbursement','Disbursement Cancellation','Tadala Nkhoma','SMS','Delivered',true,'Normal','25 Oct 14:30',
+   'Release cancelled','Your disbursement was cancelled. Please contact your loan officer.','AM-98022'],
+  ['System','Suspicious Login Activity','Administrator','Email','Delivered',false,'High','25 Oct 07:58',
+   'Suspicious sign-in blocked','Sign-in from an unrecognised device was blocked for s.zimba@goldenfs.mw.','SG-76980'],
+  ['Repayment','Unallocated Payment Alert','Grace Mtemang\'ombe','Staff Dashboard','Delivered',true,'Normal','24 Oct 16:20',
+   'Receipt not matched','Receipt RCP-99388 (MK 512,000) could not be matched to a loan account.',''],
+  ['Customer','Repayment Due Reminder','Chimwemwe Zulu','SMS','Pending',true,'Normal','24 Oct 08:00',
+   'Instalment due in 3 days','Your instalment of MK 318,000 is due on 27 Oct 2026.',''],
+  ['Staff','Customer Support Request','Agnes Mbewe','In-App','Queued',true,'Normal','24 Oct 07:45',
+   'New customer query','A customer raised a query about a missing repayment receipt.',''],
+  ['Loan','Incomplete Application','Thoko Phiri','In-App','Delivered',true,'Normal','23 Oct 15:10',
+   'Missing mandatory fields','Application LN-2026-1822 is missing employment details.',''],
+  ['System','System Error','Administrator','Email','Delivered',true,'High','23 Oct 10:44',
+   'Posting service exception','An unhandled exception occurred in the repayment posting service (3 occurrences).','SG-76820'],
+  ['Disbursement','Failed Disbursement','Samuel Zimba','In-App','Delivered',true,'High','22 Oct 16:05',
+   'Release failed at bank','DIS-2026-1022 failed: beneficiary account name mismatch.',''],
+  ['Customer','Overdue Payment Alert','Isaac Mponda','SMS','Delivered',true,'High','22 Oct 09:15',
+   'Account 95 days overdue','Your account is 95 days past due. Immediate settlement is required to avoid legal action.','AM-97811'],
+  ['Staff','Assigned Collection Task','Agnes Mbewe','In-App','Delivered',true,'Normal','21 Oct 11:20',
+   'New follow-up assigned','Account LN-2024-0761 assigned to you for recovery follow-up.',''],
+  ['Repayment','Promised Payment Reminder','Samuel Zimba','In-App','Delivered',true,'Normal','21 Oct 08:30',
+   'Promised date tomorrow','Mercy Chatsika promised payment tomorrow (22 Oct).',''],
+  ['System','Maintenance Notification','All staff','Staff Dashboard','Delivered',true,'Normal','20 Oct 17:00',
+   'Planned maintenance','The portal will be unavailable on 21 Oct from 22:00 to 23:00.','']
+];
+
+seed.forEach(([cat,type,recipient,channel,status,read,priority,when,subject,body,provider])=>{
+  const created = when.includes('Oct')||when.includes('Nov') ? when : '30 Oct 2026 ' + when;
+  addN({ref:'NTF-'+(++S.seq), cat, type, recipient, rtype: RECIPIENTS.Customer.includes(recipient) ? 'Customer'
+    : RECIPIENTS.Staff.includes(recipient) || recipient==='All staff' || recipient==='Administrator' || recipient==='Credit Committee' ? 'Staff' : 'Group',
+    channel, status, read, priority, created, subject, body, provider,
+    sender: cat==='System' ? 'System' : 'Automation',
+    attempts: status==='Failed' ? 3 : 1});
+});
+
+NTF.reverse();   /* newest first */
+
+/* generated history — gives every alert type realistic monthly volume */
+(function(){
+  const days = [12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
+  const chans = {Customer:['SMS','SMS','Email','In-App'], Staff:['Staff Dashboard','In-App','Email'],
+    Loan:['SMS','In-App','Email'], Repayment:['SMS','SMS','In-App'], Disbursement:['SMS','Email','In-App'],
+    System:['Email','Email','In-App']};
+  const pool = c => c==='Staff' ? RECIPIENTS.Staff.concat(['All staff','Credit Committee'])
+    : c==='System' ? ['Administrator','All staff'] : RECIPIENTS.Customer;
+  const bodies = [
+    'Reference %REF% · handled automatically by the notification engine.',
+    'Sent to the recipient on file. Delivery confirmed by the provider.',
+    'Logged in the notification register and retained for audit.',
+    'Triggered by a workflow event in the %CAT% module.'
+  ];
+  const out = [];
+  let k = 0;
+  Object.entries(TYPES).forEach(([cat,list])=>{
+    list.forEach(([type,desc])=>{
+      const n = 2 + (k % 4);
+      for(let i=0;i<n;i++){
+        const day = days[(k*3 + i*5) % days.length];
+        const hour = 8 + ((k + i*3) % 10), minute = (k*7 + i*13) % 60;
+        const pl = pool(cat);
+        const recipient = pl[(k + i*2) % pl.length];
+        const channel = chans[cat][(k + i) % chans[cat].length];
+        let status = 'Delivered', read = true, attempts = 1, provider = '';
+        if((k+i) % 17 === 0){ status='Failed'; read=false; attempts=3; }
+        else if((k+i) % 13 === 0){ status='Sent'; read=false; }
+        else if((k+i) % 23 === 0){ status='Queued'; read=false; }
+        else read = (k+i) % 5 !== 0;
+        if(status==='Delivered' && channel==='SMS') provider='AM-'+(97000 + k*13 + i);
+        if(status==='Delivered' && channel==='Email') provider='EM-'+(43000 + k*11 + i);
+        const body = bodies[(k+i) % bodies.length].replace('%REF%','NTF-'+(S.seq+out.length+1)).replace('%CAT%',cat);
+        out.push({ref:'NTF-'+(S.seq + out.length + 1), cat, type, recipient,
+          rtype: cat==='Staff'||cat==='System' ? 'Staff' : 'Customer', channel, status, read,
+          priority: (k+i)%11===0 ? 'High' : 'Normal', created: `${day} Oct 2026 ${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`,
+          subject: desc, body, provider, sender: cat==='System' ? 'System' : 'Automation',
+          attempts, archived:false, template:'', readCount:0, audience:0});
+      }
+      k++;
+    });
+  });
+  out.sort((x,y)=> key(y.created) - key(x.created));
+  out.forEach(o=>NTF.push(o));
+  S.seq += out.length;
+  function key(c){
+    const m = c.match(/(\d+) Oct 2026 (\d+):(\d+)/);
+    if(!m) return 0;
+    return (+m[1])*1440 + (+m[2])*60 + (+m[3]);
+  }
+})();
+
+/* templates */
+let TEMPLATES = [
+  ['TPL-01','Customer Welcome','SMS','Customer',true,'Welcome to Golden Financial Services, {{first_name}}. Your customer number is {{customer_no}}. Dial *247# to get started.'],
+  ['TPL-02','Loan Application Received','SMS','Loan',true,'Hello {{first_name}}, we received your loan application {{loan_no}} for MK {{amount}}. We will update you within 48 hours.'],
+  ['TPL-03','Loan Approval','SMS','Loan',true,'Good news {{first_name}}! Your loan {{loan_no}} has been approved for MK {{amount}}. Visit your branch to sign the agreement.'],
+  ['TPL-04','Loan Rejection','SMS','Loan',true,'Dear {{first_name}}, your application {{loan_no}} was not approved. Call 111 to speak to a loan officer about your options.'],
+  ['TPL-05','Disbursement Confirmation','SMS','Disbursement',true,'{{first_name}}, MK {{net_amount}} has been sent to your {{channel}} for loan {{loan_no}}. Reference {{reference}}.'],
+  ['TPL-06','Repayment Reminder','SMS','Repayment',true,'Reminder: your instalment of MK {{amount}} for loan {{loan_no}} is due on {{due_date}}. Pay via *247#.'],
+  ['TPL-07','Overdue Payment','SMS','Repayment',true,'Dear {{first_name}}, your account is {{days}} days past due. Please settle MK {{amount}} to avoid penalties.'],
+  ['TPL-08','Payment Receipt','SMS','Repayment',true,'Payment received: MK {{amount}} for loan {{loan_no}} on {{date}}. Thank you. Balance: MK {{balance}}.'],
+  ['TPL-09','Password Reset','Email','Customer',true,'Hello {{first_name}}, use this link to reset your portal password: {{link}}. The link expires in 30 minutes.'],
+  ['TPL-10','Staff Alert','In-App','Staff',true,'{{action_required}}: {{count}} item(s) require your attention. Open the admin portal to review.'],
+  ['TPL-11','System Announcement','Email','System',true,'{{title}} — {{message}}. This is an automated service announcement from Golden Financial Services.']
+];
+
+/* channels */
+const CHANNELS = [
+  {name:'In-App', icon:'🔔', color:'#2F6FED', enabled:true, sent:2480, delivered:2452, failed:28, cost:'Free'},
+  {name:'SMS', icon:'📱', color:'#C9A227', enabled:true, sent:2180, delivered:2088, failed:92, cost:'MK 47,960'},
+  {name:'Email', icon:'✉️', color:'#1E9E6A', enabled:true, sent:1540, delivered:1512, failed:28, cost:'MK 6,160'},
+  {name:'Customer Portal', icon:'🖥', color:'#7C5CF0', enabled:true, sent:820, delivered:816, failed:4, cost:'Free'},
+  {name:'Staff Dashboard', icon:'💼', color:'#E08C1E', enabled:true, sent:420, delivered:416, failed:4, cost:'Free'}
+];
+/* category share of monthly volume (used by analytics) */
+const CAT_SHARE = {Customer:.34, Staff:.20, Loan:.14, Repayment:.16, Disbursement:.09, System:.07};
+
+/* automations */
+let AUTOMATIONS = [
+  ['Automatic repayment reminders','Daily · 08:00','31 Oct, 08:00',412,true],
+  ['Upcoming due-date alerts','3 days before due','31 Oct, 08:00',286,true],
+  ['Overdue payment alerts','Daily · 09:00','31 Oct, 09:00',164,true],
+  ['Application follow-up reminders','Daily · 10:00','31 Oct, 10:00',88,true],
+  ['Pending approval reminders','Every 2 hours','30 Oct, 12:00',134,true],
+  ['Collection follow-up reminders','Weekdays · 11:00','30 Oct, 11:00',96,true],
+  ['Weekly staff digest','Monday · 07:00','2 Nov, 07:00',24,true],
+  ['Scheduled system announcements','Manual','—',12,false]
+];
+
+/* announcements */
+let ANNOUNCEMENTS = [
+  ['ANN-104','Month-end close on 31 October','All staff','System will be read-only from 18:00 for month-end close.', 'High','29 Oct 2026', 24, 24],
+  ['ANN-103','New interest rate effective 1 November','All staff','Business Growth rate moves from 4.0% to 4.2% per month.','Normal','28 Oct 2026', 24, 19],
+  ['ANN-102','KYC refresh campaign','Customers in arrears','Please visit your branch to update your KYC documents before 15 November.','Normal','26 Oct 2026', 118, 64]
+];
+
+/* audit */
+S.audit = [
+  ['09:42','NTF-10331','Sent','Automation','Disbursement confirmation · SMS','196.44.21.7','Success'],
+  ['09:41','NTF-10330','Sent','Automation','Authorization request · staff dashboard','196.44.21.4','Success'],
+  ['09:15','NTF-10329','Created','C. Mwale','Manual repayment reminder','196.44.21.4','Success'],
+  ['08:22','NTF-10327','Sent','Automation','Overdue notice — provider rejected','196.44.21.9','Failed'],
+  ['08:05','NTF-10326','Sent','System','Backup status email','10.0.4.12','Success'],
+  ['07:58','NTF-10324','Modified','C. Mwale','Template TPL-04 wording updated','196.44.21.4','Success'],
+  ['07:35','NTF-10323','Sent','System','Security alert to administrator','10.0.4.12','Success'],
+  ['07:02','BC-0041','Broadcast','C. Mwale','Month-end announcement to all staff','196.44.21.4','Success'],
+  ['06:58','NTF-10318','Blocked','L. Chirwa','Attempted broadcast to all customers','41.87.112.8','Blocked'],
+  ['06:44','NTF-10312','Archived','C. Mwale','Bulk archive of 42 read notifications','196.44.21.4','Success']
+];
+
+/* charts */
+function niceMax(v){
+  if(v<=0) return 10;
+  const p=Math.pow(10,Math.floor(Math.log10(v)));
+  for(const s of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(v<=s*p) return s*p;
+  return 10*p;
+}
+function mkChart(host,o){
+  if(!host) return;
+  const type=o.type||'line', labels=o.labels||[], series=o.series||[];
+  const W=640,H=o.height||210,L=o.suffix?48:38,R=12,T=12,B=26, iw=W-L-R, ih=H-T-B;
+  const yMax=o.yMax||niceMax(Math.max(0,...series.flatMap(s=>s.data)));
+  const step=iw/Math.max(labels.length,1);
+  let g='';
+  for(let i=0;i<=4;i++){
+    const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
+    const t=Number.isInteger(v)?v:v.toFixed(1);
+    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}${o.suffix||''}</text>`;
+  }
+  labels.forEach((lb,i)=>{
+    if(labels.length>12 && i%2) return;
+    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+  });
+  if(type==='bar'){
+    const n=series.length, groupW=step*0.6, bw=Math.max(3,groupW/n-(n>1?2:0));
+    labels.forEach((lb,i)=>{
+      const gx=L+step*i+(step-groupW)/2;
+      series.forEach((s,j)=>{
+        const v=s.data[i]||0, h=(v/yMax)*ih;
+        if(h<0.6) return;
+        const x=gx+j*(bw+2), y=T+ih-h, r=Math.min(3,bw/2,h/2);
+        g+=`<path d="M${x.toFixed(1)} ${(y+r).toFixed(1)} q0 ${-r} ${r} ${-r} h${(bw-2*r).toFixed(1)} q${r} 0 ${r} ${r} v${(h-r).toFixed(1)} h${-bw.toFixed(1)} Z" fill="${s.color}"><title>${lb} · ${s.name}: ${v}</title></path>`;
+      });
+    });
+  } else {
+    series.forEach(s=>{
+      const pts=s.data.map((v,i)=>[L+step*i+step/2,T+ih-(v/yMax)*ih]);
+      const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+      const gid='g'+Math.random().toString(36).slice(2,8);
+      g+=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${s.color}" stop-opacity=".2"/><stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient></defs>
+        <path d="${d} L${pts[pts.length-1][0].toFixed(1)} ${T+ih} L${pts[0][0].toFixed(1)} ${T+ih} Z" fill="url(#${gid})"/>
+        <path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.1" stroke-linejoin="round"/>`;
+      pts.forEach((q,i)=>{g+=`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.3" fill="#fff" stroke="${s.color}" stroke-width="1.7"><title>${labels[i]}: ${s.data[i]}</title></circle>`;});
+    });
+  }
+  host.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  host.innerHTML=g;
+}
+function mkHBars(host, rows){
+  if(!host) return;
+  const max=Math.max(...rows.map(r=>r.value))||1;
+  host.innerHTML=rows.map(r=>`<div class="hbar-row">
+    <div class="hbar-l">${r.label}</div>
+    <div class="hbar-t"><i style="width:${Math.max(2,(r.value/max)*100)}%;background:${r.color}"></i></div>
+    <div class="hbar-v">${r.display||nf(r.value)}</div></div>`).join('');
+}
+function mkDonut(host, data, opt={}){
+  if(!host) return;
+  const total=data.reduce((s,d)=>s+d.value,0)||1;
+  const size=opt.size||150,c=size/2,r=size*0.335,sw=opt.ring||15,C=2*Math.PI*r,GAP=2.5;
+  let off=0,arcs='';
+  data.forEach(d=>{
+    const len=(d.value/total)*C, dash=Math.max(len-GAP,0.6);
+    arcs+=`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${(C-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${c} ${c})"><title>${d.label}: ${nf(d.value)}</title></circle>`;
+    off+=len;
+  });
+  host.innerHTML=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
+    <text x="${c}" y="${c-1}" text-anchor="middle" font-size="${(size*0.122).toFixed(1)}" font-weight="800" fill="#0F1115" font-family="inherit">${opt.center||nf(total)}</text>
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.056).toFixed(1)}" font-weight="700" fill="#8A90A0" letter-spacing=".8" font-family="inherit">${opt.caption||'TOTAL'}</text></svg>`;
+}
+
+/* ============================================================
+   SECTION 1 · OVERVIEW
+   ============================================================ */
+function renderOverview(){
+  const active = NTF.filter(n=>!n.archived);
+  const unread = active.filter(n=>!n.read && ['Delivered','Sent'].includes(n.status)).length;
+  const read = active.filter(n=>n.read && ['Delivered','Sent'].includes(n.status)).length;
+  const pending = active.filter(n=>['Pending','Queued'].includes(n.status)).length;
+  const delivered = active.filter(n=>n.status==='Delivered').length;
+  const failed = active.filter(n=>n.status==='Failed').length;
+  const cust = active.filter(n=>n.cat==='Customer').length;
+  const staff = active.filter(n=>n.cat==='Staff').length;
+  const sys = active.filter(n=>n.cat==='System').length;
+  const rate = delivered + failed ? (delivered/(delivered+failed)*100).toFixed(1) : '100.0';
+
+  el('bandTotal').textContent = active.length;
+  el('bandUnread').textContent = unread;
+  el('bandFailed').textContent = failed;
+  el('bandRate').textContent = rate + '%';
+
+  const tiles = [
+    ['Total Notifications', active.length, 'All channels · last 30 days', 'doc', '', 'across 6 categories'],
+    ['Unread Notifications', unread, 'Awaiting recipient action', 'alert', 'a', 'unread'],
+    ['Read Notifications', read, 'Opened by recipients', 'check', 'g', 'read'],
+    ['Pending Notifications', pending, 'Queued or not yet dispatched', 'card', 'p', 'in queue'],
+    ['Successfully Delivered', delivered, `Delivery rate ${rate}%`, 'check', 'g', 'delivered'],
+    ['Failed Notifications', failed, 'Provider rejections and errors', 'alert', 'r', 'needs retry'],
+    ['Customer Notifications', cust, 'Borrower lifecycle messaging', 'users', 'b', 'customers'],
+    ['Staff Notifications', staff, 'Internal operational alerts', 'users', 'p', 'staff'],
+    ['System Alerts', sys, 'Security and infrastructure', 'alert', 'r', 'critical']
+  ];
+  el('ovTiles').innerHTML = tiles.map(([l,v,f,i,tone,tag])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div><div class="stat-ic ${tone}">${ICONS[i]}</div></div>
+      <div class="stat-val">${nf(v)}</div>
+      <div class="stat-foot"><span class="badge ${tag==='critical'||tag==='needs retry'?'b-rev':tag==='unread'?'b-pend':'b-appr'}">${tag}</span></div>
+      <div class="tiny muted" style="margin-top:4px">${f}</div>
+    </div>`).join('');
+
+  el('ovActivity').innerHTML = active.slice(0,7).map(n=>`
+    <tr>
+      <td class="muted tiny" style="white-space:nowrap">${n.created.replace(' 2026','')}</td>
+      <td class="tiny" style="font-weight:700">${n.ref}</td>
+      <td class="tiny">${n.recipient}</td>
+      <td class="tiny muted" style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.subject}</td>
+      <td class="tiny">${n.channel}</td>
+      <td>${statusChip(n)}</td>
+    </tr>`).join('');
+}
+
+const ICONS = {
+  doc:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/></svg>',
+  alert:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17.5h.01"/></svg>',
+  check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 13 5 5L21 5"/></svg>',
+  card:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.4"/></svg>',
+  users:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.4a3.2 3.2 0 0 1 0 6.2M18.6 20a6.2 6.2 0 0 0-3-5.2"/></svg>'
+};
+
+/* ============================================================
+   SECTION 2 · ALL NOTIFICATIONS
+   ============================================================ */
+function filtered(){
+  const q=(el('fltSearch').value||'').toLowerCase();
+  const from=el('fltFrom').value, to=el('fltTo').value;
+  const type=el('fltType').value, ch=el('fltChannel').value, st=el('fltStatus').value,
+        rc=el('fltRecipient').value;
+  return NTF.filter(n=>{
+    if(q && !(n.recipient+n.subject+n.body+n.ref+n.type).toLowerCase().includes(q)) return false;
+    if(from || to){
+      const d = isoOf(n.created);
+      if(from && d < from) return false;
+      if(to && d > to) return false;
+    }
+    if(type && n.cat!==type) return false;
+    if(ch && n.channel!==ch) return false;
+    if(rc && n.recipient!==rc) return false;
+    if(st==='Unread' && !( !n.read && ['Delivered','Sent'].includes(n.status) && !n.archived )) return false;
+    if(st==='Read' && !( n.read && ['Delivered','Sent'].includes(n.status) && !n.archived )) return false;
+    if(st==='Archived' && !n.archived) return false;
+    if(st && !['Unread','Read','Archived'].includes(st) && n.status!==st) return false;
+    if(!st && n.archived) return false;
+    return true;
+  });
+}
+function isoOf(created){
+  // 'created' looks like '30 Oct 2026 09:42' or '29 Oct 16:40'
+  const m = created.match(/(\d{1,2}) (Oct|Nov|Dec|Sep) (?:2026 )?/);
+  const day = m ? m[1].padStart(2,'0') : '30';
+  return '2026-10-' + day;
+}
+
+function renderRegister(){
+  const rows = filtered();
+  const pages = Math.max(1, Math.ceil(rows.length/S.size));
+  if(S.page>pages) S.page = pages;
+  const slice = rows.slice((S.page-1)*S.size, S.page*S.size);
+  el('allCount').textContent = rows.length + ' notification' + (rows.length===1?'':'s');
+  el('allBody').innerHTML = slice.length ? slice.map(n=>`
+    <tr class="${n.read?'':'sel'}">
+      <td><input type="checkbox" data-sel="${n.ref}" ${S.selected.has(n.ref)?'checked':''} /></td>
+      <td class="tiny" style="font-weight:700">${n.ref}</td>
+      <td><div class="who"><div class="av">${initials(n.recipient)}</div>
+        <div><div class="nm">${n.recipient}</div><div class="id">${n.rtype}</div></div></div></td>
+      <td class="msg"><div class="tiny" style="font-weight:600;max-width:168px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.subject}</div>
+        <div class="tiny muted" style="max-width:168px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.body}</div></td>
+      <td class="tiny">${n.cat}</td>
+      <td class="tiny">${n.channel}</td>
+      <td>${statusChip(n)}</td>
+      <td class="tiny muted">${n.created.replace(' 2026','')}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" data-act="view" data-ref="${n.ref}">View</button>
+        <button class="btn btn-ghost btn-sm tick" data-act="toggle-read" data-ref="${n.ref}"
+          title="${n.read?'Mark unread':'Mark read'}">${n.read?'○':'✓'}</button>
+        <button class="btn btn-ghost btn-sm" data-act="archive" data-ref="${n.ref}">${n.archived?'Restore':'Archive'}</button>
+      </td></tr>`).join('')
+    : `<tr><td colspan="9"><div class="empty">No notifications match these filters.</div></td></tr>`;
+  el('allPager').innerHTML = `
+    <span>${rows.length} record${rows.length===1?'':'s'} · page ${S.page} of ${pages}</span>
+    <button data-act="prev" ${S.page<=1?'disabled':''}>Prev</button>
+    <button data-act="next" ${S.page>=pages?'disabled':''}>Next</button>`;
+}
+
+/* ============================================================
+   SECTIONS 3–8 · TYPE GROUPS
+   ============================================================ */
+function renderTypeSection(cat, typesHost, listHost, countHost){
+  const list = TYPES[cat] || [];
+  el(countHost).textContent = NTF.filter(n=>n.cat===cat).length + ' sent';
+  el(typesHost).innerHTML = list.map(([name,desc])=>{
+    const n = NTF.filter(x=>x.type===name);
+    return `<div class="tcard" data-act="quick-type" data-ref="${name}" data-cat="${cat}">
+      <div class="th"><div class="ti" style="background:${CAT_COLORS[cat]}1A;color:${CAT_COLORS[cat]}">${CAT_ICON[cat]}</div>
+        <div class="tn">${name}</div></div>
+      <div class="tc">${desc}</div>
+      <div class="tb"><span class="muted">Sent</span><span class="tn2">${n.length}</span></div>
+    </div>`;
+  }).join('');
+
+  const recent = NTF.filter(n=>n.cat===cat).slice(0,5);
+  el(listHost).innerHTML = recent.length ? recent.map(n=>`
+    <div class="nitem ${n.read?'':'unread'}" data-act="view" data-ref="${n.ref}">
+      <div class="nic" style="background:${CAT_COLORS[n.cat]}1A;color:${CAT_COLORS[n.cat]}">${CAT_ICON[n.cat]}</div>
+      <div style="flex:1;min-width:0">
+        <div class="nt">${n.subject} ${n.read?'':'<span class="udot"></span>'}</div>
+        <div class="nb">${n.body}</div>
+        <div class="nm2"><span>${n.recipient}</span><span>·</span><span>${n.channel}</span><span>·</span><span>${n.created}</span></div>
+      </div>
+      <div style="flex:0 0 auto">${statusChip(n)}</div>
+    </div>`).join('')
+    : '<div class="empty">No notifications in this category yet.</div>';
+}
+
+/* ============================================================
+   SECTION 9 · SEND MANUAL NOTIFICATION
+   ============================================================ */
+let AUD = 'Customer';
+
+function renderSendForm(){
+  const opts = RECIPIENTS[AUD] || [];
+  el('sendRecipient').innerHTML = opts.map(r=>`<option>${r}</option>`).join('');
+  el('sendTemplate').innerHTML = `<option value="">— choose a template —</option>` +
+    TEMPLATES.filter(t=>t[4]).map(t=>`<option value="${t[0]}">${t[1]} (${t[2]})</option>`).join('');
+  el('recipientHint').textContent = AUD==='Customer' ? 'Individual customer with a verified contact number.'
+    : AUD==='Staff' ? 'Individual staff member — delivered to their dashboard and email.'
+    : 'Authorized customer group — bulk send with consent checks.';
+  el('sendChannel').value = AUD==='Staff' ? 'Staff Dashboard' : AUD==='Customer' ? 'SMS' : 'SMS';
+  updatePreview();
+}
+
+function updatePreview(){
+  const subject = el('sendSubject').value || 'Your subject appears here';
+  const body = el('sendBody').value || 'Your message will appear here as the recipient sees it.';
+  const channel = el('sendChannel').value;
+  el('pvSubject').textContent = subject;
+  el('pvBody').textContent = body;
+  el('pvChannel').textContent = channel;
+  el('pvTo').textContent = 'To: ' + (el('sendRecipient').value || '—');
+  el('pvTime').textContent = el('sendWhen').value === 'Immediately' ? 'Sending now' : (el('sendAt').value || 'Scheduled');
+  el('pvFrom').textContent = channel === 'Email' ? 'no-reply@goldenfs.mw'
+    : channel === 'SMS' ? 'GOLDEN FS' : 'Golden Financial Services';
+  el('previewChannelSub').textContent = channel + ' preview' + (channel==='SMS' ? ' · 160 characters per segment' : '');
+
+  const len = el('sendBody').value.length;
+  el('smsSegments').textContent = `${len} / 160 (${Math.max(1,Math.ceil(len/160||1))} segment${len>160?'s':''})`;
+
+  const ch = CHANNELS.find(c=>c.name===(channel==='Email'?'Email':channel==='SMS'?'SMS':channel==='In-App'?'In-App':channel));
+  el('sendChecks').innerHTML = [
+    ['Recipient selected', !!el('sendRecipient').value],
+    ['Channel available', ch ? ch.enabled : true],
+    ['Subject entered', el('sendSubject').value.trim().length>2],
+    ['Message entered', el('sendBody').value.trim().length>5],
+    ['Within consent / opt-in', true],
+    ['Outside quiet hours (08:00–18:00)', true],
+    ['Daily sending limit not exceeded', true]
+  ].map(([t,ok])=>`<div class="check"><div class="ck ${ok?'y':'n'}">${ok?'✓':'✕'}</div><div><b>${t}</b></div></div>`).join('');
+}
+
+function sendNotification(){
+  const subject = el('sendSubject').value.trim();
+  const body = el('sendBody').value.trim();
+  if(!subject) return toast('Enter a subject','err');
+  if(!body) return toast('Enter a message','err');
+  const channel = el('sendChannel').value;
+  const when = el('sendWhen').value;
+  const scheduled = when !== 'Immediately';
+  const n = addN({
+    ref:'NTF-'+(++S.seq), cat: AUD==='Customer' ? 'Customer' : AUD==='Staff' ? 'Staff' : 'Staff',
+    type: 'Staff Announcement', recipient: el('sendRecipient').value,
+    rtype: AUD, channel, status: scheduled ? 'Pending' : 'Sent',
+    read:false, priority: el('sendPriority').value,
+    created:'30 Oct 2026 ' + (scheduled ? (el('sendAt').value||'14:00').slice(11,16) : stamp()),
+    subject, body, sender:'C. Mwale', template: el('sendTemplate').value, attempts:1, provider:''
+  });
+  S.audit.unshift([stamp(), n.ref, 'Created', 'C. Mwale',
+    (scheduled?'Scheduled':'Sent') + ' manual ' + channel + ' to ' + n.recipient, '196.44.21.4', 'Success']);
+  el('sendBadge').textContent = scheduled ? 'Scheduled' : 'Sent';
+  toast(scheduled ? `Scheduled for ${el('sendAt').value.replace('T',' ')}` : `Notification sent to ${n.recipient}`, 'ok');
+  renderAll(); renderAudit();
+}
+
+function quickCompose(cat, type){
+  AUD = cat==='Staff' ? 'Staff' : 'Customer';
+  document.querySelectorAll('#audienceSeg button').forEach(b=>b.classList.toggle('on', b.dataset.aud===AUD));
+  renderSendForm();
+  const tpl = TEMPLATES.find(t=>t[1].toLowerCase().includes(type.split(' ')[0].toLowerCase()));
+  if(tpl) el('sendTemplate').value = tpl[0];
+  el('sendSubject').value = type;
+  el('sendBody').value = tpl ? tpl[5] : `Automated notice: ${type}. Please contact Golden Financial Services on 111 for assistance.`;
+  updatePreview();
+  document.getElementById('s9').scrollIntoView({behavior:'smooth'});
+  toast(`Template loaded for “${type}”`, 'info');
+}
+
+/* ============================================================
+   SECTION 10 · CHANNELS
+   ============================================================ */
+function renderChannels(){
+  el('channelCards').innerHTML = CHANNELS.map((c,i)=>{
+    const rate = ((c.delivered/(c.delivered+c.failed))*100).toFixed(1);
+    return `<div class="chcard">
+      <div class="chh">
+        <div class="chi" style="background:${c.color}1A;color:${c.color}">${c.icon}</div>
+        <div style="flex:1;min-width:0"><b style="font-size:12px">${c.name}</b>
+          <div class="tiny muted">${c.enabled?'Available':'Suspended'}</div></div>
+        <button class="toggle ${c.enabled?'on':''}" data-act="toggle-channel" data-idx="${i}"></button>
+      </div>
+      <div class="chv"><span class="muted">Sent</span><b>${nf(c.sent)}</b></div>
+      <div class="chv"><span class="muted">Delivered</span><b>${nf(c.delivered)}</b></div>
+      <div class="chv"><span class="muted">Failed</span><b style="color:${c.failed?'#B32C2C':'#157A50'}">${nf(c.failed)}</b></div>
+      <div class="chv"><span class="muted">Success rate</span><b style="color:#157A50">${rate}%</b></div>
+      <div class="chv"><span class="muted">Cost</span><b>${c.cost}</b></div>
+    </div>`;
+  }).join('');
+
+  el('channelUsage').innerHTML = CHANNELS.map(c=>`
+    <tr><td style="font-weight:600">${c.name}</td><td class="num">${nf(c.sent)}</td>
+      <td class="num">${nf(c.delivered)}</td><td class="num" style="color:#B32C2C">${nf(c.failed)}</td>
+      <td class="num">${((c.delivered/(c.delivered+c.failed))*100).toFixed(1)}%</td>
+      <td class="num">${c.cost}</td></tr>`).join('');
+
+  el('channelFailures').innerHTML = [
+    ['SMS — retry twice at 15 minute intervals, then flag the officer'],
+    ['SMS — invalid numbers marked undeliverable and removed from the list'],
+    ['Email — bounce handling with suppression list'],
+    ['In-app — queued until the recipient next signs in'],
+    ['Portal — fallback to SMS when unread for 48 hours'],
+    ['All channels — failures recorded with provider response codes']
+  ].map(([t])=>`<div class="check"><div class="ck y">✓</div><div><b>${t}</b></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 11 · TEMPLATES
+   ============================================================ */
+function renderTemplates(){
+  el('tplCount').textContent = TEMPLATES.filter(t=>t[4]).length + ' active';
+  el('templateGrid').innerHTML = TEMPLATES.map((t,i)=>`
+    <div class="tpl ${t[4]?'':'off'}">
+      <div class="tph">
+        <div style="flex:1;min-width:0">
+          <div class="tpt">${t[1]}</div>
+          <div class="tps">${t[0]} · ${t[2]} · ${t[3]}</div>
+        </div>
+        <button class="toggle ${t[4]?'on':''}" data-act="toggle-tpl" data-idx="${i}" title="Activate / deactivate"></button>
+      </div>
+      <div class="tpbody">${t[5]}</div>
+      <div class="tpfoot">
+        <button class="btn btn-ghost btn-sm" data-act="edit-tpl" data-idx="${i}">Edit</button>
+        <button class="btn btn-ghost btn-sm" data-act="preview-tpl" data-idx="${i}">Preview</button>
+        <button class="btn btn-ghost btn-sm" data-act="use-tpl" data-idx="${i}">Use</button>
+      </div>
+    </div>`).join('');
+}
+
+function editTemplate(i){
+  const t = TEMPLATES[i];
+  openModal(`Edit template ${t[0]}`, t[1], `
+    <div class="form-grid">
+      <div class="fg"><label>Template name</label><input id="tpName" value="${t[1]}" /></div>
+      <div class="fg"><label>Channel</label><select id="tpChannel">${['SMS','Email','In-App','Customer Portal','Staff Dashboard']
+        .map(c=>`<option ${c===t[2]?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="fg"><label>Category</label><select id="tpCat">${['Customer','Loan','Repayment','Disbursement','System','Staff']
+        .map(c=>`<option ${c===t[3]?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="fg"><label>Status</label><select id="tpActive">
+        <option value="1" ${t[4]?'selected':''}>Active</option><option value="0" ${t[4]?'':'selected'}>Inactive</option></select></div>
+      <div class="fg" style="grid-column:1/-1"><label>Message body</label>
+        <textarea id="tpBody" rows="4">${t[5]}</textarea>
+        <div class="hint">Merge fields: {{first_name}} {{loan_no}} {{amount}} {{due_date}} {{reference}}</div></div>
+    </div>`,
+    [{label:'Cancel', cls:'btn-ghost', act:'close'},
+     {label:'Save template', cls:'btn-gold', act:()=>{
+        TEMPLATES[i] = [t[0], el('tpName').value, el('tpChannel').value, el('tpCat').value,
+          el('tpActive').value==='1', el('tpBody').value];
+        S.audit.unshift([stamp(), t[0], 'Modified', 'C. Mwale', 'Template wording updated', '196.44.21.4', 'Success']);
+        closeModal(); renderTemplates(); renderAudit(); toast('Template saved', 'ok');
+     }}]);
+}
+
+/* ============================================================
+   SECTION 12 · AUTOMATIONS
+   ============================================================ */
+function renderAutomations(){
+  el('automationBody').innerHTML = AUTOMATIONS.map((a,i)=>`
+    <tr>
+      <td class="auto-name"><b>${a[0]}</b><span style="color:${a[4]?'#157A50':'#8A6D0F'}">${a[4]?'● Running':'● Paused'}</span></td>
+      <td class="tiny muted">${a[1]}</td>
+      <td class="tiny">${a[2]}</td>
+      <td class="num">${a[3]}</td>
+      <td><button class="btn ${a[4]?'btn-ghost':'btn-gold'} btn-sm" data-act="toggle-auto" data-idx="${i}">${a[4]?'Pause':'Resume'}</button></td>
+    </tr>`).join('');
+
+  el('automationHistory').innerHTML = [
+    ['Automatic repayment reminders · 412 delivered','30 Oct 08:00 · 3 failed'],
+    ['Upcoming due-date alerts · 286 delivered','30 Oct 08:00 · 1 failed'],
+    ['Overdue payment alerts · 164 delivered','29 Oct 09:00 · 2 failed'],
+    ['Pending approval reminders · 34 delivered','29 Oct 16:00 · all delivered'],
+    ['Collection follow-up reminders · 96 delivered','29 Oct 11:00 · 0 failed']
+  ].map(([t,s])=>`<div class="li"><div class="av">↻</div>
+    <div><div class="t1">${t}</div><div class="t2">${s}</div></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 13 · DELIVERY TRACKING
+   ============================================================ */
+function renderDelivery(){
+  const pending = NTF.filter(n=>n.status==='Pending');
+  const queued = NTF.filter(n=>n.status==='Queued');
+  const sent = NTF.filter(n=>n.status==='Sent');
+  const delivered = NTF.filter(n=>n.status==='Delivered');
+  const failed = NTF.filter(n=>n.status==='Failed');
+  el('queueCount').textContent = (pending.length+queued.length) + ' in queue';
+
+  const tiles = [
+    ['Pending Delivery', pending.length, 'Awaiting dispatch', '#9A6A0D', 'var(--amber-soft)', 'card'],
+    ['Queued', queued.length, 'Held by provider queue', '#5A3FCB', 'var(--purple-soft)', 'doc'],
+    ['Sent', sent.length, 'Handed to the provider', '#2456C4', 'var(--blue-soft)', 'doc'],
+    ['Delivered', delivered.length, 'Confirmed by provider', '#157A50', 'var(--green-soft)', 'check'],
+    ['Failed', failed.length, 'Provider rejected', '#B32C2C', 'var(--red-soft)', 'alert']
+  ];
+  el('deliveryTiles').innerHTML = tiles.map(([l,v,s,c,bg,ic])=>`
+    <div class="card stat">
+      <div class="stat-top"><div class="stat-label">${l}</div>
+        <div class="stat-ic" style="background:${bg};color:${c}">${ICONS[ic]}</div></div>
+      <div class="stat-val">${v}</div>
+      <div class="stat-foot">${s}</div>
+    </div>`).join('');
+
+  el('deliveryBody').innerHTML = failed.length ? failed.map(n=>`
+    <tr>
+      <td class="tiny" style="font-weight:700;white-space:nowrap">${n.ref}</td>
+      <td class="tiny" style="white-space:nowrap">${n.recipient}<div class="muted">${n.channel}</div></td>
+      <td class="tiny" style="color:#B32C2C;max-width:190px">${providerError(n)}
+        <div class="muted">${n.attempts} attempts</div></td>
+      <td><button class="btn btn-gold btn-sm" data-act="retry" data-ref="${n.ref}">Retry</button></td>
+    </tr>`).join('')
+    : `<tr><td colspan="4"><div class="empty">No failed deliveries.</div></td></tr>`;
+
+  el('deliveryHistory').innerHTML = NTF.slice(0,6).map(n=>`
+    <div class="li"><div class="av" style="background:${CAT_COLORS[n.cat]}1A;color:${CAT_COLORS[n.cat]}">${initials(n.recipient)}</div>
+      <div><div class="t1">${n.recipient}</div><div class="t2">${n.channel} · ${n.provider||'—'} · ${n.created}</div></div>
+      <div class="amt">${statusChip(n)}</div></div>`).join('');
+}
+function providerError(n){
+  if(n.channel==='SMS') return 'AM-ERR-7741 · wallet unreachable';
+  if(n.channel==='Email') return 'SMTP 550 · mailbox unavailable';
+  return 'TIMEOUT · no response in 30s';
+}
+
+/* ============================================================
+   SECTION 14 · ANNOUNCEMENTS
+   ============================================================ */
+function renderAnnouncements(){
+  el('annCount').textContent = ANNOUNCEMENTS.length + ' published';
+  el('annList').innerHTML = ANNOUNCEMENTS.map((a,i)=>{
+    const pct = Math.round((a[7]/a[6])*100);
+    return `<div class="ann" style="margin-bottom:10px">
+      <div class="anh">
+        <div style="flex:1;min-width:0">
+          <div class="ant">${a[1]}</div>
+          <div class="ans">${a[0]} · ${a[2]} · ${a[5]} · <span style="color:${a[4]==='High'?'#B32C2C':'#5A6172'};font-weight:700">${a[4]} priority</span></div>
+          <div class="anb">${a[3]}</div>
+        </div>
+      </div>
+      <div class="prog-row" style="margin-top:9px">
+        <div class="prog-top"><b>Read by ${a[7]} of ${a[6]}</b><span>${pct}%</span></div>
+        <div class="bar ${pct>80?'green':''}"><i style="width:${pct}%"></i></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:9px">
+        <button class="btn btn-ghost btn-sm" data-act="edit-ann" data-idx="${i}">Edit</button>
+        <button class="btn btn-red btn-sm" data-act="withdraw-ann" data-idx="${i}">Withdraw</button>
+      </div>
+    </div>`;
+  }).join('') || '<div class="empty">No announcements published.</div>';
+}
+
+function publishAnnouncement(){
+  const title = el('annTitle').value.trim();
+  const body = el('annBody').value.trim();
+  if(!title || !body) return toast('Title and message are required', 'err');
+  const audience = el('annAudience').value + (el('annTarget').value!=='All' ? ' · '+el('annTarget').value : '');
+  const size = el('annAudience').value.includes('staff') ? 24 : 118;
+  ANNOUNCEMENTS.unshift(['ANN-'+(104+ANNOUNCEMENTS.length), title, audience, body,
+    el('annPriority').value, '30 Oct 2026', size, 0]);
+  S.audit.unshift([stamp(), 'ANN-NEW', 'Broadcast', 'C. Mwale', 'Published: ' + title, '196.44.21.4', 'Success']);
+  el('annTitle').value=''; el('annBody').value='';
+  toast(`Announcement published to ${size} recipients`, 'ok');
+  renderAnnouncements(); renderAudit();
+}
+
+/* ============================================================
+   SECTION 15 · PREFERENCES
+   ============================================================ */
+function row(title, sub, on, locked){
+  return `<div class="setrow">
+    <div><div class="sk">${title}</div><div class="ss">${sub}</div></div>
+    <div class="sv">${locked
+      ? `<span class="badge b-gray">Mandatory</span>`
+      : `<button class="toggle ${on?'on':''}" data-act="toggle"></button>`}</div>
+  </div>`;
+}
+function renderPrefs(){
+  el('prefCustomer').innerHTML =
+    row('SMS notifications','Repayment reminders, receipts and alerts',true) +
+    row('Email notifications','Statements and formal notices',true) +
+    row('In-app notifications','Portal messages',true) +
+    row('Repayment reminders','3 days before and on the due date',true) +
+    row('Marketing messages','Promotions and product offers',false) +
+    row('Quiet hours','No non-critical messages between 20:00 and 07:00',true);
+
+  el('prefStaff').innerHTML =
+    row('Staff dashboard notifications','Approvals, assignments and queues',true) +
+    row('Email notifications','Digests and escalation',true) +
+    row('SMS alerts','Critical escalations only',false) +
+    row('Approval reminders','Repeat every 2 hours while pending',true) +
+    row('Collection task alerts','New follow-ups assigned to me',true);
+
+  el('prefConsent').innerHTML =
+    row('Explicit opt-in required','Customers must consent before marketing messages',true) +
+    row('Opt-out honoured within 24 hours','Suppression list applied across channels',true) +
+    row('Re-confirm consent annually','Consent expiry and refresh campaign',true) +
+    row('Keep delivery logs for audit','Retained with message content',true);
+
+  el('prefLocked').innerHTML = `
+    <div class="locked" style="margin-bottom:8px">🔒 Security alerts are always delivered to the account holder and administrator.</div>
+    <div class="locked" style="margin-bottom:8px">🔒 Password reset and sign-in alerts cannot be disabled by users.</div>
+    <div class="locked">🔒 Account lockout and fraud notices bypass quiet hours.</div>`;
+}
+
+/* ============================================================
+   SECTION 16 · REPORTS
+   ============================================================ */
+const REPORTS = [
+  ['Daily Notification Report','Volume, failures and channel split for a day'],
+  ['Weekly Notification Report','Seven-day roll-up by category'],
+  ['Monthly Notification Report','Full month with delivery performance'],
+  ['Notifications by Category','Customer, staff, loan, repayment, disbursement, system'],
+  ['Notifications by Channel','SMS, email, in-app and portal usage'],
+  ['Delivery Success Rate','Provider performance over time'],
+  ['Failed Delivery Report','Failures with provider response codes'],
+  ['Customer Notification Report','Borrower messaging history'],
+  ['Staff Notification Report','Internal alert volumes and read rates'],
+  ['Automated Reminder Report','Reminder engine output and outcomes'],
+  ['SMS & Email Usage Summary','Volumes and cost by provider'],
+  ['Notification Audit Report','Creation, sending and modification trail']
+];
+function renderReports(){
+  el('reportCards').innerHTML = REPORTS.map(([t,s])=>`
+    <div class="card panel" style="padding:13px">
+      <div class="panel-title" style="font-size:12.5px">${t}</div>
+      <div class="panel-sub" style="min-height:30px">${s}</div>
+      <div style="display:flex;gap:6px;margin-top:6px">
+        <button class="btn btn-ghost btn-sm" data-act="report-pdf" data-ref="${t}">PDF</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-xls" data-ref="${t}">Excel</button>
+        <button class="btn btn-ghost btn-sm" data-act="report-csv" data-ref="${t}">CSV</button>
+      </div>
+    </div>`).join('');
+
+  const monthTotal = CHANNELS.reduce((a,c)=>a+c.sent,0);
+  mkHBars(el('chCategory'), Object.keys(TYPES).map(c=>({
+    label:c, value:Math.round(monthTotal*CAT_SHARE[c]), color:CAT_COLORS[c]
+  })));
+
+  const chData = CHANNELS.map(c=>({label:c.name, value:c.sent, color:c.color}));
+  el('chChannel').innerHTML = '<div id="chChannelDonut"></div><div id="chChannelLegend" style="min-width:180px"></div>';
+  mkDonut(el('chChannelDonut'), chData, {size:158, center:nf(chData.reduce((s,d)=>s+d.value,0)), caption:'MESSAGES'});
+  el('chChannelLegend').innerHTML = chData.map(d=>`
+    <div class="kv"><span class="k" style="display:flex;align-items:center;gap:6px">
+      <i style="width:7px;height:7px;border-radius:50%;background:${d.color};display:block"></i>${d.label}</span>
+      <span class="v">${nf(d.value)}</span></div>`).join('');
+
+  mkChart(el('chSuccess'), {type:'line', height:210, suffix:'%', yMax:100,
+    labels:['21','22','23','24','25','26','27','28','29','30'],
+    series:[{name:'Success rate', color:'#1E9E6A', data:[96.2,95.8,97.1,96.4,98.0,97.2,96.6,97.4,96.9,96.8]}]});
+
+  mkChart(el('chVolume'), {type:'bar', height:210,
+    labels:['21','22','23','24','25','26','27','28','29','30'],
+    series:[
+      {name:'Delivered', color:'#C9A227', data:[184,192,176,208,196,214,188,226,202,248]},
+      {name:'Failed', color:'#D93F3F', data:[7,8,5,7,4,6,3,6,5,5]}
+    ]});
+}
+
+/* ============================================================
+   SECTION 17 · AUDIT
+   ============================================================ */
+function renderAudit(){
+  const q=(el('auditSearch').value||'').toLowerCase();
+  const act=el('auditAction').value;
+  const rows = S.audit.filter(a=>{
+    if(q && !(a[1]+a[3]+a[4]).toLowerCase().includes(q)) return false;
+    if(act && a[2]!==act) return false;
+    return true;
+  });
+  el('auditBody').innerHTML = rows.length ? rows.map(a=>`
+    <tr><td class="tiny muted">${a[0]}</td><td class="tiny" style="font-weight:700">${a[1]}</td>
+      <td class="tiny">${a[2]}</td><td class="tiny">${a[3]}</td><td class="tiny muted">${a[4]}</td>
+      <td class="tiny muted">${a[5]}</td>
+      <td><span class="chip ${a[6]==='Blocked'||a[6]==='Failed'?'st-fail':'st-ok'}">${a[6]}</span></td></tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No audit entries match your filters.</div></td></tr>`;
+
+  el('auditBlocked').innerHTML = [
+    ['L. Chirwa','Attempted broadcast to all customers without approval','06:58'],
+    ['Unknown session','Attempted to read SMS content for an unrelated customer','07:41']
+  ].map(([who,what,t])=>`<div class="li"><div class="av" style="background:var(--red-soft);color:#B32C2C">!</div>
+    <div><div class="t1">${what}</div><div class="t2">${who} · ${t}</div></div>
+    <div class="amt"><b class="tiny" style="color:#B32C2C">Blocked</b></div></div>`).join('');
+
+  el('auditSensitive').innerHTML = [
+    ['C. Mwale','Viewed message content for NTF-10324','09:12'],
+    ['C. Mwale','Exported 42 notification records','08:40'],
+    ['System','Masked customer numbers in delivery log','06:00']
+  ].map(([who,what,t])=>`<div class="li"><div class="av">${initials(who)}</div>
+    <div><div class="t1">${what}</div><div class="t2">${who} · ${t}</div></div></div>`).join('');
+}
+
+/* ============================================================
+   SECTION 18 · SETTINGS
+   ============================================================ */
+function field(title, sub, html){
+  return `<div class="setrow">
+    <div><div class="sk">${title}</div><div class="ss">${sub}</div></div>
+    <div class="sv">${html}</div>
+  </div>`;
+}
+const num = v => `<input type="number" value="${v}" />`;
+const sel = (opts, cur) => `<select>${opts.map(o=>`<option ${o===cur?'selected':''}>${o}</option>`).join('')}</select>`;
+
+function renderSettings(){
+  el('setCategories').innerHTML =
+    row('Customer notifications','Lifecycle messages to borrowers',true) +
+    row('Staff notifications','Internal operational alerts',true) +
+    row('Loan &amp; application alerts','Pipeline events',true) +
+    row('Repayment &amp; collection alerts','Reminders and arrears',true) +
+    row('Disbursement notifications','Release workflow',true) +
+    field('Default channel','Applied when a message has no channel','<select><option>In-App</option><option>SMS</option><option>Email</option></select>');
+
+  el('setPriority').innerHTML =
+    row('High priority bypasses quiet hours','Security and arrears notices',true) +
+    field('Escalate unread high priority after','Hours before escalation to a supervisor', num(4)) +
+    field('Reminder timing','Days before the due date', num(3)) +
+    field('Repeat overdue reminders','Hours between reminders until paid', num(24));
+
+  el('setDelivery').innerHTML =
+    row('Retry failed deliveries','Automatic retry when a provider rejects',true) +
+    field('Retry interval','Minutes between attempts', num(15)) +
+    field('Daily SMS limit','Per recipient, per day', num(5)) +
+    field('Retention period','Months before archival', sel(['12 months','24 months','84 months'],'24 months'));
+
+  el('setProviders').innerHTML = `
+    <div class="setrow"><div><div class="sk">SMS provider</div><div class="ss">Primary gateway</div></div>
+      <div class="sv"><span class="badge b-appr">Airtel / TNM · connected</span></div></div>
+    <div class="setrow"><div><div class="sk">Sender ID</div><div class="ss">Shown to recipients</div></div>
+      <div class="sv"><input type="text" value="GOLDENFS" /></div></div>
+    <div class="setrow"><div><div class="sk">Email provider</div><div class="ss">SMTP relay</div></div>
+      <div class="sv"><span class="badge b-appr">Postmark · connected</span></div></div>
+    <div class="setrow"><div><div class="sk">In-app / realtime keys</div><div class="ss">Supabase channel</div></div>
+      <div class="sv"><span class="badge b-appr">Healthy</span></div></div>
+    <div class="setrow"><div><div class="sk">Who can send broadcasts</div><div class="ss">Minimum role</div></div>
+      <div class="sv">${sel(['Administrator','Manager','Loan Officer'],'Administrator')}</div></div>
+    <div class="setrow"><div><div class="sk">Require approval for bulk sends</div><div class="ss">Above 100 recipients</div></div>
+      <div class="sv"><button class="toggle on" data-act="toggle"></button></div></div>`;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+const findN = ref => NTF.find(n=>n.ref===ref);
+
+function viewNotification(ref){
+  const n = findN(ref); if(!n) return;
+  n.read = true;
+  openModal(n.subject, `${n.ref} · ${n.cat} · ${n.channel}`, `
+    <div class="grid g2" style="gap:10px">
+      <div>
+        <div class="kv"><span class="k">Recipient</span><span class="v">${n.recipient}</span></div>
+        <div class="kv"><span class="k">Recipient type</span><span class="v">${n.rtype}</span></div>
+        <div class="kv"><span class="k">Channel</span><span class="v">${n.channel}</span></div>
+        <div class="kv"><span class="k">Status</span><span class="v">${statusChip(n)}</span></div>
+      </div>
+      <div>
+        <div class="kv"><span class="k">Created</span><span class="v">${n.created}</span></div>
+        <div class="kv"><span class="k">Sender</span><span class="v">${n.sender}</span></div>
+        <div class="kv"><span class="k">Provider ref</span><span class="v">${n.provider||'—'}</span></div>
+        <div class="kv"><span class="k">Attempts</span><span class="v">${n.attempts}</span></div>
+      </div>
+    </div>
+    <div class="preview" style="margin-top:12px">
+      <div class="phead"><span>GOLDEN FS</span><span>${n.channel}</span></div>
+      <div class="pbody"><div class="psub">${n.subject}</div><div style="white-space:pre-wrap;color:#C7CBD4">${n.body}</div></div>
+      <div class="pfoot"><span>To: ${n.recipient}</span><span>${n.created}</span></div>
+    </div>
+    ${n.status==='Failed'?`<div class="note red" style="margin-top:10px">${providerError(n)}</div>`:''}`,
+    [{label:'Close', cls:'btn-ghost', act:'close'},
+     {label:'Mark unread', cls:'btn-ghost', act:()=>{ n.read=false; closeModal(); renderAll(); }},
+     n.status==='Failed'
+       ? {label:'Retry delivery', cls:'btn-gold', act:()=>{ closeModal(); retryNotification(ref); }}
+       : {label:'Archive', cls:'btn-red', act:()=>{ n.archived=true; closeModal(); renderAll(); toast('Archived','info'); }}]);
+}
+
+function retryNotification(ref){
+  const n = findN(ref); if(!n) return;
+  n.attempts++;
+  n.status = 'Delivered'; n.read = true;
+  S.audit.unshift([stamp(), ref, 'Retried', 'C. Mwale', 'Redelivered after provider error', '196.44.21.4', 'Success']);
+  toast(`${ref} redelivered`, 'ok');
+  renderAll(); renderAudit();
+}
+
+function openModal(title, sub, body, actions=[]){
+  el('modalTitle').textContent = title;
+  el('modalSub').textContent = sub;
+  el('modalBody').innerHTML = body;
+  el('modalFoot').innerHTML = '';
+  actions.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = 'btn ' + (a.cls||'btn-ghost');
+    b.textContent = a.label;
+    b.onclick = a.act==='close' ? closeModal : a.act;
+    el('modalFoot').appendChild(b);
+  });
+  el('modal').classList.add('on');
+}
+function closeModal(){ el('modal').classList.remove('on'); }
+
+function exportCSV(rows, name){
+  const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Export ready · ' + name, 'ok');
+}
+
+/* ============================================================
+   EVENT DELEGATION
+   ============================================================ */
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-act]');
+  if(!t) return;
+  const act = t.dataset.act, ref = t.dataset.ref;
+  switch(act){
+    case 'view': viewNotification(ref); break;
+    case 'toggle-read': { const n=findN(ref); n.read=!n.read; renderAll(); break; }
+    case 'archive': { const n=findN(ref); n.archived=!n.archived;
+      S.audit.unshift([stamp(), ref, 'Archived','C. Mwale', n.archived?'Archived notification':'Restored notification','196.44.21.4','Success']);
+      renderAll(); renderAudit(); toast(n.archived?'Notification archived':'Notification restored','info'); break; }
+    case 'retry': retryNotification(ref); break;
+    case 'prev': S.page=Math.max(1,S.page-1); renderRegister(); break;
+    case 'next': S.page++; renderRegister(); break;
+    case 'quick-type': quickCompose(t.dataset.cat, ref); break;
+    case 'toggle-channel': { CHANNELS[+t.dataset.idx].enabled = !CHANNELS[+t.dataset.idx].enabled;
+      renderChannels(); toast(`${CHANNELS[+t.dataset.idx].name} ${CHANNELS[+t.dataset.idx].enabled?'enabled':'suspended'}`,'info'); break; }
+    case 'toggle-tpl': { const i=+t.dataset.idx; TEMPLATES[i][4]=!TEMPLATES[i][4]; renderTemplates();
+      toast(`${TEMPLATES[i][1]} ${TEMPLATES[i][4]?'activated':'deactivated'}`,'info'); break; }
+    case 'edit-tpl': editTemplate(+t.dataset.idx); break;
+    case 'preview-tpl': {
+      const tp = TEMPLATES[+t.dataset.idx];
+      const sample = tp[5].replace('{{first_name}}','Thokozani').replace('{{loan_no}}','LN-2026-1842')
+        .replace('{{customer_no}}','CUS-004286').replace('{{amount}}','2,500,000')
+        .replace('{{net_amount}}','2,412,500').replace('{{channel}}','Airtel Money')
+        .replace('{{reference}}','DIS-2026-1042').replace('{{due_date}}','2 Nov 2026')
+        .replace('{{days}}','14').replace('{{balance}}','842,000').replace('{{date}}','30 Oct 2026')
+        .replace('{{link}}','https://portal.goldenfs.mw/reset/8f2c').replace('{{action_required}}','Approval required')
+        .replace('{{count}}','3').replace('{{title}}',tp[1]).replace('{{message}}','Scheduled maintenance');
+      openModal(tp[1], `${tp[0]} · ${tp[2]} · ${tp[3]}`, `
+        <div class="preview"><div class="phead"><span>GOLDEN FS</span><span>${tp[2]}</span></div>
+          <div class="pbody"><div class="psub">${tp[1]}</div>
+          <div style="white-space:pre-wrap;color:#C7CBD4">${sample}</div></div>
+          <div class="pfoot"><span>Preview with sample merge fields</span><span>${new Date().toLocaleDateString()}</span></div></div>`,
+        [{label:'Close', cls:'btn-ghost', act:'close'},
+         {label:'Use this template', cls:'btn-gold', act:()=>{ closeModal(); useTemplate(+t.dataset.idx); }}]);
+      break; }
+    case 'use-tpl': useTemplate(+t.dataset.idx); break;
+    case 'toggle-auto': { const i=+t.dataset.idx; AUTOMATIONS[i][4]=!AUTOMATIONS[i][4];
+      renderAutomations(); toast(`${AUTOMATIONS[i][0]} ${AUTOMATIONS[i][4]?'resumed':'paused'}`,'info'); break; }
+    case 'withdraw-ann': { const i=+t.dataset.idx; const a=ANNOUNCEMENTS.splice(i,1)[0];
+      S.audit.unshift([stamp(), a[0], 'Broadcast','C. Mwale','Withdrawn: '+a[1],'196.44.21.4','Success']);
+      renderAnnouncements(); renderAudit(); toast('Announcement withdrawn','info'); break; }
+    case 'edit-ann': {
+      const i=+t.dataset.idx, a=ANNOUNCEMENTS[i];
+      openModal('Edit announcement', a[0], `
+        <div class="form-grid">
+          <div class="fg" style="grid-column:1/-1"><label>Title</label><input id="eaTitle" value="${a[1]}" /></div>
+          <div class="fg"><label>Priority</label><select id="eaPri">${['High','Normal','Low']
+            .map(p=>`<option ${p===a[4]?'selected':''}>${p}</option>`).join('')}</select></div>
+          <div class="fg"><label>Audience</label><input id="eaAud" value="${a[2]}" /></div>
+          <div class="fg" style="grid-column:1/-1"><label>Message</label>
+            <textarea id="eaBody" rows="4">${a[3]}</textarea></div>
+        </div>`,
+        [{label:'Cancel', cls:'btn-ghost', act:'close'},
+         {label:'Save changes', cls:'btn-gold', act:()=>{
+            a[1]=el('eaTitle').value; a[4]=el('eaPri').value; a[2]=el('eaAud').value; a[3]=el('eaBody').value;
+            closeModal(); renderAnnouncements(); toast('Announcement updated','ok');
+         }}]);
+      break; }
+    case 'report-pdf': toast(`${ref} · PDF generated`, 'ok'); break;
+    case 'report-xls': toast(`${ref} · Excel generated`, 'ok'); break;
+    case 'report-csv':
+      exportCSV([['Reference','Category','Type','Recipient','Channel','Status','Created','Subject'],
+        ...NTF.map(n=>[n.ref,n.cat,n.type,n.recipient,n.channel,n.status,n.created,n.subject])],
+        ref.toLowerCase().replace(/[^a-z]+/g,'-')+'.csv');
+      break;
+    case 'toggle': t.classList.toggle('on'); break;
+  }
+});
+
+function useTemplate(i){
+  const tp = TEMPLATES[i];
+  AUD = tp[3]==='Staff' ? 'Staff' : 'Customer';
+  document.querySelectorAll('#audienceSeg button').forEach(b=>b.classList.toggle('on', b.dataset.aud===AUD));
+  renderSendForm();
+  el('sendTemplate').value = tp[0];
+  el('sendSubject').value = tp[1];
+  el('sendBody').value = tp[5];
+  el('sendChannel').value = tp[2];
+  updatePreview();
+  document.getElementById('s9').scrollIntoView({behavior:'smooth'});
+  toast(`Template “${tp[1]}” loaded`, 'info');
+}
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+el('modalClose').onclick = closeModal;
+el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
+
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', e=>{
+    const p = item.dataset.page;
+    if(['dashboard','disbursements','staff'].includes(p)) return;
+    e.preventDefault(); toast('This module is queued for build.','info');
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+const secs=[...document.querySelectorAll('.sec')], chips=[...document.querySelectorAll('.snav')];
+const spy=()=>{ let cur=secs[0]; for(const s of secs) if(s.getBoundingClientRect().top<=150) cur=s;
+  chips.forEach(c=>c.classList.toggle('on', c.getAttribute('href')==='#'+cur.id)); };
+window.addEventListener('scroll', spy, {passive:true});
+chips.forEach(c=>c.addEventListener('click', e=>{
+  e.preventDefault();
+  const t=document.querySelector(c.getAttribute('href'));
+  if(t) window.scrollTo({top:t.offsetTop-112, behavior:'smooth'});
+}));
+
+/* filters */
+['fltSearch','fltFrom','fltTo','fltType','fltChannel','fltStatus','fltRecipient'].forEach(id=>{
+  const h=()=>{ S.page=1; renderRegister(); };
+  el(id).addEventListener('input',h); el(id).addEventListener('change',h);
+});
+el('fltReset').onclick = ()=>{ ['fltSearch','fltFrom','fltTo'].forEach(i=>el(i).value='');
+  ['fltType','fltChannel','fltStatus','fltRecipient'].forEach(i=>el(i).value=''); S.page=1; renderRegister(); };
+
+/* bulk + selection */
+document.addEventListener('change', e=>{
+  const cb = e.target.closest('[data-sel]');
+  if(!cb) return;
+  if(cb.checked) S.selected.add(cb.dataset.sel); else S.selected.delete(cb.dataset.sel);
+});
+el('selAll').addEventListener('change', e=>{
+  const rows = filtered().slice((S.page-1)*S.size, S.page*S.size);
+  if(e.target.checked) rows.forEach(n=>S.selected.add(n.ref)); else S.selected.clear();
+  renderRegister();
+});
+el('bulkRead').onclick = ()=>{ if(!S.selected.size) return toast('Select notifications first','err');
+  NTF.forEach(n=>{ if(S.selected.has(n.ref)) n.read=true; }); toast(`${S.selected.size} marked read`,'ok'); renderAll(); };
+el('bulkUnread').onclick = ()=>{ if(!S.selected.size) return toast('Select notifications first','err');
+  NTF.forEach(n=>{ if(S.selected.has(n.ref)) n.read=false; }); toast(`${S.selected.size} marked unread`,'ok'); renderAll(); };
+el('bulkArchive').onclick = ()=>{ if(!S.selected.size) return toast('Select notifications first','err');
+  NTF.forEach(n=>{ if(S.selected.has(n.ref)) n.archived=true; }); toast(`${S.selected.size} archived`,'info'); renderAll(); };
+el('bulkExport').onclick = ()=>{
+  const rows = S.selected.size ? NTF.filter(n=>S.selected.has(n.ref)) : filtered();
+  exportCSV([['Reference','Category','Type','Recipient','Channel','Status','Created','Subject'],
+    ...rows.map(n=>[n.ref,n.cat,n.type,n.recipient,n.channel,n.status,n.created,n.subject])],
+    'golden-notifications-2026-10-30.csv');
+};
+el('exportAll').onclick = ()=> el('bulkExport').click();
+
+/* send form */
+document.querySelectorAll('#audienceSeg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#audienceSeg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); AUD = b.dataset.aud; renderSendForm();
+  });
+});
+['sendChannel','sendRecipient','sendSubject','sendBody','sendWhen','sendAt'].forEach(id=>{
+  el(id).addEventListener('input', updatePreview);
+  el(id).addEventListener('change', updatePreview);
+});
+el('sendWhen').addEventListener('change', e=>{ el('sendAt').disabled = e.target.value==='Immediately'; });
+el('sendTemplate').addEventListener('change', e=>{
+  const tp = TEMPLATES.find(t=>t[0]===e.target.value);
+  if(tp){ el('sendSubject').value = tp[1]; el('sendBody').value = tp[5]; el('sendChannel').value = tp[2]; updatePreview(); }
+});
+el('sendBtn').onclick = sendNotification;
+el('previewBtn').onclick = ()=>{ updatePreview(); toast('Preview updated','info'); };
+el('clearSend').onclick = ()=>{ el('sendSubject').value=''; el('sendBody').value=''; el('sendTemplate').value=''; updatePreview(); };
+
+/* announcements */
+el('publishAnn').onclick = publishAnnouncement;
+el('clearAnn').onclick = ()=>{ el('annTitle').value=''; el('annBody').value=''; };
+el('quickAnnounce').onclick = ()=> document.getElementById('s14').scrollIntoView({behavior:'smooth'});
+el('annWhen').addEventListener('change', e=>{
+  if(e.target.value==='Schedule') toast('Scheduled announcements use the automation sending window','info');
+});
+
+/* templates / automations / settings */
+el('newTemplate').onclick = ()=>{
+  const id = 'TPL-' + String(TEMPLATES.length+1).padStart(2,'0');
+  TEMPLATES.push([id,'New template','SMS','Customer',false,'Type your approved wording here with {{first_name}} merge fields.']);
+  renderTemplates(); editTemplate(TEMPLATES.length-1);
+  toast('New template created','info');
+};
+el('automationSettings').onclick = ()=>{ document.getElementById('s12').scrollIntoView({behavior:'smooth'}); };
+el('saveWindow').onclick = ()=> toast('Sending window updated','ok');
+el('savePrefs').onclick = ()=> toast('Notification preferences saved','ok');
+el('settingsSave').onclick = ()=> toast('Notification settings saved','ok');
+el('settingsReset').onclick = ()=>{ renderSettings(); toast('Changes discarded','info'); };
+
+/* audit + misc */
+['auditSearch','auditAction'].forEach(id=>{
+  el(id).addEventListener('input', renderAudit); el(id).addEventListener('change', renderAudit);
+});
+el('auditReset').onclick = ()=>{ el('auditSearch').value=''; el('auditAction').value=''; renderAudit(); };
+el('auditExport').onclick = ()=>
+  exportCSV([['Time','Reference','Action','User','Detail','IP','Outcome'], ...S.audit], 'golden-notification-audit.csv');
+el('markAllRead').onclick = ()=>{ NTF.forEach(n=>n.read=true); renderAll(); toast('All notifications marked read','ok'); };
+el('actAll').onclick = ()=> document.getElementById('s2').scrollIntoView({behavior:'smooth'});
+el('bellBtn').onclick = ()=> document.getElementById('s2').scrollIntoView({behavior:'smooth'});
+el('quickSend').onclick = ()=> document.getElementById('s9').scrollIntoView({behavior:'smooth'});
+el('globalSearch').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){ el('fltSearch').value = e.target.value; S.page=1; renderRegister();
+    document.getElementById('s2').scrollIntoView({behavior:'smooth'}); }
+});
+el('savePrefs').onclick = ()=> toast('Notification preferences saved','ok');
+
+/* boot */
+function renderAll(){
+  renderOverview(); renderRegister(); renderTypeSection('Customer','custTypes','custList','custCount');
+  renderTypeSection('Staff','staffTypes','staffList','staffCount');
+  renderTypeSection('Loan','loanTypes','loanList','loanCount');
+  renderTypeSection('Repayment','repayTypes','repayList','repayCount');
+  renderTypeSection('Disbursement','disbTypes','disbList','disbCount');
+  renderTypeSection('System','sysTypes','sysList','sysCount');
+  renderSendForm(); renderChannels(); renderTemplates(); renderAutomations(); renderDelivery();
+  renderAnnouncements(); renderPrefs(); renderReports(); renderAudit(); renderSettings();
+}
+window.NOTIF_APP = {NTF, TEMPLATES, CHANNELS, AUTOMATIONS, ANNOUNCEMENTS, S, renderAll, filtered, TYPES};
+el('fltRecipient').innerHTML = '<option value="">All recipients</option>' +
+  [...new Set(NTF.map(n=>n.recipient))].sort().map(r=>`<option>${r}</option>`).join('');
+renderAll();
+spy();
+</script>
+</body>
+</html>
