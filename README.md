@@ -14,6 +14,19 @@ records table, CSV / Excel / PDF export, print, generation history and a role-ba
 access matrix. Nothing is a static screenshot — every figure is recomputed from the
 sample dataset when a filter changes.
 
+## Back navigation
+
+Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
+of each build by `inject_backnav.py`). It keeps a per-tab stack of the pages you actually
+visited, so **Back** walks that stack — reports → staff → dashboard — and stops (disabled) on
+the dashboard, the home page. Opening a module directly from a bookmark falls back to
+`index.html`. On the dashboard it also steps out of a drill-down view back to the overview.
+
+- Desktop: labelled `‹ Back` button showing the destination in its tooltip (`row` of the stack).
+- Tablet / phone (≤860px): icon-only 36–38px touch target, kept leftmost before the menu button.
+- Keyboard: the browser's own back shortcut keeps working; this is additive.
+- In print: the control is excluded with the rest of the topbar.
+
 ## Modules
 
 | Module | File | Sections |
@@ -46,6 +59,8 @@ build.sh                rebuilds disbursements.html from its partials
 build-notifications.sh  rebuilds notifications.html from its partials
 build-staff.sh          rebuilds staff.html from its partials
 build-reports.sh        rebuilds reports.html from its partials
+_backnav.html           shared back-navigation script (injected into every page)
+inject_backnav.py       appends the back-navigation script before </body>
 
 _bodyA/B/C.html  _jsA/B/C*.js          disbursements partials
 _nbodyA/B/C.html _njsA/B/C*.js         notifications partials

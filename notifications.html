@@ -303,6 +303,27 @@
   }
   .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
     background:#fff;place-items:center;cursor:pointer}
+  /* ===================== BACK NAVIGATION ===================== */
+  .backbtn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 9px;
+    border-radius:10px;border:1px solid var(--line);background:#fff;color:#3A3F4A;
+    font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;flex:0 0 auto;transition:.15s}
+  .backbtn:hover{border-color:var(--gold);background:var(--gold-soft);color:#6B5310}
+  .backbtn:active{transform:translateY(1px)}
+  .backbtn:disabled{opacity:.42;cursor:not-allowed;background:#F7F8FA;color:#8A90A0}
+  .backbtn:disabled:hover{border-color:var(--line);background:#F7F8FA;color:#8A90A0;transform:none}
+  .backbtn .bk-arrow{width:14px;height:14px;transition:transform .15s}
+  .backbtn:hover:not(:disabled) .bk-arrow{transform:translateX(-2px)}
+  @media(max-width:860px){
+    .backbtn{width:36px;height:36px;padding:0;justify-content:center;border-radius:10px}
+    .backbtn .bk-label{display:none}
+  }
+  @media(max-width:620px){
+    .backbtn{width:38px;height:38px;border-radius:11px}
+    .backbtn .bk-arrow{width:16px;height:16px}
+    .topbar{gap:8px}
+    .topbar .btn-ghost,.topbar .icon-btn{display:none}
+    .page-sub{display:none}
+  }
 
   /* ===================== MODULE PAGE ADDITIONS ===================== */
   .modband{background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);color:#fff;
@@ -2576,6 +2597,102 @@ el('fltRecipient').innerHTML = '<option value="">All recipients</option>' +
   [...new Set(NTF.map(n=>n.recipient))].sort().map(r=>`<option>${r}</option>`).join('');
 renderAll();
 spy();
+</script>
+<!-- ==================== SHARED BACK NAVIGATION ==================== -->
+<script>
+/* GOLDEN FINANCIAL SERVICES · back navigation
+   Keeps a per-tab navigation stack so "Back" always walks the pages you actually
+   visited (reports → staff → home) and falls back to the home page when a page is
+   opened directly. Responsive: icon button on phones, labelled button on desktop. */
+(function(){
+  if(window.__glsBack) return;
+  window.__glsBack = true;
+
+  var KEY = 'gls_nav_stack', HOME = 'index.html';
+  var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
+                'notifications.html':'Notifications','staff.html':'Staff Management'};
+  var file = (location.pathname.split('/').pop() || HOME) || HOME;
+  if(!/\.html$/i.test(file)) file = HOME;
+
+  function read(){ try{ var s = JSON.parse(sessionStorage.getItem(KEY) || '[]'); return Array.isArray(s) ? s : []; }
+                  catch(e){ return []; } }
+  function write(a){ try{ sessionStorage.setItem(KEY, JSON.stringify(a.slice(-15))); }catch(e){} }
+  function isHome(){ return file === HOME; }
+  function name(p){ return TITLES[p] || p.replace(/\.html$/i,'').replace(/[-_]/g,' '); }
+
+  var stack = read();
+  if(stack[stack.length - 1] !== file) stack.push(file);
+  write(stack);
+
+  function prevPage(){
+    var s = read();
+    return s.length > 1 ? s[s.length - 2] : null;
+  }
+  /* on the dashboard the SPA can show a sub-view; that counts as one level down */
+  function subViewOpen(){
+    if(!isHome()) return false;
+    var d = document.getElementById('page-dashboard');
+    return !!(d && d.classList.contains('hide'));
+  }
+  function canGoBack(){ return !!prevPage() || subViewOpen() || !isHome(); }
+
+  function label(){
+    var p = prevPage();
+    if(p) return 'Back to ' + name(p);
+    if(subViewOpen()) return 'Back to the dashboard';
+    return 'Back to the home page';
+  }
+
+  function refresh(){
+    var b = document.getElementById('backBtn');
+    if(!b) return;
+    var ok = canGoBack();
+    b.disabled = !ok;
+    if(ok){ b.removeAttribute('aria-disabled'); } else { b.setAttribute('aria-disabled','true'); }
+    b.title = label();
+    b.setAttribute('aria-label', b.title);
+    var lab = b.querySelector('.bk-label');
+    if(lab) lab.textContent = 'Back';
+  }
+
+  function goBack(){
+    if(!canGoBack()) return;
+    if(subViewOpen()){
+      var nav = document.querySelector('.nav-item[data-page="dashboard"]');
+      if(nav){ nav.click(); setTimeout(refresh, 40); return; }
+    }
+    var s = read();
+    if(s.length > 1){                                   // walk the visited stack
+      s.pop(); write(s);
+      location.href = s[s.length - 1];
+      return;
+    }
+    if(!isHome()){ write([HOME]); location.href = HOME; return; }   // deep link → home
+  }
+
+  function mount(){
+    var bar = document.querySelector('.topbar');
+    if(!bar || bar.querySelector('#backBtn')) return;
+    var b = document.createElement('button');
+    b.id = 'backBtn'; b.type = 'button'; b.className = 'backbtn';
+    b.innerHTML = '<svg class="bk-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'+
+      '<span class="bk-label">Back</span>';
+    b.addEventListener('click', goBack);
+    bar.insertBefore(b, bar.firstChild);
+    refresh();
+    /* keep the state honest when the SPA swaps views on the dashboard */
+    document.querySelectorAll('.nav-item').forEach(function(n){
+      n.addEventListener('click', function(){ setTimeout(refresh, 60); });
+    });
+  }
+
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', mount); }
+  else { mount(); }
+
+  window.addEventListener('pageshow', function(e){ if(e.persisted) refresh(); });
+  window.glsBack = goBack;
+})();
 </script>
 </body>
 </html>

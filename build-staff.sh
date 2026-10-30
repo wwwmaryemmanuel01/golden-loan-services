@@ -11,3 +11,4 @@ s = s.replace('<title>Module — GOLDEN FINANCIAL SERVICES</title>',
 p.write_text(s)
 print('built staff.html', len(s), 'bytes')
 PY
+python3 inject_backnav.py staff.html
