@@ -63,14 +63,27 @@ are stored or displayed.
 
 ## Deploying to GitHub Pages
 
-1. Create an empty repository on GitHub (no README).
-2. Push this folder:
+Target repository: `https://github.com/wwwmaryemmanuel01/golden-loan-services`
 
-   ```bash
-   git remote add origin https://github.com/<user>/<repo>.git
-   git branch -M main
-   git push -u origin main
-   ```
+**Fastest route** — run the helper (it commits, sets the remote and pushes):
+
+```bash
+./push-to-github.sh
+```
+
+or, with a fine-grained token instead of an interactive login:
+
+```bash
+GH_TOKEN=github_pat_xxx ./push-to-github.sh
+```
+
+**Manual route**:
+
+```bash
+git remote add origin https://github.com/wwwmaryemmanuel01/golden-loan-services.git
+git branch -M main
+git push -u origin main
+```
 
 3. Repository **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`**.
 4. The portal appears at `https://<user>.github.io/<repo>/` (entry point `index.html`).
