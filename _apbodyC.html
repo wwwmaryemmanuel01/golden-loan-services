@@ -1,0 +1,170 @@
+    <!-- 8 -->
+    <section class="sec" id="s8" data-sec="8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Loan Approval &amp; Authorization</h2><p>Recommended terms become approved terms only when the authority matrix signs off</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="apprCount">0 approved</span>
+          <span class="badge b-await" id="apprAwait">0 awaiting authorization</span>
+        </div>
+      </div>
+
+      <div class="mgrid" id="apprTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval Register</div>
+            <div class="panel-sub">Approved, authorized and conditionally approved files</div></div>
+            <div class="segbar" id="apprTabs">
+              <button class="on" data-at="pending">Pending authorization</button>
+              <button data-at="authorized">Authorized</button>
+              <button data-at="conditions">With conditions</button>
+            </div></div>
+          <div class="tblwrap" style="max-height:400px"><table class="tbl2">
+            <thead><tr><th>Application</th><th>Applicant</th><th class="num">Approved</th>
+              <th>Level</th><th>Status</th><th></th></tr></thead>
+            <tbody id="apprBody"></tbody></table></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Authorization Panel</div>
+            <div class="panel-sub" id="apprSub">Nothing selected</div></div>
+            <span class="count-pill" id="apprLevel">Level 1</span></div>
+          <div id="apprPanel"><div class="empty">Select an approved application.</div></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Approval History</div>
+          <div class="panel-sub">Multi-level sign-off with amounts, limits and conditions</div></div>
+          <span class="count-pill" id="apprHistCount">0</span></div>
+        <div class="tblwrap"><table class="tbl2">
+          <thead><tr><th>When</th><th>Application</th><th>Level</th><th>Approver</th>
+            <th class="num">Approved</th><th>Rate</th><th>Conditions</th></tr></thead>
+          <tbody id="apprHistory"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9" data-sec="9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Pending &amp; Incomplete Applications</h2><p>Everything sitting still — and the reason it is sitting still</p></div>
+        <div class="sec-tools">
+          <span class="badge b-rej" id="pendLate">0 past deadline</span>
+          <button class="btn btn-ghost btn-sm" id="pendExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="pendTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Waiting On</div>
+            <div class="panel-sub">Filter the list by what is blocking the file</div></div></div>
+          <div class="segbar" id="pendTabs" style="margin-bottom:9px;flex-wrap:wrap">
+            <button class="on" data-pt="">All</button>
+            <button data-pt="documents">Documents</button>
+            <button data-pt="information">Customer info</button>
+            <button data-pt="verification">Verification</button>
+            <button data-pt="assessment">Assessment</button>
+            <button data-pt="approval">Approval</button>
+            <button data-pt="returned">Returned</button>
+            <button data-pt="hold">On hold</button>
+          </div>
+          <div class="tblwrap" style="max-height:420px"><table class="tbl2">
+            <thead><tr><th>Application</th><th>Applicant</th><th>Waiting on</th>
+              <th class="num">Days</th><th>Owner</th><th></th></tr></thead>
+            <tbody id="pendBody"></tbody></table></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Follow-Up Tasks</div>
+            <div class="panel-sub">Reminders set on stalled files</div></div>
+            <button class="btn btn-ghost btn-sm" id="pendTask">Add task</button></div>
+          <div id="pendTasks"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10" data-sec="10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Rejected, Cancelled &amp; Withdrawn</h2><p>Closed files stay in the record with the reason and the decision maker</p></div>
+        <div class="sec-tools"><span class="count-pill" id="rejCount">0 closed</span></div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Closed Applications</div>
+            <div class="panel-sub">Rejected, cancelled, withdrawn and closed without approval</div></div>
+            <div class="segbar" id="rejTabs">
+              <button class="on" data-jt="">All</button>
+              <button data-jt="Rejected">Rejected</button>
+              <button data-jt="Cancelled">Cancelled</button>
+              <button data-jt="Withdrawn">Withdrawn</button>
+              <button data-jt="Disbursed">Disbursed</button>
+            </div></div>
+          <div class="tblwrap" style="max-height:420px"><table class="tbl2">
+            <thead><tr><th>Application</th><th>Applicant</th><th>Status</th>
+              <th>Reason</th><th>Decided by</th><th>Date</th><th></th></tr></thead>
+            <tbody id="rejBody"></tbody></table></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rejection Reasons</div>
+            <div class="panel-sub">Across every closed file this quarter</div></div></div>
+          <div id="rejReasons"></div>
+          <div class="minihead">Reconsideration &amp; reapplication</div>
+          <div id="rejRecon"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11" data-sec="11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Application Assignment &amp; Workflow</h2><p>Who owns each file, how long it has sat there and what happens next</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="wfEscalate">Escalate overdue</button>
+          <button class="btn btn-gold btn-sm" id="wfAssign">Assign / reassign</button>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Officer Workload</div>
+            <div class="panel-sub">Open files per loan officer</div></div>
+            <span class="count-pill" id="wfLoadTotal">0 open</span></div>
+          <div id="wfLoad"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Processing Stages</div>
+            <div class="panel-sub">Standard turnaround against the files in each stage</div></div></div>
+          <div id="wfStages"></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Assignment Board</div>
+          <div class="panel-sub">Open applications, their owner and their deadline</div></div>
+          <span class="count-pill" id="wfBoardCount">0</span></div>
+        <div class="tblwrap" style="max-height:400px"><table class="tbl2">
+          <thead><tr><th>Application</th><th>Applicant</th><th>Stage</th><th>Officer</th>
+            <th>Deadline</th><th class="num">Days</th><th></th></tr></thead>
+          <tbody id="wfBody"></tbody></table></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Status History</div>
+            <div class="panel-sub" id="wfHistSub">Select an application on the board</div></div></div>
+          <div id="wfHistory"><div class="empty">Pick an application to see how it moved.</div></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Internal Notes</div>
+            <div class="panel-sub">Visible to staff only</div></div>
+            <button class="btn btn-ghost btn-sm" id="wfNoteBtn">Add note</button></div>
+          <div id="wfNotes"><div class="empty">Pick an application to read its notes.</div></div>
+        </div>
+      </div>
+    </section>

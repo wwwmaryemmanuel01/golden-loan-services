@@ -1,0 +1,188 @@
+    <!-- 4 -->
+    <section class="sec" id="s4" data-sec="4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Application Verification &amp; KYC</h2><p>Confirm who the applicant is, where they live, what they earn and what they already owe</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="verCount">0 to verify</span>
+          <span class="badge b-await" id="verFlagged">0 flagged</span>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Queue</div>
+            <div class="panel-sub">Applications in intake or under review</div></div></div>
+          <div class="segbar" id="verTabs" style="margin-bottom:9px">
+            <button class="on" data-vt="">All</button>
+            <button data-vt="pending">Unverified</button>
+            <button data-vt="flagged">Flagged</button>
+            <button data-vt="done">Verified</button>
+          </div>
+          <div id="verQueue"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Checklist</div>
+            <div class="panel-sub" id="verSub">Nothing selected</div></div>
+            <span class="count-pill" id="verScore">0 / 9</span></div>
+          <div id="verDetail"></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Verification Results</div>
+          <div class="panel-sub">Recorded checks, flags raised and who signed off</div></div>
+          <span class="count-pill" id="verHistCount">0</span></div>
+        <div class="tblwrap"><table class="tbl2">
+          <thead><tr><th>Application</th><th>Applicant</th><th class="num">Checks</th>
+            <th>Flags</th><th>Verifier</th><th>Recorded</th><th>Status</th></tr></thead>
+          <tbody id="verHistory"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5" data-sec="5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Application Assessment &amp; Credit Analysis</h2><p>Affordability, debt-to-income, credit history and the recommendation that goes to the reviewer</p></div>
+        <div class="sec-tools"><span class="badge b-proc" id="asRiskBadge">No application selected</span></div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Assessment Queue</div>
+            <div class="panel-sub">Verified applications waiting for analysis</div></div>
+            <span class="count-pill" id="asQueueCount">0</span></div>
+          <div id="asList"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Affordability Worksheet</div>
+            <div class="panel-sub" id="asSub">Select an application</div></div>
+            <button class="btn btn-ghost btn-sm" id="asReset">Reset from file</button></div>
+
+          <div class="form-grid">
+            <div class="fg"><label>Monthly income</label><input id="asIncome" type="number" value="0"></div>
+            <div class="fg"><label>Monthly expenses</label><input id="asExpenses" type="number" value="0"></div>
+            <div class="fg"><label>Other loan obligations</label><input id="asOblig" type="number" value="0"></div>
+            <div class="fg"><label>Requested amount</label><input id="asAmount" type="number" value="0"></div>
+            <div class="fg"><label>Term (months)</label><input id="asTerm" type="number" value="12"></div>
+            <div class="fg"><label>Interest rate (% / month)</label><input id="asRate" type="number" value="3.5" step="0.1"></div>
+          </div>
+
+          <div class="kv" style="margin-top:6px"><span class="k">Proposed instalment</span>
+            <span class="v big" id="asInst">—</span></div>
+          <div class="kv"><span class="k">Total repayable</span><span class="v" id="asTotal">—</span></div>
+          <div class="kv"><span class="k">Debt-to-income ratio</span><span class="v" id="asDti">—</span></div>
+          <div class="meter" id="asDtiBar"><i style="width:0%"></i></div>
+          <div class="legend" id="asDtiLegend"></div>
+
+          <div class="minihead">Risk classification</div>
+          <div class="toggle-row" id="asRiskPick">
+            <div class="choice on" data-risk="Low"><span class="dotx"></span>Low</div>
+            <div class="choice" data-risk="Medium"><span class="dotx"></span>Medium</div>
+            <div class="choice" data-risk="High"><span class="dotx"></span>High</div>
+          </div>
+
+          <div class="fg" style="margin-top:10px"><label>Assessment notes</label>
+            <textarea id="asNotes" style="min-height:64px" placeholder="Affordability, purpose, guarantor strength, anything the reviewer must weigh"></textarea></div>
+
+          <div class="note" id="asRec"><div><b>Recommendation:</b> select an application to calculate one.</div></div>
+
+          <div class="form-actions">
+            <button class="btn btn-gold" id="asRun">Run assessment</button>
+            <button class="btn btn-ghost" id="asSave">Save &amp; send to review</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Credit &amp; Repayment History</div>
+            <div class="panel-sub">Existing loans at Golden and elsewhere</div></div></div>
+          <div id="asHistory">
+            <div class="empty">Select an application to load the applicant's history.</div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Proposed Interest &amp; Fees</div>
+            <div class="panel-sub">What the customer will actually pay</div></div></div>
+          <div id="asCharges">
+            <div class="empty">Select an application to price the loan.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6" data-sec="6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Application Documents &amp; Agreements</h2><p>What has been received, what is missing and what still has to be signed before a file can be approved</p></div>
+        <div class="sec-tools">
+          <span class="badge b-rej" id="docMissingPill">0 missing</span>
+          <button class="btn btn-ghost btn-sm" id="docRequest">Request missing documents</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="docTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Checklist</div>
+            <div class="panel-sub" id="docSub">No application selected</div></div>
+            <select id="docApp" style="max-width:220px"></select></div>
+          <div id="docChecklist"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Missing &amp; Invalid</div>
+            <div class="panel-sub">Blocking items before review</div></div>
+            <span class="count-pill" id="docAlertCount">0</span></div>
+          <div id="docAlerts"></div>
+          <div class="minihead">Document history</div>
+          <div class="tblwrap" style="max-height:200px"><table class="tbl2">
+            <thead><tr><th>When</th><th>Document</th><th>Action</th><th>By</th></tr></thead>
+            <tbody id="docHistory"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7" data-sec="7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Application Review &amp; Decision</h2><p>Weigh the assessment, recommend the terms and record a decision that can be audited</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="revCount">0 awaiting review</span>
+          <span class="badge b-await" id="revLate">0 past deadline</span>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Review Queue</div>
+            <div class="panel-sub">Assessed applications and returned files</div></div></div>
+          <div class="segbar" id="revTabs" style="margin-bottom:9px">
+            <button class="on" data-rt="review">Awaiting review</button>
+            <button data-rt="returned">Returned</button>
+            <button data-rt="mine">Assigned to me</button>
+          </div>
+          <div id="revQueue"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Decision Panel</div>
+            <div class="panel-sub" id="revSub">Nothing selected</div></div>
+            <span class="count-pill" id="revDtiPill">—</span></div>
+          <div id="revPanel"><div class="empty">Pick an application from the queue.</div></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Decision Record</div>
+          <div class="panel-sub">Every decision, who took it and why</div></div>
+          <span class="count-pill" id="revRecCount">0</span></div>
+        <div class="tblwrap"><table class="tbl2">
+          <thead><tr><th>Application</th><th>Applicant</th><th>Decision</th>
+            <th class="num">Amount</th><th>By</th><th>Date</th><th>Reason</th></tr></thead>
+          <tbody id="revRecords"></tbody></table></div>
+      </div>
+    </section>

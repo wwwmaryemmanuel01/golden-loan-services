@@ -345,7 +345,7 @@
       Dashboard
     </a>
     <div class="nav-label">Lending</div>
-    <a class="nav-item" data-page="applications" href="#applications">
+    <a class="nav-item" data-page="applications" href="applications.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
       Loan Applications <span class="pill gold">18</span>
     </a>
@@ -1762,6 +1762,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'reports'){ window.location.href = 'reports.html'; return; }
     if(page === 'settings'){ window.location.href = 'settings.html'; return; }
     if(page === 'repayments'){ window.location.href = 'repayments.html'; return; }
+    if(page === 'applications'){ window.location.href = 'applications.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
@@ -1841,7 +1842,8 @@ el('exportBtn').addEventListener('click', ()=>{
   var KEY = 'gls_nav_stack', HOME = 'index.html';
   var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
                 'notifications.html':'Notifications','staff.html':'Staff Management',
-                'settings.html':'System Settings','repayments.html':'Repayments & Collections'};
+                'settings.html':'System Settings','repayments.html':'Repayments & Collections',
+                'applications.html':'Loan Applications'};
   var file = (location.pathname.split('/').pop() || HOME) || HOME;
   if(!/\.html$/i.test(file)) file = HOME;
 
