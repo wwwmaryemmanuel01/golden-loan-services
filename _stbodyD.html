@@ -1,0 +1,306 @@
+    <!-- 15 -->
+    <section class="sec" id="s15" data-sec="15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>System Integrations &amp; API Settings</h2><p>Supabase, authentication, email, SMS and payment gateway status, keys, webhooks and health</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="15">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="15">Save section</button>
+          <button class="btn btn-gold btn-sm" id="keyNew">Generate API key</button>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="panel-head"><div><div class="panel-title">Integration Status</div>
+          <div class="panel-sub">Live connection state · checked every 60 seconds</div></div>
+          <button class="btn btn-ghost btn-sm" id="healthCheck">Re-check all</button></div>
+        <div class="igrid" id="integrations" style="margin-top:10px"></div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">API Configuration</div>
+            <div class="panel-sub">Base settings for the public API</div></div>
+            <span class="badge b-ok">v2</span></div>
+          <div class="setlist" id="apiCfg"></div>
+          <div class="grp" style="margin-top:12px">API access permissions</div>
+          <div id="apiScopes"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">API Keys</div>
+            <div class="panel-sub">Revoke a key to cut off an integration immediately</div></div>
+            <span class="count-pill" id="keyCount">0 keys</span></div>
+          <div class="tblwrap" style="max-height:250px">
+            <table class="tbl2"><thead><tr><th>Name</th><th>Key</th><th>Scope</th><th>Created</th>
+              <th>Last used</th><th>Status</th><th></th></tr></thead><tbody id="keyBody"></tbody></table>
+          </div>
+          <div class="grp" style="margin-top:12px">Webhook settings</div>
+          <div id="hookList"></div>
+          <div class="form-actions"><button class="btn btn-ghost btn-sm" id="hookNew">Add webhook</button></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Integration Error Logs</div>
+            <div class="panel-sub">Failed calls to external services</div></div>
+            <div class="fld"><select id="intErrFilter"><option value="">All services</option>
+              <option>Supabase</option><option>Auth</option><option>Email</option><option>SMS</option>
+              <option>Payment gateway</option></select></div></div>
+          <div class="tblwrap" style="max-height:280px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Service</th><th>Endpoint</th>
+              <th>Error</th><th>Retries</th></tr></thead><tbody id="intErrBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Integration Health Monitoring</div>
+            <div class="panel-sub">24-hour uptime and response time per service</div></div></div>
+          <div id="healthList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16" data-sec="16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>System Maintenance &amp; Updates</h2><p>Version, health, scheduled maintenance, cache and update history</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="16">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="16">Save section</button>
+          <button class="btn btn-gold btn-sm" id="checkUpdates">Check for updates</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Current Application Version</div>
+            <div class="panel-sub">Deployment details for this environment</div></div>
+            <span class="badge b-ok" id="envBadge">Production</span></div>
+          <div class="setlist" id="versionCfg"></div>
+          <div class="note gold" style="margin-top:10px" id="updateNote">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+            <div><b>v2.5.0 is available.</b> Includes the settings console, faster reports and a Supabase client upgrade.
+              <button class="btn btn-ghost btn-sm" id="viewUpdate" style="margin-left:4px">View notes</button></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">System &amp; Server Health</div>
+            <div class="panel-sub">Resource usage and service status</div></div>
+            <button class="btn btn-ghost btn-sm" id="healthRefresh">Refresh</button></div>
+          <div class="health" id="sysHealth" style="margin-top:10px"></div>
+          <div class="grp" style="margin-top:12px">Error monitoring</div>
+          <div class="setlist" id="errMonCfg"></div>
+        </div>
+      </div>
+
+      <div class="grid g3" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Scheduled Maintenance</div>
+            <div class="panel-sub">Planned downtime windows</div></div></div>
+          <div class="setlist" id="schedMaintCfg"></div>
+          <div class="prev" style="margin-top:9px">
+            <div class="pl">Next maintenance window</div>
+            <div class="pv" id="nextMaint">02 Nov 2026 · 23:00</div>
+            <div class="pn" id="nextMaintSub">90 minutes · maintenance mode auto-enabled</div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Maintenance Notifications</div>
+            <div class="panel-sub">Who is told, and how far ahead</div></div></div>
+          <div class="setlist" id="maintNotifCfg"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Cache Management</div>
+            <div class="panel-sub">Clear stale data without downtime</div></div>
+            <span class="badge b-await" id="cacheBadge">Warm</span></div>
+          <div class="setlist" id="cacheCfg"></div>
+          <div class="prev" style="margin-top:9px">
+            <div class="pl">Cache size</div>
+            <div class="pv" id="cacheSize">184.2 MB</div>
+            <div class="pn" id="cacheSub">Hit rate 96.4% · last purge 28 Oct 2026</div>
+          </div>
+          <div class="form-actions"><button class="btn btn-red btn-sm" id="cacheClear">Clear cache</button>
+            <button class="btn btn-ghost btn-sm" id="cdnPurge">Purge CDN</button></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Application Update Information</div>
+            <div class="panel-sub">Release history for this deployment channel</div></div></div>
+          <div class="tl" id="updateList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Maintenance History</div>
+            <div class="panel-sub">Completed windows and their impact</div></div></div>
+          <div class="tblwrap" style="max-height:290px">
+            <table class="tbl2"><thead><tr><th>Date</th><th>Type</th><th>Duration</th>
+              <th>Impact</th><th>Status</th></tr></thead><tbody id="maintBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17" data-sec="17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Localization &amp; Regional Settings</h2><p>Currency, date, time and number formats, business days, public holidays and regional reporting</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="17">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-discard="17">Discard</button>
+          <button class="btn btn-gold btn-sm" data-save="17">Save section</button>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Currency Symbol &amp; Format</div>
+            <div class="panel-sub">Malawi Kwacha is the functional currency</div></div></div>
+          <div class="setlist" id="locCurrency"></div>
+          <div class="prev">
+            <div class="pl">Live preview</div>
+            <div class="pv" id="locMoney">MK 1,250,000.00</div>
+            <div class="pn" id="locMoneySub">Symbol before · comma thousands · 2 decimals</div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Date &amp; Time Format</div>
+            <div class="panel-sub">Used on documents, statements and every table</div></div></div>
+          <div class="setlist" id="locDateTime"></div>
+          <div class="prevrow">
+            <div class="prev"><div class="pl">Date</div><div class="pv" id="locDate" style="font-size:13px">30 Oct 2026</div></div>
+            <div class="prev"><div class="pl">Long date</div><div class="pv" id="locLongDate" style="font-size:12px">Friday, 30 October 2026</div></div>
+            <div class="prev"><div class="pl">Time</div><div class="pv" id="locTime" style="font-size:13px">14:32 CAT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g3" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Number &amp; Language</div>
+            <div class="panel-sub">Separators and interface language</div></div></div>
+          <div class="setlist" id="locNumber"></div>
+          <div class="prev">
+            <div class="pl">Number sample</div>
+            <div class="pv" id="locNum">1,250,000.00</div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Country &amp; Local Business Days</div>
+            <div class="panel-sub">Working days drive due dates and penalty grace</div></div></div>
+          <div class="setlist" id="locCountry"></div>
+          <div class="grp" style="margin-top:10px">Business days</div>
+          <div class="filters" id="bizDays" style="margin-top:4px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Regional Financial Reporting</div>
+            <div class="panel-sub">Statutory requirements for Malawi</div></div></div>
+          <div class="setlist" id="locRegional"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Public Holidays</div>
+          <div class="panel-sub">Excluded from due-date and penalty calculations</div></div>
+          <button class="btn btn-ghost btn-sm" id="holidayNew">Add holiday</button></div>
+        <div class="tblwrap" style="max-height:320px">
+          <table class="tbl2"><thead><tr><th>Date</th><th>Holiday</th><th>Type</th>
+            <th>Due dates shift</th><th>Status</th><th></th></tr></thead><tbody id="holidayBody"></tbody></table>
+        </div>
+        <div class="note" style="margin-top:10px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+          <div>Instalments that fall on a weekend or public holiday move to the next business day
+            (<b id="bizRuleLabel">enabled</b>) rather than attracting a late penalty.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18" data-sec="18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Compliance &amp; Data Protection</h2><p>Customer data access, privacy and consent, retention, correction requests and regulatory reporting</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="18">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="18">Save section</button>
+          <button class="btn btn-gold btn-sm" id="complianceExport">Export compliance pack</button>
+        </div>
+      </div>
+
+      <div class="grid g4" id="compTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Data Access Rules</div>
+            <div class="panel-sub">Who sees personal data, and how it is masked</div></div></div>
+          <div class="setlist" id="compAccess"></div>
+          <div class="grp" style="margin-top:12px">Sensitive data access restrictions</div>
+          <div id="compSensitive"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Privacy &amp; Consent Settings</div>
+            <div class="panel-sub">Malawi Data Protection Act 2024</div></div>
+            <span class="badge b-ok" id="consentBadge">Compliant</span></div>
+          <div class="setlist" id="compPrivacy"></div>
+          <div class="grp" style="margin-top:12px">Data retention policies</div>
+          <div class="setlist" id="compRetention"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Data Correction Requests</div>
+            <div class="panel-sub">Right-to-rectification requests awaiting action</div></div>
+            <span class="count-pill" id="corrCount">0 open</span></div>
+          <div class="tblwrap" style="max-height:280px">
+            <table class="tbl2"><thead><tr><th>Received</th><th>Customer</th><th>Field</th>
+              <th>Status</th><th></th></tr></thead><tbody id="corrBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Export Rules &amp; Account Closure</div>
+            <div class="panel-sub">What happens when a customer leaves</div></div></div>
+          <div class="setlist" id="compExport"></div>
+          <div class="grp" style="margin-top:12px">Account closure and data handling</div>
+          <div class="setlist" id="compClosure"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Regulatory Reporting Configuration</div>
+            <div class="panel-sub">Reserve Bank of Malawi and FIU obligations</div></div></div>
+          <div class="setlist" id="compReg"></div>
+          <div class="grp" style="margin-top:12px">Audit trail requirements</div>
+          <div class="setlist" id="compAudit"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Security &amp; Compliance Review History</div>
+            <div class="panel-sub">Independent reviews and internal attestations</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2"><thead><tr><th>Date</th><th>Review</th><th>Reviewer</th>
+              <th>Findings</th><th>Status</th></tr></thead><tbody id="compHistBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample configuration. Every control on this page is live — toggles, selects and fields update the
+        in-page state, sections track unsaved changes, and saving writes an entry to the audit log.
+        No secrets are displayed and nothing is sent anywhere.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

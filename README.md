@@ -21,6 +21,32 @@ export falls back to an in-page preview modal with a **Copy** button instead of 
 silently. Nothing is a static screenshot — every figure is recomputed from the
 sample dataset when a filter changes.
 
+## Settings module
+
+`settings.html` is the system configuration console: **18 sections** covering organisation
+details and branding, users and staff, roles and permissions, authentication and security,
+loan products, the approval workflow, repayments and financial rules, payment methods,
+notifications, the customer portal, data and backups, audit logs, documents, reporting,
+integrations and API, maintenance, localization and compliance — roughly 390 individual
+settings.
+
+Every control is live. Toggles, selects, number fields and text inputs write straight into
+an in-page configuration object, and each section tracks its own **unsaved changes** —
+`Save section` / `Discard` act on that section alone, `Save all changes` commits everything,
+and every save appends an entry to the audit log in section 12. Changing a value that
+legitimately appears in two places (currency in §1 and §17, for example) updates both.
+
+Above the page a **search** finds any setting across all 18 sections by name or keyword,
+dims the sections with no match and reports where the hits are — the only practical way
+to navigate 390 settings.
+
+The tables are real: creating a staff account, suspending, unlocking and resetting a
+password, creating or deleting a role, editing the permission matrix, adding a loan
+product or an approval level, reordering the payment allocation priority (with a live
+allocation simulator), enabling payment methods, scheduling a report, revoking an API key,
+adding a holiday and resolving a data correction request all mutate the in-page state and
+re-render. Nothing is a static screenshot.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -43,6 +69,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Notifications | `notifications.html` | 18 |
 | Staff Management | `staff.html` | 18 |
 | Reports & Analytics | `reports.html` | 11 · 89 reports |
+| System Settings | `settings.html` | 18 · ~390 settings |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -55,17 +82,20 @@ disbursements.html      Module 2  (built)
 notifications.html      Module 3  (built)
 staff.html              Module 4  (built)
 reports.html            Module 5  (built · 89 reports in 10 categories + console)
+settings.html           Module 6  (built · 18 configuration sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
 _staff.css              page CSS for Staff Management
 _reports.css            page CSS for Reports
+_settings.css           page CSS for System Settings
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
 build-notifications.sh  rebuilds notifications.html from its partials
 build-staff.sh          rebuilds staff.html from its partials
 build-reports.sh        rebuilds reports.html from its partials
+build-settings.sh       rebuilds settings.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -73,6 +103,7 @@ _bodyA/B/C.html  _jsA/B/C*.js          disbursements partials
 _nbodyA/B/C.html _njsA/B/C*.js         notifications partials
 _sbodyA/B/C.html _sjsA/B/C*/D.js       staff partials
 _rbodyA/B.html   _rjsA/B/C*/D*/E.js    reports partials (_rjsE.js = xlsx writer)
+_stbodyA/B/C/D.html _stjsA/B/C/D.js  settings partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -84,6 +115,8 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ```bash
 ./build-staff.sh          # staff.html
 ./build-notifications.sh  # notifications.html
+./build-settings.sh       # settings.html
+./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```
 
