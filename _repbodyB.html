@@ -1,0 +1,289 @@
+    <!-- 4 -->
+    <section class="sec" id="s4" data-sec="4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Payment Verification</h2><p>Confirm the money actually arrived before it can be allocated to a loan</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="verCount">0 pending</span>
+          <span class="badge b-await" id="verValue">MK 0</span>
+        </div>
+      </div>
+
+      <div class="mgrid" id="verMethods" style="margin-bottom:13px"></div>
+
+      <div class="split rev">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Verification</div>
+            <div class="panel-sub">Select a payment to review its reference and evidence</div></div>
+            <button class="btn btn-ghost btn-sm" id="verAll">Verify all matched</button></div>
+          <div id="verQueue" style="margin-top:9px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Review Panel</div>
+            <div class="panel-sub" id="verDetailSub">Nothing selected</div></div></div>
+          <div id="verDetail"></div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Verification History</div>
+          <div class="panel-sub">Confirmed and rejected payments · decision, verifier and notes</div></div></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Receipt</th><th>Customer</th>
+            <th class="num">Amount</th><th>Method</th><th>Decision</th><th>Verified by</th><th>Notes</th></tr></thead>
+            <tbody id="verHistory"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5" data-sec="5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Repayment Allocation</h2><p>Apply verified money to penalties, fees, interest, principal and specific instalments</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="unallocCount">0 unallocated</span>
+          <button class="btn btn-ghost btn-sm" id="allocCorrect">Correct an allocation</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verified Payments Awaiting Allocation</div>
+            <div class="panel-sub">Select a payment, then apply it below or on the right</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2"><thead><tr><th>Receipt</th><th>Customer</th><th>Loan</th>
+              <th class="num">Amount</th><th>Verified</th><th></th></tr></thead>
+              <tbody id="unallocBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Allocate Payment</div>
+            <div class="panel-sub" id="allocSub">No payment selected</div></div>
+            <button class="btn btn-ghost btn-sm" id="allocAuto">Auto-allocate</button></div>
+          <div clasS="alloc-detail" id="allocDetail"></div>
+          <div class="form-grid" style="margin-top:10px">
+            <div class="fg"><label>Penalties</label><input id="allocPen" type="number" value="0" /></div>
+            <div class="fg"><label>Fees</label><input id="allocFees" type="number" value="0" /></div>
+            <div class="fg"><label>Interest</label><input id="allocInt" type="number" value="0" /></div>
+            <div class="fg"><label>Principal</label><input id="allocPrin" type="number" value="0" /></div>
+          </div>
+          <div class="fld" style="width:100%;margin-top:9px">
+            <span style="font-size:10px;color:var(--muted);font-weight:700">Instalment</span>
+            <select id="allocInst" style="flex:1"><option value="">Apply to arrears first</option></select>
+          </div>
+          <div id="allocSummary" style="margin-top:9px"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="allocApply">Apply allocation</button>
+            <button class="btn btn-ghost" id="allocReset">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Excess &amp; Unallocated Payments</div>
+            <div class="panel-sub">Money received that could not be fully applied</div></div></div>
+          <div id="excessList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Allocation History</div>
+            <div class="panel-sub">Every application, with who applied it</div></div></div>
+          <div class="tblwrap" style="max-height:280px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Receipt</th><th class="num">Amount</th>
+              <th>Breakdown</th><th>By</th></tr></thead><tbody id="allocHistory"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6" data-sec="6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Repayment Schedules</h2><p>Instalment plan per loan — what is due, what is paid and what is behind</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="schedPrint">Print schedule</button>
+          <button class="btn btn-gold btn-sm" id="schedRegen">Generate / update</button>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="filters">
+          <div class="fld"><span style="font-size:10px;color:var(--muted);font-weight:700">Loan</span>
+            <select id="schedLoan" style="min-width:290px"></select></div>
+          <div class="segbar" id="schedTabs" style="margin-left:auto">
+            <button class="on" data-tab="all">All instalments</button>
+            <button data-tab="upcoming">Upcoming</button>
+            <button data-tab="today">Due today</button>
+            <button data-tab="week">Due this week</button>
+            <button data-tab="overdue">Overdue</button>
+            <button data-tab="paid">Paid</button>
+            <button data-tab="partial">Partially paid</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kgrid" id="schedSummary" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title" id="schedTitle">Instalment plan</div>
+          <div class="panel-sub" id="schedSub">Select a loan</div></div>
+          <span class="count-pill" id="schedCount">0 instalments</span></div>
+        <div class="tblwrap" style="max-height:460px">
+          <table class="tbl2"><thead><tr><th>#</th><th>Due date</th><th class="num">Instalment</th>
+            <th class="num">Principal</th><th class="num">Interest</th><th class="num">Fees</th>
+            <th class="num">Paid</th><th class="num">Balance</th><th>Status</th><th></th></tr></thead>
+            <tbody id="schBody"></tbody></table>
+        </div>
+        <div class="note" style="margin-top:10px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+          <div>Regenerating a schedule requires supervisor authorization and is written to the audit log.
+            Paid instalments are never rewritten — only future rows are recalculated.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7" data-sec="7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Collections Management</h2><p>Who owes what, who is chasing it, and what was promised</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="colTaskCount">0 tasks</span>
+          <button class="btn btn-ghost btn-sm" id="colAssign">Assign accounts</button>
+          <button class="btn btn-gold btn-sm" id="colNewTask">Log follow-up</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="colTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customers Due for Payment</div>
+            <div class="panel-sub">Due today and in the next 7 days</div></div></div>
+          <div class="tblwrap" style="max-height:290px">
+            <table class="tbl2"><thead><tr><th>Customer</th><th>Loan</th><th>Due date</th>
+              <th class="num">Amount</th><th>Officer</th><th></th></tr></thead><tbody id="colDueBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customers with Overdue Payments</div>
+            <div class="panel-sub">Highest days past due first</div></div></div>
+          <div class="tblwrap" style="max-height:290px">
+            <table class="tbl2"><thead><tr><th>Customer</th><th>Loan</th><th class="num">DPD</th>
+              <th class="num">Overdue</th><th>Officer</th><th></th></tr></thead><tbody id="colOverdueBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Follow-Up Tasks</div>
+            <div class="panel-sub">Contact attempts, promises and outcomes</div></div>
+            <div class="fld"><select id="colTaskFilter"><option value="">All tasks</option>
+              <option>Open</option><option>Promised</option><option>Escalated</option><option>Closed</option></select></div></div>
+          <div class="tblwrap" style="max-height:320px">
+            <table class="tbl2"><thead><tr><th>Customer</th><th>Task</th><th>Follow-up</th>
+              <th>Officer</th><th>Status</th><th></th></tr></thead><tbody id="colTaskBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Promises</div>
+            <div class="panel-sub">Promised payment dates being tracked</div></div>
+            <button class="btn btn-ghost btn-sm" id="colPromiseAdd">Record promise</button></div>
+          <div class="tblwrap" style="max-height:320px">
+            <table class="tbl2"><thead><tr><th>Customer</th><th class="num">Promised</th>
+              <th>Date</th><th>Status</th><th></th></tr></thead><tbody id="colPromiseBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8" data-sec="8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Arrears &amp; Delinquency</h2><p>Ageing, days past due, penalties and how much of the book is behind</p></div>
+        <div class="sec-tools">
+          <span class="badge b-rej" id="arStatus">At risk</span>
+          <button class="btn btn-ghost btn-sm" id="arExport">Export ageing</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="arTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Ageing Buckets</div>
+            <div class="panel-sub">Overdue balance by days past due</div></div></div>
+          <div class="buckets" id="arBuckets"></div>
+          <div class="minihead" style="margin-top:14px">Arrears recovery progress</div>
+          <div id="arProgress"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Penalties &amp; Charges</div>
+            <div class="panel-sub">Late payment penalties applied this month</div></div>
+            <span class="count-pill" id="arPenCount">0</span></div>
+          <div class="tblwrap" style="max-height:260px">
+            <table class="tbl2"><thead><tr><th>Date</th><th>Loan</th><th>Customer</th>
+              <th class="num">Penalty</th><th>Reason</th></tr></thead><tbody id="arPenaltyBody"></tbody></table>
+          </div>
+          <div class="legend"><b><i style="background:#D93F3F"></i>Charged</b>
+            <b><i style="background:#1E9E6A"></i>Waived</b></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Overdue Amounts by Customer</div>
+          <div class="panel-sub">Sorted by exposure · days past due and delinquency status</div></div>
+          <div class="fld"><select id="arFilter">
+            <option value="">All overdue</option><option value="1–30">1–30 days</option>
+            <option value="31–60">31–60 days</option><option value="61–90">61–90 days</option>
+            <option value="90+">More than 90 days</option></select></div></div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2"><thead><tr><th>Customer</th><th>Loan</th><th class="num">Outstanding</th>
+            <th class="num">Overdue</th><th class="num">DPD</th><th>Bucket</th><th>Delinquency</th>
+            <th class="num">Penalties</th><th>Officer</th></tr></thead><tbody id="arBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9" data-sec="9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Payment Methods &amp; Transactions</h2><p>Every channel, its references, confirmations, failures and duplicates</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="dupCheck">Run duplicate check</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="mthCards" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transaction History</div>
+            <div class="panel-sub">References, confirmation status and channel</div></div>
+            <div class="fld"><select id="mthFilter">
+              <option value="">All channels</option><option>Cash</option><option>Bank transfer</option>
+              <option>Airtel Money</option><option>TNM Mpamba</option><option>Cheque</option>
+            </select></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Receipt</th><th>Reference</th>
+              <th>Channel</th><th class="num">Amount</th><th>Confirmation</th></tr></thead>
+              <tbody id="mthTxBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed &amp; Reversed Transactions</div>
+            <div class="panel-sub">Never count towards collections</div></div>
+            <span class="count-pill" id="failCount">0</span></div>
+          <div class="tblwrap" style="max-height:200px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Reference</th><th>Channel</th>
+              <th class="num">Amount</th><th>Reason</th></tr></thead><tbody id="failBody"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">Duplicate payment check</div>
+          <div id="dupResults">
+            <div class="note"><div>No duplicate scan has run in this session. The nightly scan on
+              30 Oct 2026 02:00 flagged <b>2</b> possible duplicates.</div></div>
+          </div>
+          <div class="minihead" style="margin-top:12px">Payment method summary</div>
+          <div id="mthSummary"></div>
+        </div>
+      </div>
+    </section>

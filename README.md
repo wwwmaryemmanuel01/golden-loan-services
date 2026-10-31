@@ -47,6 +47,39 @@ allocation simulator), enabling payment methods, scheduling a report, revoking a
 adding a holiday and resolving a data correction request all mutate the in-page state and
 re-render. Nothing is a static screenshot.
 
+## Repayments & Collections module
+
+`repayments.html` is the collection and repayment console: **18 sections** — overview,
+record a repayment, the all-repayments register, payment verification, allocation,
+schedules, collections, arrears and delinquency, payment methods, receipts,
+settlements and early repayment, reversals and adjustments, collection officers,
+reconciliation, reports, notifications, audit and repayment settings.
+
+It is a working console, not a mockup. Recording a repayment issues a real receipt from
+the running sequence (`RCP-000513…`), runs the reference duplicate check, queues the
+payment for verification and writes to the audit log — after which it appears in the
+register, the KPI tiles, the schedules and the receipt book. Verification moves a payment
+from pending to verified (individually, with notes and a rejection reason, or in bulk for
+everything that has a matching reference); allocation then splits it across penalties,
+fees, interest and principal, using the configured order, and reduces the loan balance.
+Excess stays visible until it is applied to the next instalment, held as credit or
+refunded. Reversals never delete: the original receipt, allocation and audit entry stay
+in place with a reversing entry on top, and settlement closes a loan outright.
+
+The five tools that are easy to fake are real here:
+
+- **Arrears ageing** — 1–30 / 31–60 / 61–90 / 90+ buckets computed from DPD per loan.
+- **Receipts** — printable receipt card, reprint history with a reason, and voiding that
+  needs supervisor authorization and is logged separately from the payment.
+- **Reconciliation** — per-channel recorded vs confirmed with differences, an
+  investigation modal that posts adjustments, and a "run reconciliation" that balances
+  the day and appends to the history.
+- **Officers** — targets against collections with a portfolio drill-down.
+- **Exports** — CSV, and a genuine hand-built **`.xlsx`** (Office Open XML in a STORE zip,
+  no libraries) validated to open in Excel; PDF through the browser print dialog. Inside a
+  sandboxed preview frame, where downloads and print are blocked, each falls back to an
+  in-page preview instead of failing silently.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -70,6 +103,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Staff Management | `staff.html` | 18 |
 | Reports & Analytics | `reports.html` | 11 · 89 reports |
 | System Settings | `settings.html` | 18 · ~390 settings |
+| Repayments & Collections | `repayments.html` | 18 |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -83,12 +117,14 @@ notifications.html      Module 3  (built)
 staff.html              Module 4  (built)
 reports.html            Module 5  (built · 89 reports in 10 categories + console)
 settings.html           Module 6  (built · 18 configuration sections)
+repayments.html         Module 7  (built · 18 collections sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
 _staff.css              page CSS for Staff Management
 _reports.css            page CSS for Reports
 _settings.css           page CSS for System Settings
+_repayments.css         page CSS for Repayments & Collections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -96,6 +132,7 @@ build-notifications.sh  rebuilds notifications.html from its partials
 build-staff.sh          rebuilds staff.html from its partials
 build-reports.sh        rebuilds reports.html from its partials
 build-settings.sh       rebuilds settings.html from its partials
+build-repayments.sh     rebuilds repayments.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -104,6 +141,7 @@ _nbodyA/B/C.html _njsA/B/C*.js         notifications partials
 _sbodyA/B/C.html _sjsA/B/C*/D.js       staff partials
 _rbodyA/B.html   _rjsA/B/C*/D*/E.js    reports partials (_rjsE.js = xlsx writer)
 _stbodyA/B/C/D.html _stjsA/B/C/D.js  settings partials
+_repbodyA/B/C/D.html _repjsA/B/C/D.js  repayments partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -116,6 +154,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-staff.sh          # staff.html
 ./build-notifications.sh  # notifications.html
 ./build-settings.sh       # settings.html
+./build-repayments.sh     # repayments.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

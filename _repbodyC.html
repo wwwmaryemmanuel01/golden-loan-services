@@ -1,0 +1,236 @@
+    <!-- 10 -->
+    <section class="sec" id="s10" data-sec="10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Receipts &amp; Payment Confirmations</h2><p>Issue, reprint, resend and void receipts with a full audit trail</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="rcptCount">0 receipts</span>
+          <button class="btn btn-ghost btn-sm" id="rcptExport">Export receipts</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipt Register</div>
+            <div class="panel-sub">Search by receipt number, customer or loan</div></div>
+            <div class="fld"><select id="rcptStatus">
+              <option value="">All receipts</option><option>Issued</option><option>Reprinted</option><option>Void</option>
+            </select></div></div>
+          <div class="filters">
+            <div class="fld search">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input placeholder="Receipt, customer or loan…" id="rcptSearch" />
+            </div>
+          </div>
+          <div class="tblwrap" style="max-height:380px">
+            <table class="tbl2"><thead><tr><th>Receipt</th><th>Date</th><th>Customer</th>
+              <th class="num">Amount</th><th>Method</th><th>Prints</th><th>Status</th><th></th></tr></thead>
+              <tbody id="rcptBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipt Numbering</div>
+            <div class="panel-sub">Branch sequence, shared with the finance ledger</div></div></div>
+          <div id="rcptNumbering"></div>
+          <div class="minihead" style="margin-top:12px">Reprint history</div>
+          <div class="tblwrap" style="max-height:180px">
+            <table class="tbl2"><thead><tr><th>Receipt</th><th>Printed</th><th>By</th><th>Reason</th></tr></thead>
+              <tbody id="rcptReprints"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">Receipt audit trail</div>
+          <div id="rcptAudit"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment Confirmations</div>
+          <div class="panel-sub">Customer confirmations sent by SMS and email</div></div>
+          <button class="btn btn-ghost btn-sm" id="rcptResendAll">Resend unsent</button></div>
+        <div class="tblwrap" style="max-height:260px">
+          <table class="tbl2"><thead><tr><th>Receipt</th><th>Customer</th><th>Channel</th>
+            <th>Sent</th><th>Status</th><th></th></tr></thead><tbody id="rcptConfirmBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11" data-sec="11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Loan Settlements &amp; Early Repayments</h2><p>Quote, approve and confirm a payoff, full or partial</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="settleCount">0 requests</span>
+          <button class="btn btn-gold btn-sm" id="settleNew">New settlement quote</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Settlement Calculator</div>
+            <div class="panel-sub" id="settleSub">Select a loan to calculate the payoff</div></div></div>
+          <div class="filters">
+            <div class="fld search" style="max-width:none;flex:1 1 240px">
+              <span style="font-size:10px;color:var(--muted);font-weight:700">Loan</span>
+              <select id="settleLoan" style="flex:1"></select>
+            </div>
+            <div class="fld"><span style="font-size:10px;color:var(--muted);font-weight:700">Type</span>
+              <select id="settleType"><option>Full settlement</option><option>Partial early repayment</option></select></div>
+          </div>
+          <div class="form-grid three" style="margin-top:11px">
+            <div class="fg"><label>Outstanding principal</label><input id="settlePrin" type="number" readonly /></div>
+            <div class="fg"><label>Accrued interest</label><input id="settleInt" type="number" readonly /></div>
+            <div class="fg"><label>Fees &amp; charges</label><input id="settleFees" type="number" readonly /></div>
+            <div class="fg"><label>Early settlement discount (%)</label><input id="settleDisc" type="number" value="2" step="0.1" /></div>
+            <div class="fg"><label>Partial amount (MWK)</label><input id="settlePartial" type="number" value="0" step="1000" /></div>
+            <div class="fg"><label>Notice given</label><input id="settleNotice" value="7 days" readonly /></div>
+          </div>
+          <div class="prev" style="margin-top:11px">
+            <div class="pl">Settlement amount due</div>
+            <div class="pv" id="settleTotal">MK 0.00</div>
+            <div class="pn" id="settleBreakdown">Principal + interest + fees − discount</div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="settleRequest">Request approval</button>
+            <button class="btn btn-ghost" id="settleQuote">Send quote</button>
+            <button class="btn btn-ghost" id="settleVerify">Verify payment</button>
+            <button class="btn btn-ghost" id="settleConfirm">Issue confirmation</button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Requests &amp; Approvals</div>
+            <div class="panel-sub">Settlement and early repayment requests</div></div></div>
+          <div class="tblwrap" style="max-height:250px">
+            <table class="tbl2"><thead><tr><th>Customer</th><th>Loan</th><th>Type</th>
+              <th class="num">Amount</th><th>Status</th><th></th></tr></thead><tbody id="settleBody"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">Settlement workflow</div>
+          <div id="settleFlow"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Settlement History</div>
+          <div class="panel-sub">Confirmed payoffs and the status change that followed</div></div></div>
+        <div class="tblwrap" style="max-height:260px">
+          <table class="tbl2"><thead><tr><th>Date</th><th>Customer</th><th>Loan</th>
+            <th class="num">Settlement</th><th class="num">Discount</th><th>Confirmed by</th>
+            <th>Loan status</th><th></th></tr></thead><tbody id="settleHist"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="sec" id="s12" data-sec="12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Payment Reversals &amp; Adjustments</h2><p>Correct mistakes without losing the original transaction</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="revPend">0 pending</span>
+          <button class="btn btn-gold btn-sm" id="revNew">Request reversal</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="corrTypes" style="margin-bottom:13px"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reversal &amp; Adjustment Queue</div>
+            <div class="panel-sub">Nothing is deleted — a reversing entry is posted and the original kept</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Requested</th><th>Receipt</th><th>Customer</th>
+              <th class="num">Amount</th><th>Reason</th><th>Requested by</th><th>Status</th><th></th></tr></thead>
+              <tbody id="revBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reversal &amp; Adjustment History</div>
+            <div class="panel-sub">Approved, rejected and posted corrections</div></div></div>
+          <div class="tblwrap" style="max-height:268px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Receipt</th><th>Type</th>
+              <th class="num">Amount</th><th>Approved by</th></tr></thead><tbody id="revHistory"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">Original transaction records</div>
+          <div class="note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <div>Reversals never overwrite the original row. The register keeps the original receipt,
+              its allocation and its audit entries, and links them to the reversing entry.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13" data-sec="13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Collection Officer Management</h2><p>Portfolios, targets, recovery performance and follow-up activity</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="offReassign">Reassign accounts</button>
+        </div>
+      </div>
+
+      <div class="ogrid" id="offCards" style="margin-bottom:13px"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collection Officer Directory</div>
+            <div class="panel-sub">Assigned accounts, targets and success rate</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2"><thead><tr><th>Officer</th><th>Branch</th><th class="num">Accounts</th>
+              <th class="num">Overdue</th><th class="num">Collected</th><th class="num">Target</th>
+              <th class="num">Success</th><th></th></tr></thead><tbody id="offBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Follow-Up Activity History</div>
+            <div class="panel-sub">Calls, visits, promises and outcomes</div></div></div>
+          <div id="offActivity"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14" data-sec="14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Repayment Reconciliation</h2><p>Match what the system recorded against what the banks and wallets confirmed</p></div>
+        <div class="sec-tools">
+          <span class="badge b-await" id="reconStatus">Not reconciled today</span>
+          <button class="btn btn-gold btn-sm" id="reconRun">Run reconciliation</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="reconCards" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Reconciliation — 30 Oct 2026</div>
+            <div class="panel-sub">Recorded against confirmed, per channel</div></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Channel</th><th class="num">Recorded</th><th class="num">Confirmed</th>
+              <th class="num">Difference</th><th>Status</th><th></th></tr></thead><tbody id="reconBody"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">Reconciliation adjustments</div>
+          <div class="filters">
+            <div class="fld"><select id="reconAdjType">
+              <option>Bank charge</option><option>Timing difference</option><option>Missing transaction</option>
+              <option>Duplicate entry</option></select></div>
+            <div class="fld"><input id="reconAdjAmt" type="number" placeholder="Amount" value="2500" style="width:110px" /></div>
+            <div class="fld"><input id="reconAdjNote" placeholder="Note for the ledger" style="width:190px" /></div>
+            <button class="btn btn-ghost btn-sm" id="reconAdjAdd">Record</button>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Discrepancies</div>
+            <div class="panel-sub">Investigate unmatched and duplicated items</div></div>
+            <span class="count-pill" id="discCount">0</span></div>
+          <div id="reconDisc"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reconciliation History</div>
+          <div class="panel-sub">Daily sign-off, differences and who cleared them</div></div></div>
+        <div class="tblwrap" style="max-height:280px">
+          <table class="tbl2"><thead><tr><th>Date</th><th class="num">Recorded</th><th class="num">Confirmed</th>
+            <th class="num">Difference</th><th class="num">Adjustments</th><th>Signed off by</th><th>Status</th></tr></thead>
+            <tbody id="reconHist"></tbody></table>
+        </div>
+      </div>
+    </section>
