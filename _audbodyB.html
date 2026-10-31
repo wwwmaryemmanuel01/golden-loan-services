@@ -1,0 +1,174 @@
+    <!-- 3 -->
+    <section class="sec" id="s3" data-sec="3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Staff Activity Logs</h2><p>What every staff member did — sessions, records touched, and what they took out of the system</p></div>
+        <div class="sec-tools">
+          <select id="stUser" style="max-width:230px"><option value="">All staff</option></select>
+          <span class="count-pill" id="stCount">0 events</span>
+          <button class="btn btn-ghost btn-sm" id="stExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="stTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="stTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-st="">All activity</button>
+          <button data-st="session">Login &amp; logout</button>
+          <button data-st="customer">Customer access</button>
+          <button data-st="create">Record creation</button>
+          <button data-st="modify">Record modification</button>
+          <button data-st="loan">Loan applications</button>
+          <button data-st="repayment">Repayments</button>
+          <button data-st="disbursement">Disbursements</button>
+          <button data-st="collection">Collections</button>
+          <button data-st="export">Report access &amp; exports</button>
+          <button data-st="account">Staff account changes</button>
+        </div>
+        <div class="tblwrap" style="max-height:420px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Staff member</th><th>Role</th><th>Activity</th>
+              <th>Record</th><th>Outcome</th><th></th></tr></thead>
+            <tbody id="stBody"></tbody></table>
+        </div>
+        <div class="pager" id="stPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Activity History</div>
+            <div class="panel-sub">Volume by staff member in the selected view</div></div></div>
+          <div id="stHistory"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Session trail</div>
+            <div class="panel-sub">Logins, logouts and failed attempts for the selected staff member</div></div>
+            <span class="count-pill" id="stSessionPill">0</span></div>
+          <div id="stSessions" style="max-height:300px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="s4" data-sec="4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Administrator Activity Logs</h2><p>Privileged actions — accounts, roles, settings, limits and overrides</p></div>
+        <div class="sec-tools">
+          <span class="badge b-rej" id="adCriticalPill">0 critical</span>
+          <button class="btn btn-gold btn-sm" id="adExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="adTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="adTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-ad="">All administrator activity</button>
+          <button data-ad="login">Login history</button>
+          <button data-ad="staff-create">Staff account creation</button>
+          <button data-ad="staff-modify">Staff account modification</button>
+          <button data-ad="role">Role assignment</button>
+          <button data-ad="permission">Permission changes</button>
+          <button data-ad="settings">Settings changes</button>
+          <button data-ad="product">Loan product configuration</button>
+          <button data-ad="limit">Approval limit changes</button>
+          <button data-ad="payment">Payment method configuration</button>
+          <button data-ad="override">Administrative overrides</button>
+          <button data-ad="critical">Critical actions</button>
+        </div>
+        <div class="tblwrap" style="max-height:430px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Administrator</th><th>Action</th><th>Module</th>
+              <th>Record</th><th>Change</th><th>Outcome</th><th></th></tr></thead>
+            <tbody id="adBody"></tbody></table>
+        </div>
+        <div class="pager" id="adPager"></div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Critical Administrative Actions</div>
+          <div class="panel-sub">Actions that change who can do what, or move money without a customer in front of you</div></div>
+          <span class="count-pill" id="adCritCount">0</span></div>
+        <div id="adCritical"></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5" data-sec="5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Customer Record Audit</h2><p>Every change to a customer file, with the previous and updated value and the person responsible</p></div>
+        <div class="sec-tools">
+          <input id="crSearch" placeholder="Customer number or name" style="max-width:220px">
+          <span class="count-pill" id="crCount">0 events</span>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="segbar" id="crTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-cr="">All customer events</button>
+          <button data-cr="create">Record creation</button>
+          <button data-cr="profile">Profile changes</button>
+          <button data-cr="contact">Contact detail changes</button>
+          <button data-cr="status">Account status changes</button>
+          <button data-cr="verification">Verification changes</button>
+          <button data-cr="docaccess">Document access</button>
+          <button data-cr="export">Record exports</button>
+          <button data-cr="closure">Account closure</button>
+        </div>
+        <div class="split" style="align-items:start">
+          <div>
+            <div class="tblwrap" style="max-height:430px">
+              <table class="tbl2 dense">
+                <thead><tr><th>When</th><th>Customer</th><th>Change</th><th>By</th><th>Outcome</th></tr></thead>
+                <tbody id="crBody"></tbody></table>
+            </div>
+            <div class="pager" id="crPager"></div>
+          </div>
+          <div>
+            <div class="minihead" style="margin-top:0">Previous and updated values</div>
+            <div id="crDiff"><div class="empty">Select a customer event to see what changed.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6" data-sec="6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Loan Application Audit</h2><p>From submission to decision — who moved the file, when, and on what basis</p></div>
+        <div class="sec-tools">
+          <input id="laSearch" placeholder="Application or loan number" style="max-width:220px">
+          <span class="count-pill" id="laCount">0 events</span>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="segbar" id="laTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-la="">All events</button>
+          <button data-la="submission">Submission</button>
+          <button data-la="assignment">Assignment</button>
+          <button data-la="review">Review</button>
+          <button data-la="status">Status changes</button>
+          <button data-la="docverify">Document verification</button>
+          <button data-la="approval">Approval</button>
+          <button data-la="rejection">Rejection</button>
+          <button data-la="cancellation">Cancellation</button>
+          <button data-la="override">Approval limit overrides</button>
+          <button data-la="modification">Modification history</button>
+        </div>
+        <div class="split" style="align-items:start">
+          <div>
+            <div class="tblwrap" style="max-height:420px">
+              <table class="tbl2 dense">
+                <thead><tr><th>When</th><th>Application</th><th>Action</th><th>By</th><th>Outcome</th></tr></thead>
+                <tbody id="laBody"></tbody></table>
+            </div>
+            <div class="pager" id="laPager"></div>
+          </div>
+          <div>
+            <div class="fg"><label>Application timeline</label><select id="laApp"></select></div>
+            <div id="laTimeline" style="margin-top:8px;max-height:420px;overflow:auto"></div>
+          </div>
+        </div>
+      </div>
+    </section>

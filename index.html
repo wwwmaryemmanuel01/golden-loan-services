@@ -389,6 +389,10 @@
       Notifications
     </a>
     <div class="nav-label">System</div>
+    <a class="nav-item" data-page="audit" href="audit.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Audit Logs
+    </a>
     <a class="nav-item" data-page="staff" href="#staff">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
       Staff &amp; Users
@@ -1747,6 +1751,7 @@ const pageMeta = {
   reports:{title:'Reports & Analytics', sub:'Portfolio, ageing and performance reporting'},
   notifications:{title:'Notifications', sub:'Message delivery, templates and alerts'},
   staff:{title:'Staff & Users', sub:'Roles, permissions and branch officers'},
+  audit:{title:'Audit Logs', sub:'Every action, who took it, when, and what changed'},
   settings:{title:'Settings', sub:'Products, interest rates, fees and system rules'}
 };
 
@@ -1764,6 +1769,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'repayments'){ window.location.href = 'repayments.html'; return; }
     if(page === 'applications'){ window.location.href = 'applications.html'; return; }
     if(page === 'clients'){ window.location.href = 'clients.html'; return; }
+    if(page === 'audit'){ window.location.href = 'audit.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
