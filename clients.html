@@ -823,6 +823,10 @@
       Notifications
     </a>
     <div class="nav-label">System</div>
+    <a class="nav-item" data-page="audit" href="audit.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Audit Logs
+    </a>
     <a class="nav-item" data-page="staff" href="staff.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7.5" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
       Staff &amp; Users
@@ -4580,7 +4584,8 @@ boot();
   var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
                 'notifications.html':'Notifications','staff.html':'Staff Management',
                 'settings.html':'System Settings','repayments.html':'Repayments & Collections',
-                'applications.html':'Loan Applications','clients.html':'Customers'};
+                'applications.html':'Loan Applications','clients.html':'Customers',
+                'audit.html':'Audit Logs'};
   var file = (location.pathname.split('/').pop() || HOME) || HOME;
   if(!/\.html$/i.test(file)) file = HOME;
 

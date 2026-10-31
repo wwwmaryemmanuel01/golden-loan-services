@@ -1,0 +1,185 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Audit Logs</div>
+      <div class="page-sub">Every action, who took it, when, and what changed · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search event ID, user, action or record…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Security alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export log
+    </button>
+    <button class="btn btn-gold" id="invNew">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      New investigation
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · All Logs</a>
+    <a class="snav" href="#s3">3 · Staff Activity</a>
+    <a class="snav" href="#s4">4 · Admin Activity</a>
+    <a class="snav" href="#s5">5 · Customer Records</a>
+    <a class="snav" href="#s6">6 · Loan Applications</a>
+    <a class="snav" href="#s7">7 · Disbursements</a>
+    <a class="snav" href="#s8">8 · Repayments</a>
+    <a class="snav" href="#s9">9 · Financial</a>
+    <a class="snav" href="#s10">10 · Security</a>
+    <a class="snav" href="#s11">11 · Roles</a>
+    <a class="snav" href="#s12">12 · Configuration</a>
+    <a class="snav" href="#s13">13 · System Events</a>
+    <a class="snav" href="#s14">14 · Event Detail</a>
+    <a class="snav" href="#s15">15 · Investigation</a>
+    <a class="snav" href="#s16">16 · Alerts</a>
+    <a class="snav" href="#s17">17 · Reports</a>
+    <a class="snav" href="#s18">18 · Retention</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Audit &amp; Activity Logs</h1>
+        <p>Append-only record of every staff, administrator, customer, loan, financial and security event · 30 October 2026</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandTotal">0</b><span>Events</span></div>
+        <div class="band-stat"><b id="bandToday">0</b><span>Today</span></div>
+        <div class="band-stat"><b id="bandSecurity">0</b><span>Security</span></div>
+        <div class="band-stat"><b id="bandCritical">0</b><span>Critical</span></div>
+        <div class="band-stat"><b id="bandIntegrity">—</b><span>Chain</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="integrityBtn">Verify integrity</button>
+        <button class="btn btn-gold btn-sm" id="exportBand">Export</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1" data-sec="1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Audit Logs Overview</h2><p>The whole activity record at a glance — volume, who is acting, and what needs a human</p></div>
+        <div class="sec-tools">
+          <select id="ovRange">
+            <option value="today">Today</option>
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="all">All retained events</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="kgrid" id="ovTiles" style="margin-bottom:13px"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Events by Day</div>
+            <div class="panel-sub">Volume of logged activity, by outcome</div></div>
+            <span class="count-pill" id="ovTrendPill">—</span></div>
+          <div class="chartwrap" id="ovTrend"></div>
+          <div class="legendrow">
+            <b><i style="background:#C9A227"></i>Success</b>
+            <b><i style="background:#D93F3F"></i>Failed</b>
+            <b><i style="background:#9A6A0D"></i>Denied</b>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Events by Module</div>
+            <div class="panel-sub">Where activity is concentrated this period</div></div></div>
+          <div id="ovByModule"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Audit Activities</div>
+            <div class="panel-sub">Newest first · click an event to open its full record</div></div>
+            <button class="btn btn-ghost btn-sm" id="ovOpenAll">Open all logs</button></div>
+          <div id="ovRecent" style="max-height:420px;overflow:auto"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Needs Attention</div>
+            <div class="panel-sub">Security alerts, failures and integrity</div></div>
+            <span class="count-pill" id="ovAttentionPill">0</span></div>
+          <div id="ovAttention"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Most Active Users</div>
+            <div class="panel-sub">Events recorded in the selected period</div></div></div>
+          <div id="ovUsers"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Today by Hour</div>
+            <div class="panel-sub">Activity volume across the working day</div></div>
+            <span class="count-pill" id="ovHourPill">—</span></div>
+          <div id="ovHour"></div>
+          <div class="heatgrid" id="ovHeat"></div>
+          <div class="legendrow"><b><i style="background:#F1F2F6"></i>Quiet</b><b><i style="background:#E8C860"></i>Busy</b><b><i style="background:#C9A227"></i>Peak</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2" data-sec="2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>All Audit Logs</h2><p>The complete, append-only event register — filter it, read it, export it</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="lgCount">0 events</span>
+          <button class="btn btn-ghost btn-sm" id="lgPrint">Print</button>
+          <button class="btn btn-gold btn-sm" id="lgExport">Export</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="filters" style="margin-bottom:4px">
+          <div class="fld" style="flex:0 0 132px"><select id="lgSearchBy">
+            <option value="any">Search all fields</option>
+            <option value="user">User name</option>
+            <option value="username">Username</option>
+            <option value="action">Action</option>
+            <option value="record">Record reference</option>
+            <option value="id">Audit event ID</option>
+          </select></div>
+          <div class="fld search" style="flex:2 1 210px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search the log…" id="lgSearch" autocomplete="off" />
+          </div>
+          <div class="fld" style="flex:0 0 132px"><input type="date" id="lgFrom" value="2026-10-24" title="From date"></div>
+          <div class="fld" style="flex:0 0 132px"><input type="date" id="lgTo" value="2026-10-30" title="To date"></div>
+        </div>
+        <div class="filters" style="margin-bottom:9px">
+          <div class="fld"><select id="lgRole"><option value="">All roles</option></select></div>
+          <div class="fld"><select id="lgModule"><option value="">All modules</option></select></div>
+          <div class="fld"><select id="lgType"><option value="">All action types</option></select></div>
+          <div class="fld"><select id="lgOutcome">
+            <option value="">Any outcome</option><option>Success</option><option>Failed</option>
+            <option>Denied</option><option>Warning</option></select></div>
+          <div class="fld"><select id="lgSeverity">
+            <option value="">Any severity</option><option>Info</option><option>Warning</option>
+            <option>Critical</option><option>Security</option></select></div>
+          <div class="fld" style="flex:0 0 auto"><button class="btn btn-ghost" id="lgReset">Clear filters</button></div>
+        </div>
+
+        <div class="tblwrap" style="max-height:520px">
+          <table class="tbl2 dense">
+            <thead><tr><th>Event ID</th><th>Date &amp; time</th><th>User</th><th>Role</th>
+              <th>Action</th><th>Module</th><th>Record</th><th>Outcome</th><th>Severity</th><th></th></tr></thead>
+            <tbody id="lgBody"></tbody></table>
+        </div>
+        <div class="pager" id="lgPager"></div>
+      </div>
+    </section>

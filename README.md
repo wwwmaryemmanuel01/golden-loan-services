@@ -114,6 +114,46 @@ merge a duplicate record (loans, payments, messages and tickets move across and 
 duplicate is retired), and close an account. Reports (9) compute from the live register
 and export as CSV or a real `.xlsx` workbook, with a print/PDF preview fallback.
 
+## Audit Logs module
+
+`audit.html` is the audit and compliance console: **18 sections** — overview, the all-logs
+register, staff activity, administrator activity, customer record audit, loan application
+audit, disbursement audit, repayment & collections audit, financial transaction audit,
+authentication & security, roles & permissions, system configuration, system events &
+errors, audit event details, search & investigation, security alerts, reports & exports,
+and retention & integrity.
+
+It runs on one seeded ledger of **560 audit events** (plus **132 sealed archive events**)
+generated from 83 event templates across eleven staff accounts (including an auditor)
+and the system principal.
+Every event carries an event ID, timestamp, user ID, username, role, action, module,
+affected record, outcome, severity, before/after values, transaction reference, correlation
+ID, source IP, device, storage block and hash — so every section is a different lens on the
+same data rather than a separate mock.
+
+Filters are live: the all-logs register searches by user, username, action or record
+reference and filters by date range, role, module, action type, outcome and severity, with
+pagination and CSV export. Staff, administrator, customer, loan, disbursement, repayment,
+financial, security, permission, configuration and system sections each carry their own
+record-type tabs that re-query the ledger. Customer, financial and configuration events show
+real previous/updated field diffs; loan and disbursement references open chronological
+trails.
+
+Work happens on the ledger, not in it: unlocking a locked account, approving or rejecting a
+permission request, assigning, escalating, resolving or reopening a security alert, closing
+an error investigation, saving an investigation with notes, editing the retention policy,
+running an integrity check, archiving events and raising a backup all append genuine audit
+events — which immediately appear in the overview, the registers and the event picker.
+
+Retention and integrity are enforced rather than described: an SHA-style hash chain is
+computed per 25-event storage block with a chain head, the checker reports gaps, archiving
+moves events older than the configured age into the sealed store (still searchable) and
+removes them from the live register, and a deletion request inside the retention period is
+refused automatically and logged as a denied critical event. Reports (9, daily/weekly/
+monthly summaries through staff, administrator, financial, security, permission and critical
+reports) compute from the live ledger and export as CSV, a real `.xlsx` workbook or print/
+PDF, with every export written to the export history.
+
 ## Repayments & Collections module
 
 `repayments.html` is the collection and repayment console: **18 sections** — overview,
@@ -173,6 +213,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Repayments & Collections | `repayments.html` | 18 |
 | Loan Applications | `applications.html` | 15 |
 | Customers | `clients.html` | 14 |
+| Audit Logs | `audit.html` | 18 |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -189,6 +230,7 @@ settings.html           Module 6  (built · 18 configuration sections)
 repayments.html         Module 7  (built · 18 collections sections)
 applications.html       Module 8  (built · 15 application sections)
 clients.html            Module 9  (built · 14 customer sections)
+audit.html              Module 10 (built · 18 audit sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -198,6 +240,7 @@ _settings.css           page CSS for System Settings
 _repayments.css         page CSS for Repayments & Collections
 _applications.css       page CSS for Loan Applications
 _customers.css          page CSS for Customers
+_audit.css              page CSS for Audit Logs
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -208,6 +251,7 @@ build-settings.sh       rebuilds settings.html from its partials
 build-repayments.sh     rebuilds repayments.html from its partials
 build-applications.sh   rebuilds applications.html from its partials
 build-clients.sh        rebuilds clients.html from its partials
+build-audit.sh          rebuilds audit.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -219,6 +263,7 @@ _stbodyA/B/C/D.html _stjsA/B/C/D.js  settings partials
 _repbodyA/B/C/D.html _repjsA/B/C/D.js  repayments partials
 _apbodyA/B/C/D.html _apjsA/B/C/D.js    applications partials
 _cubodyA/B/C/D.html _cujsA/B/C/D.js    customers partials
+_audbodyA/B/C/D.html _audjsA/B/C/D.js  audit partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -234,6 +279,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-repayments.sh     # repayments.html
 ./build-applications.sh   # applications.html
 ./build-clients.sh        # clients.html
+./build-audit.sh          # audit.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

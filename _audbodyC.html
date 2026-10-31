@@ -1,0 +1,232 @@
+    <!-- 7 -->
+    <section class="sec" id="s7" data-sec="7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Disbursement Audit</h2><p>Every payout, who authorised it, every change to the amount or channel, and every failure</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="dbCount">0 events</span>
+          <button class="btn btn-ghost btn-sm" id="dbExport">Export trail</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="dbTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="dbTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-db="">All events</button>
+          <button data-db="creation">Record creation</button>
+          <button data-db="authorization">Authorization</button>
+          <button data-db="amount">Amount changes</button>
+          <button data-db="method">Payment method changes</button>
+          <button data-db="confirmation">Confirmation</button>
+          <button data-db="failure">Failed disbursements</button>
+          <button data-db="cancellation">Cancellation</button>
+          <button data-db="reversal">Reversals &amp; corrections</button>
+        </div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Disbursement</th><th>Action</th><th>Amount</th><th>By</th><th>Outcome</th><th></th></tr></thead>
+            <tbody id="dbBody"></tbody></table>
+        </div>
+        <div class="pager" id="dbPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Authorization History</div>
+            <div class="panel-sub">Who signed off what, at which level</div></div>
+            <span class="count-pill" id="dbAuthCount">0</span></div>
+          <div id="dbAuth" style="max-height:320px;overflow:auto"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursement Audit Trail</div>
+            <div class="panel-sub">Pick a disbursement to read its whole history</div></div></div>
+          <div class="fg"><select id="dbSel"></select></div>
+          <div class="inline-note" id="dbTrailRef" style="margin-top:6px"></div>
+          <div id="dbTrail" style="margin-top:6px;max-height:300px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8" data-sec="8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Repayment &amp; Collections Audit</h2><p>Payments, verification, allocation, receipts, reversals and settlement — the money trail</p></div>
+        <div class="sec-tools">
+          <input id="rpaSearch" placeholder="Receipt, loan or customer" style="max-width:220px">
+          <span class="count-pill" id="rpaCount">0 events</span>
+        </div>
+      </div>
+
+      <div class="kgrid" id="rpaTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="rpaTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-rpa="">All events</button>
+          <button data-rpa="creation">Repayment creation</button>
+          <button data-rpa="verification">Payment verification</button>
+          <button data-rpa="allocation">Allocation changes</button>
+          <button data-rpa="receipt">Receipt generation</button>
+          <button data-rpa="reversal">Reversals</button>
+          <button data-rpa="adjustment">Adjustments</button>
+          <button data-rpa="arrears">Arrears status</button>
+          <button data-rpa="assignment">Collection assignment</button>
+          <button data-rpa="settlement">Settlement</button>
+          <button data-rpa="correction">Financial corrections</button>
+        </div>
+        <div class="tblwrap" style="max-height:410px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Receipt / ref</th><th>Action</th><th>Amount</th><th>By</th><th>Outcome</th><th></th></tr></thead>
+            <tbody id="rpaBody"></tbody></table>
+        </div>
+        <div class="pager" id="rpaPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Financial Correction History</div>
+            <div class="panel-sub">Every adjustment, why it was made and who approved it</div></div></div>
+          <div id="rpaCorrections" style="max-height:300px;overflow:auto"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Arrears &amp; Assignment Changes</div>
+            <div class="panel-sub">Status moves and collection hand-offs</div></div></div>
+          <div id="rpaArrears" style="max-height:300px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9" data-sec="9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Financial Transaction Audit</h2><p>Every change to a number that moves money — with the value before and after</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="finCount">0 events</span>
+          <button class="btn btn-ghost btn-sm" id="finExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="finTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="finTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-fin="">All financial events</button>
+          <button data-fin="amount">Loan amount changes</button>
+          <button data-fin="rate">Interest rate changes</button>
+          <button data-fin="fee">Fee &amp; penalty changes</button>
+          <button data-fin="ref">Transaction references</button>
+          <button data-fin="correction">Record corrections</button>
+          <button data-fin="duplicate">Duplicate investigations</button>
+          <button data-fin="recon">Reconciliation adjustments</button>
+          <button data-fin="auth">Authorization history</button>
+        </div>
+        <div class="split" style="align-items:start">
+          <div>
+            <div class="tblwrap" style="max-height:400px">
+              <table class="tbl2 dense">
+                <thead><tr><th>When</th><th>Record</th><th>Change</th><th>By</th><th>Ref</th><th></th></tr></thead>
+                <tbody id="finBody"></tbody></table>
+            </div>
+            <div class="pager" id="finPager"></div>
+          </div>
+          <div>
+            <div class="minihead" style="margin-top:0">Before and after</div>
+            <div id="finDiff"><div class="empty">Select a financial event.</div></div>
+            <div class="minihead">Transaction references</div>
+            <div id="finRefs" style="max-height:190px;overflow:auto"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10" data-sec="10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Authentication &amp; Security Logs</h2><p>Sessions, failures, lockouts, resets and anything that looks like an attack</p></div>
+        <div class="sec-tools">
+          <span class="badge b-rej" id="secFailedPill">0 failed</span>
+          <button class="btn btn-ghost btn-sm" id="secExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="secTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="secTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-sec="">All security events</button>
+          <button data-sec="success">Successful logins</button>
+          <button data-sec="failed">Failed logins</button>
+          <button data-sec="logout">Logouts</button>
+          <button data-sec="lockout">Account lockouts</button>
+          <button data-sec="password">Password resets &amp; changes</button>
+          <button data-sec="suspicious">Suspicious activity</button>
+          <button data-sec="unauthorized">Unauthorized access</button>
+          <button data-sec="session">Session revocations</button>
+          <button data-sec="mfa">MFA events</button>
+        </div>
+        <div class="tblwrap" style="max-height:400px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>User</th><th>Event</th><th>Source IP</th><th>Device</th><th>Outcome</th><th></th></tr></thead>
+            <tbody id="secBody"></tbody></table>
+        </div>
+        <div class="pager" id="secPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Login Activity</div>
+            <div class="panel-sub">New devices, unusual hours and repeated failures</div></div>
+            <span class="count-pill" id="secSuspCount">0</span></div>
+          <div id="secSuspicious"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Locked &amp; Disabled Accounts</div>
+            <div class="panel-sub">Locked after repeated failures or by an administrator</div></div>
+            <span class="count-pill" id="secLockCount">0</span></div>
+          <div id="secLocked"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11" data-sec="11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Roles &amp; Permissions Audit</h2><p>Who was given what, who took it away, and every attempt to exceed it</p></div>
+        <div class="sec-tools">
+          <span class="badge b-await" id="perPendingPill">0 pending</span>
+          <button class="btn btn-gold btn-sm" id="perRequest">Request change</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="perTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="perTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-per="">All events</button>
+          <button data-per="create">Role creation</button>
+          <button data-per="modify">Role modification</button>
+          <button data-per="delete">Role deletion</button>
+          <button data-per="grant">Permission grants</button>
+          <button data-per="revoke">Permission revocations</button>
+          <button data-per="staffrole">Staff role changes</button>
+          <button data-per="privileged">Privileged access</button>
+          <button data-per="denied">Access denied</button>
+          <button data-per="sensitive">Sensitive data access</button>
+        </div>
+        <div class="split" style="align-items:start">
+          <div>
+            <div class="tblwrap" style="max-height:400px">
+              <table class="tbl2 dense">
+                <thead><tr><th>When</th><th>Actor</th><th>Change</th><th>Target</th><th>Outcome</th></tr></thead>
+                <tbody id="perBody"></tbody></table>
+            </div>
+            <div class="pager" id="perPager"></div>
+          </div>
+          <div>
+            <div class="minihead" style="margin-top:0">Permission change approvals</div>
+            <div id="perApprovals" style="max-height:250px;overflow:auto"></div>
+            <div class="minihead">Access denied events</div>
+            <div id="perDenied" style="max-height:180px;overflow:auto"></div>
+          </div>
+        </div>
+      </div>
+    </section>
