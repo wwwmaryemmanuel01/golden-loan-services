@@ -1,0 +1,300 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">System Settings</div>
+      <div class="page-sub">18 sections · organisation · lending · security · integrations · compliance · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search all settings by name or keyword…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Settings requiring review" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportCfg">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export config
+    </button>
+    <button class="btn btn-gold" id="saveAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+      Save all changes
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · General</a>
+    <a class="snav" href="#s2">2 · Users &amp; Staff</a>
+    <a class="snav" href="#s3">3 · Roles</a>
+    <a class="snav" href="#s4">4 · Security</a>
+    <a class="snav" href="#s5">5 · Loan Products</a>
+    <a class="snav" href="#s6">6 · Approvals</a>
+    <a class="snav" href="#s7">7 · Repayments</a>
+    <a class="snav" href="#s8">8 · Payments</a>
+    <a class="snav" href="#s9">9 · Notifications</a>
+    <a class="snav" href="#s10">10 · Customer Portal</a>
+    <a class="snav" href="#s11">11 · Data &amp; Backup</a>
+    <a class="snav" href="#s12">12 · Audit Logs</a>
+    <a class="snav" href="#s13">13 · Documents</a>
+    <a class="snav" href="#s14">14 · Reports</a>
+    <a class="snav" href="#s15">15 · Integrations</a>
+    <a class="snav" href="#s16">16 · Maintenance</a>
+    <a class="snav" href="#s17">17 · Localization</a>
+    <a class="snav" href="#s18">18 · Compliance</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>System Settings</h1>
+        <p>Central configuration for GOLDEN FINANCIAL SERVICES · MWK · Africa/Blantyre</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandSections">18</b><span>Sections</span></div>
+        <div class="band-stat"><b id="bandSettings">0</b><span>Settings</span></div>
+        <div class="band-stat"><b id="bandDirty">0</b><span>Unsaved</span></div>
+        <div class="band-stat"><b id="bandHealth">4/5</b><span>Integrations up</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="reviewBtn">Review queue</button>
+        <button class="btn btn-gold btn-sm" id="saveAll2">Save all</button>
+      </div>
+    </div>
+
+    <div class="searchhits" id="searchHits">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A6D0F" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span id="searchHitsText"></span>
+      <button class="btn btn-ghost btn-sm" id="clearSearch" style="padding:2px 7px;font-size:10px">Clear</button>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1" data-sec="1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>General System Settings</h2><p>Organisation identity, branding, regional defaults, financial year and maintenance mode</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="1">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-discard="1">Discard</button>
+          <button class="btn btn-gold btn-sm" data-save="1">Save section</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Organisation Name &amp; Details</div>
+            <div class="panel-sub">Appears on statements, receipts and every generated document</div></div>
+            <span class="badge b-ok">Verified</span></div>
+          <div class="setlist" id="genOrg"></div>
+        </div>
+        <div>
+          <div class="card panel" style="margin-bottom:13px">
+            <div class="panel-head"><div><div class="panel-title">Company Logo &amp; Branding</div>
+              <div class="panel-sub">Logo, brand colours and document identity</div></div></div>
+            <div style="display:flex;gap:11px;align-items:center;margin-top:11px">
+              <div class="logo-tile" id="logoPreview">GF</div>
+              <div style="min-width:0">
+                <div style="font-size:11.5px;font-weight:700">golden-logo.svg</div>
+                <div style="font-size:10px;color:var(--muted);margin-top:1px">SVG · 512 × 512 · 8.4 KB</div>
+                <div style="display:flex;gap:5px;margin-top:6px">
+                  <button class="btn btn-ghost btn-sm" id="logoUpload">Replace</button>
+                  <button class="btn btn-ghost btn-sm" id="logoView">Preview</button>
+                </div>
+              </div>
+            </div>
+            <div class="drop" id="logoDrop" style="margin-top:10px">Drop a PNG / SVG here, or click to browse</div>
+            <div class="setlist" id="genBrand" style="margin-top:6px"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Financial Year</div>
+              <div class="panel-sub">Reporting period used across every module</div></div></div>
+            <div class="setlist" id="genFy"></div>
+            <div class="prev" style="margin-top:4px">
+              <div class="pl">Current financial year</div>
+              <div class="pv" id="fyLabel">FY 2026/27</div>
+              <div class="pn" id="fyRange">1 July 2026 — 30 June 2027 · 121 days elapsed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Business Address &amp; Contact</div>
+            <div class="panel-sub">Head office and published contact details</div></div></div>
+          <div class="setlist" id="genContact"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Country, Region &amp; Language</div>
+            <div class="panel-sub">Operating region and default language</div></div></div>
+          <div class="setlist" id="genRegion"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Date, Time &amp; Currency</div>
+            <div class="panel-sub">Formatting defaults for the whole portal</div></div></div>
+          <div class="setlist" id="genFormat"></div>
+          <div class="prevrow" style="margin-top:10px">
+            <div class="prev"><div class="pl">Amount</div><div class="pv" id="fmtMoney">MK 1,250,000.00</div><div class="pn">MWK · 2 decimals</div></div>
+            <div class="prev"><div class="pl">Date &amp; time</div><div class="pv" id="fmtDate" style="font-size:12.5px">30 Oct 2026</div><div class="pn" id="fmtClock">14:32 · CAT (UTC+2)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">System Maintenance Mode</div>
+          <div class="panel-sub">Restrict access during upgrades, data migration or month-end close</div></div>
+          <span class="badge b-ok" id="maintBadge">Live</span></div>
+        <div class="mmbanner" id="maintBanner" style="margin-top:10px">
+          <span class="dot ok"></span>
+          <div>Maintenance mode is <b>off</b> — all staff and customers can access the portal normally.</div>
+        </div>
+        <div class="split even" style="margin-top:10px">
+          <div class="setlist" id="genMaint"></div>
+          <div class="setlist" id="genMaint2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2" data-sec="2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>User &amp; Staff Management</h2><p>Every system user, account lifecycle actions, roles and access state</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="2">Saved</span>
+          <span class="count-pill" id="usrCount">0 users</span>
+        </div>
+      </div>
+
+      <div class="health" id="usrStats" style="margin-bottom:13px"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">All System Users</div>
+            <div class="panel-sub">Activate, deactivate, suspend, restore, unlock and reset from the action menu</div></div>
+            <button class="btn btn-ghost btn-sm" id="usrExport">Export</button></div>
+          <div class="filters">
+            <div class="fld search">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input placeholder="Search name, email, username…" id="usrSearch" />
+            </div>
+            <div class="fld"><select id="usrRole"><option value="">All roles</option></select></div>
+            <div class="fld"><select id="usrStatus">
+              <option value="">All statuses</option><option>Active</option><option>Suspended</option>
+              <option>Locked</option><option>Deactivated</option><option>Pending invite</option>
+            </select></div>
+            <div class="fld"><select id="usrBranch"><option value="">All branches</option></select></div>
+          </div>
+          <div class="tblwrap" style="max-height:520px">
+            <table class="tbl2">
+              <thead><tr><th>User</th><th>Role</th><th>Branch</th><th>Status</th><th>MFA</th>
+                <th>Last login</th><th style="text-align:right">Actions</th></tr></thead>
+              <tbody id="usrBody"></tbody>
+            </table>
+          </div>
+          <div class="pager" id="usrPager"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Create Staff Account</div>
+            <div class="panel-sub">New accounts start in Pending invite until the first login</div></div></div>
+          <div class="setlist" id="usrCreate">
+            <div class="fg"><label>Full name</label><input id="ncName" placeholder="e.g. Thandiwe Kamanga" /></div>
+            <div class="fg"><label>Email address</label><input id="ncEmail" type="email" placeholder="name@goldenfinancial.mw" /></div>
+            <div class="fg"><label>Mobile number</label><input id="ncPhone" placeholder="+265 999 000 000" /></div>
+            <div class="fg"><label>Staff role</label><select id="ncRole"></select></div>
+            <div class="fg"><label>Branch</label><select id="ncBranch"></select></div>
+            <div class="fg"><label>Temporary password</label><input id="ncPass" readonly />
+              <div class="hint">Auto-generated · must be changed at first login</div></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="ncCreate">Create account</button>
+            <button class="btn btn-ghost" id="ncRegen">Regenerate</button>
+          </div>
+          <div class="note gold" style="margin-top:11px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div>Account rules — <b id="ncRuleLen">12</b> character minimum, role-based permissions applied
+              automatically, invite expires in <b id="ncRuleExp">72</b> hours.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3" data-sec="3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Roles &amp; Permissions</h2><p>System roles, custom roles and the full permission matrix across all modules</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="3">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="3">Save permissions</button>
+        </div>
+      </div>
+
+      <div class="split rev">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role Management</div>
+            <div class="panel-sub">Select a role to inspect and edit its permissions</div></div>
+            <button class="btn btn-ghost btn-sm" id="roleNew">Create custom role</button></div>
+          <div class="rgrid" id="roleCards" style="margin-top:10px"></div>
+          <div class="note" style="margin-top:11px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <div>System roles cannot be deleted — only their permissions can be edited.
+              Custom roles can be deleted once they have no assigned users.</div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Permission Assignment</div>
+            <div class="panel-sub" id="permSub">Administrator · full access</div></div>
+            <span class="badge b-auth" id="permCount">0 of 40</span></div>
+          <div class="mxwrap">
+            <table class="mx">
+              <thead id="mxHead"></thead>
+              <tbody id="mxBody"></tbody>
+            </table>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-ghost btn-sm" id="permAll">Grant all</button>
+            <button class="btn btn-ghost btn-sm" id="permNone">Revoke all</button>
+            <button class="btn btn-ghost btn-sm" id="permReset">Reset to default</button>
+            <span style="margin-left:auto;font-size:10.5px;color:var(--muted)" id="permNote">Changes apply on the next login</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Create Custom Role</div>
+            <div class="panel-sub">Start from an existing role, then adjust permissions</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Role name</label><input id="crName" placeholder="e.g. Branch Supervisor" /></div>
+            <div class="fg"><label>Base on</label><select id="crBase"></select></div>
+            <div class="fg"><label>Approval authority</label>
+              <select id="crAuth">
+                <option>None</option><option>Up to MK 500,000</option><option>Up to MK 2,000,000</option>
+                <option>Up to MK 5,000,000</option><option>Unlimited</option>
+              </select></div>
+            <div class="fg"><label>Data scope</label>
+              <select id="crScope"><option>Own branch only</option><option>Assigned officers</option>
+                <option>All branches</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Description</label>
+              <input id="crDesc" placeholder="What this role is responsible for" /></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="crCreate">Create role</button>
+            <button class="btn btn-ghost" id="crClear">Clear</button>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role Detail &amp; Deletion</div>
+            <div class="panel-sub">Selected role, its users and permitted actions</div></div></div>
+          <div id="roleDetail"></div>
+          <div class="setlist" style="margin-top:8px">
+            <div class="setrow"><div><div class="sk">Delete role where permitted</div>
+              <div class="ss">Custom roles with no assigned users only. System roles are permanently protected.</div></div>
+              <div class="sv"><button class="btn btn-red btn-sm" id="roleDelete">Delete role</button></div></div>
+          </div>
+        </div>
+      </div>
+    </section>

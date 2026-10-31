@@ -10,7 +10,8 @@
 
   var KEY = 'gls_nav_stack', HOME = 'index.html';
   var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
-                'notifications.html':'Notifications','staff.html':'Staff Management'};
+                'notifications.html':'Notifications','staff.html':'Staff Management',
+                'settings.html':'System Settings'};
   var file = (location.pathname.split('/').pop() || HOME) || HOME;
   if(!/\.html$/i.test(file)) file = HOME;
 

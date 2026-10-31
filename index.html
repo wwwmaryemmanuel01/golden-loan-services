@@ -1760,6 +1760,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'notifications'){ window.location.href = 'notifications.html'; return; }
     if(page === 'staff'){ window.location.href = 'staff.html'; return; }
     if(page === 'reports'){ window.location.href = 'reports.html'; return; }
+    if(page === 'settings'){ window.location.href = 'settings.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
@@ -1838,7 +1839,8 @@ el('exportBtn').addEventListener('click', ()=>{
 
   var KEY = 'gls_nav_stack', HOME = 'index.html';
   var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
-                'notifications.html':'Notifications','staff.html':'Staff Management'};
+                'notifications.html':'Notifications','staff.html':'Staff Management',
+                'settings.html':'System Settings'};
   var file = (location.pathname.split('/').pop() || HOME) || HOME;
   if(!/\.html$/i.test(file)) file = HOME;
 

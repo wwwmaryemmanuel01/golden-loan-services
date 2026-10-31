@@ -1,0 +1,402 @@
+    <!-- 4 -->
+    <section class="sec" id="s4" data-sec="4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Authentication &amp; Security</h2><p>Password policy, lockout, sessions, multi-factor authentication and login monitoring</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="4">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-discard="4">Discard</button>
+          <button class="btn btn-gold btn-sm" data-save="4">Save section</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password Policy</div>
+            <div class="panel-sub">Applies to all staff accounts on creation and reset</div></div>
+            <span class="badge b-appr" id="pwScoreBadge">Strong</span></div>
+          <div class="setlist" id="secPass"></div>
+          <div class="grp" style="margin-top:12px">Policy test <span class="gt">type to validate</span></div>
+          <div class="fld" style="width:100%;margin-top:6px">
+            <input id="pwTest" placeholder="Type a sample password to test the policy…" style="width:100%" />
+          </div>
+          <div class="hbar" style="margin-top:8px"><i id="pwBar" style="width:34%"></i></div>
+          <div class="tagline" id="pwChecks"></div>
+        </div>
+        <div>
+          <div class="card panel" style="margin-bottom:13px">
+            <div class="panel-head"><div><div class="panel-title">Failed Logins &amp; Account Lockout</div>
+              <div class="panel-sub">Automatic protection against credential guessing</div></div></div>
+            <div class="setlist" id="secLock"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Session Timeout</div>
+              <div class="panel-sub">Idle and absolute session limits</div></div></div>
+            <div class="setlist" id="secSession"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Multi-Factor Authentication</div>
+            <div class="panel-sub">Second factor for staff sign-in</div></div>
+            <span class="badge b-ok" id="mfaBadge">Enforced</span></div>
+          <div class="setlist" id="secMfa"></div>
+          <div class="grp" style="margin-top:10px">Default method</div>
+          <div class="optgrid" id="mfaMethods"></div>
+          <div class="grp" style="margin-top:12px">Required for roles</div>
+          <div class="tagline" id="mfaRoles"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Login Activity Monitoring</div>
+            <div class="panel-sub">Suspicious sign-in detection and alerting</div></div></div>
+          <div class="setlist" id="secMonitor"></div>
+          <div class="grp" style="margin-top:12px">Trusted device management
+            <span class="gt" id="devCount">0 devices</span></div>
+          <div class="tblwrap" style="max-height:190px;margin-top:6px">
+            <table class="tbl2"><thead><tr><th>Device</th><th>User</th><th>Last seen</th><th></th></tr></thead>
+              <tbody id="trustedBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recent Login Activity</div>
+          <div class="panel-sub">Successful and failed sign-in attempts · last 24 hours</div></div>
+          <div class="fld"><select id="loginFilter">
+            <option value="">All attempts</option><option>Success</option><option>Failed</option><option>Blocked</option>
+          </select></div></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>User</th><th>Role</th><th>Source IP</th>
+            <th>Location</th><th>Device</th><th>MFA</th><th>Result</th></tr></thead>
+            <tbody id="loginBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5" data-sec="5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Loan Product &amp; Lending Configuration</h2><p>Product catalogue, amounts, interest, fees, penalties and eligibility</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="5">Saved</span>
+          <span class="count-pill" id="prodCount">0 products</span>
+          <button class="btn btn-gold btn-sm" id="prodNew">New loan product</button>
+        </div>
+      </div>
+
+      <div class="split rev" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Products</div>
+            <div class="panel-sub">Activate, pause or retire a product. Editing a live product affects new applications only.</div></div></div>
+          <div class="tblwrap" style="max-height:430px">
+            <table class="tbl2"><thead><tr><th>Product</th><th class="num">Min</th><th class="num">Max</th>
+              <th class="num">Rate</th><th>Method</th><th>Freq</th><th>Status</th><th></th></tr></thead>
+              <tbody id="prodBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Create Loan Product</div>
+            <div class="panel-sub">Defaults applied to every new application</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Product name</label><input id="npName" placeholder="e.g. Business Boost" /></div>
+            <div class="fg"><label>Product code</label><input id="npCode" placeholder="BB-03" /></div>
+            <div class="fg"><label>Minimum amount (MWK)</label><input id="npMin" type="number" value="50000" /></div>
+            <div class="fg"><label>Maximum amount (MWK)</label><input id="npMax" type="number" value="5000000" /></div>
+            <div class="fg"><label>Default interest rate</label><input id="npRate" type="number" value="4.5" step="0.1" /></div>
+            <div class="fg"><label>Interest method</label><select id="npMethod">
+              <option>Flat</option><option>Declining balance</option><option>Reducing balance</option><option>Simple daily</option>
+            </select></div>
+            <div class="fg"><label>Repayment frequency</label><select id="npFreq">
+              <option>Monthly</option><option>Fortnightly</option><option>Weekly</option><option>Daily</option>
+            </select></div>
+            <div class="fg"><label>Term options (months)</label><input id="npTerms" value="3, 6, 12, 18, 24" /></div>
+            <div class="fg"><label>Processing fee (%)</label><input id="npFee" type="number" value="3" step="0.1" /></div>
+            <div class="fg"><label>Late penalty (% of instalment)</label><input id="npPen" type="number" value="5" step="0.1" /></div>
+            <div class="fg"><label>Grace period (days)</label><input id="npGrace" type="number" value="5" /></div>
+            <div class="fg"><label>Approval rule</label><select id="npAppr">
+              <option>Standard workflow</option><option>Branch manager only</option><option>Credit committee</option>
+            </select></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="npCreate">Create product</button>
+            <button class="btn btn-ghost" id="npClear">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Interest &amp; Fee Defaults</div>
+            <div class="panel-sub">Applied when a product does not override</div></div></div>
+          <div class="setlist" id="prodDefaults"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Eligibility Requirements</div>
+            <div class="panel-sub">Minimum criteria before an application can be submitted</div></div></div>
+          <div class="setlist" id="prodElig"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Product Approval Rules</div>
+            <div class="panel-sub">Default routing per product band</div></div></div>
+          <div class="setlist" id="prodApprRules"></div>
+          <div class="note" style="margin-top:10px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Amounts above <b id="prodAutoCap">MK 2,000,000</b> always require two approvers, regardless of product rule.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6" data-sec="6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Loan Approval Workflow Settings</h2><p>Levels, authority limits, thresholds, review stages, escalation and separation of duties</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="6">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="6">Save section</button>
+          <button class="btn btn-gold btn-sm" id="lvlNew">Add approval level</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval Levels &amp; Authority Limits</div>
+            <div class="panel-sub">An application routes to the lowest level whose limit covers the amount</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2"><thead><tr><th>Level</th><th>Approver role</th><th class="num">From</th>
+              <th class="num">Up to</th><th>SLA</th><th>Self-approve</th><th></th></tr></thead>
+              <tbody id="lvlBody"></tbody></table>
+          </div>
+          <div class="grp" style="margin-top:12px">Amount thresholds</div>
+          <div class="setlist" id="apprThresholds"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Required Review Stages</div>
+            <div class="panel-sub">Stages that must complete, in order, before approval</div></div></div>
+          <div id="stages"></div>
+          <div class="grp" style="margin-top:12px">Automatic approval restrictions</div>
+          <div class="setlist" id="autoRules"></div>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Application Assignment Rules</div>
+            <div class="panel-sub">How new applications reach an officer</div></div></div>
+          <div class="setlist" id="assignRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Escalation &amp; Additional Authorization</div>
+            <div class="panel-sub">What happens when a review stalls</div></div></div>
+          <div class="setlist" id="escRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Separation of Duties</div>
+            <div class="panel-sub">Prevent the same person approving and paying out</div></div></div>
+          <div class="setlist" id="sodRules"></div>
+          <div class="grp" style="margin-top:10px">Approval notifications</div>
+          <div class="setlist" id="apprNotif"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7" data-sec="7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Repayment &amp; Financial Settings</h2><p>Allocation priority, partial and advance payments, penalties, rescheduling, precision and ledger mapping</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="7">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="7">Save section</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Allocation Priority</div>
+            <div class="panel-sub">Order in which a repayment is applied — drag the arrows to reorder</div></div>
+            <button class="btn btn-ghost btn-sm" id="prioReset">Reset</button></div>
+          <div class="prio" id="prio"></div>
+          <div class="grp" style="margin-top:12px">Allocation simulator</div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap">
+            <div class="fld"><span style="font-size:10.5px;color:var(--muted);font-weight:700">Repayment</span>
+              <input id="simIn" type="number" value="100000" style="width:100px;text-align:right" /></div>
+            <div class="fld"><span style="font-size:10.5px;color:var(--muted);font-weight:700">Overdue penalty</span>
+              <input id="simPen" type="number" value="7500" style="width:80px;text-align:right" /></div>
+            <button class="btn btn-ghost btn-sm" id="simRun">Apply</button>
+          </div>
+          <div class="sims" id="simOut"></div>
+          <div class="note" style="margin-top:9px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Outstanding on the sample loan — penalty <b>MK 7,500</b>, fees <b>MK 4,000</b>,
+              interest <b>MK 18,000</b>, principal <b>MK 95,000</b>.</div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Partial, Advance &amp; Early Settlement</div>
+            <div class="panel-sub">Rules for payments that do not match the scheduled instalment</div></div></div>
+          <div class="setlist" id="repRules"></div>
+          <div class="grp" style="margin-top:12px">Penalties &amp; Grace</div>
+          <div class="setlist" id="penRules"></div>
+        </div>
+      </div>
+
+      <div class="grid g3" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rescheduling Rules</div>
+            <div class="panel-sub">Moving an instalment date</div></div></div>
+          <div class="setlist" id="resRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Restructuring Rules</div>
+            <div class="panel-sub">Changing the terms of an existing loan</div></div></div>
+          <div class="setlist" id="restRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rounding &amp; Reference Format</div>
+            <div class="panel-sub">Decimal precision and transaction numbering</div></div></div>
+          <div class="setlist" id="roundRules"></div>
+          <div class="refbox" id="refPreview">TXN-2026-000481<span>live preview</span></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Accounting &amp; Ledger Mapping</div>
+          <div class="panel-sub">Chart of accounts used for each transaction type</div></div>
+          <span class="badge b-ok">Balanced</span></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2"><thead><tr><th>Transaction type</th><th>Debit account</th><th>Credit account</th>
+            <th>Revenue recognition</th><th class="num">MTD value</th></tr></thead>
+            <tbody id="ledgerBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8" data-sec="8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Payment Methods &amp; Disbursement Settings</h2><p>Cash, bank transfer, Airtel Money and TNM Mpamba, channels, limits and reconciliation</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="8">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="8">Save section</button>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="panel-head"><div><div class="panel-title">Payment Methods</div>
+          <div class="panel-sub">Enable a method to accept it on repayments and disbursements</div></div>
+          <span class="count-pill" id="methodCount">0 enabled</span></div>
+        <div class="methodgrid" id="methods"></div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Reference Requirements</div>
+            <div class="panel-sub">How a payment is matched back to a loan</div></div></div>
+          <div class="setlist" id="payRef"></div>
+          <div class="refbox" id="payRefPreview">GF-REP-000481<span>reference preview</span></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursement Channels</div>
+            <div class="panel-sub">How approved loans reach the customer</div></div></div>
+          <div class="setlist" id="payChan"></div>
+          <div class="grp" style="margin-top:12px">Transaction limits</div>
+          <div class="setlist" id="payLimits"></div>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Confirmation Rules</div>
+            <div class="panel-sub">Evidence required before a payment posts</div></div></div>
+          <div class="setlist" id="payConfirm"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Transaction Handling</div>
+            <div class="panel-sub">Retry policy and customer messaging</div></div></div>
+          <div class="setlist" id="payFail"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reconciliation Settings</div>
+            <div class="panel-sub">Matching gateway statements to the ledger</div></div></div>
+          <div class="setlist" id="payRec"></div>
+          <div class="prev" style="margin-top:9px">
+            <div class="pl">Last reconciliation</div>
+            <div class="pv" id="recLast">99.82%</div>
+            <div class="pn" id="recSub">30 Oct 2026 · 14 unmatched of 7,812</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9" data-sec="9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Notifications &amp; Communication Settings</h2><p>Email, SMS, templates, event triggers, reminders and delivery logs</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="9">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="9">Save section</button>
+          <button class="btn btn-gold btn-sm" id="tplNew">New template</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Email Configuration</div>
+            <div class="panel-sub">Outbound SMTP used for statements, receipts and alerts</div></div>
+            <span class="badge b-ok" id="emailBadge">Connected</span></div>
+          <div class="setlist" id="emailCfg"></div>
+          <div class="form-actions"><button class="btn btn-ghost btn-sm" id="emailTest">Send test email</button>
+            <span style="font-size:10px;color:var(--muted)" id="emailSent">Last sent 30 Oct 2026 · 14:12</span></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">SMS Configuration</div>
+            <div class="panel-sub">Airtel Money and TNM Mpamba delivery networks</div></div>
+            <span class="badge b-ok" id="smsBadge">Connected</span></div>
+          <div class="setlist" id="smsCfg"></div>
+          <div class="prev" style="margin-top:9px">
+            <div class="pl">Credit balance</div>
+            <div class="pv" id="smsBalance">48,250</div>
+            <div class="pn">Messages remaining · est. 32 days at current volume</div>
+          </div>
+          <div class="form-actions"><button class="btn btn-ghost btn-sm" id="smsTest">Send test SMS</button></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notification Templates</div>
+            <div class="panel-sub">Message body per event, per channel</div></div>
+            <span class="count-pill" id="tplCount">0 templates</span></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Template</th><th>Trigger</th><th>Channel</th>
+              <th>Status</th><th>Updated</th><th></th></tr></thead><tbody id="tplBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Event Notifications</div>
+            <div class="panel-sub">Switch each event on or off per channel</div></div>
+            <span class="count-pill" id="notifEventsCount">8 of 8 enabled</span></div>
+          <div id="notifEvents"></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reminder Scheduling Rules</div>
+            <div class="panel-sub">When repayment reminders and overdue alerts go out</div></div></div>
+          <div class="setlist" id="remRules"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Notification Delivery Logs</div>
+            <div class="panel-sub">Last 24 hours across email and SMS</div></div>
+            <div class="fld"><select id="logFilter">
+              <option value="">All channels</option><option>Email</option><option>SMS</option>
+            </select></div></div>
+          <div class="tblwrap" style="max-height:300px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Recipient</th><th>Template</th>
+              <th>Channel</th><th>Result</th></tr></thead><tbody id="logBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>

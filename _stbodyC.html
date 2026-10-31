@@ -1,0 +1,384 @@
+    <!-- 10 -->
+    <section class="sec" id="s10" data-sec="10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Customer Portal Settings</h2><p>Availability, registration, login, self-service permissions and support contact</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="10">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-discard="10">Discard</button>
+          <button class="btn btn-gold btn-sm" data-save="10">Save section</button>
+        </div>
+      </div>
+
+      <div class="split rev">
+        <div>
+          <div class="grid g2" style="margin-bottom:13px">
+            <div class="card panel">
+              <div class="panel-head"><div><div class="panel-title">Portal Availability &amp; Registration</div>
+                <div class="panel-sub">Whether customers can reach the portal at all</div></div>
+                <span class="badge b-ok" id="portalBadge">Open</span></div>
+              <div class="setlist" id="portalAvail"></div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><div><div class="panel-title">Customer Login &amp; Password Policy</div>
+                <div class="panel-sub">Separate policy from staff accounts</div></div></div>
+              <div class="setlist" id="portalLogin"></div>
+            </div>
+          </div>
+
+          <div class="card panel" style="margin-bottom:13px">
+            <div class="panel-head"><div><div class="panel-title">Customer Profile Update Permissions</div>
+              <div class="panel-sub">Which fields a customer may change without staff approval</div></div></div>
+            <div class="split even">
+              <div class="setlist" id="portalProfile"></div>
+              <div class="setlist" id="portalProfile2"></div>
+            </div>
+          </div>
+
+          <div class="grid g3" style="margin-bottom:13px">
+            <div class="card panel">
+              <div class="panel-head"><div><div class="panel-title">Loan Application Availability</div>
+                <div class="panel-sub">Self-service applications</div></div></div>
+              <div class="setlist" id="portalApply"></div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><div><div class="panel-title">Document Upload Settings</div>
+                <div class="panel-sub">Customer-submitted documents</div></div></div>
+              <div class="setlist" id="portalDocs"></div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><div><div class="panel-title">Dashboard, Statements &amp; Alerts</div>
+                <div class="panel-sub">What the customer sees after login</div></div></div>
+              <div class="setlist" id="portalDash"></div>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Customer Support Contact Details</div>
+              <div class="panel-sub">Shown on the portal help screen and in every SMS footer</div></div></div>
+            <div class="form-grid three">
+              <div class="fg"><label>Support phone</label><input id="psPhone" value="+265 1 770 200" /></div>
+              <div class="fg"><label>Support email</label><input id="psEmail" value="support@goldenfinancial.mw" /></div>
+              <div class="fg"><label>WhatsApp number</label><input id="psWa" value="+265 999 770 200" /></div>
+              <div class="fg"><label>Support hours</label><input id="psHours" value="Mon–Fri 07:30–17:00, Sat 08:00–12:00" /></div>
+              <div class="fg"><label>Response time target</label>
+                <select id="psSla"><option>Within 2 hours</option><option selected>Within 24 hours</option>
+                  <option>Within 48 hours</option></select></div>
+              <div class="fg"><label>Escalation contact</label><input id="psEsc" value="care@goldenfinancial.mw" /></div>
+            </div>
+            <div class="form-actions"><button class="btn btn-gold btn-sm" id="psSave">Save contact details</button></div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Portal Preview</div>
+            <div class="panel-sub">Live rendering of the customer app</div></div></div>
+          <div class="phone" style="margin-top:11px">
+            <div class="pscreen">
+              <div class="pbar"><span class="pav">GF</span><b id="pvName">Golden Financial</b>
+                <span style="margin-left:auto;font-size:8px;color:#B9BFCB" id="pvGreet">Hi, Chisomo</span></div>
+              <div class="pbody">
+                <div class="pcard">
+                  <div class="pk">Outstanding balance</div>
+                  <div class="pbig" id="pvBal">MK 486,250.00</div>
+                  <div style="font-size:8.5px;color:#C9CFDA;margin-top:3px" id="pvLoan">Business Boost · LN-2026-0481</div>
+                </div>
+                <div id="pvRows" style="margin-top:4px"></div>
+                <div class="pbtns" id="pvBtns"></div>
+              </div>
+            </div>
+          </div>
+          <div class="note" style="margin-top:11px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Disabling the portal hides the login page but keeps staff access. Customers mid-application
+              are sent the maintenance message below.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11" data-sec="11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Data Management &amp; Backup</h2><p>Database connection, Supabase settings, backups, retention, duplicates and integrity</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="11">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="11">Save section</button>
+          <button class="btn btn-gold btn-sm" id="backupNow">Run backup now</button>
+        </div>
+      </div>
+
+      <div class="health" id="dbHealth" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Connection &amp; Supabase Settings</div>
+            <div class="panel-sub">Primary data store for every module</div></div>
+            <span class="badge b-ok" id="dbBadge">Connected</span></div>
+          <div class="setlist" id="dbCfg"></div>
+          <div class="grp" style="margin-top:12px">Data synchronization status
+            <span class="gt" id="syncAgo">2 min ago</span></div>
+          <div class="tblwrap" style="max-height:230px;margin-top:6px">
+            <table class="tbl2"><thead><tr><th>Table</th><th class="num">Rows</th><th>Last sync</th>
+              <th>Status</th><th></th></tr></thead><tbody id="syncBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Backup Configuration</div>
+            <div class="panel-sub">Automatic snapshots and off-site copies</div></div></div>
+          <div class="setlist" id="backupCfg"></div>
+          <div class="prev" style="margin-top:10px">
+            <div class="pl">Next scheduled backup</div>
+            <div class="pv" id="nextBackup">30 Oct 2026 · 23:00</div>
+            <div class="pn" id="nextBackupSub">Full snapshot · retains 30 copies · encrypted AES-256</div>
+          </div>
+          <div class="grp" style="margin-top:12px">Backup history</div>
+          <div class="tblwrap" style="max-height:210px;margin-top:6px">
+            <table class="tbl2"><thead><tr><th>Started</th><th>Type</th><th class="num">Size</th>
+              <th>Duration</th><th>Status</th><th></th></tr></thead><tbody id="backupBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g3" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Export &amp; Retention</div>
+            <div class="panel-sub">Export defaults and how long records are kept</div></div></div>
+          <div class="setlist" id="exportCfg2"></div>
+          <div class="minihead">Retention by record type</div>
+          <div class="setlist" id="retentionCfg"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Archived Records Management</div>
+            <div class="panel-sub">Closed loans, inactive customers and old applications</div></div></div>
+          <div class="setlist" id="archiveCfg"></div>
+          <div class="lrow" style="margin-top:8px">
+            <div class="lic">AR</div>
+            <div><div class="lt">Archive store</div><div class="ls" id="archiveStat">0 records · 0 MB</div></div>
+            <div class="lr"><button class="btn btn-ghost btn-sm" id="archiveRun">Archive now</button></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Record Detection</div>
+            <div class="panel-sub">Find the same customer registered twice</div></div>
+            <button class="btn btn-ghost btn-sm" id="dupRun">Run scan</button></div>
+          <div class="setlist" id="dupCfg"></div>
+          <div id="dupResults" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Integrity Checks</div>
+            <div class="panel-sub">Automated consistency verification</div></div>
+            <button class="btn btn-ghost btn-sm" id="intRun">Run all checks</button></div>
+          <div id="intList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Import Tools &amp; Recovery Procedures</div>
+            <div class="panel-sub">Bulk load and disaster recovery runbook</div></div></div>
+          <div class="setlist" id="importCfg"></div>
+          <div class="drop" id="importDrop" style="margin-top:9px">Upload CSV / XLSX to import customers, loans or repayments</div>
+          <div class="grp" style="margin-top:12px">Recovery procedures</div>
+          <div id="recoveryList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="sec" id="s12" data-sec="12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Audit Logs &amp; System Monitoring</h2><p>Every administrative action, configuration change, financial event and error</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="12">Saved</span>
+          <button class="btn btn-ghost btn-sm" id="auditExport">Export logs</button>
+        </div>
+      </div>
+
+      <div class="grid g4" id="auditTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Activity Log</div>
+          <div class="panel-sub">Immutable record · newest first</div></div>
+          <div class="fld"><select id="auditRange">
+            <option>Today</option><option>Last 7 days</option><option>Last 30 days</option><option>All time</option>
+          </select></div></div>
+        <div class="filters">
+          <div class="segbar" id="auditTabs">
+            <button class="on" data-cat="">All</button>
+            <button data-cat="Admin">Administrator</button>
+            <button data-cat="Login">Logins</button>
+            <button data-cat="Permission">Permissions</button>
+            <button data-cat="Config">Configuration</button>
+            <button data-cat="Financial">Financial</button>
+            <button data-cat="Customer">Customer records</button>
+            <button data-cat="Failed">Failed logins</button>
+            <button data-cat="Error">Errors</button>
+            <button data-cat="API">API</button>
+          </div>
+          <div class="fld search" style="margin-left:auto">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search actor, entity, IP…" id="auditSearch" />
+          </div>
+          <div class="fld"><select id="auditActor"><option value="">All actors</option></select></div>
+        </div>
+        <div class="tblwrap" style="max-height:440px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Category</th><th>Actor</th><th>Action</th>
+            <th>Entity</th><th>IP address</th><th>Result</th></tr></thead><tbody id="auditBody"></tbody></table>
+        </div>
+        <div class="pager" id="auditPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Security Event Alerts</div>
+            <div class="panel-sub">Unresolved security events requiring attention</div></div>
+            <span class="badge b-rev" id="secAlertCount">0</span></div>
+          <div id="secAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">System Error Logs &amp; API Monitoring</div>
+            <div class="panel-sub">Recent application errors and request health</div></div></div>
+          <div class="setlist" id="errCfg"></div>
+          <div class="lrow" style="margin-top:6px">
+            <div class="lic">API</div>
+            <div><div class="lt">Request monitoring</div>
+              <div class="ls" id="apiStat">0 requests · 0.00% error rate · 182 ms avg</div></div>
+            <div class="lr"><span class="chip st-ok">Healthy</span></div>
+          </div>
+          <div class="grp" style="margin-top:12px">Log retention</div>
+          <div class="setlist" id="auditRetention"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13" data-sec="13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Document &amp; Agreement Settings</h2><p>Agreement templates, letterhead, numbering, required documents and electronic signatures</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="13">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="13">Save section</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Templates</div>
+            <div class="panel-sub">Versioned templates used for every generated document</div></div>
+            <span class="count-pill" id="docCount">0 templates</span></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2"><thead><tr><th>Template</th><th>Type</th><th>Version</th>
+              <th>Updated</th><th>Status</th><th></th></tr></thead><tbody id="docBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Company Letterhead Preview</div>
+            <div class="panel-sub">Applied to agreements, statements and settlement letters</div></div>
+            <button class="btn btn-ghost btn-sm" id="lhEdit">Edit</button></div>
+          <div class="letterhead" style="margin-top:10px" id="letterhead">
+            <div class="lhh">
+              <div class="logo-tile" style="width:34px;height:34px;border-radius:9px;font-size:11px;box-shadow:none" id="lhLogo">GF</div>
+              <div><b id="lhName">GOLDEN FINANCIAL SERVICES</b>
+                <span id="lhTag">Licensed microfinance · Blantyre, Malawi</span></div>
+            </div>
+            <div class="lhb" id="lhBody">
+              <b style="font-size:10.5px">LOAN AGREEMENT</b><br />
+              This agreement is made between GOLDEN FINANCIAL SERVICES and the borrower named overleaf,
+              under the terms set out in the accompanying schedule. Repayment is due in accordance with
+              the instalment plan attached as Annex A.
+            </div>
+            <div class="lhf"><span id="lhFooter">P.O. Box 481, Blantyre · +265 1 770 200</span><span>Page 1 of 4</span></div>
+          </div>
+          <div class="setlist" id="letterCfg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Numbering Rules</div>
+            <div class="panel-sub">Automatic sequence per document type</div></div></div>
+          <div class="setlist" id="docNumCfg"></div>
+          <div class="refbox" id="docNumPreview">LN-2026-000481<span>next number</span></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Required Document Types</div>
+            <div class="panel-sub">Compulsory attachments per product</div></div></div>
+          <div id="reqDocs"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Electronic Signatures</div>
+            <div class="panel-sub">Sign agreements without printing</div></div>
+            <span class="badge b-ok" id="esigBadge">Enabled</span></div>
+          <div class="setlist" id="esigCfg"></div>
+          <div class="grp" style="margin-top:12px">Document storage rules</div>
+          <div class="setlist" id="docStoreCfg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14" data-sec="14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Reports &amp; Financial Period Settings</h2><p>Reporting period, currency, export defaults, scheduled reports and calculation rules</p></div>
+        <div class="sec-tools">
+          <span class="savestate" data-state="14">Saved</span>
+          <button class="btn btn-ghost btn-sm" data-save="14">Save section</button>
+          <button class="btn btn-gold btn-sm" id="schedNew">Schedule a report</button>
+        </div>
+      </div>
+
+      <div class="grid g4" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reporting Period</div>
+            <div class="panel-sub">Default range</div></div></div>
+          <div class="setlist" id="rptPeriod"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Currency &amp; Rounding</div>
+            <div class="panel-sub">Figures shown in reports</div></div></div>
+          <div class="setlist" id="rptCurrency"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">PDF Export Settings</div>
+            <div class="panel-sub">Print-ready output</div></div></div>
+          <div class="setlist" id="rptPdf"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Excel / CSV Export Settings</div>
+            <div class="panel-sub">Spreadsheet output</div></div></div>
+          <div class="setlist" id="rptExcel"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Scheduled Reports</div>
+            <div class="panel-sub">Delivered automatically to the recipients below</div></div>
+            <span class="count-pill" id="schedCount">0 scheduled</span></div>
+          <div class="tblwrap" style="max-height:290px">
+            <table class="tbl2"><thead><tr><th>Report</th><th>Frequency</th><th>Recipients</th>
+              <th>Format</th><th>Status</th><th></th></tr></thead><tbody id="schedBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Financial Summary Calculation Rules</div>
+            <div class="panel-sub">How headline figures are derived</div></div></div>
+          <div class="setlist" id="calcRules"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Report Access Permissions</div>
+          <div class="panel-sub">Which roles can open each report category</div></div>
+          <span class="badge b-auth">Role based</span></div>
+        <div class="mxwrap">
+          <table class="mx"><thead><tr><th style="text-align:left">Report category</th><th>Administrator</th>
+            <th>Credit Analyst</th><th>Loan Officer</th><th>Cashier</th><th>Collections</th><th>Auditor</th>
+            </tr></thead><tbody id="rptMatrix"></tbody></table>
+        </div>
+        <div class="form-actions">
+          <span style="font-size:10.5px;color:var(--muted)">Report numbering, reference formats and PDF templates
+            are shared with section 13 · Document settings.</span>
+        </div>
+      </div>
+    </section>

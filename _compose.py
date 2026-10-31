@@ -17,8 +17,9 @@ def sidebar(active):
     s = s.replace('data-page="disbursements" href="#disbursements"', 'data-page="disbursements" href="disbursements.html"')
     s = s.replace('data-page="notifications" href="#notifications"', 'data-page="notifications" href="notifications.html"')
     s = s.replace('data-page="staff" href="#staff"', 'data-page="staff" href="staff.html"')
+    s = s.replace('data-page="settings" href="#settings"', 'data-page="settings" href="settings.html"')
     for slug in ["applications","loans","repayments","collections","clients","guarantors",
-                 "transactions","reports","settings"]:
+                 "transactions","reports"]:
         s = s.replace(f'data-page="{slug}" href="#{slug}"', f'data-page="{slug}" href="#"')
     s = s.replace('data-page="reports" href="#"', 'data-page="reports" href="reports.html"')
     # mark active item
