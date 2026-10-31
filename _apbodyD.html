@@ -1,0 +1,215 @@
+    <!-- 12 -->
+    <section class="sec" id="s12" data-sec="12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Approved Applications &amp; Disbursement Handover</h2><p>Final checks, terms confirmation, schedule generation and the handover to disbursements</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="dbCount">0 ready</span>
+          <span class="badge b-ok" id="dbForwarded">0 forwarded</span>
+        </div>
+      </div>
+
+      <div class="mgrid" id="dbTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Handover Queue</div>
+            <div class="panel-sub">Authorized applications not yet forwarded</div></div></div>
+          <div id="dbQueue"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Final Checks &amp; Handover</div>
+            <div class="panel-sub" id="dbSub">Nothing selected</div></div>
+            <span class="count-pill" id="dbCkCount">0 / 6</span></div>
+          <div id="dbDetail"><div class="empty">Select an application from the queue.</div></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repayment Schedule</div>
+            <div class="panel-sub" id="dbSchedSub">Generated from the approved terms</div></div>
+            <button class="btn btn-ghost btn-sm" id="dbGen">Generate schedule</button></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2">
+            <thead><tr><th class="num">#</th><th>Due date</th><th class="num">Instalment</th>
+              <th class="num">Principal</th><th class="num">Interest</th><th class="num">Balance</th></tr></thead>
+            <tbody id="dbSchedule"></tbody></table></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursement Register</div>
+            <div class="panel-sub">Forwarded files and their disbursement status</div></div>
+            <span class="count-pill" id="dbRegCount">0</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2">
+            <thead><tr><th>Application</th><th>Applicant</th><th class="num">Amount</th>
+              <th>Status</th><th>Forwarded</th></tr></thead>
+            <tbody id="dbBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13" data-sec="13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Customer Communication</h2><p>Every acknowledgement, document request, approval, rejection and disbursement notice</p></div>
+        <div class="sec-tools"><span class="count-pill" id="cmCount">0 messages</span></div>
+      </div>
+
+      <div class="kgrid" id="cmStats" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Send a Message</div>
+            <div class="panel-sub">Templates fill in the applicant's details</div></div></div>
+          <div class="fg"><label>Application</label><select id="cmApp"></select></div>
+          <div class="form-grid" style="margin-top:9px">
+            <div class="fg"><label>Message type</label><select id="cmTemplate">
+              <option value="received">Application received</option>
+              <option value="documents">Additional documents requested</option>
+              <option value="review">Under review</option>
+              <option value="approved">Application approved</option>
+              <option value="rejected">Application rejected</option>
+              <option value="correction">Corrections required</option>
+              <option value="disbursement">Disbursement status</option>
+            </select></div>
+            <div class="fg"><label>Channel</label><select id="cmChannel">
+              <option>SMS</option><option>Email</option><option>Both</option></select></div>
+          </div>
+          <div class="fg" style="margin-top:9px"><label>Message</label>
+            <textarea id="cmBody" style="min-height:96px"></textarea></div>
+          <div class="inline-note" id="cmHint">Choose a template to prefill the message.</div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="cmSend">Send message</button>
+            <button class="btn btn-ghost" id="cmReset">Reset template</button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Communication History</div>
+            <div class="panel-sub">Newest first</div></div>
+            <div class="segbar" id="cmTabs">
+              <button class="on" data-ct="">All</button>
+              <button data-ct="SMS">SMS</button>
+              <button data-ct="Email">Email</button>
+            </div></div>
+          <div id="cmHistory" style="max-height:440px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14" data-sec="14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Application Reports &amp; Analytics</h2><p>Twelve reports computed from the live application register</p></div>
+        <div class="sec-tools">
+          <div class="segbar" id="rptPeriod">
+            <button class="on" data-rp="month">This month</button>
+            <button data-rp="week">This week</button>
+            <button data-rp="quarter">Quarter</button>
+            <button data-rp="year">Year</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Report Catalogue</div>
+            <div class="panel-sub">Run a report to load it on the right</div></div>
+            <span class="count-pill" id="rptCount">12</span></div>
+          <div class="tblwrap" style="max-height:430px"><table class="tbl2">
+            <thead><tr><th>Report</th><th>Group</th><th></th></tr></thead>
+            <tbody id="rptList"></tbody></table></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title" id="rptTitle">All applications report</div>
+            <div class="panel-sub" id="rptSub">—</div></div>
+            <span class="count-pill" id="rptRows">0 rows</span></div>
+          <div class="filters" style="margin-bottom:8px">
+            <button class="btn btn-ghost btn-sm" id="rptCsv">CSV</button>
+            <button class="btn btn-ghost btn-sm" id="rptXls">Excel</button>
+            <button class="btn btn-ghost btn-sm" id="rptPdf">PDF</button>
+            <button class="btn btn-ghost btn-sm" id="rptPrint">Print</button>
+            <div style="margin-left:auto;font-size:10px;color:var(--muted)" id="rptStamp">30 Oct 2026</div>
+          </div>
+          <div class="tblwrap" style="max-height:400px"><table class="tbl2">
+            <thead id="rptHead"></thead><tbody id="rptBody"></tbody></table></div>
+          <div id="rptTotals"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="sec" id="s15" data-sec="15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Application Audit &amp; Security</h2><p>Who created, changed, assessed, approved or touched a file — and who should not have</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="audExport">Export log</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Audit Trail</div>
+          <div class="panel-sub">Newest first · 60 most recent events</div></div>
+          <span class="count-pill" id="audCount">0 events</span></div>
+        <div class="filters" style="margin-bottom:6px">
+          <div class="segbar" id="audTabs" style="flex-wrap:wrap">
+            <button class="on" data-ac="">All</button>
+            <button data-ac="Creation">Creation</button>
+            <button data-ac="Change">Changes</button>
+            <button data-ac="Assessment">Assessment</button>
+            <button data-ac="Decision">Decision</button>
+            <button data-ac="Document">Documents</button>
+            <button data-ac="Access">Access</button>
+          </div>
+          <div class="fld search" style="flex:1 1 200px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Filter by actor, action or application…" id="audSearch" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="tblwrap" style="max-height:400px"><table class="tbl2">
+          <thead><tr><th>Time</th><th>Category</th><th>Actor</th><th>Action</th>
+            <th>Application</th><th>Result</th></tr></thead>
+          <tbody id="audBody"></tbody></table></div>
+        <div class="pager" id="audPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unauthorized Action Alerts</div>
+            <div class="panel-sub">Blocked attempts and policy breaches</div></div>
+            <span class="count-pill" id="secAlertCount">0</span></div>
+          <div id="secAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Role-Based Access</div>
+            <div class="panel-sub">What each role may do on an application</div></div></div>
+          <div class="tblwrap"><table class="tbl2">
+            <thead><tr><th>Permission</th><th>Officer</th><th>Reviewer</th><th>Head of Credit</th><th>Admin</th></tr></thead>
+            <tbody id="secMatrix"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note">
+      <div><b>Sample data.</b> Every application, applicant, document and amount on this page is illustrative.
+        Actions you take — submitting an application, running verification, assessing, approving, rejecting,
+        forwarding to disbursements or sending a message — update the in-page records and the audit trail
+        for the length of your visit. Nothing leaves the browser.</div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

@@ -47,6 +47,39 @@ allocation simulator), enabling payment methods, scheduling a report, revoking a
 adding a holiday and resolving a data correction request all mutate the in-page state and
 re-render. Nothing is a static screenshot.
 
+## Loan Applications module
+
+`applications.html` is intake-to-disbursement: **15 sections** covering the overview, the
+master register, capture of a new application, verification and KYC, credit assessment,
+documents and agreements, review and decision, approval and authorization, pending files,
+rejected and closed files, assignment and workflow, disbursement handover, customer
+communication, reports and the audit trail.
+
+The workflow is a real state machine, not a series of screenshots. Submitting an
+application on section 3 creates the record (and the customer, if you register a new one),
+places it in intake and stamps a review deadline. Verification then walks nine checks —
+identity, contact, address, employment, income, documents, existing loans, balances and
+repayment history — that you can mark pending, verified or flagged, and only completes when
+all nine are verified. Assessment recomputes instalment, total repayable and debt-to-income
+from whatever you type, classifies the risk and writes a recommendation. The reviewer then
+recommends, rejects, returns or requests information, and each of those moves the file to
+the right stage with the reason recorded. Approval enforces the authority matrix — a
+1,000,000 limit at level 1, 5,000,000 at level 2 — and refuses an amount above the signer's
+limit (and logs the blocked attempt). Handover runs six final checks, generates a real
+repayment schedule from the approved terms, prepares a printable disbursement instruction
+and forwards the file; forwarding is blocked until all six checks are ticked.
+
+The rest is wired to the same records: documents can be received, marked invalid or
+requested; the pending view groups files by what they are actually waiting for and lets you
+record follow-ups; closed files can be reopened for reconsideration; officers can be
+reassigned with a note; messages are sent from seven templates and land in the
+communication history; and every action appends to the audit log, which is filterable and
+pageable, alongside blocked-attempt alerts and the role permission matrix.
+
+Reports (13) compute from the live register and export as CSV or a genuine hand-built
+`.xlsx` (Office Open XML in a STORE zip, no libraries) and PDF through the browser print
+dialog, with an in-page preview fallback inside sandboxed frames.
+
 ## Repayments & Collections module
 
 `repayments.html` is the collection and repayment console: **18 sections** — overview,
@@ -104,6 +137,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Reports & Analytics | `reports.html` | 11 · 89 reports |
 | System Settings | `settings.html` | 18 · ~390 settings |
 | Repayments & Collections | `repayments.html` | 18 |
+| Loan Applications | `applications.html` | 15 |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -118,6 +152,7 @@ staff.html              Module 4  (built)
 reports.html            Module 5  (built · 89 reports in 10 categories + console)
 settings.html           Module 6  (built · 18 configuration sections)
 repayments.html         Module 7  (built · 18 collections sections)
+applications.html       Module 8  (built · 15 application sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -125,6 +160,7 @@ _staff.css              page CSS for Staff Management
 _reports.css            page CSS for Reports
 _settings.css           page CSS for System Settings
 _repayments.css         page CSS for Repayments & Collections
+_applications.css       page CSS for Loan Applications
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -133,6 +169,7 @@ build-staff.sh          rebuilds staff.html from its partials
 build-reports.sh        rebuilds reports.html from its partials
 build-settings.sh       rebuilds settings.html from its partials
 build-repayments.sh     rebuilds repayments.html from its partials
+build-applications.sh   rebuilds applications.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -142,6 +179,7 @@ _sbodyA/B/C.html _sjsA/B/C*/D.js       staff partials
 _rbodyA/B.html   _rjsA/B/C*/D*/E.js    reports partials (_rjsE.js = xlsx writer)
 _stbodyA/B/C/D.html _stjsA/B/C/D.js  settings partials
 _repbodyA/B/C/D.html _repjsA/B/C/D.js  repayments partials
+_apbodyA/B/C/D.html _apjsA/B/C/D.js    applications partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -155,6 +193,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-notifications.sh  # notifications.html
 ./build-settings.sh       # settings.html
 ./build-repayments.sh     # repayments.html
+./build-applications.sh   # applications.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

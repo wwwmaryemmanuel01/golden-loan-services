@@ -5,23 +5,6 @@
 
   .subnav.wrap{flex-wrap:wrap;overflow-x:visible;row-gap:6px}
 
-  /* ---- KPI tiles ---- */
-  .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
-  .kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px;position:relative;overflow:hidden}
-  .kpi .kl{font-size:9.5px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;color:var(--muted-2);
-    display:flex;align-items:center;gap:5px}
-  .kpi .kv{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:5px;letter-spacing:-.4px}
-  .kpi .kv small{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0}
-  .kpi .ks{font-size:10px;color:var(--muted);margin-top:3px;display:flex;gap:5px;align-items:center}
-  .kpi .kt{font-size:9.5px;font-weight:800;padding:1px 5px;border-radius:5px;background:var(--green-soft);color:#157A50}
-  .kpi .kt.dn{background:var(--red-soft);color:#B32C2C}
-  .kpi .kt.flat{background:#F1F2F6;color:#5A6172}
-  .kpi.gold{background:linear-gradient(150deg,#FFFDF4,#FFF7DF);border-color:#EFE2B4}
-  .kpi.red{background:linear-gradient(150deg,#FFF8F8,#FDECEC);border-color:#F6D5D5}
-  .kpi.blue{background:linear-gradient(150deg,#F7FAFF,#EAF1FE);border-color:#D3E0FA}
-  .kpi .kbar{height:4px;border-radius:20px;background:#EEF0F4;margin-top:8px;overflow:hidden}
-  .kpi .kbar i{display:block;height:100%;border-radius:20px;background:var(--gold)}
-
   /* ---- stacked allocation bar ---- */
   .allocbar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:#F1F2F6;margin-top:8px}
   .allocbar span{display:block;height:100%}
@@ -29,18 +12,6 @@
   .allocleg b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B;
     font-variant-numeric:tabular-nums}
   .allocleg i{width:8px;height:8px;border-radius:2px;display:inline-block}
-
-  /* ---- method cards ---- */
-  .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px}
-  .mcard{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff;transition:.15s}
-  .mcard:hover{border-color:#E0D4A8}
-  .mcard .mh{display:flex;align-items:center;gap:8px}
-  .mcard .mi{width:28px;height:28px;flex:0 0 28px;border-radius:8px;display:grid;place-items:center;
-    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
-  .mcard .mn{font-size:11px;font-weight:700;line-height:1.2}
-  .mcard .md{font-size:9.5px;color:var(--muted);margin-top:1px}
-  .mcard .mv{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:8px}
-  .mcard .ms{font-size:9.5px;color:var(--muted);margin-top:2px}
 
   /* ---- schedule table states ---- */
   .srow-paid td{background:#FAFDFB}
@@ -92,11 +63,6 @@
   .ocard .or{font-size:9.5px;color:var(--muted);margin-top:1px}
   .ocard .om{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:7px}
   .ocard .om b{color:#2B303B;font-variant-numeric:tabular-nums}
-  .meter{height:6px;border-radius:20px;background:#EEF0F4;overflow:hidden;margin-top:6px}
-  .meter i{display:block;height:100%;border-radius:20px;background:var(--gold)}
-  .meter.green i{background:#1E9E6A}
-  .meter.red i{background:#D93F3F}
-  .meter.blue i{background:#2F6FED}
 
   /* ---- verification card ---- */
   .vcard{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff;margin-bottom:9px}
@@ -143,44 +109,12 @@
 
   /* ---- misc ---- */
   .note{margin-top:10px}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--muted);margin-top:8px}
-  .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
-  .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
   .pager{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:10px;font-size:11.5px;color:var(--muted)}
   .pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;cursor:pointer;
     font-size:11.5px;font-family:inherit;color:#3A3F4A}
   .pager button:hover{border-color:var(--gold)}
   .pager button:disabled{opacity:.45;cursor:not-allowed}
   .empty{padding:24px 10px;text-align:center;font-size:12px;color:var(--muted)}
-  .minihead{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.6px;
-    text-transform:uppercase;color:var(--muted-2);margin:12px 0 6px}
-  .minihead:first-child{margin-top:0}
-  .mini-tag{font-size:9.5px;font-weight:700;background:#F1F2F6;color:#4A5160;border-radius:5px;padding:2px 6px}
-  .mini-tag.g{background:var(--green-soft);color:#157A50}
-  .mini-tag.a{background:var(--amber-soft);color:#9A6A0D}
-  .mini-tag.r{background:var(--red-soft);color:#B32C2C}
-  .mini-tag.b{background:#EAF1FE;color:#2456C4}
-  .tagline{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-  .check{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed #EDEFF4;font-size:12px}
-  .check:last-child{border-bottom:0}
-  .check .ck{width:16px;height:16px;flex:0 0 16px;border-radius:5px;display:grid;place-items:center;
-    font-size:10px;font-weight:800;margin-top:1px}
-  .check .ck.y{background:var(--green-soft);color:#157A50}
-  .check .ck.n{background:#F1F2F6;color:#8A90A0}
-  .check .ck.w{background:var(--amber-soft);color:#9A6A0D}
-  .check b{font-weight:600}
-  .check span.s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
-  .tl{position:relative;margin-top:10px;padding-left:16px}
-  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:1.5px;background:var(--line)}
-  .tl-item{position:relative;padding:0 0 12px 0}
-  .tl-item::before{content:"";position:absolute;left:-15px;top:3px;width:7px;height:7px;border-radius:50%;
-    background:var(--gold);box-shadow:0 0 0 3px #fff}
-  .tl-item b{font-size:11.5px;font-weight:700}
-  .tl-item span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
-  .drop{border:1.5px dashed #D9DDE6;border-radius:10px;padding:13px;text-align:center;font-size:10.5px;
-    color:var(--muted);background:#FBFCFD;cursor:pointer;transition:.15s}
-  .drop:hover{border-color:var(--gold);background:#FFFCF0;color:var(--gold-dark)}
-  .tablewrap{overflow:auto}
   #regBody td, #regBody th{white-space:nowrap}
   #regBody .msg, #verBody .msg, #audBody .msg{white-space:normal;max-width:260px}
   #schBody td, #schBody th{white-space:nowrap}
@@ -195,3 +129,4 @@
     .prow{grid-template-columns:1fr;gap:4px}
     .prow .pv{text-align:left}
   }
+
