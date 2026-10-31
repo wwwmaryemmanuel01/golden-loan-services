@@ -511,6 +511,68 @@
   .pager button:disabled{opacity:.45;cursor:not-allowed}
   .empty{padding:26px 10px;text-align:center;font-size:12px;color:var(--muted)}
   .sec{margin-bottom:22px}
+
+  /* ===================== SHARED PAGE PRIMITIVES ===================== */
+  /* compact list rows (activity feeds, alerts, officer lists) */
+  .lrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .lrow:last-child{border-bottom:0}
+  .lrow .lic{width:28px;height:28px;flex:0 0 28px;border-radius:8px;display:grid;place-items:center;
+    font-size:11px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .lrow .lt{font-size:11.5px;font-weight:700;line-height:1.3}
+  .lrow .ls{font-size:10px;color:var(--muted);margin-top:1px}
+  .lrow .lr{margin-left:auto;display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  .lrow .lr .btn{padding:4px 8px;font-size:10.5px}
+  .lrow .dim{font-size:10.5px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  /* segmented control */
+  .segbar{display:flex;gap:4px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .segbar button{border:0;background:transparent;font-family:inherit;font-size:10.5px;font-weight:700;
+    color:var(--muted);padding:5px 9px;border-radius:6px;cursor:pointer;white-space:nowrap}
+  .segbar button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+
+  /* subsection heading inside a panel */
+  .grp{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--muted-2);margin:14px 0 2px;padding-bottom:6px;
+    border-bottom:1px solid var(--line)}
+  .grp .gt{font-size:9.5px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);
+    margin-left:auto}
+
+  /* small value tags */
+  .val-tag{font-size:10.5px;font-weight:800;background:#F1F2F6;color:#4A5160;
+    border-radius:6px;padding:2px 7px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* saved / unsaved state pill */
+  .savestate{font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+    padding:3px 8px;border-radius:20px;background:#F1F2F6;color:#5A6172;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px}
+  .savestate::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .savestate.dirty{background:var(--amber-soft);color:#9A6A0D}
+  .savestate.saved{background:var(--green-soft);color:#157A50}
+
+  /* small preview blocks */
+  .prev{background:#F7F8FA;border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-top:9px}
+  .prev .pl{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--muted-2);margin-bottom:5px}
+  .prev .pv{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+  .prev .pn{font-size:10px;color:var(--muted);margin-top:2px}
+  .prevrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+  .letterhead{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;
+    box-shadow:0 2px 10px rgba(16,18,24,.05);position:relative;overflow:hidden}
+
+  /* brand tile */
+  .logo-tile{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:#fff;
+    font-size:11px;font-weight:800;letter-spacing:-.3px;box-shadow:0 2px 8px rgba(201,162,39,.35)}
+
+  /* badge tones */
+  .b-ok{background:var(--green-soft);color:#157A50}
+  .b-await{background:var(--amber-soft);color:#9A6A0D}
+  .b-rej{background:var(--red-soft);color:#B32C2C}
+  .b-auth{background:#EDEBFB;color:#5A3FCB}
+  .b-conf{background:#EAF1FE;color:#2456C4}
+  .b-proc{background:#F1F2F6;color:#4A5160}
+  .b-draft{background:#F1F2F6;color:#5A6172}
+
   @media(max-width:1120px){
     .split,.split.even,.split.rev{grid-template-columns:1fr}
     .form-grid,.form-grid.three{grid-template-columns:1fr 1fr}
@@ -1907,6 +1969,18 @@ const REPAYMENTS = SEED.map((r,i)=>({
   rejReason: r[5]==='Rejected' ? 'No matching deposit on the bank statement' : null,
   alloc: null
 }));
+/* push the oldest rows back across the previous two months so the month-to-date
+   totals differ from all-time and the register has real history */
+const shiftISO = (iso, days) => {
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() - days);
+  return d.toISOString().slice(0,10);
+};
+REPAYMENTS.forEach((p,i)=>{
+  if(i >= 33) p.date = shiftISO(p.date, 61);
+  else if(i >= 25) p.date = shiftISO(p.date, 30);
+});
+
 /* allocation split for the already-allocated rows */
 REPAYMENTS.filter(p=>p.status==='Allocated').forEach(p=>{
   const pen = loanBy(p.loan).penalty ? Math.min(loanBy(p.loan).penalty, Math.round(p.amount*0.1)) : 0;
@@ -1992,27 +2066,33 @@ const pendingList = () => REPAYMENTS.filter(p=>p.status==='Pending verification'
 const unallocList = () => REPAYMENTS.filter(p=>p.status==='Verified');
 const todayList = () => REPAYMENTS.filter(p=>p.date===TODAY);
 const monthList = () => REPAYMENTS.filter(p=>p.date.slice(0,7)==='2026-10');
-const EXPECTED_MONTH = 4120000;
+/* October target: instalments falling due this month plus the arrears the branch
+   is working to recover (see the arrears section for the overdue book). */
+const EXPECTED_MONTH = 1750000;
+const cleared = p => p.status === 'Allocated' || p.status === 'Verified';
+const octoberCleared = () => sum(monthList().filter(cleared), p=>p.amount);
+const todayCleared   = () => sum(todayList().filter(cleared), p=>p.amount);
 
 /* ===================== 1 · OVERVIEW ===================== */
 function renderOverview(){
   const pend = pendingList(), un = unallocList(), tod = todayList(), mon = monthList();
   const received = collected();
+  const mtd = octoberCleared();
   const overdueTotal = sum(LOANS, overdueOf);
   const partials = LOANS.filter(l=>l.dpd>0).length;
   const expectedToday = sum(LOANS.filter(l=>scheduleFor(l).some(s=>s.due===TODAY)), l=>l.inst);
 
   const tiles = [
-    ['Total received', mk(received), 'All time across '+REPAYMENTS.length+' payments', 'gold', ''],
-    ['Today', mk(sum(tod.filter(p=>p.status!=='Rejected'&&p.status!=='Reversed'),p=>p.amount)), tod.length+' payments · expected '+mk(expectedToday), '', ''],
-    ['This month', mk(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount)), Math.round(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount)/EXPECTED_MONTH*100)+'% of expected', '', ''],
+    ['Total received', mk(received), 'All time · '+REPAYMENTS.filter(cleared).length+' cleared payments', 'gold', ''],
+    ['Today', mk(todayCleared()), tod.length+' recorded · expected '+mk(expectedToday), '', ''],
+    ['This month', mk(octoberCleared()), Math.round(octoberCleared()/EXPECTED_MONTH*100)+'% of expected', '', ''],
     ['Expected · October', mk(EXPECTED_MONTH), 'Scheduled for the month', 'blue', ''],
     ['Outstanding book', mk(sum(LOANS,l=>l.outstanding)), LOANS.length+' active loans', '', ''],
     ['Overdue', mk(overdueTotal), LOANS.filter(l=>l.dpd>0).length+' accounts behind', 'red', ''],
     ['Partially paid', String(partials), 'instalments across the book', '', ''],
     ['Unallocated', mk(sum(un,p=>p.amount)), un.length+' payments awaiting allocation', un.length?'gold':'', ''],
     ['Pending verification', mk(sum(pend,p=>p.amount)), pend.length+' payments to confirm', pend.length?'red':'', ''],
-    ['Recovery rate', Math.round(received/EXPECTED_MONTH*100)+'%', 'of the month target', '', '']
+    ['Recovery rate', Math.round(octoberCleared()/EXPECTED_MONTH*100)+'%', 'of the month target', '', '']
   ];
   el('ovTiles').innerHTML = tiles.map(([l,v,s,cls,extra])=>`
     <div class="kpi ${cls}"><div class="kl">${l}</div><div class="kv">${v}</div>
@@ -2020,12 +2100,12 @@ function renderOverview(){
 
   const labels = ['May','Jun','Jul','Aug','Sep','Oct'];
   mkBars(el('ovTrend'), labels, [
-    {name:'Expected', color:'#2F6FED', data:[3100000,3400000,3600000,3800000,4000000,EXPECTED_MONTH]},
-    {name:'Received', color:'#C9A227', data:[2980000,3220000,3410000,3560000,3840000,received]}
+    {name:'Expected', color:'#2F6FED', data:[1560000,1620000,1640000,1690000,1720000,EXPECTED_MONTH]},
+    {name:'Received', color:'#C9A227', data:[1184000,1306000,1242000,1388000,1404500,mtd]}
   ]);
-  el('ovTrendFoot').innerHTML = `<b><i style="background:#C9A227"></i>Month to date ${mk(received)}</b>
+  el('ovTrendFoot').innerHTML = `<b><i style="background:#C9A227"></i>Month to date ${mk(mtd)}</b>
     <b><i style="background:#2F6FED"></i>Expected ${mk(EXPECTED_MONTH)}</b>
-    <b style="color:${received>EXPECTED_MONTH*0.8?'#157A50':'#B32C2C'}">${Math.round(received/EXPECTED_MONTH*100)}% collected</b>`;
+    <b style="color:${mtd>EXPECTED_MONTH*0.8?'#157A50':'#B32C2C'}">${Math.round(mtd/EXPECTED_MONTH*100)}% collected</b>`;
 
   const byMethod = ['Cash','Bank transfer','Airtel Money','TNM Mpamba','Cheque'].map(m=>({
     label:m, value: sum(REPAYMENTS.filter(p=>p.method===m && !['Rejected','Reversed'].includes(p.status)), p=>p.amount),
@@ -2059,14 +2139,14 @@ function renderOverview(){
   el('ovAlerts').querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>gotoSec(b.dataset.jump));
 
   progressRows(el('ovRecovery'), [
-    {label:'This month', pct:received/EXPECTED_MONTH*100, display:Math.round(received/EXPECTED_MONTH*100)+'%'},
+    {label:'This month', pct:mtd/EXPECTED_MONTH*100, display:Math.round(mtd/EXPECTED_MONTH*100)+'%'},
     {label:'Target · 95%', pct:95, display:'MK '+nf(EXPECTED_MONTH*0.95), color:'#1E9E6A'},
     {label:'Overdue recovered', pct:62, display:'62%', color:'#D93F3F'},
     {label:'Promises kept', pct:74, display:'74%', color:'#2F6FED'}
   ]);
 
-  el('bandCollected').textContent = mk(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount));
-  el('bandToday').textContent = mk(sum(tod.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount));
+  el('bandCollected').textContent = mk(octoberCleared());
+  el('bandToday').textContent = mk(todayCleared());
   el('bandPending').textContent = pend.length;
   el('bandOverdue').textContent = mk(overdueTotal);
 }
@@ -3535,19 +3615,28 @@ function officerModal(name){
 }
 
 /* ===================== 14 · RECONCILIATION ===================== */
-const RECON = [
-  {ch:'Cash', recorded:184250, confirmed:184250},
-  {ch:'Bank transfer', recorded:472000, confirmed:469500},
-  {ch:'Airtel Money', recorded:302000, confirmed:296500},
-  {ch:'TNM Mpamba', recorded:129000, confirmed:129000},
-  {ch:'Cheque', recorded:100000, confirmed:0}
-];
+/* channel positions are built from today's register, so reconciliation agrees
+   with the payments in section 3 */
+const RECON = [{ch:'Cash', recorded:0, confirmed:0}];
+function buildRecon(){
+  const rec = m => sum(todayList().filter(p=>p.method===m), p=>p.amount);
+  const cheque = sum(REPAYMENTS.filter(p=>p.method==='Cheque' && p.status==='Pending verification'), p=>p.amount);
+  const rows = [
+    {ch:'Cash',         recorded:rec('Cash'),         confirmed:rec('Cash')},
+    {ch:'Bank transfer',recorded:rec('Bank transfer'),confirmed:Math.max(0, rec('Bank transfer') - 25000)},
+    {ch:'Airtel Money', recorded:rec('Airtel Money'), confirmed:Math.max(0, rec('Airtel Money') - 6000)},
+    {ch:'TNM Mpamba',   recorded:rec('TNM Mpamba'),   confirmed:rec('TNM Mpamba')},
+    {ch:'Cheque',       recorded:cheque,              confirmed:0}
+  ];
+  RECON.length = 0; rows.forEach(r=>RECON.push(r));
+  return RECON;
+}
 const RECON_HIST = [
-  ['2026-10-29',1184250,1184250,0,0,'Thandiwe Kamanga','Balanced'],
-  ['2026-10-28',986000,984000,2000,1,'Thandiwe Kamanga','Adjusted'],
-  ['2026-10-27',742000,742000,0,0,'Memory Phiri','Balanced'],
-  ['2026-10-26',812000,809500,2500,1,'Thandiwe Kamanga','Adjusted'],
-  ['2026-10-25',654000,654000,0,0,'Memory Phiri','Balanced']
+  ['2026-10-29',412600,412600,0,0,'Thandiwe Kamanga','Balanced'],
+  ['2026-10-28',386250,384250,2000,1,'Thandiwe Kamanga','Adjusted'],
+  ['2026-10-27',297800,297800,0,0,'Memory Phiri','Balanced'],
+  ['2026-10-26',345900,343400,2500,1,'Thandiwe Kamanga','Adjusted'],
+  ['2026-10-25',210400,210400,0,0,'Memory Phiri','Balanced']
 ];
 const DISC = [
   {t:'Missing transaction', s:'Bank transfer NBM-7710228 · MK 25,000 not on the statement', amt:25000, sev:'High'},
@@ -3557,13 +3646,14 @@ const DISC = [
 ];
 let ADJUSTMENTS = [];
 function renderRecon(){
+  buildRecon();
   el('reconCards').innerHTML = RECON.map(r=>{
     const diff = r.recorded - r.confirmed;
     return `<div class="mcard">
       <div class="mh"><div class="mi">${r.ch.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
-        <div><div class="mn">${r.ch}</div><div class="md">${diff?'Difference '+mk(diff):'Balanced'}</div></div></div>
-      <div class="mv">${mk(r.confirmed)}</div>
-      <div class="ms" style="color:${diff?'#B32C2C':'#157A50'};font-weight:700">${diff?'⚠ '+mk(diff)+' unmatched':'✓ Matched'}</div>
+        <div><div class="mn">${r.ch}</div><div class="md">Recorded ${mk(r.recorded)}</div></div></div>
+      <div class="mv">${mk(r.confirmed)}<span style="font-size:9px;font-weight:600;color:var(--muted);display:block">confirmed</span></div>
+      <div class="ms" style="color:${diff?'#B32C2C':'#157A50'};font-weight:700">${diff?'⚠ '+mk(diff)+' unmatched':'✓ Matched to statement'}</div>
     </div>`;
   }).join('');
   el('reconBody').innerHTML = RECON.map(r=>{
@@ -3672,10 +3762,15 @@ function reportData(key){
     case 'monthly': return {
       title:'Monthly repayment report', sub:'October 2026',
       cols:[['Week',0],['Payments',1],['Collected',1],['Expected',1],['Variance',1],['Recovery %',0]],
-      rows: [['Week 1 (1–7)', 8, 462000, 950000, -488000, '49%'],
-             ['Week 2 (8–14)', 11, 640000, 980000, -340000, '65%'],
-             ['Week 3 (15–21)', 12, 786000, 1040000, -254000, '76%'],
-             ['Week 4 (22–30)', 9, 812250, 1150000, -337750, '71%']],
+      rows: [['Week 1 (1–7)',1,7],['Week 2 (8–14)',8,14],['Week 3 (15–21)',15,21],['Week 4 (22–30)',22,30]]
+        .map(([label,a,b])=>{
+          const r = month.filter(p=>{
+            const day = Number(p.date.slice(8,10));
+            return day>=a && day<=b && !['Rejected','Reversed'].includes(p.status);
+          });
+          const got = sum(r,p=>p.amount), exp = Math.round(EXPECTED_MONTH/4);
+          return [label, r.length, got, exp, got-exp, Math.round(got/exp*100)+'%'];
+        }),
       sums:[1,2,3,4]
     };
     case 'customer': return {
@@ -4400,7 +4495,7 @@ function boot(){
 
   /* section 14 */
   on('reconRun','click', ()=>{
-    RECON.forEach(r=>{ r.confirmed = r.recorded; });
+    buildRecon(); RECON.forEach(r=>{ r.confirmed = r.recorded; });
     const total = sum(RECON,r=>r.recorded);
     RECON_HIST.unshift([TODAY,total,total,0,0,'Thandiwe Kamanga','Balanced']);
     renderRecon();

@@ -122,6 +122,18 @@ const REPAYMENTS = SEED.map((r,i)=>({
   rejReason: r[5]==='Rejected' ? 'No matching deposit on the bank statement' : null,
   alloc: null
 }));
+/* push the oldest rows back across the previous two months so the month-to-date
+   totals differ from all-time and the register has real history */
+const shiftISO = (iso, days) => {
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() - days);
+  return d.toISOString().slice(0,10);
+};
+REPAYMENTS.forEach((p,i)=>{
+  if(i >= 33) p.date = shiftISO(p.date, 61);
+  else if(i >= 25) p.date = shiftISO(p.date, 30);
+});
+
 /* allocation split for the already-allocated rows */
 REPAYMENTS.filter(p=>p.status==='Allocated').forEach(p=>{
   const pen = loanBy(p.loan).penalty ? Math.min(loanBy(p.loan).penalty, Math.round(p.amount*0.1)) : 0;
@@ -207,27 +219,33 @@ const pendingList = () => REPAYMENTS.filter(p=>p.status==='Pending verification'
 const unallocList = () => REPAYMENTS.filter(p=>p.status==='Verified');
 const todayList = () => REPAYMENTS.filter(p=>p.date===TODAY);
 const monthList = () => REPAYMENTS.filter(p=>p.date.slice(0,7)==='2026-10');
-const EXPECTED_MONTH = 4120000;
+/* October target: instalments falling due this month plus the arrears the branch
+   is working to recover (see the arrears section for the overdue book). */
+const EXPECTED_MONTH = 1750000;
+const cleared = p => p.status === 'Allocated' || p.status === 'Verified';
+const octoberCleared = () => sum(monthList().filter(cleared), p=>p.amount);
+const todayCleared   = () => sum(todayList().filter(cleared), p=>p.amount);
 
 /* ===================== 1 · OVERVIEW ===================== */
 function renderOverview(){
   const pend = pendingList(), un = unallocList(), tod = todayList(), mon = monthList();
   const received = collected();
+  const mtd = octoberCleared();
   const overdueTotal = sum(LOANS, overdueOf);
   const partials = LOANS.filter(l=>l.dpd>0).length;
   const expectedToday = sum(LOANS.filter(l=>scheduleFor(l).some(s=>s.due===TODAY)), l=>l.inst);
 
   const tiles = [
-    ['Total received', mk(received), 'All time across '+REPAYMENTS.length+' payments', 'gold', ''],
-    ['Today', mk(sum(tod.filter(p=>p.status!=='Rejected'&&p.status!=='Reversed'),p=>p.amount)), tod.length+' payments · expected '+mk(expectedToday), '', ''],
-    ['This month', mk(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount)), Math.round(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount)/EXPECTED_MONTH*100)+'% of expected', '', ''],
+    ['Total received', mk(received), 'All time · '+REPAYMENTS.filter(cleared).length+' cleared payments', 'gold', ''],
+    ['Today', mk(todayCleared()), tod.length+' recorded · expected '+mk(expectedToday), '', ''],
+    ['This month', mk(octoberCleared()), Math.round(octoberCleared()/EXPECTED_MONTH*100)+'% of expected', '', ''],
     ['Expected · October', mk(EXPECTED_MONTH), 'Scheduled for the month', 'blue', ''],
     ['Outstanding book', mk(sum(LOANS,l=>l.outstanding)), LOANS.length+' active loans', '', ''],
     ['Overdue', mk(overdueTotal), LOANS.filter(l=>l.dpd>0).length+' accounts behind', 'red', ''],
     ['Partially paid', String(partials), 'instalments across the book', '', ''],
     ['Unallocated', mk(sum(un,p=>p.amount)), un.length+' payments awaiting allocation', un.length?'gold':'', ''],
     ['Pending verification', mk(sum(pend,p=>p.amount)), pend.length+' payments to confirm', pend.length?'red':'', ''],
-    ['Recovery rate', Math.round(received/EXPECTED_MONTH*100)+'%', 'of the month target', '', '']
+    ['Recovery rate', Math.round(octoberCleared()/EXPECTED_MONTH*100)+'%', 'of the month target', '', '']
   ];
   el('ovTiles').innerHTML = tiles.map(([l,v,s,cls,extra])=>`
     <div class="kpi ${cls}"><div class="kl">${l}</div><div class="kv">${v}</div>
@@ -235,12 +253,12 @@ function renderOverview(){
 
   const labels = ['May','Jun','Jul','Aug','Sep','Oct'];
   mkBars(el('ovTrend'), labels, [
-    {name:'Expected', color:'#2F6FED', data:[3100000,3400000,3600000,3800000,4000000,EXPECTED_MONTH]},
-    {name:'Received', color:'#C9A227', data:[2980000,3220000,3410000,3560000,3840000,received]}
+    {name:'Expected', color:'#2F6FED', data:[1560000,1620000,1640000,1690000,1720000,EXPECTED_MONTH]},
+    {name:'Received', color:'#C9A227', data:[1184000,1306000,1242000,1388000,1404500,mtd]}
   ]);
-  el('ovTrendFoot').innerHTML = `<b><i style="background:#C9A227"></i>Month to date ${mk(received)}</b>
+  el('ovTrendFoot').innerHTML = `<b><i style="background:#C9A227"></i>Month to date ${mk(mtd)}</b>
     <b><i style="background:#2F6FED"></i>Expected ${mk(EXPECTED_MONTH)}</b>
-    <b style="color:${received>EXPECTED_MONTH*0.8?'#157A50':'#B32C2C'}">${Math.round(received/EXPECTED_MONTH*100)}% collected</b>`;
+    <b style="color:${mtd>EXPECTED_MONTH*0.8?'#157A50':'#B32C2C'}">${Math.round(mtd/EXPECTED_MONTH*100)}% collected</b>`;
 
   const byMethod = ['Cash','Bank transfer','Airtel Money','TNM Mpamba','Cheque'].map(m=>({
     label:m, value: sum(REPAYMENTS.filter(p=>p.method===m && !['Rejected','Reversed'].includes(p.status)), p=>p.amount),
@@ -274,14 +292,14 @@ function renderOverview(){
   el('ovAlerts').querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>gotoSec(b.dataset.jump));
 
   progressRows(el('ovRecovery'), [
-    {label:'This month', pct:received/EXPECTED_MONTH*100, display:Math.round(received/EXPECTED_MONTH*100)+'%'},
+    {label:'This month', pct:mtd/EXPECTED_MONTH*100, display:Math.round(mtd/EXPECTED_MONTH*100)+'%'},
     {label:'Target · 95%', pct:95, display:'MK '+nf(EXPECTED_MONTH*0.95), color:'#1E9E6A'},
     {label:'Overdue recovered', pct:62, display:'62%', color:'#D93F3F'},
     {label:'Promises kept', pct:74, display:'74%', color:'#2F6FED'}
   ]);
 
-  el('bandCollected').textContent = mk(sum(mon.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount));
-  el('bandToday').textContent = mk(sum(tod.filter(p=>!['Rejected','Reversed'].includes(p.status)),p=>p.amount));
+  el('bandCollected').textContent = mk(octoberCleared());
+  el('bandToday').textContent = mk(todayCleared());
   el('bandPending').textContent = pend.length;
   el('bandOverdue').textContent = mk(overdueTotal);
 }
