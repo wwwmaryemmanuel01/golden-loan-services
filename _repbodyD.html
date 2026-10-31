@@ -1,0 +1,217 @@
+    <!-- 15 -->
+    <section class="sec" id="s15" data-sec="15">
+      <div class="sec-head"><div class="sec-num">15</div>
+        <div><h2>Repayment &amp; Collections Reports</h2><p>Twelve operational reports, computed from the live register</p></div>
+        <div class="sec-tools">
+          <div class="fld"><select id="rptPeriod">
+            <option>Today</option><option>This week</option><option selected>This month</option>
+            <option>Last month</option><option>Year to date</option></select></div>
+          <button class="btn btn-ghost btn-sm" id="rptPrint">Print</button>
+          <button class="btn btn-gold btn-sm" id="rptExport">Export</button>
+        </div>
+      </div>
+
+      <div class="split rev" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Report Catalogue</div>
+            <div class="panel-sub">Pick a report to run it against the selected period</div></div>
+            <span class="count-pill" id="rptCount">12 reports</span></div>
+          <div class="tblwrap" style="max-height:420px">
+            <table class="tbl2"><thead><tr><th>Report</th><th>Category</th><th>Period</th>
+              <th>Last run</th><th></th></tr></thead><tbody id="rptList"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Export</div>
+            <div class="panel-sub">PDF uses the browser print dialog</div></div></div>
+          <div class="setlist" id="rptExportCfg"></div>
+          <div class="form-actions" style="flex-direction:column;align-items:stretch;gap:7px">
+            <button class="btn btn-gold" id="rptPdf">Export PDF</button>
+            <button class="btn btn-ghost" id="rptXls">Export Excel (.xlsx)</button>
+            <button class="btn btn-ghost" id="rptCsv">Export CSV</button>
+          </div>
+          <div class="note" style="margin-top:10px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+            <div>Excel is a genuine <b>.xlsx</b> workbook. When this page is embedded in a preview frame,
+              exports fall back to a copyable preview instead of failing silently.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title" id="rptTitle">Daily repayment report</div>
+          <div class="panel-sub" id="rptSub">This month · 30 Oct 2026</div></div>
+          <span class="badge b-auth" id="rptRows">0 rows</span></div>
+        <div class="tblwrap" style="max-height:420px">
+          <table class="tbl2"><thead id="rptHead"></thead><tbody id="rptBody"></tbody></table>
+        </div>
+        <div id="rptTotals"></div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="sec" id="s16" data-sec="16">
+      <div class="sec-head"><div class="sec-num">16</div>
+        <div><h2>Repayment Notifications &amp; Reminders</h2><p>Reminders before, on and after the due date — and what the customer actually received</p></div>
+        <div class="sec-tools">
+          <span class="savestate saved" id="notifState">Saved</span>
+          <button class="btn btn-ghost btn-sm" id="notifSend">Send due-today batch</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reminder Rules</div>
+            <div class="panel-sub">Applied to every active loan</div></div></div>
+          <div class="setlist" id="remCfg"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer SMS &amp; Email History</div>
+            <div class="panel-sub">Newest first · delivery status per message</div></div>
+            <div class="fld"><select id="msgFilter">
+              <option value="">All messages</option><option>Reminder</option><option>Overdue</option>
+              <option>Confirmation</option><option>Failed payment</option><option>Follow-up</option>
+            </select></div></div>
+          <div class="tblwrap" style="max-height:320px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Customer</th><th>Type</th>
+              <th>Channel</th><th>Status</th><th></th></tr></thead><tbody id="msgBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification Delivery Status</div>
+          <div class="panel-sub">Last 7 days by channel</div></div></div>
+        <div class="kgrid" id="msgStats"></div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="sec" id="s17" data-sec="17">
+      <div class="sec-head"><div class="sec-num">17</div>
+        <div><h2>Repayment Audit &amp; Security</h2><p>Every creation, verification, allocation, reversal and correction — who did what</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="audExport">Export audit log</button>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="filters" style="margin-bottom:0">
+          <div class="segbar" id="audTabs">
+            <button class="on" data-cat="">All events</button>
+            <button data-cat="Creation">Repayment creation</button>
+            <button data-cat="Verification">Verification</button>
+            <button data-cat="Allocation">Allocation</button>
+            <button data-cat="Reversal">Reversals</button>
+            <button data-cat="Receipt">Receipts</button>
+            <button data-cat="Access">Record access</button>
+            <button data-cat="Correction">Financial corrections</button>
+          </div>
+          <div class="fld search" style="margin-left:auto">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search actor, receipt, action…" id="audSearch" />
+          </div>
+        </div>
+        <div class="tblwrap" style="max-height:420px">
+          <table class="tbl2"><thead><tr><th>Time</th><th>Category</th><th>Actor</th>
+            <th>Action</th><th>Record</th><th class="num">Amount</th><th>IP</th><th>Result</th></tr></thead>
+            <tbody id="audBody"></tbody></table>
+        </div>
+        <div class="pager" id="audPager"></div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Transaction Monitoring</div>
+            <div class="panel-sub">Patterns that need a human look</div></div>
+            <span class="badge b-rej" id="suspCount">0</span></div>
+          <div id="suspList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval History</div>
+            <div class="panel-sub">Reversals, corrections and settlement approvals</div></div></div>
+          <div class="tblwrap" style="max-height:250px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Request</th><th>Decision</th>
+              <th>Approver</th><th>Note</th></tr></thead><tbody id="apprHist"></tbody></table>
+          </div>
+          <div class="minihead" style="margin-top:12px">User activity</div>
+          <div id="userActivity"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="sec" id="s18" data-sec="18">
+      <div class="sec-head"><div class="sec-num">18</div>
+        <div><h2>Repayment Settings</h2><p>Methods, allocation rules, numbering, penalties and approval requirements</p></div>
+        <div class="sec-tools">
+          <span class="savestate" id="setState">Saved</span>
+          <button class="btn btn-ghost btn-sm" id="setDiscard">Discard</button>
+          <button class="btn btn-gold btn-sm" id="setSave">Save settings</button>
+        </div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Accepted Payment Methods</div>
+            <div class="panel-sub">Which channels a cashier can select</div></div></div>
+          <div class="setlist" id="setMethods"></div>
+          <div class="grp" style="margin-top:10px">Payment reference requirements</div>
+          <div class="setlist" id="setRefs"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Allocation &amp; Partial Payments</div>
+            <div class="panel-sub">Order of application and what counts as valid</div></div></div>
+          <div class="setlist" id="setAlloc"></div>
+          <div class="grp" style="margin-top:10px">Late payment penalties</div>
+          <div class="setlist" id="setPenalty"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipts, Verification &amp; Approval</div>
+            <div class="panel-sub">Numbering and the sign-offs required</div></div></div>
+          <div class="setlist" id="setReceipt"></div>
+          <div class="grp" style="margin-top:10px">Early settlement</div>
+          <div class="setlist" id="setEarly"></div>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reminder &amp; Escalation Rules</div>
+            <div class="panel-sub">When the customer is contacted and when the account escalates</div></div></div>
+          <div class="setlist" id="setRemind"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reversal Approval Requirements</div>
+            <div class="panel-sub">Who may reverse money, and up to what value</div></div></div>
+          <div class="setlist" id="setReverse"></div>
+          <div class="note gold" style="margin-top:10px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div>These rules are enforced server-side in production. Changing them is written to the
+              audit log in section 17 with the previous and new values.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note" style="margin-top:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 14px;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+      <div>Sample data. Recording a repayment updates the register, the loan balance, the schedule,
+        the overview totals, the receipts and the audit log, so the full collection lifecycle can be
+        walked end to end. No real money moves and nothing leaves this page.</div>
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

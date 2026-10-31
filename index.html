@@ -353,7 +353,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
       Loan Portfolio
     </a>
-    <a class="nav-item" data-page="repayments" href="#repayments">
+    <a class="nav-item" data-page="repayments" href="repayments.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
       Repayments
     </a>
@@ -1761,6 +1761,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'staff'){ window.location.href = 'staff.html'; return; }
     if(page === 'reports'){ window.location.href = 'reports.html'; return; }
     if(page === 'settings'){ window.location.href = 'settings.html'; return; }
+    if(page === 'repayments'){ window.location.href = 'repayments.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
@@ -1840,7 +1841,7 @@ el('exportBtn').addEventListener('click', ()=>{
   var KEY = 'gls_nav_stack', HOME = 'index.html';
   var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
                 'notifications.html':'Notifications','staff.html':'Staff Management',
-                'settings.html':'System Settings'};
+                'settings.html':'System Settings','repayments.html':'Repayments & Collections'};
   var file = (location.pathname.split('/').pop() || HOME) || HOME;
   if(!/\.html$/i.test(file)) file = HOME;
 

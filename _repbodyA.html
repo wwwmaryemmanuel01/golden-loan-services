@@ -1,0 +1,243 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Repayments &amp; Collections</div>
+      <div class="page-sub">Register · verification · allocation · arrears · settlements · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search customer, loan, receipt or transaction…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Pending verification" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export register
+    </button>
+    <button class="btn btn-gold" id="recordBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+      Record repayment
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Record Payment</a>
+    <a class="snav" href="#s3">3 · All Repayments</a>
+    <a class="snav" href="#s4">4 · Verification</a>
+    <a class="snav" href="#s5">5 · Allocation</a>
+    <a class="snav" href="#s6">6 · Schedules</a>
+    <a class="snav" href="#s7">7 · Collections</a>
+    <a class="snav" href="#s8">8 · Arrears</a>
+    <a class="snav" href="#s9">9 · Payment Methods</a>
+    <a class="snav" href="#s10">10 · Receipts</a>
+    <a class="snav" href="#s11">11 · Settlements</a>
+    <a class="snav" href="#s12">12 · Reversals</a>
+    <a class="snav" href="#s13">13 · Officers</a>
+    <a class="snav" href="#s14">14 · Reconciliation</a>
+    <a class="snav" href="#s15">15 · Reports</a>
+    <a class="snav" href="#s16">16 · Notifications</a>
+    <a class="snav" href="#s17">17 · Audit</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Repayments &amp; Collections</h1>
+        <p>Every kwacha received, verified, allocated and reconciled · MWK · 30 October 2026</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandCollected">0</b><span>Collected MTD</span></div>
+        <div class="band-stat"><b id="bandToday">0</b><span>Today</span></div>
+        <div class="band-stat"><b id="bandPending">0</b><span>To verify</span></div>
+        <div class="band-stat"><b id="bandOverdue">0</b><span>Overdue</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="reconBtn">Reconcile</button>
+        <button class="btn btn-gold btn-sm" id="recordBtn2">Record payment</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1" data-sec="1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Repayments Overview</h2><p>Collections position for the month, today's activity and everything awaiting action</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+
+      <div class="kgrid" id="ovTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="margin-bottom:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Collections Trend</div>
+            <div class="panel-sub">Received against expected · last 6 months</div></div>
+            <div class="legend" style="margin:0">
+              <b><i style="background:#2F6FED"></i>Expected</b>
+              <b><i style="background:#C9A227"></i>Received</b>
+            </div></div>
+          <svg id="ovTrend" viewBox="0 0 640 220" style="width:100%;height:auto;margin-top:8px"></svg>
+          <div class="legend" id="ovTrendFoot"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Method Mix</div>
+            <div class="panel-sub">Share of value received this month</div></div></div>
+          <div style="display:flex;gap:14px;align-items:center;margin-top:10px;flex-wrap:wrap">
+            <svg id="ovMix" viewBox="0 0 150 150" style="width:150px;height:150px;flex:0 0 150px"></svg>
+            <div id="ovMixLegend" style="flex:1;min-width:140px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Repayment Activities</div>
+            <div class="panel-sub">Newest first · register, verification and allocation events</div></div>
+            <button class="btn btn-ghost btn-sm" id="ovOpenRegister">Open register</button></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2"><thead><tr><th>Time</th><th>Receipt</th><th>Customer</th>
+              <th class="num">Amount</th><th>Method</th><th>Status</th></tr></thead>
+              <tbody id="ovRecent"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Needs Attention</div>
+            <div class="panel-sub">Items blocking the daily close</div></div>
+            <span class="badge b-rej" id="ovAlertCount">0</span></div>
+          <div id="ovAlerts"></div>
+          <div class="minihead" style="margin-top:12px">Collection recovery</div>
+          <div id="ovRecovery"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2" data-sec="2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Record Customer Repayment</h2><p>Capture a payment against a loan, attach evidence and post it to the register</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="rcMode">Counter mode</span></div>
+      </div>
+
+      <div class="split rev">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Details</div>
+            <div class="panel-sub">Start by finding the customer or loan account</div></div></div>
+
+          <div class="filters" style="margin-top:2px">
+            <div class="fld search" style="max-width:none;flex:1 1 260px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input placeholder="Search customer name, loan number or phone…" id="rcSearch" autocomplete="off" />
+            </div>
+            <div class="fld"><select id="rcLoan"><option value="">Select loan account…</option></select></div>
+          </div>
+          <div id="rcResults"></div>
+
+          <div class="form-grid three" style="margin-top:12px">
+            <div class="fg"><label>Payment amount (MWK)</label>
+              <input id="rcAmount" type="number" value="48250" step="500" />
+              <div class="hint" id="rcAmountHint">Scheduled instalment: MK 48,250.00</div></div>
+            <div class="fg"><label>Payment date</label><input id="rcDate" type="date" value="2026-10-30" /></div>
+            <div class="fg"><label>Payment method</label><select id="rcMethod">
+              <option>Cash</option><option>Bank transfer</option><option>Airtel Money</option>
+              <option>TNM Mpamba</option><option>Cheque</option></select></div>
+            <div class="fg"><label>Transaction reference</label>
+              <input id="rcRef" placeholder="e.g. AM-88214051" />
+              <div class="hint">Required for non-cash payments</div></div>
+            <div class="fg"><label>Receipt number</label>
+              <input id="rcReceipt" readonly />
+              <div class="hint">Issued automatically on submission</div></div>
+            <div class="fg"><label>Received by</label>
+              <input id="rcOfficer" value="Memory Phiri · Cashier" readonly /></div>
+          </div>
+
+          <div class="fg" style="margin-top:10px"><label>Payment notes</label>
+            <textarea id="rcNotes" style="min-height:56px" placeholder="Anything the verifier should know — part payment, promised balance, who handed over the cash…"></textarea></div>
+
+          <div class="grp" style="margin-top:12px">Payment evidence <span class="gt">optional for cash, required above MK 500,000</span></div>
+          <div class="drop" id="rcEvidence">Click to attach a receipt photo, bank slip or mobile money screenshot (PDF, JPG, PNG · max 5 MB)</div>
+          <div id="rcEvidenceList" style="margin-top:8px"></div>
+
+          <div class="form-actions">
+            <button class="btn btn-gold" id="rcSubmit">Submit repayment</button>
+            <button class="btn btn-ghost" id="rcClear">Clear form</button>
+            <button class="btn btn-ghost" id="rcVerifyNow">Submit &amp; verify</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="card panel" style="margin-bottom:13px">
+            <div class="panel-head"><div><div class="panel-title">Loan Summary</div>
+              <div class="panel-sub" id="rcLoanSub">No loan selected</div></div></div>
+            <div id="rcLoanCard"></div>
+          </div>
+          <div class="card panel" style="margin-bottom:13px">
+            <div class="panel-head"><div><div class="panel-title">Allocation Preview</div>
+              <div class="panel-sub">How this payment will be applied</div></div></div>
+            <div id="rcAlloc"></div>
+          </div>
+          <div class="card panel">
+            <div class="panel-head"><div><div class="panel-title">Today's Receipts</div>
+              <div class="panel-sub">Issued at this branch counter</div></div>
+              <span class="count-pill" id="rcTodayCount">0</span></div>
+            <div id="rcToday"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3" data-sec="3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>All Repayments</h2><p>The full repayment register with search, filters, detail view and export</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="regCount">0 payments</span>
+          <button class="btn btn-ghost btn-sm" id="regPrint">Print</button>
+          <button class="btn btn-gold btn-sm" id="regExport">Export</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="filters">
+          <div class="fld"><select id="regSearchBy">
+            <option value="customer">Search by customer name</option>
+            <option value="account">Search by account number</option>
+            <option value="loan">Search by loan number</option>
+            <option value="receipt">Search by receipt number</option>
+            <option value="ref">Search by transaction reference</option>
+          </select></div>
+          <div class="fld search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search the register…" id="regSearch" autocomplete="off" />
+          </div>
+          <div class="fld"><span style="font-size:10px;color:var(--muted);font-weight:700">From</span>
+            <input type="date" id="regFrom" value="2026-10-01" /></div>
+          <div class="fld"><span style="font-size:10px;color:var(--muted);font-weight:700">To</span>
+            <input type="date" id="regTo" value="2026-10-30" /></div>
+          <div class="fld"><select id="regMethod">
+            <option value="">All methods</option>
+            <option>Cash</option><option>Bank transfer</option><option>Airtel Money</option>
+            <option>TNM Mpamba</option><option>Cheque</option>
+          </select></div>
+          <div class="fld"><select id="regStatus">
+            <option value="">All statuses</option>
+            <option>Pending verification</option><option>Verified</option><option>Allocated</option>
+            <option>Rejected</option><option>Reversed</option>
+          </select></div>
+        </div>
+
+        <div class="tblwrap" style="max-height:520px">
+          <table class="tbl2">
+            <thead><tr><th>Receipt</th><th>Date</th><th>Customer</th><th>Loan</th>
+              <th class="num">Amount</th><th>Method</th><th>Reference</th><th>Status</th><th></th></tr></thead>
+            <tbody id="regBody"></tbody>
+          </table>
+        </div>
+        <div class="pager" id="regPager"></div>
+      </div>
+    </section>
