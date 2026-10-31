@@ -655,6 +655,18 @@
     .modband{padding:14px}
   }
 
+  /* ---- inline notes, requirement marks, choice chips, clickable rows ---- */
+  .inline-note{font-size:9.5px;color:var(--muted);margin-top:4px}
+  .req{color:#B32C2C;font-weight:800}
+  .toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .choice{border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:11px;
+    font-weight:600;cursor:pointer;background:#fff;display:flex;align-items:center;gap:7px}
+  .choice.on{border-color:var(--gold);background:#FFFCF0}
+  .choice .dotx{width:6px;height:6px;border-radius:50%;background:#D9DDE6}
+  .choice.on .dotx{background:var(--gold-dark)}
+  .rowlink{cursor:pointer}
+  .rowlink:hover td{background:#FFFDF5}
+
 /* ===================== LOAN APPLICATIONS MODULE ===================== */
 /* Reuses .card/.panel/.kpi/.kgrid/.mcard/.tbl2/.chip/.lrow/.segbar/.modal/.toast
    from index.html, _module.css and the shared primitives. Everything below is
@@ -817,7 +829,7 @@
       Collections &amp; Arrears <span class="pill red">142</span>
     </a>
     <div class="nav-label">Customers</div>
-    <a class="nav-item" data-page="clients" href="#">
+    <a class="nav-item" data-page="clients" href="clients.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
       Clients (KYC)
     </a>

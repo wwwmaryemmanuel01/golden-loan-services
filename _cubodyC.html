@@ -1,0 +1,176 @@
+    <!-- 8 -->
+    <section class="sec" id="s8" data-sec="8">
+      <div class="sec-head"><div class="sec-num">8</div>
+        <div><h2>Customer Financial Summary</h2><p>Borrowed, repaid, owed and due — the customer's whole position with Golden</p></div>
+        <div class="sec-tools">
+          <select id="finCust" style="max-width:280px"></select>
+          <button class="btn btn-ghost btn-sm" id="finStatement">Account statement</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="finTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Statement Preview</div>
+            <div class="panel-sub" id="finStmtSub">Select a customer</div></div>
+            <button class="btn btn-ghost btn-sm" id="finDownload">Download</button></div>
+          <div id="finStatementView"><div class="empty">Select a customer to build a statement.</div></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Settlement Amount</div>
+            <div class="panel-sub">What it would take to close every open facility</div></div>
+            <span class="count-pill" id="finSettlePill">—</span></div>
+          <div class="fg"><label>Early settlement discount (% of remaining interest)</label>
+            <input id="finDisc" type="number" value="0" min="0" max="100" step="5"></div>
+          <div id="finSettle"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="finSettleBtn">Settlement letter</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="s9" data-sec="9">
+      <div class="sec-head"><div class="sec-num">9</div>
+        <div><h2>Customer Documents &amp; Agreements</h2><p>Identity, address, income, agreements, guarantees and receipts — with expiry dates</p></div>
+        <div class="sec-tools">
+          <select id="docCust" style="max-width:280px"></select>
+          <button class="btn btn-ghost btn-sm" id="docRequest">Request missing</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="docTiles" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Checklist</div>
+            <div class="panel-sub" id="docSub">Select a customer</div></div>
+            <span class="count-pill" id="docOnFile">0 on file</span></div>
+          <div id="docChecklist"><div class="empty">Select a customer.</div></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Expiry &amp; Missing Alerts</div>
+            <div class="panel-sub">Before the next disbursement</div></div>
+            <span class="count-pill" id="docAlertCount">0</span></div>
+          <div id="docAlerts"></div>
+          <div class="minihead">Document history</div>
+          <div class="tblwrap" style="max-height:210px"><table class="tbl2">
+            <thead><tr><th>When</th><th>Document</th><th>Action</th><th>By</th></tr></thead>
+            <tbody id="docHistory"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="s10" data-sec="10">
+      <div class="sec-head"><div class="sec-num">10</div>
+        <div><h2>Customer Communication</h2><p>Reminders, notices and updates — and a record of every conversation</p></div>
+        <div class="sec-tools"><span class="count-pill" id="comCount">0 messages</span></div>
+      </div>
+
+      <div class="kgrid" id="comStats" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Send a Message</div>
+            <div class="panel-sub">Templates use this customer's loan details</div></div></div>
+          <div class="fg"><label>Customer</label><select id="comCust"></select></div>
+          <div class="form-grid" style="margin-top:9px">
+            <div class="fg"><label>Message type</label><select id="comTemplate">
+              <option value="reminder">Repayment reminder</option>
+              <option value="overdue">Overdue payment notice</option>
+              <option value="application">Loan application update</option>
+              <option value="approval">Loan approval notification</option>
+              <option value="disbursement">Disbursement notification</option>
+              <option value="statement">Statement available</option>
+              <option value="welcome">Welcome / account opened</option>
+            </select></div>
+            <div class="fg"><label>Channel</label><select id="comChannel">
+              <option>SMS</option><option>Email</option><option>Both</option></select></div>
+          </div>
+          <div class="fg" style="margin-top:9px"><label>Message</label>
+            <textarea id="comBody" style="min-height:96px"></textarea></div>
+          <div class="inline-note" id="comHint">Choose a template to prefill the message.</div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="comSend">Send message</button>
+            <button class="btn btn-ghost" id="comReset">Reset template</button>
+          </div>
+
+          <div class="minihead">Record a contact note</div>
+          <div class="fg"><textarea id="comNote" style="min-height:56px"
+            placeholder="Call outcome, who was spoken to, what was agreed"></textarea></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="comNoteSave">Save note</button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Communication History</div>
+            <div class="panel-sub">Messages and contact notes, newest first</div></div>
+            <div class="segbar" id="comTabs">
+              <button class="on" data-mt="">All</button>
+              <button data-mt="SMS">SMS</button>
+              <button data-mt="Email">Email</button>
+              <button data-mt="Note">Notes</button>
+            </div></div>
+          <div id="comHistory" style="max-height:520px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="sec" id="s11" data-sec="11">
+      <div class="sec-head"><div class="sec-num">11</div>
+        <div><h2>Customer Risk &amp; Credit History</h2><p>How this customer has borrowed, repaid and behaved over time</p></div>
+        <div class="sec-tools">
+          <select id="riskCust" style="max-width:280px"></select>
+          <span class="badge b-ok" id="riskBadge">Risk: —</span>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Risk Classification</div>
+            <div class="panel-sub" id="riskSub">Select a customer</div></div>
+            <span class="count-pill" id="riskScore">—</span></div>
+          <div id="riskPanel"><div class="empty">Select a customer.</div></div>
+          <div class="toggle-row" id="riskPick" style="margin-top:10px">
+            <div class="choice" data-risk="Low"><span class="dotx"></span>Low</div>
+            <div class="choice" data-risk="Medium"><span class="dotx"></span>Medium</div>
+            <div class="choice" data-risk="High"><span class="dotx"></span>High</div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="riskSave">Save classification</button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Borrowing &amp; Behaviour</div>
+            <div class="panel-sub">Loan count, repeated borrowing and defaults</div></div></div>
+          <div id="riskBehaviour"></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Borrowing History</div>
+            <div class="panel-sub">Every facility, including closed ones</div></div>
+            <span class="count-pill" id="riskLoanCount">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2">
+            <thead><tr><th>Loan</th><th>Product</th><th class="num">Amount</th>
+              <th>Opened</th><th>Closed</th><th>Outcome</th></tr></thead>
+            <tbody id="riskLoans"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Guarantors, Collateral &amp; Assessments</div>
+            <div class="panel-sub">Security held and the credit record</div></div></div>
+          <div id="riskSecurity"></div>
+          <div class="minihead">Credit assessment records</div>
+          <div id="riskAssess"></div>
+        </div>
+      </div>
+    </section>

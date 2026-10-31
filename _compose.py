@@ -25,6 +25,7 @@ def sidebar(active):
     s = s.replace('data-page="reports" href="#"', 'data-page="reports" href="reports.html"')
     s = s.replace('data-page="repayments" href="#"', 'data-page="repayments" href="repayments.html"')
     s = s.replace('data-page="applications" href="#"', 'data-page="applications" href="applications.html"')
+    s = s.replace('data-page="clients" href="#"', 'data-page="clients" href="clients.html"')
     # mark active item
     s = re.sub(r'<a class="nav-item" (data-page="%s")' % re.escape(active),
                r'<a class="nav-item active" \1', s)
@@ -49,7 +50,9 @@ if __name__ == "__main__":
     out = sys.argv[1]
     css_path = ROOT / "_module.css"
     extra = css_path.read_text() if css_path.exists() else ""
-    page_css = ROOT / ("_%s.css" % (sys.argv[2] if len(sys.argv)>2 else ""))
+    slug = sys.argv[2] if len(sys.argv)>2 else ""
+    css_name = {"clients": "_customers.css"}.get(slug, "_%s.css" % slug)
+    page_css = ROOT / css_name
     if page_css.exists():
         extra += "\n" + page_css.read_text()
     (ROOT / out).write_text(head("Module", extra))

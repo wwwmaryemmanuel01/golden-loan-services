@@ -1,0 +1,130 @@
+    <!-- 12 -->
+    <section class="sec" id="s12" data-sec="12">
+      <div class="sec-head"><div class="sec-num">12</div>
+        <div><h2>Customer Support &amp; Complaints</h2><p>Inquiries, complaints, disputes and corrections — tracked to resolution</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-gold btn-sm" id="tkNew">Log ticket</button>
+          <span class="badge b-part" id="tkOpenPill">0 open</span>
+        </div>
+      </div>
+
+      <div class="kgrid" id="tkStats" style="margin-bottom:13px"></div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Ticket Register</div>
+            <div class="panel-sub">Newest first</div></div>
+            <span class="count-pill" id="tkCount">0</span></div>
+          <div class="filters">
+            <select id="tkCust"><option value="">All customers</option></select>
+            <select id="tkType">
+              <option value="">All types</option>
+              <option>Inquiry</option><option>Complaint</option>
+              <option>Payment Dispute</option><option>Account Correction</option>
+              <option>Balance Dispute</option>
+            </select>
+            <select id="tkStatus">
+              <option value="">All statuses</option>
+              <option>New</option><option>In progress</option>
+              <option>Escalated</option><option>Resolved</option><option>Closed</option>
+            </select>
+            <input id="tkSearch" placeholder="Search ticket or subject">
+          </div>
+          <div id="tkList" style="max-height:520px;overflow:auto"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Ticket Detail</div>
+            <div class="panel-sub" id="tkSub">Select a ticket</div></div>
+            <span class="count-pill" id="tkRef">—</span></div>
+          <div id="tkDetail"><div class="empty">Select a ticket from the register.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="sec" id="s13" data-sec="13">
+      <div class="sec-head"><div class="sec-num">13</div>
+        <div><h2>Customer Account Actions</h2><p>Edit, verify, block, restore, merge and close — every action logged</p></div>
+        <div class="sec-tools">
+          <select id="actCust" style="max-width:280px"></select>
+          <span class="badge b-ok" id="actStatusPill">—</span>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div id="actSummary"><div class="empty">Select a customer.</div></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Available Actions</div>
+          <div class="panel-sub">Actions apply to the selected customer and are recorded in the activity history</div></div></div>
+        <div class="agrid" id="actGrid"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Activity History</div>
+            <div class="panel-sub">Every change made to this customer record</div></div>
+            <span class="count-pill" id="actHistCount">0</span></div>
+          <div id="actHistory" style="max-height:420px;overflow:auto"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Detection</div>
+            <div class="panel-sub">Possible same-person records by name, phone or NRC</div></div>
+            <button class="btn btn-ghost btn-sm" id="actDupScan">Rescan</button></div>
+          <div id="actDupes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="sec" id="s14" data-sec="14">
+      <div class="sec-head"><div class="sec-num">14</div>
+        <div><h2>Customer Reports &amp; Exports</h2><p>Nine reports, a preview of each, and PDF, Excel and CSV output</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost btn-sm" id="rpPrint">Print / PDF</button>
+          <button class="btn btn-gold btn-sm" id="rpExcel">Export Excel</button>
+          <button class="btn btn-ghost btn-sm" id="rpCsv">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="mgrid" id="rpTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title" id="rpTitle">Customer register</div>
+          <div class="panel-sub" id="rpSub">All customer records on the book</div></div>
+          <div class="sec-tools">
+            <select id="rpAs">
+              <option value="">All customers</option>
+            </select>
+            <span class="count-pill" id="rpRows">0 rows</span>
+          </div></div>
+        <div class="tblwrap" style="max-height:460px"><table class="tbl2" id="rpTable">
+          <thead><tr id="rpHead"></tr></thead><tbody id="rpBody"></tbody></table></div>
+        <div class="inline-note" id="rpNote"></div>
+      </div>
+    </section>
+
+    <div class="note">
+      <div><b>Sample data.</b> Every customer, phone number, NRC, loan and amount on this page is illustrative.
+        Actions you take — registering a customer, verifying KYC, editing a profile, activating, suspending,
+        merging, closing an account, sending a message, logging a ticket or exporting a report — update the
+        in-page records and the activity log for the length of your visit. Nothing leaves the browser.</div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

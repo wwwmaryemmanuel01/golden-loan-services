@@ -80,6 +80,40 @@ Reports (13) compute from the live register and export as CSV or a genuine hand-
 `.xlsx` (Office Open XML in a STORE zip, no libraries) and PDF through the browser print
 dialog, with an in-page preview fallback inside sandboxed frames.
 
+## Customers module
+
+`clients.html` is the customer book: **14 sections** — customer overview, registration,
+the directory, profile management, verification (KYC), loan accounts, repayment history,
+financial summary, documents and agreements, communication, risk and credit history,
+support and complaints, account actions, and reports and exports.
+
+It runs on one in-memory register of 34 customers, 35 facilities and 211 payments, and
+every section reads and writes that same state, so a change in one place shows up
+everywhere else. Registering a customer (individual or business, with consent, bank and
+mobile money details and attached documents) creates the record with a real customer
+number, puts it in the KYC queue and seeds the welcome message; the profile preview and
+the eight-point registration checklist update as you type.
+
+Verification is a genuine gate: six checks (identity, address, employment, income,
+documents, phone consent) can each be marked verified or outstanding, and approval is
+refused — with the outstanding items listed — until all six pass and the documents are on
+file. Approving lifts the customer from *Pending Verification* to *Active* and writes to
+the verification history. Expired IDs are flagged everywhere they matter: the overview,
+the document alerts, the KYC queue and the reports.
+
+The customer's money is computed, never typed in. Each facility carries a real repayment
+schedule built from the product rate and term, and every figure — outstanding principal
+and interest, arrears, days past due, next instalment, settlement amount at any early
+settlement discount, punctuality — is derived from it. Payments can be drilled down
+receipt by receipt, statements and settlement letters print (or save to PDF), and
+documents can be received, renewed or requested by SMS.
+
+Account actions are live state changes with a reason and an audit trail: activate,
+deactivate, suspend, restore, reset portal access (a temporary PIN is issued and texted),
+merge a duplicate record (loans, payments, messages and tickets move across and the
+duplicate is retired), and close an account. Reports (9) compute from the live register
+and export as CSV or a real `.xlsx` workbook, with a print/PDF preview fallback.
+
 ## Repayments & Collections module
 
 `repayments.html` is the collection and repayment console: **18 sections** — overview,
@@ -138,6 +172,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | System Settings | `settings.html` | 18 · ~390 settings |
 | Repayments & Collections | `repayments.html` | 18 |
 | Loan Applications | `applications.html` | 15 |
+| Customers | `clients.html` | 14 |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -153,6 +188,7 @@ reports.html            Module 5  (built · 89 reports in 10 categories + consol
 settings.html           Module 6  (built · 18 configuration sections)
 repayments.html         Module 7  (built · 18 collections sections)
 applications.html       Module 8  (built · 15 application sections)
+clients.html            Module 9  (built · 14 customer sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -161,6 +197,7 @@ _reports.css            page CSS for Reports
 _settings.css           page CSS for System Settings
 _repayments.css         page CSS for Repayments & Collections
 _applications.css       page CSS for Loan Applications
+_customers.css          page CSS for Customers
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -170,6 +207,7 @@ build-reports.sh        rebuilds reports.html from its partials
 build-settings.sh       rebuilds settings.html from its partials
 build-repayments.sh     rebuilds repayments.html from its partials
 build-applications.sh   rebuilds applications.html from its partials
+build-clients.sh        rebuilds clients.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -180,6 +218,7 @@ _rbodyA/B.html   _rjsA/B/C*/D*/E.js    reports partials (_rjsE.js = xlsx writer)
 _stbodyA/B/C/D.html _stjsA/B/C/D.js  settings partials
 _repbodyA/B/C/D.html _repjsA/B/C/D.js  repayments partials
 _apbodyA/B/C/D.html _apjsA/B/C/D.js    applications partials
+_cubodyA/B/C/D.html _cujsA/B/C/D.js    customers partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -194,12 +233,14 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-settings.sh       # settings.html
 ./build-repayments.sh     # repayments.html
 ./build-applications.sh   # applications.html
+./build-clients.sh        # clients.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```
 
 `_compose.py` pulls the `<style>` block and sidebar out of `index.html`, appends
-`_module.css` plus the page CSS, and emits the head fragment that the build script
+`_module.css` plus the page CSS (the `clients` slug maps to `_customers.css`), and emits
+the head fragment that the build script
 concatenates with the body and script partials.
 
 ## Data

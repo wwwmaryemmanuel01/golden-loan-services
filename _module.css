@@ -327,3 +327,15 @@
     .form-grid,.form-grid.three{grid-template-columns:1fr}
     .modband{padding:14px}
   }
+
+  /* ---- inline notes, requirement marks, choice chips, clickable rows ---- */
+  .inline-note{font-size:9.5px;color:var(--muted);margin-top:4px}
+  .req{color:#B32C2C;font-weight:800}
+  .toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .choice{border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:11px;
+    font-weight:600;cursor:pointer;background:#fff;display:flex;align-items:center;gap:7px}
+  .choice.on{border-color:var(--gold);background:#FFFCF0}
+  .choice .dotx{width:6px;height:6px;border-radius:50%;background:#D9DDE6}
+  .choice.on .dotx{background:var(--gold-dark)}
+  .rowlink{cursor:pointer}
+  .rowlink:hover td{background:#FFFDF5}

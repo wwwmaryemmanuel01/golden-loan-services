@@ -1,0 +1,280 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Customers</div>
+      <div class="page-sub">Registration · KYC · profile · loans · statements · support · 30 Oct 2026</div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search name, customer number, NRC or phone…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="KYC and document alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="exportAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export customers
+    </button>
+    <button class="btn btn-gold" id="newCustBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+      Register customer
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Registration</a>
+    <a class="snav" href="#s3">3 · Directory</a>
+    <a class="snav" href="#s4">4 · Profile</a>
+    <a class="snav" href="#s5">5 · Verification</a>
+    <a class="snav" href="#s6">6 · Loan Accounts</a>
+    <a class="snav" href="#s7">7 · Repayments</a>
+    <a class="snav" href="#s8">8 · Financial Summary</a>
+    <a class="snav" href="#s9">9 · Documents</a>
+    <a class="snav" href="#s10">10 · Communication</a>
+    <a class="snav" href="#s11">11 · Risk &amp; Credit</a>
+    <a class="snav" href="#s12">12 · Support</a>
+    <a class="snav" href="#s13">13 · Account Actions</a>
+    <a class="snav" href="#s14">14 · Reports</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Customers</h1>
+        <p>One record per customer — identity, KYC, loans, repayments, documents and support · 30 October 2026</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandTotal">0</b><span>Customers</span></div>
+        <div class="band-stat"><b id="bandActive">0</b><span>Active</span></div>
+        <div class="band-stat"><b id="bandLoans">0</b><span>With loans</span></div>
+        <div class="band-stat"><b id="bandArrears">0</b><span>Overdue</span></div>
+        <div class="band-stat"><b id="bandOwed">0</b><span>Owed</span></div>
+      </div>
+      <div class="mb-actions">
+        <button class="btn btn-ghost btn-sm" id="kycBtn">KYC queue</button>
+        <button class="btn btn-gold btn-sm" id="newCustBtn2">Register customer</button>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="s1" data-sec="1">
+      <div class="sec-head"><div class="sec-num">1</div>
+        <div><h2>Customer Overview</h2><p>The register at a glance — who is active, who is borrowing and who needs attention</p></div>
+        <div class="sec-tools"><span class="badge b-appr">Live</span></div>
+      </div>
+
+      <div class="kgrid" id="ovTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div class="panel-head"><div><div class="panel-title">Customers by Status</div>
+          <div class="panel-sub">Click a status to filter the directory</div></div>
+          <span class="count-pill" id="ovStatusCount">0</span></div>
+        <div class="statstrip" id="ovStatus"></div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recently Registered</div>
+            <div class="panel-sub">Newest first · click a row to open the profile</div></div>
+            <button class="btn btn-ghost btn-sm" id="ovOpenDir">Open directory</button></div>
+          <div class="tblwrap"><table class="tbl2">
+            <thead><tr><th>Customer</th><th>Type</th><th>District</th><th>Status</th><th>Joined</th></tr></thead>
+            <tbody id="ovRecent"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Needs Attention</div>
+            <div class="panel-sub">KYC, arrears and open support</div></div>
+            <span class="count-pill" id="ovAlertCount">0</span></div>
+          <div id="ovAlerts"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2" data-sec="2">
+      <div class="sec-head"><div class="sec-num">2</div>
+        <div><h2>Customer Registration</h2><p>Capture a new individual or business customer with consent and identification</p></div>
+        <div class="sec-tools"><span class="badge b-proc" id="regMode">Individual</span></div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Identity &amp; Contact</div>
+            <div class="panel-sub">What we need before a customer can borrow</div></div>
+            <div class="segbar" id="regType">
+              <button class="on" data-ct="Individual">Individual</button>
+              <button data-ct="Business">Business</button>
+            </div></div>
+
+          <div class="form-grid">
+            <div class="fg"><label id="lblFirst">First name <span class="req">*</span></label>
+              <input id="cuFirst" placeholder="Given name"></div>
+            <div class="fg"><label id="lblLast">Surname <span class="req">*</span></label>
+              <input id="cuLast" placeholder="Family name"></div>
+            <div class="fg" id="wrapBizName" style="display:none"><label>Business name <span class="req">*</span></label>
+              <input id="cuBiz" placeholder="Registered trading name"></div>
+            <div class="fg" id="wrapTin" style="display:none"><label>TIN / registration number</label>
+              <input id="cuTin" placeholder="e.g. 20145882"></div>
+            <div class="fg"><label>Customer type</label><select id="cuCategory">
+              <option>Individual</option><option>Group member</option><option>SME</option>
+              <option>Corporate</option></select></div>
+            <div class="fg"><label>Phone <span class="req">*</span></label>
+              <input id="cuPhone" placeholder="+265 999 000 000"></div>
+            <div class="fg"><label>Email</label><input id="cuEmail" placeholder="name@example.mw"></div>
+            <div class="fg"><label>NRC / passport <span class="req">*</span></label>
+              <input id="cuNrc" placeholder="e.g. 483921/10/1"></div>
+            <div class="fg"><label>Date of birth</label><input id="cuDob" type="date" value="1992-04-18"></div>
+            <div class="fg"><label>Gender</label><select id="cuGender">
+              <option>Female</option><option>Male</option><option>Not stated</option></select></div>
+            <div class="fg"><label>Marital status</label><select id="cuMarital">
+              <option>Single</option><option>Married</option><option>Widowed</option><option>Divorced</option></select></div>
+            <div class="fg"><label>Preferred language</label><select id="cuLang">
+              <option>Chichewa</option><option>English</option><option>Tumbuka</option><option>Yao</option></select></div>
+          </div>
+
+          <div class="minihead">Address</div>
+          <div class="form-grid">
+            <div class="fg"><label>District</label><select id="cuDistrict">
+              <option>Blantyre</option><option>Lilongwe</option><option>Mzuzu</option><option>Zomba</option>
+              <option>Mangochi</option><option>Kasungu</option><option>Salima</option><option>Mulanje</option></select></div>
+            <div class="fg"><label>Town / trading centre</label><input id="cuTown" placeholder="e.g. Limbe"></div>
+            <div class="fg"><label>Physical address</label><input id="cuAddress" placeholder="House / plot, street, area"></div>
+            <div class="fg"><label>Postal address</label><input id="cuPostal" placeholder="P.O. Box …"></div>
+          </div>
+
+          <div class="minihead">Employment &amp; income</div>
+          <div class="form-grid">
+            <div class="fg"><label>Employment status</label><select id="cuEmploy">
+              <option>Employed — salaried</option><option>Self-employed</option><option>Smallholder farmer</option>
+              <option>Informal trader</option><option>Unemployed</option><option>Retired</option></select></div>
+            <div class="fg"><label>Employer / business</label><input id="cuEmployer" placeholder="e.g. Blantyre Water Board"></div>
+            <div class="fg"><label>Occupation</label><input id="cuOccupation" placeholder="e.g. Clerk"></div>
+            <div class="fg"><label>Monthly income (MWK)</label><input id="cuIncome" type="number" value="350000"></div>
+            <div class="fg"><label>Income frequency</label><select id="cuIncomeFreq">
+              <option>Monthly</option><option>Fortnightly</option><option>Weekly</option><option>Seasonal</option></select></div>
+            <div class="fg"><label>Monthly expenses (MWK)</label><input id="cuExpenses" type="number" value="180000"></div>
+          </div>
+
+          <div class="minihead">Next of kin / emergency contact</div>
+          <div class="form-grid">
+            <div class="fg"><label>Full name</label><input id="cuKinName" placeholder="Contact name"></div>
+            <div class="fg"><label>Relationship</label><select id="cuKinRel">
+              <option>Spouse</option><option>Parent</option><option>Sibling</option>
+              <option>Child</option><option>Guardian</option><option>Other</option></select></div>
+            <div class="fg"><label>Phone</label><input id="cuKinPhone" placeholder="+265 …"></div>
+            <div class="fg"><label>Lives with customer</label><select id="cuKinLive">
+              <option>Yes</option><option>No</option></select></div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Bank &amp; Mobile Money</div>
+            <div class="panel-sub">Where disbursements and receipts go</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Mobile money provider</label><select id="cuMomo">
+              <option>Airtel Money</option><option>TNM Mpamba</option><option>Both</option><option>None</option></select></div>
+            <div class="fg"><label>Mobile money number</label><input id="cuMomoNo" placeholder="+265 999 000 000"></div>
+            <div class="fg"><label>Bank</label><select id="cuBank">
+              <option>National Bank of Malawi</option><option>Standard Bank</option><option>FDH Bank</option>
+              <option>NBS Bank</option><option>Ecobank</option><option>None</option></select></div>
+            <div class="fg"><label>Account number</label><input id="cuBankAcc" placeholder="e.g. 1004 2210 55"></div>
+            <div class="fg"><label>Branch</label><input id="cuBankBranch" placeholder="e.g. Limbe"></div>
+            <div class="fg"><label>Account name</label><input id="cuBankName" placeholder="Name on the account"></div>
+          </div>
+
+          <div class="minihead">Consent &amp; declarations</div>
+          <div class="check" data-consent="data"><span class="ck y">✓</span>
+            <div style="flex:1"><b>Credit bureau and data processing consent</b>
+              <span class="s">Customer may be reported to, and checked against, the credit reference bureau</span></div></div>
+          <div class="check" data-consent="terms"><span class="ck y">✓</span>
+            <div style="flex:1"><b>Terms and conditions accepted</b>
+              <span class="s">Product terms, fees and repayment obligations explained</span></div></div>
+          <div class="check" data-consent="truth"><span class="ck y">✓</span>
+            <div style="flex:1"><b>Information declared true</b>
+              <span class="s">Customer confirms the details supplied are accurate</span></div></div>
+          <div class="check" data-consent="portals"><span class="ck n">–</span>
+            <div style="flex:1"><b>Customer portal access</b>
+              <span class="s">Optional — create a portal login and send an activation SMS</span></div></div>
+
+          <div class="minihead">Identification documents</div>
+          <div class="drop" id="cuDocs">Click to attach the NRC copy, proof of address and payslip</div>
+          <div id="cuDocList" style="margin-top:8px"></div>
+
+          <div class="form-actions">
+            <button class="btn btn-gold" id="cuSubmit">Register customer</button>
+            <button class="btn btn-ghost" id="cuDraft">Save as draft</button>
+            <button class="btn btn-ghost" id="cuReset">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Card Preview</div>
+            <div class="panel-sub">What the officer will see</div></div></div>
+          <div id="cuPreview"><div class="empty">Start entering the customer's details.</div></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Registration Checklist</div>
+            <div class="panel-sub">Before the record can go live</div></div>
+            <span class="count-pill" id="cuCheckPill">0 / 6</span></div>
+          <div id="cuCheck"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3" data-sec="3">
+      <div class="sec-head"><div class="sec-num">3</div>
+        <div><h2>Customer Directory</h2><p>Every customer on the books with the status, risk grade and exposure</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="dirCount">0 customers</span>
+          <button class="btn btn-ghost btn-sm" id="dirPrint">Print</button>
+          <button class="btn btn-gold btn-sm" id="dirExport">Export</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="segbar" id="dirTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-dt="">All</button>
+          <button data-dt="Active">Active</button>
+          <button data-dt="Inactive">Inactive</button>
+          <button data-dt="Pending Verification">Pending</button>
+          <button data-dt="Verified">Verified</button>
+          <button data-dt="Suspended">Suspended</button>
+          <button data-dt="Blacklisted">Blacklisted</button>
+        </div>
+        <div class="filters">
+          <div class="fld search" style="flex:2 1 220px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Name, customer number, phone or NRC…" id="dirSearch" autocomplete="off" />
+          </div>
+          <div class="fld"><select id="dirDistrict"><option value="">All districts</option></select></div>
+          <div class="fld"><select id="dirRisk">
+            <option value="">All risk grades</option><option>Low</option><option>Medium</option><option>High</option>
+          </select></div>
+          <div class="fld"><select id="dirLoans">
+            <option value="">Any loan position</option><option value="active">With active loans</option>
+            <option value="overdue">With overdue loans</option><option value="none">No loans</option>
+          </select></div>
+          <div class="fld"><select id="dirSort">
+            <option value="name">Sort: name A–Z</option><option value="recent">Sort: newest first</option>
+            <option value="exposure">Sort: exposure</option><option value="status">Sort: status</option>
+          </select></div>
+        </div>
+
+        <div class="tblwrap" style="max-height:560px">
+          <table class="tbl2">
+            <thead><tr><th>Customer</th><th>Number</th><th>Type</th><th>District</th>
+              <th>Phone</th><th class="num">Exposure</th><th>Risk</th><th>Status</th><th></th></tr></thead>
+            <tbody id="dirBody"></tbody></table>
+        </div>
+        <div class="pager" id="dirPager"></div>
+      </div>
+    </section>
