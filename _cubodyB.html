@@ -1,0 +1,161 @@
+    <!-- 4 -->
+    <section class="sec" id="s4" data-sec="4">
+      <div class="sec-head"><div class="sec-num">4</div>
+        <div><h2>Customer Profile Management</h2><p>The full customer record, its history and the account status</p></div>
+        <div class="sec-tools">
+          <select id="profCust" style="max-width:280px"></select>
+          <button class="btn btn-gold btn-sm" id="profEdit">Edit details</button>
+        </div>
+      </div>
+
+      <div class="card panel" style="margin-bottom:13px">
+        <div id="profCard"><div class="empty">Select a customer.</div></div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Profile</div>
+            <div class="panel-sub" id="profSub">Personal, contact, identification, employment, address, next of kin</div></div>
+            <span class="count-pill" id="profCompleteness">0%</span></div>
+          <div id="profFields"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Profile Update History</div>
+            <div class="panel-sub">Who changed what, and when</div></div>
+            <span class="count-pill" id="profHistCount">0</span></div>
+          <div id="profHistory" style="max-height:460px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="s5" data-sec="5">
+      <div class="sec-head"><div class="sec-num">5</div>
+        <div><h2>Customer Verification (KYC)</h2><p>Identity, address, employment and income — verified before money moves</p></div>
+        <div class="sec-tools">
+          <span class="count-pill" id="kycCount">0 pending</span>
+          <span class="badge b-rej" id="kycExpired">0 expired IDs</span>
+        </div>
+      </div>
+
+      <div class="split" style="align-items:start">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Queue</div>
+            <div class="panel-sub">Unverified customers and expired documents</div></div></div>
+          <div class="segbar" id="kycTabs" style="margin-bottom:9px">
+            <button class="on" data-kt="">All</button>
+            <button data-kt="Pending Verification">Pending</button>
+            <button data-kt="expired">Expired ID</button>
+            <button data-kt="Verified">Verified</button>
+          </div>
+          <div id="kycQueue"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Panel</div>
+            <div class="panel-sub" id="kycSub">Nothing selected</div></div>
+            <span class="count-pill" id="kycScore">0 / 6</span></div>
+          <div id="kycPanel"><div class="empty">Select a customer from the queue.</div></div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Status</div>
+            <div class="panel-sub">What is on file for this customer</div></div>
+            <span class="count-pill" id="kycDocCount">0</span></div>
+          <div id="kycDocs"><div class="empty">Select a customer.</div></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification History</div>
+            <div class="panel-sub">Approvals, rejections and re-checks</div></div></div>
+          <div class="tblwrap" style="max-height:230px"><table class="tbl2">
+            <thead><tr><th>When</th><th>Customer</th><th>Result</th><th>By</th></tr></thead>
+            <tbody id="kycHistory"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6" data-sec="6">
+      <div class="sec-head"><div class="sec-num">6</div>
+        <div><h2>Customer Loan Accounts</h2><p>Every facility this customer has had, from application to repayment</p></div>
+        <div class="sec-tools">
+          <select id="loanCust" style="max-width:280px"></select>
+          <span class="count-pill" id="loanCount">0 loans</span>
+        </div>
+      </div>
+
+      <div class="kgrid" id="loanTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="loanTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-lt="">All</button>
+          <button data-lt="Active">Active</button>
+          <button data-lt="Pending">Applications</button>
+          <button data-lt="Approved">Approved</button>
+          <button data-lt="Awaiting Disbursement">Awaiting disbursement</button>
+          <button data-lt="Fully Repaid">Fully repaid</button>
+          <button data-lt="Overdue">Overdue</button>
+          <button data-lt="Defaulted">Defaulted</button>
+        </div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2">
+          <thead><tr><th>Loan</th><th>Product</th><th class="num">Principal</th><th class="num">Outstanding</th>
+            <th class="num">Instalment</th><th>Next due</th><th class="num">DPD</th><th>Status</th><th></th></tr></thead>
+          <tbody id="loanBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel" style="margin-top:13px">
+        <div class="panel-head"><div><div class="panel-title">Loan Account Detail</div>
+          <div class="panel-sub" id="loanDetailSub">Select a loan</div></div></div>
+        <div id="loanDetail"><div class="empty">Pick a loan from the table.</div></div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7" data-sec="7">
+      <div class="sec-head"><div class="sec-num">7</div>
+        <div><h2>Customer Repayment History</h2><p>Every payment, what it covered, and what was missed or paid ahead</p></div>
+        <div class="sec-tools">
+          <select id="repCust" style="max-width:280px"></select>
+          <button class="btn btn-ghost btn-sm" id="repStatement">Repayment statement</button>
+          <button class="btn btn-gold btn-sm" id="repExport">Export</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="repTiles" style="margin-bottom:13px"></div>
+
+      <div class="card panel">
+        <div class="segbar" id="repTabs" style="margin-bottom:9px;flex-wrap:wrap">
+          <button class="on" data-rt="">All</button>
+          <button data-rt="Principal">Principal</button>
+          <button data-rt="Interest">Interest</button>
+          <button data-rt="Fees">Fees</button>
+          <button data-rt="Penalty">Penalties</button>
+          <button data-rt="Missed">Missed</button>
+          <button data-rt="Partial">Partial</button>
+          <button data-rt="Advance">Advance</button>
+        </div>
+        <div class="tblwrap" style="max-height:430px"><table class="tbl2">
+          <thead><tr><th>Date</th><th>Receipt</th><th>Loan</th><th class="num">Amount</th>
+            <th class="num">Principal</th><th class="num">Interest</th><th class="num">Fees</th>
+            <th>Type</th><th class="num">Balance</th><th></th></tr></thead>
+          <tbody id="repBody"></tbody></table></div>
+        <div class="pager" id="repPager"></div>
+      </div>
+
+      <div class="split" style="margin-top:13px">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repayment Behaviour</div>
+            <div class="panel-sub">This customer against the book</div></div></div>
+          <div id="repBehaviour"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipts</div>
+            <div class="panel-sub">Latest payment receipts</div></div>
+            <span class="count-pill" id="repRcCount">0</span></div>
+          <div id="repReceipts" style="max-height:300px;overflow:auto"></div>
+        </div>
+      </div>
+    </section>

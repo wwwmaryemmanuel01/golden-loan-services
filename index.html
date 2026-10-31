@@ -362,7 +362,7 @@
       Collections &amp; Arrears <span class="pill red">142</span>
     </a>
     <div class="nav-label">Customers</div>
-    <a class="nav-item" data-page="clients" href="#clients">
+    <a class="nav-item" data-page="clients" href="clients.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
       Clients (KYC)
     </a>
@@ -1740,7 +1740,7 @@ const pageMeta = {
   loans:{title:'Loan Portfolio', sub:'All disbursed loans and their standing'},
   repayments:{title:'Repayments', sub:'Installment schedules and received payments'},
   collections:{title:'Collections & Arrears', sub:'Overdue accounts and recovery activity'},
-  clients:{title:'Clients (KYC)', sub:'Customer register and identity verification'},
+  clients:{title:'Customers', sub:'Registration, KYC, profiles, loans, statements and support'},
   guarantors:{title:'Guarantors & Collateral', sub:'Security held against active loans'},
   disbursements:{title:'Disbursements', sub:'Fund release and payout batches'},
   transactions:{title:'Transactions', sub:'Cashbook, bank and mobile money entries'},
@@ -1763,6 +1763,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'settings'){ window.location.href = 'settings.html'; return; }
     if(page === 'repayments'){ window.location.href = 'repayments.html'; return; }
     if(page === 'applications'){ window.location.href = 'applications.html'; return; }
+    if(page === 'clients'){ window.location.href = 'clients.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
