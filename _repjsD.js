@@ -45,10 +45,15 @@ function reportData(key){
     case 'monthly': return {
       title:'Monthly repayment report', sub:'October 2026',
       cols:[['Week',0],['Payments',1],['Collected',1],['Expected',1],['Variance',1],['Recovery %',0]],
-      rows: [['Week 1 (1–7)', 8, 462000, 950000, -488000, '49%'],
-             ['Week 2 (8–14)', 11, 640000, 980000, -340000, '65%'],
-             ['Week 3 (15–21)', 12, 786000, 1040000, -254000, '76%'],
-             ['Week 4 (22–30)', 9, 812250, 1150000, -337750, '71%']],
+      rows: [['Week 1 (1–7)',1,7],['Week 2 (8–14)',8,14],['Week 3 (15–21)',15,21],['Week 4 (22–30)',22,30]]
+        .map(([label,a,b])=>{
+          const r = month.filter(p=>{
+            const day = Number(p.date.slice(8,10));
+            return day>=a && day<=b && !['Rejected','Reversed'].includes(p.status);
+          });
+          const got = sum(r,p=>p.amount), exp = Math.round(EXPECTED_MONTH/4);
+          return [label, r.length, got, exp, got-exp, Math.round(got/exp*100)+'%'];
+        }),
       sums:[1,2,3,4]
     };
     case 'customer': return {
@@ -773,7 +778,7 @@ function boot(){
 
   /* section 14 */
   on('reconRun','click', ()=>{
-    RECON.forEach(r=>{ r.confirmed = r.recorded; });
+    buildRecon(); RECON.forEach(r=>{ r.confirmed = r.recorded; });
     const total = sum(RECON,r=>r.recorded);
     RECON_HIST.unshift([TODAY,total,total,0,0,'Thandiwe Kamanga','Balanced']);
     renderRecon();

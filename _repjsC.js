@@ -501,19 +501,28 @@ function officerModal(name){
 }
 
 /* ===================== 14 · RECONCILIATION ===================== */
-const RECON = [
-  {ch:'Cash', recorded:184250, confirmed:184250},
-  {ch:'Bank transfer', recorded:472000, confirmed:469500},
-  {ch:'Airtel Money', recorded:302000, confirmed:296500},
-  {ch:'TNM Mpamba', recorded:129000, confirmed:129000},
-  {ch:'Cheque', recorded:100000, confirmed:0}
-];
+/* channel positions are built from today's register, so reconciliation agrees
+   with the payments in section 3 */
+const RECON = [{ch:'Cash', recorded:0, confirmed:0}];
+function buildRecon(){
+  const rec = m => sum(todayList().filter(p=>p.method===m), p=>p.amount);
+  const cheque = sum(REPAYMENTS.filter(p=>p.method==='Cheque' && p.status==='Pending verification'), p=>p.amount);
+  const rows = [
+    {ch:'Cash',         recorded:rec('Cash'),         confirmed:rec('Cash')},
+    {ch:'Bank transfer',recorded:rec('Bank transfer'),confirmed:Math.max(0, rec('Bank transfer') - 25000)},
+    {ch:'Airtel Money', recorded:rec('Airtel Money'), confirmed:Math.max(0, rec('Airtel Money') - 6000)},
+    {ch:'TNM Mpamba',   recorded:rec('TNM Mpamba'),   confirmed:rec('TNM Mpamba')},
+    {ch:'Cheque',       recorded:cheque,              confirmed:0}
+  ];
+  RECON.length = 0; rows.forEach(r=>RECON.push(r));
+  return RECON;
+}
 const RECON_HIST = [
-  ['2026-10-29',1184250,1184250,0,0,'Thandiwe Kamanga','Balanced'],
-  ['2026-10-28',986000,984000,2000,1,'Thandiwe Kamanga','Adjusted'],
-  ['2026-10-27',742000,742000,0,0,'Memory Phiri','Balanced'],
-  ['2026-10-26',812000,809500,2500,1,'Thandiwe Kamanga','Adjusted'],
-  ['2026-10-25',654000,654000,0,0,'Memory Phiri','Balanced']
+  ['2026-10-29',412600,412600,0,0,'Thandiwe Kamanga','Balanced'],
+  ['2026-10-28',386250,384250,2000,1,'Thandiwe Kamanga','Adjusted'],
+  ['2026-10-27',297800,297800,0,0,'Memory Phiri','Balanced'],
+  ['2026-10-26',345900,343400,2500,1,'Thandiwe Kamanga','Adjusted'],
+  ['2026-10-25',210400,210400,0,0,'Memory Phiri','Balanced']
 ];
 const DISC = [
   {t:'Missing transaction', s:'Bank transfer NBM-7710228 · MK 25,000 not on the statement', amt:25000, sev:'High'},
@@ -523,13 +532,14 @@ const DISC = [
 ];
 let ADJUSTMENTS = [];
 function renderRecon(){
+  buildRecon();
   el('reconCards').innerHTML = RECON.map(r=>{
     const diff = r.recorded - r.confirmed;
     return `<div class="mcard">
       <div class="mh"><div class="mi">${r.ch.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
-        <div><div class="mn">${r.ch}</div><div class="md">${diff?'Difference '+mk(diff):'Balanced'}</div></div></div>
-      <div class="mv">${mk(r.confirmed)}</div>
-      <div class="ms" style="color:${diff?'#B32C2C':'#157A50'};font-weight:700">${diff?'⚠ '+mk(diff)+' unmatched':'✓ Matched'}</div>
+        <div><div class="mn">${r.ch}</div><div class="md">Recorded ${mk(r.recorded)}</div></div></div>
+      <div class="mv">${mk(r.confirmed)}<span style="font-size:9px;font-weight:600;color:var(--muted);display:block">confirmed</span></div>
+      <div class="ms" style="color:${diff?'#B32C2C':'#157A50'};font-weight:700">${diff?'⚠ '+mk(diff)+' unmatched':'✓ Matched to statement'}</div>
     </div>`;
   }).join('');
   el('reconBody').innerHTML = RECON.map(r=>{
