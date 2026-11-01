@@ -1,0 +1,231 @@
+    <!-- ============ 9 · AUTHENTICATION CONNECTIONS ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div><h2>Authentication Connections</h2>
+          <p>Staff login, customer login, registration, password recovery, the staff and customer authentication functions, session validation and login service health</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="authPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="authKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="authGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authentication Service Directory</div>
+          <div class="panel-sub">Test any service to re-run its probe</div></div>
+          <span class="badge b-gray" id="asPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="asHead"></thead><tbody id="asBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Login Connection</div>
+            <div class="panel-sub">Email, password and a second factor</div></div></div>
+          <div id="staffAuthBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Login Connection</div>
+            <div class="panel-sub">Phone number and a one-time code</div></div></div>
+          <div id="custAuthBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Registration and Password Recovery</div>
+            <div class="panel-sub">Both write to the same customer record the rest of the portal reads</div></div></div>
+          <div id="regBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Session Validation</div>
+            <div class="panel-sub">The middleware that runs on every authenticated request</div></div>
+            <span class="badge b-ok" id="sessPill">—</span></div>
+          <div id="sessBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authentication Functions</div>
+          <div class="panel-sub">Edge functions, their call volume and the errors they returned</div></div></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="afHead"></thead><tbody id="afBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authentication Error Logs</div>
+          <div class="panel-sub">Every refusal, timeout and rate limit, with the code the service returned</div></div>
+          <span class="badge b-gray" id="aePill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="aeHead"></thead><tbody id="aeBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · FRONTEND AND BACKEND INTEGRATION ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div><h2>Frontend and Backend Integration</h2>
+          <p>How the public website, the admin portal and the customer portal reach the backend — configuration, validation, timeouts and failures</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="fePill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="feKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="feGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Frontend to Backend Connections</div>
+          <div class="panel-sub">Test any origin to re-check the round trip</div></div>
+          <span class="badge b-gray" id="fcPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="fcHead"></thead><tbody id="fcBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Frontend API Configuration</div>
+            <div class="panel-sub">What the browser bundle is told at build time</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="cfgHead"></thead><tbody id="cfgBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Request and Response Validation</div>
+            <div class="panel-sub">The contract between the two sides</div></div>
+            <span class="badge b-gray" id="valPill">—</span></div>
+          <div id="valBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Connection Timeout Monitoring</div>
+            <div class="panel-sub">Median and p95 against each route's budget</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="toHead"></thead><tbody id="toBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Request Tracking</div>
+            <div class="panel-sub">Where the requests died, and who called</div></div>
+            <span class="badge b-gray" id="frPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="frHead"></thead><tbody id="frBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Frontend Error Reporting</div>
+            <div class="panel-sub">Unhandled errors captured in the browser</div></div>
+            <span class="badge b-gray" id="feerrPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="feerrHead"></thead><tbody id="feerrBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Integration Test Results</div>
+            <div class="panel-sub">Round-trip tests from each origin</div></div>
+            <button class="btn btn-ghost" id="runFeTests">Run the frontend suite</button></div>
+          <div id="feTestBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · WEBSITE FORMS AND DATA CONNECTIONS ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div><h2>Website Forms and Data Connections</h2>
+          <p>The contact form, customer registration form, loan application form, loan calculator data connection and repayment submission — with validation and submission logs</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="formPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="formKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="formGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Form Connections</div>
+          <div class="panel-sub">Send a test submission to re-check any form end to end</div></div>
+          <span class="badge b-gray" id="formRowPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="formHead"></thead><tbody id="formBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Form Validation Status</div>
+            <div class="panel-sub">What each form refuses, and what it accepts</div></div></div>
+          <div id="valStatusBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Successful Submission Monitoring</div>
+            <div class="panel-sub">Submissions per form over the last fourteen days</div></div>
+            <span class="badge b-gray" id="subPill">—</span></div>
+          <div id="subBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Form Submission Error Logs</div>
+          <div class="panel-sub">The field, the reason and how many submissions it cost</div></div>
+          <span class="badge b-gray" id="ferrPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="ferrHead"></thead><tbody id="ferrBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · FILES AND MEDIA MANAGEMENT ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div><h2>Files and Media Management</h2>
+          <p>The image library, brand assets, document storage, upload rules, access permissions and what is missing</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="mediaPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="mediaKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="mediaGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Website Image Library</div>
+          <div class="panel-sub">Every image the site references, and how often it is used</div></div>
+          <span class="badge b-gray" id="imgPill">—</span></div>
+        <div class="thumbs" id="imgGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Logo and Brand Assets</div>
+            <div class="panel-sub">The files the branding panel selects from</div></div></div>
+          <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="brandAssetHead"></thead><tbody id="brandAssetBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Document Storage Connection</div>
+            <div class="panel-sub">Buckets, file counts and scan results</div></div>
+            <span class="badge b-gray" id="docPill">—</span></div>
+          <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="docHead"></thead><tbody id="docBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Document Storage</div>
+            <div class="panel-sub">KYC files by customer, and what the compliance register expects</div></div></div>
+          <div id="docStoreBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">File Upload Configuration</div>
+            <div class="panel-sub">Size, type and scanning rules</div></div></div>
+          <div id="uploadBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">File Access Permissions</div>
+            <div class="panel-sub">Who can read and write each bucket</div></div></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="faHead"></thead><tbody id="faBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Storage Usage Monitoring</div>
+            <div class="panel-sub">Bytes per bucket against the plan</div></div>
+            <span class="badge b-gray" id="storePill">—</span></div>
+          <div id="storageBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Missing File Detection</div>
+          <div class="panel-sub">Files the pages point at that are not in the bucket</div></div>
+          <span class="badge b-gray" id="missPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="missHead"></thead><tbody id="missBody"></tbody></table></div>
+      </div>
+    </section>
