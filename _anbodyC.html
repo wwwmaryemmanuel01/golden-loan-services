@@ -1,0 +1,73 @@
+
+    <!-- ============ 6 · STAFF PERFORMANCE ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div><h2>Staff Performance Graphs</h2>
+          <p>Volume, value and quality of work per officer for the selected period</p></div>
+      </div>
+
+      <div class="kgrid" id="sfKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="sfGrid"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Performance Table</div>
+            <div class="panel-sub">The same numbers the charts are built from</div></div></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="sfTableHead"></thead><tbody id="sfTableBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Outstanding Assigned Tasks</div>
+            <div class="panel-sub">Follow-ups owned by the team</div></div>
+            <span class="badge b-await" id="sfTaskCount">0</span></div>
+          <div id="sfTasks"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · DISBURSEMENT GRAPHS ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div><h2>Disbursement Graphs</h2>
+          <p>Payout volume, value, method, product and how much actually left the till</p></div>
+      </div>
+
+      <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="dbGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approved vs Actually Disbursed</div>
+          <div class="panel-sub">Variance between the approved amount and the value released</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dbTableHead"></thead><tbody id="dbTableBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · TABULAR DATA & REGISTERS ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div><h2>Tabular Data &amp; Registers</h2>
+          <p>Ten registers drawn from the same records as the charts — searchable, sortable and exportable</p></div>
+        <div class="sec-tools">
+          <span class="badge b-gray" id="regCount">0 records</span>
+          <button class="btn btn-ghost" id="regCsv">Export CSV</button>
+          <button class="btn btn-ghost" id="regXlsx">Export Excel</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head">
+          <div><div class="panel-title">Registers</div><div class="panel-sub" id="regSub">Pick a register</div></div>
+        </div>
+        <div class="regtabs" id="regTabs"></div>
+        <div class="filters">
+          <div class="fld">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="regSearch" placeholder="Search this register…" autocomplete="off" />
+          </div>
+          <span class="qhint">Click a column heading to sort · click a row to open the record</span>
+        </div>
+        <div class="tblwrap" style="margin-top:9px;max-height:430px">
+          <table class="tbl2 dense"><thead id="regHead"></thead><tbody id="regBody"></tbody></table>
+        </div>
+        <div class="pager" id="regPager"></div>
+      </div>
+    </section>

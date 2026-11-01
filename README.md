@@ -187,6 +187,44 @@ The five tools that are easy to fake are real here:
   sandboxed preview frame, where downloads and print are blocked, each falls back to an
   in-page preview instead of failing silently.
 
+## Graphing & Tabulation module
+
+`analytics.html` is the analytics console: **15 sections** — analytics overview, financial
+graphs, loan portfolio graphs, repayment & collection graphs, customer analytics, staff
+performance, disbursement graphs, tabular data and registers, financial summary tables,
+comparison and trend analysis, filters and data exploration, graph types and visualization,
+report exports and printing, data accuracy and reconciliation, and graphing & tabulation
+settings.
+
+One seeded book feeds the whole page: 60 customers, 77 facilities, 132 applications,
+86 payouts, 402 receipts, 512 financial transactions and 140 audit events across 15 months
+and five products (Salary Loan, Business Boost, Emergency Loan, Asset Finance, Group
+Lending) in four regions. Every figure — disbursed, collected, outstanding, arrears,
+interest, fees, ageing, approval rate, recovery — is derived from those records, so a chart,
+its total and the register underneath can never disagree.
+
+Charts are drawn as inline SVG by a small chart engine with no libraries: line, area, bar,
+grouped bar, stacked bar, pie and donut, with axis ticks, gridlines, tooltips and legends,
+all respecting the display settings. There are 56 charts on load, each paired with the
+number it is drawing.
+
+Exploration is live. The filter panel (date range with presets, daily/weekly/monthly/annual
+grain, product, status, customer, staff, payment method, region and free-text search) drives
+every section at once; the ten registers (loans, customers, applications, disbursements,
+repayments, arrears, collections, staff, transactions, audit) sort by any column, search,
+paginate and open the underlying record on click. Section 9 holds nine summary tables, and
+section 10 computes current-vs-previous period, month-on-month and year-on-year growth,
+approval and repayment rate trends, arrears movement, customer growth and target vs actual.
+
+Section 12 rebuilds any of seven measures as any of six chart types with the matching data
+table. Section 13 exports CSV, a real `.xlsx` workbook (own stored-zip writer), print-ready
+PDF via the browser dialog with the company brand block, date range and filters, PNG images
+of the current chart, and an executive summary — every export is written to the export
+history. Section 14 recomputes eight reconciliation checks and compares each headline figure
+with its source records. Section 15 controls currency (MK/MWK/K), precision, number format,
+default range and chart type, table columns and sorting, chart gridlines/legend/values and
+the access matrix — and the figures reformat immediately when applied.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -214,6 +252,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Loan Applications | `applications.html` | 15 |
 | Customers | `clients.html` | 14 |
 | Audit Logs | `audit.html` | 18 |
+| Graphing & Tabulation | `analytics.html` | 15 · 56 charts |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -231,6 +270,7 @@ repayments.html         Module 7  (built · 18 collections sections)
 applications.html       Module 8  (built · 15 application sections)
 clients.html            Module 9  (built · 14 customer sections)
 audit.html              Module 10 (built · 18 audit sections)
+analytics.html          Module 11 (built · 15 graphing sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -241,6 +281,7 @@ _repayments.css         page CSS for Repayments & Collections
 _applications.css       page CSS for Loan Applications
 _customers.css          page CSS for Customers
 _audit.css              page CSS for Audit Logs
+_analytics.css          page CSS for Graphing & Tabulation
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -252,6 +293,7 @@ build-repayments.sh     rebuilds repayments.html from its partials
 build-applications.sh   rebuilds applications.html from its partials
 build-clients.sh        rebuilds clients.html from its partials
 build-audit.sh          rebuilds audit.html from its partials
+build-analytics.sh      rebuilds analytics.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -264,6 +306,7 @@ _repbodyA/B/C/D.html _repjsA/B/C/D.js  repayments partials
 _apbodyA/B/C/D.html _apjsA/B/C/D.js    applications partials
 _cubodyA/B/C/D.html _cujsA/B/C/D.js    customers partials
 _audbodyA/B/C/D.html _audjsA/B/C/D.js  audit partials
+_anbodyA/B/C/D/E.html _anjsA/B/C/D/E.js graphing partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -280,6 +323,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-applications.sh   # applications.html
 ./build-clients.sh        # clients.html
 ./build-audit.sh          # audit.html
+./build-analytics.sh      # analytics.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```
