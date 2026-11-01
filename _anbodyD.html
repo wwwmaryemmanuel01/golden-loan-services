@@ -1,0 +1,162 @@
+
+    <!-- ============ 9 · FINANCIAL SUMMARY TABLES ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div><h2>Financial Summary Tables</h2>
+          <p>Period summaries, allocation of collections and where the balances sit</p></div>
+        <div class="sec-tools">
+          <div class="segbar" id="sumPeriod">
+            <button data-sp="day">Daily</button>
+            <button data-sp="week">Weekly</button>
+            <button data-sp="month" class="on">Monthly</button>
+            <button data-sp="year">Annual</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Period Financial Summary</div>
+          <div class="panel-sub">Disbursements, collections, income, cost and net cash per period</div></div></div>
+        <div class="tblwrap" style="max-height:360px">
+          <table class="tbl2 dense"><thead id="sumHead"></thead><tbody id="sumBody"></tbody><tfoot id="sumFoot"></tfoot></table>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements vs Repayments</div>
+            <div class="panel-sub">Whether the book is replacing what it lends</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="sumDisbHead"></thead><tbody id="sumDisbBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Principal vs Interest Collected</div>
+            <div class="panel-sub">How each kwacha received is allocated</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="sumSplitHead"></thead><tbody id="sumSplitBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fees &amp; Penalties</div>
+            <div class="panel-sub">Charges raised in the period</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Charge</th><th class="num">Count</th><th class="num">Value</th><th class="num">Share</th></tr></thead>
+            <tbody id="sumFeesBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Outstanding by Product</div>
+            <div class="panel-sub">Open principal and arrears</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Product</th><th class="num">Loans</th><th class="num">Outstanding</th><th class="num">Arrears</th><th class="num">Share</th></tr></thead>
+            <tbody id="sumOutBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Arrears by Aging Category</div>
+            <div class="panel-sub">Active loans only</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Bucket</th><th class="num">Accounts</th><th class="num">Arrears</th><th class="num">Share</th></tr></thead>
+            <tbody id="sumAgeBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · COMPARISON & TREND ANALYSIS ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div><h2>Comparison &amp; Trend Analysis</h2>
+          <p>Period against period, growth rates and target performance</p></div>
+        <div class="sec-tools"><span class="qhint" id="cmpRange"></span></div>
+      </div>
+
+      <div class="kgrid" id="cmpKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="cmpGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Current Period vs Previous Period</div>
+            <div class="panel-sub">The same-length window immediately before the current one</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Measure</th><th class="num">Current</th><th class="num">Previous</th><th class="num">Change</th><th class="num">Difference</th></tr></thead>
+            <tbody id="cmpBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Month-on-Month Growth</div>
+            <div class="panel-sub">Month against the one before it</div></div></div>
+          <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense"><thead id="momHead"></thead><tbody id="momBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Year-on-Year Growth</div>
+          <div class="panel-sub">The same month a year earlier</div></div></div>
+        <div class="tblwrap"><table class="tbl2 dense">
+          <thead><tr><th>Measure</th><th class="num">Last year</th><th class="num">This year</th><th class="num">Change</th></tr></thead>
+          <tbody id="yoyBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · FILTERS & DATA EXPLORATION ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div><h2>Filters &amp; Data Exploration</h2>
+          <p>Everything above is driven by these controls — apply once, and every chart and table follows</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="fltSummary">No filters</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Filter the Book</div>
+          <div class="panel-sub">Date range, period type, product, status, customer, staff, method and region</div></div>
+          <button class="btn btn-gold" id="fltApply">Apply filters</button></div>
+
+        <div class="g3">
+          <div class="fgroup">
+            <div class="fh">Date range</div>
+            <div class="form-grid">
+              <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+              <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+            </div>
+            <div class="chips" id="fltPreset" style="margin-top:8px">
+              <span class="fchip" data-preset="7d">Last 7 days</span>
+              <span class="fchip" data-preset="30d">Last 30 days</span>
+              <span class="fchip" data-preset="qtd">Quarter to date</span>
+              <span class="fchip" data-preset="ytd">Year to date</span>
+              <span class="fchip" data-preset="all">All time</span>
+            </div>
+          </div>
+
+          <div class="fgroup">
+            <div class="fh">Period view</div>
+            <div class="chips" id="fltGrain">
+              <span class="fchip" data-grain="day">Daily</span>
+              <span class="fchip" data-grain="week">Weekly</span>
+              <span class="fchip on" data-grain="month">Monthly</span>
+              <span class="fchip" data-grain="year">Annual</span>
+            </div>
+            <div class="fh" style="margin-top:10px">Search</div>
+            <div class="fld" style="width:100%">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="fltSearch" placeholder="Loan, receipt or customer number…" autocomplete="off" style="width:100%" />
+            </div>
+          </div>
+
+          <div class="fgroup">
+            <div class="fh">Dimensions</div>
+            <div class="form-grid">
+              <div class="fg"><label>Loan product</label><select id="fltProduct"></select></div>
+              <div class="fg"><label>Status</label><select id="fltStatus"></select></div>
+              <div class="fg"><label>Staff member</label><select id="fltStaff"></select></div>
+              <div class="fg"><label>Payment method</label><select id="fltMethod"></select></div>
+              <div class="fg"><label>Branch / region</label><select id="fltRegion"></select></div>
+              <div class="fg"><label>Customer</label><select id="fltCustomer"></select></div>
+            </div>
+            <div class="form-actions" style="margin-top:8px">
+              <button class="btn btn-ghost" id="fltReset">Clear all</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chips" id="fltChips" style="margin-top:10px"></div>
+        <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+        <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+      </div>
+    </section>

@@ -1,0 +1,186 @@
+
+    <!-- ============ 12 · GRAPH TYPES & VISUALIZATION ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div><h2>Graph Types &amp; Visualization</h2>
+          <p>Change the chart type for any measure — the table underneath always shows the same numbers</p></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Chart Builder</div>
+          <div class="panel-sub" id="galTitle">Disbursements — Bar graph</div></div></div>
+        <div class="fh" style="font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted-2);margin-bottom:6px">Measure</div>
+        <div class="chips" id="galMetric">
+          <span class="fchip on" data-met="disbursed">Disbursements</span>
+          <span class="fchip" data-met="collected">Collections</span>
+          <span class="fchip" data-met="loans">Loans issued</span>
+          <span class="fchip" data-met="outstanding">Outstanding</span>
+          <span class="fchip" data-met="interest">Interest</span>
+          <span class="fchip" data-met="arrears">Arrears</span>
+          <span class="fchip" data-met="customers">New customers</span>
+        </div>
+        <div class="fh" style="font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted-2);margin:10px 0 6px">Chart type</div>
+        <div class="chips" id="galType">
+          <span class="fchip" data-type="line">Line graph</span>
+          <span class="fchip on" data-type="bar">Bar graph</span>
+          <span class="fchip" data-type="stacked">Stacked bar</span>
+          <span class="fchip" data-type="area">Area chart</span>
+          <span class="fchip" data-type="pie">Pie chart</span>
+          <span class="fchip" data-type="donut">Donut chart</span>
+        </div>
+        <div class="kgrid" id="galKpis" style="margin-top:11px"></div>
+        <div id="galChart" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Detailed Data Table</div>
+          <div class="panel-sub">The exact series behind the chart above</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="galTableHead"></thead><tbody id="galTableBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 13 · REPORT EXPORTS & PRINTING ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div><h2>Report Exports &amp; Printing</h2>
+          <p>Every export is written to the history below, with the date range and filters it was run under</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="expCount">0</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Export the Current View</div>
+          <div class="panel-sub">The register selected in section 8, with the filters in section 11 applied</div></div></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="expCsv">Export CSV</button>
+          <button class="btn btn-ghost" id="expXlsx">Export Excel</button>
+          <button class="btn btn-ghost" id="expPdf">Generate PDF</button>
+          <button class="btn btn-ghost" id="expPrint">Print table</button>
+          <button class="btn btn-ghost" id="expImg">Export chart as image</button>
+        </div>
+        <div class="form-actions" style="margin-top:8px">
+          <button class="btn btn-gold" id="expSummary">Generate summary report</button>
+          <button class="btn btn-ghost" id="expSummaryX">Summary as Excel</button>
+        </div>
+        <div class="inline-note" style="margin-top:9px">
+          PDF output uses the browser's print dialog — choose <b>Save as PDF</b>. Every printed report carries the
+          Golden Financial Services brand block, the date range and the active filters.
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Export History</div>
+          <div class="panel-sub">Who exported what, in which format, and under which filters</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense">
+          <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+          <tbody id="expHistoryBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · DATA ACCURACY & RECONCILIATION ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div><h2>Data Accuracy &amp; Reconciliation</h2>
+          <p>Graph totals checked against the tables and the source records</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="accScore">0 / 0</span></div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Validation Checks</div>
+            <div class="panel-sub">Recomputed every time the filters change</div></div></div>
+          <div id="accChecks"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Source</div>
+            <div class="panel-sub">Where these figures come from</div></div></div>
+          <div class="pfields">
+            <div class="pfield"><div class="pk">Last data refresh</div><div class="pv" id="accRefresh">—</div></div>
+            <div class="pfield"><div class="pk">Source</div><div class="pv" id="accSource">—</div></div>
+            <div class="pfield"><div class="pk">Records loaded</div><div class="pv">Loans, repayments, customers, payouts</div></div>
+            <div class="pfield"><div class="pk">Access</div><div class="pv">Financial detail restricted to Administrator, Head of Credit and Auditor</div></div>
+          </div>
+          <div class="minihead">Inconsistencies flagged</div>
+          <div id="accFlags"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Dashboard Figures vs Source Records</div>
+          <div class="panel-sub">Each headline figure recomputed directly from the underlying records</div></div></div>
+        <div class="tblwrap"><table class="tbl2 dense"><thead id="accReconcileHead"></thead><tbody id="accReconcileBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · SETTINGS ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div><h2>Graphing &amp; Tabulation Settings</h2>
+          <p>Defaults for this module — currency, precision, chart style, columns and access</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="savestate">Saved</span></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Display &amp; Format</div>
+            <div class="panel-sub">Applies to every figure in this module</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Currency display</label>
+              <select id="setCurrency"><option value="MK">MK · Malawi Kwacha</option><option value="MWK">MWK</option><option value="K">K</option></select></div>
+            <div class="fg"><label>Decimal precision</label>
+              <select id="setDecimals"><option value="0">0 decimals</option><option value="2">2 decimals</option></select></div>
+            <div class="fg"><label>Number format</label>
+              <select id="setFormat"><option value="comma">1,234,567</option><option value="space">1 234 567</option><option value="dot">1.234.567</option></select></div>
+            <div class="fg"><label>Default date range</label>
+              <select id="setRange"><option value="30d">Last 30 days</option><option value="12m">Last 12 months</option>
+                <option value="qtd">Quarter to date</option><option value="ytd">Year to date</option><option value="all">All time</option></select></div>
+            <div class="fg"><label>Default chart type</label>
+              <select id="setChart"><option value="bar">Bar</option><option value="line">Line</option><option value="area">Area</option>
+                <option value="stacked">Stacked bar</option><option value="donut">Donut</option></select></div>
+            <div class="fg"><label>Default table columns</label>
+              <select id="setColumns"><option value="standard">Standard</option><option value="compact">Compact</option><option value="full">Full detail</option></select></div>
+            <div class="fg"><label>Table sorting</label>
+              <select id="setSort"><option value="date:desc">Newest first</option><option value="date:asc">Oldest first</option>
+                <option value="amount:desc">Largest amount first</option><option value="amount:asc">Smallest amount first</option></select></div>
+            <div class="fg"><label>Export format</label>
+              <select id="setExport"><option value="csv">CSV</option><option value="xlsx">Excel</option></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:9px">
+            <button class="btn btn-gold" id="setSave">Save settings</button>
+            <button class="btn btn-ghost" id="setReset">Reset to defaults</button>
+          </div>
+          <div class="inline-note" id="setPreview" style="margin-top:9px"></div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Chart Display Preferences</div>
+            <div class="panel-sub">How graphs are drawn</div></div></div>
+          <div class="toggle-row"><div><b>Show gridlines</b><span>Horizontal guides behind the series</span></div>
+            <input type="checkbox" id="setGrid" checked /></div>
+          <div class="toggle-row"><div><b>Show legend</b><span>Series names under each chart</span></div>
+            <input type="checkbox" id="setLegend" checked /></div>
+          <div class="toggle-row"><div><b>Show values on points</b><span>Print the number above each column or point</span></div>
+            <input type="checkbox" id="setValues" /></div>
+
+          <div class="minihead">Access permissions</div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Role</th><th>Scope</th><th>View</th><th>Export</th><th>Configure</th><th>Delete</th></tr></thead>
+            <tbody id="setAccessBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
