@@ -1,0 +1,19 @@
+#!/bin/bash
+# Rebuilds security.html from partials
+# (run after editing _security.css, _sebody*.html or _sejs*.js)
+set -e
+cd "$(dirname "$0")"
+python3 _compose.py _sehead.html security
+cat _sehead.html _sebodyA.html _sebodyB.html _sebodyC.html _sebodyD.html _sebodyE.html \
+    _sejsA.js _sejsB.js _sejsC.js _sejsD.js _sejsE.js _sejsF.js _sejsG.js > security.html
+python3 - <<'PY'
+import pathlib
+p = pathlib.Path('security.html'); s = p.read_text()
+s = s.replace('<title>Module — GOLDEN FINANCIAL SERVICES</title>',
+              '<title>Security &amp; Protection — GOLDEN FINANCIAL SERVICES</title>')
+s = s.replace('<div class="page-title">Graphing &amp; Tabulation</div>',
+              '<div class="page-title">Security &amp; Protection</div>')
+p.write_text(s)
+print('built security.html', len(s), 'bytes')
+PY
+python3 inject_backnav.py security.html

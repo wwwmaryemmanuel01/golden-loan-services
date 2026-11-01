@@ -1,0 +1,198 @@
+<!-- ============ 9 · APPLICATION & API SECURITY ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div><h2>Application &amp; API Security</h2>
+          <p>Authorization, validation, rate limits, headers, dependencies and the errors the API returned</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="appPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="appKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Application Security Status</div>
+          <div class="panel-sub">Each control with the evidence behind the claim</div></div>
+          <span class="badge b-gray" id="appChkPill">0</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="appChkHead"></thead><tbody id="appChkBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">API Access Controls</div>
+          <div class="panel-sub">Route, method, the authorization in force, the rate limit and validation state</div></div>
+          <span class="badge b-gray" id="apiPill">0</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="apiHead"></thead><tbody id="apiBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Secure HTTP Headers</div>
+            <div class="panel-sub">What the edge returns on every response</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="hdrHead"></thead><tbody id="hdrBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Dependency and Vulnerability Monitoring</div>
+            <div class="panel-sub">Versions in the lockfile against the advisories</div></div>
+            <span class="badge b-gray" id="depPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="depHead"></thead><tbody id="depBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Request Validation and Abuse Controls</div>
+            <div class="panel-sub">Where the guards sit and what they refuse</div></div></div>
+          <div id="reqGuards"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">API Error Monitoring</div>
+            <div class="panel-sub">Errors returned to clients, grouped by route</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="apiErrHead"></thead><tbody id="apiErrBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unauthorized Request Alerts</div>
+          <div class="panel-sub">Blocked requests to restricted routes — traced back to the session that made them</div></div>
+          <span class="badge b-gray" id="unauthPill">0</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="unauthHead"></thead><tbody id="unauthBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · FRAUD & SUSPICIOUS ACTIVITY ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div><h2>Fraud &amp; Suspicious Activity Monitoring</h2>
+          <p>Where staff behaviour, applications, payouts and corrections stop looking normal</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="frdPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="frdKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="frdGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeated Failed Login Attempts</div>
+            <div class="panel-sub">Accounts that keep failing verification</div></div>
+            <span class="badge b-gray" id="failPill2">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="failHead2"></thead><tbody id="failBody2"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Account Access</div>
+            <div class="panel-sub">New countries, new devices, odd hours</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="suspAccHead"></thead><tbody id="suspAccBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unusual Staff Activity</div>
+            <div class="panel-sub">Signals scored per officer across logins, exports, correctives and access</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="staffActHead"></thead><tbody id="staffActBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unexpected Permission Changes</div>
+            <div class="panel-sub">Grants that are not yet approved by a second signature</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="permUnxHead"></thead><tbody id="permUnxBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Loan Applications</div>
+            <div class="panel-sub">Applications that matched a fraud rule</div></div>
+            <span class="badge b-gray" id="suspAppPill2">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="suspAppHead2"></thead><tbody id="suspAppBody2"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unusual Disbursement Activity</div>
+            <div class="panel-sub">Payouts released off-pattern</div></div>
+            <span class="badge b-gray" id="unuDisbPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="unuDisbHead"></thead><tbody id="unuDisbBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unusual Repayment Reversals and Corrections</div>
+            <div class="panel-sub">Reversals by officer and adjustments that never got a second signature</div></div>
+            <span class="badge b-gray" id="revPatPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="revPatHead"></thead><tbody id="revPatBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Potential Duplicate Accounts</div>
+            <div class="panel-sub">Customer pairs sharing identifiers</div></div>
+            <span class="badge b-gray" id="dupAcctPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dupAcctHead"></thead><tbody id="dupAcctBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Investigation Records</div>
+          <div class="panel-sub">What was investigated, by whom, and how it ended</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="invHead2"></thead><tbody id="invBody2"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · SECURITY ALERTS & INCIDENTS ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div><h2>Security Alerts &amp; Incidents</h2>
+          <p>Assign, investigate, record notes and evidence, escalate, resolve and close — every step is written to the incident history</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="alertPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="alertKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="alertGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Active Security Alerts</div>
+          <div class="panel-sub">Click an incident to open the workspace below</div></div>
+          <span class="badge b-gray" id="alertCount">0</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="alertHead"></thead><tbody id="alertBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Incident Workspace</div>
+          <div class="panel-sub" id="awSub">Select an incident above</div></div>
+          <span class="badge b-gray" id="awStatus">—</span></div>
+        <div id="awBody"></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · AUDIT LOGS & SECURITY MONITORING ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div><h2>Audit Logs &amp; Security Monitoring</h2>
+          <p>Logins, administrator activity, permission changes, customer data reads, approvals, payouts, reversals, configuration changes and exports</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="logPill">0</span></div>
+      </div>
+
+      <div class="kgrid" id="logKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Event Log</div>
+          <div class="panel-sub">Filter by category with the chips — every row drills into the actor</div></div>
+          <span class="badge b-gray" id="logCount">0</span></div>
+        <div class="chips" id="logCats" style="margin-bottom:8px"></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="logHead"></thead><tbody id="logBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Security Event Timeline</div>
+            <div class="panel-sub">Categories by day, so a pattern shows itself</div></div></div>
+          <div class="chartgrid" id="logGrid" style="grid-template-columns:1fr"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Export and Download History</div>
+            <div class="panel-sub">Every report taken out of the platform</div></div>
+            <span class="badge b-gray" id="expCount">0</span></div>
+          <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+            <tbody id="expHistoryBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>

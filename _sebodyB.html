@@ -1,0 +1,223 @@
+<!-- ============ 5 · SESSION & DEVICE MANAGEMENT ============ -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div class="sec-num">5</div>
+        <div><h2>Session &amp; Device Management</h2>
+          <p>Who is signed in, from where, on what — with revocation one click away and a full revocation history</p></div>
+        <div class="sec-tools">
+          <span class="badge b-gray" id="sessPill">0</span>
+          <button class="btn btn-ghost" id="revokeAllBtn">Revoke all sessions</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="sessKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="sessGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Active Sessions</div>
+          <div class="panel-sub">Login time, last activity, device, browser and location — revoke a single session from the row</div></div></div>
+        <div class="tblwrap" style="max-height:400px"><table class="tbl2 dense"><thead id="sessHead"></thead><tbody id="sessBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Device, Browser and Location Signals</div>
+            <div class="panel-sub">Sessions that deserve a second look</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="sessRiskHead"></thead><tbody id="sessRiskBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Session Rules</div>
+            <div class="panel-sub">Timeout, concurrency and automatic expiry</div></div></div>
+          <div id="sessRules"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Session Revocation History</div>
+          <div class="panel-sub">Every session ended by an officer or by the timeout</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="revokeHead"></thead><tbody id="revokeBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · CUSTOMER DATA PROTECTION ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div class="sec-num">6</div>
+        <div><h2>Customer Data Protection</h2>
+          <p>Who looked at which customer record and why, what is masked, what may be exported, and the privacy requests behind it</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="dataPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dataKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Data Access Monitoring</div>
+          <div class="panel-sub">Each view with the stated purpose — entries without a valid purpose are flagged</div></div>
+          <span class="badge b-gray" id="dataAccessPill">0</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="dataAccHead"></thead><tbody id="dataAccBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Sensitive Record Controls</div>
+            <div class="panel-sub">Field-level masking and who is allowed to see past it</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="fieldCtlHead"></thead><tbody id="fieldCtlBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Record Export Controls</div>
+            <div class="panel-sub">Exports, document access and the rules that gate them</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="exportCtlHead"></thead><tbody id="exportCtlBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Privacy and Consent Records</div>
+            <div class="panel-sub">Purpose, channel, date given and current state</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="consentHead2"></thead><tbody id="consentBody2"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Correction, Export and Closure Requests</div>
+            <div class="panel-sub">Move each request forward from the row</div></div>
+            <span class="badge b-gray" id="dataReqPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dataReqHead"></thead><tbody id="dataReqBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Account Closure Procedures</div>
+          <div class="panel-sub">What happens to the data when a customer closes their account</div></div></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="closureHead"></thead><tbody id="closureBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · FINANCIAL TRANSACTION SECURITY ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div class="sec-num">7</div>
+        <div><h2>Financial Transaction Security</h2>
+          <p>Approvals, payouts, reversals, adjustments and duplicates — each checked against the authority of the officer behind it</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="finPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="finKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="finGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Approval Authorization</div>
+            <div class="panel-sub">Facility, approving officer, their limit and whether a second signature was needed</div></div>
+            <span class="badge b-gray" id="apprPill">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="apprHead"></thead><tbody id="apprBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursement Authorization</div>
+            <div class="panel-sub">Payouts released against the role that released them</div></div>
+            <span class="badge b-gray" id="disbAuthPill2">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="disbAuthHead2"></thead><tbody id="disbAuthBody2"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Reversal Authorization</div>
+            <div class="panel-sub">A reversal needs a second approver — approve or reject it from here</div></div>
+            <span class="badge b-gray" id="revPill">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="revHead2"></thead><tbody id="revBody2"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Financial Adjustment Approval</div>
+            <div class="panel-sub">Manual corrections to fees, penalties and allocations</div></div>
+            <span class="badge b-gray" id="adjPill">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="adjHead"></thead><tbody id="adjBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Transaction Detection</div>
+            <div class="panel-sub">Same facility, same amount, close together</div></div>
+            <span class="badge b-gray" id="dupTxnPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dupTxnHead"></thead><tbody id="dupTxnBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transaction Reference Verification</div>
+            <div class="panel-sub">Channel reference checked against the receipt it claims</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="refHead2"></thead><tbody id="refBody2"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Separation of Financial Duties</div>
+            <div class="panel-sub">Facilities where one officer approved, released and collected</div></div>
+            <span class="badge b-gray" id="sodPill2">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="sodHead2"></thead><tbody id="sodBody2"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Large or Unusual Transaction Alerts</div>
+            <div class="panel-sub">Movements above the monitoring threshold</div></div>
+            <span class="badge b-gray" id="largePill2">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="largeHead2"></thead><tbody id="largeBody2"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Financial Transaction Audit Trail</div>
+          <div class="panel-sub">Who touched the money, from which address, under which approval</div></div></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="finAuditHead"></thead><tbody id="finAuditBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · DATABASE & SUPABASE SECURITY ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div class="sec-num">8</div>
+        <div><h2>Database &amp; Supabase Security</h2>
+          <p>Connection health, row-level security, grants, function permissions, key handling and the errors the database returned</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="dbSecPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="dbGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Row-Level Security Status</div>
+          <div class="panel-sub">Every table, its policy and whether rows are actually narrowed</div></div>
+          <span class="badge b-gray" id="rlsPill">0</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="rlsHead"></thead><tbody id="rlsBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Permission Review</div>
+            <div class="panel-sub">Role, table and the grants in force</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dbPermHead"></thead><tbody id="dbPermBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Function Permission Review</div>
+            <div class="panel-sub">Security definer functions and their search paths</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dbFuncHead"></thead><tbody id="dbFuncBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Service Role Key and API Key Protection</div>
+            <div class="panel-sub">Where each key lives and whether it can reach a browser</div></div>
+            <span class="badge b-gray" id="keyPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="keyHead"></thead><tbody id="keyBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Error Monitoring</div>
+            <div class="panel-sub">Every error the database raised, and what happened next</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Secure Database Configuration Review</div>
+          <div class="panel-sub">Authentication configuration, connection limits and maintenance posture</div></div></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="dbCfgHead"></thead><tbody id="dbCfgBody"></tbody></table></div>
+      </div>
+    </section>

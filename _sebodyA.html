@@ -1,0 +1,288 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Security &amp; Protection</div>
+      <div class="page-sub">Accounts, authentication, access control, data protection and incident response · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search staff, session, alert or route…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Open alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export pack
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Staff accounts</a>
+    <a class="snav" href="#s3">3 · Authentication</a>
+    <a class="snav" href="#s4">4 · Roles</a>
+    <a class="snav" href="#s5">5 · Sessions</a>
+    <a class="snav" href="#s6">6 · Data protection</a>
+    <a class="snav" href="#s7">7 · Financial security</a>
+    <a class="snav" href="#s8">8 · Database</a>
+    <a class="snav" href="#s9">9 · App &amp; API</a>
+    <a class="snav" href="#s10">10 · Fraud</a>
+    <a class="snav" href="#s11">11 · Incidents</a>
+    <a class="snav" href="#s12">12 · Audit logs</a>
+    <a class="snav" href="#s13">13 · Backup</a>
+    <a class="snav" href="#s14">14 · Encryption</a>
+    <a class="snav" href="#s15">15 · Compliance</a>
+    <a class="snav" href="#s16">16 · Reports</a>
+    <a class="snav" href="#s17">17 · Testing</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Security &amp; protection</h1>
+        <p>Accounts, sessions, permissions, backups and secrets are read from one security register — the same staff, loans, payouts and receipts the rest of the portal runs on, so every alert below can be traced to a real record</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandScore">0</b><span>Security score</span></div>
+        <div class="band-stat"><b id="bandSessions">0</b><span>Active sessions</span></div>
+        <div class="band-stat"><b id="bandLocked">0</b><span>Locked accounts</span></div>
+        <div class="band-stat"><b id="bandAlerts">0</b><span>Open alerts</span></div>
+      </div>
+    </div>
+
+    <!-- ============ filter bar ============ -->
+    <div class="card panel" id="filterBar">
+      <div class="panel-head"><div><div class="panel-title">Filter the security register</div>
+        <div class="panel-sub">Every section below follows these controls — area, severity, incident state, owner, region, lane and free text</div></div>
+        <span class="badge b-gray" id="fltSummary">Date range only</span></div>
+      <div class="g3">
+        <div class="fgroup">
+          <div class="fh">Date range</div>
+          <div class="form-grid">
+            <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+            <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+          </div>
+          <div class="fh" style="margin-top:9px">Search</div>
+          <div class="fld" style="width:100%">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Staff, route, secret, alert…" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Area</div>
+          <div class="chips" id="fltLaneChips">
+            <span class="fchip" data-lane="">All areas</span>
+            <span class="fchip" data-lane="Access">Access</span>
+            <span class="fchip" data-lane="Identity">Identity</span>
+            <span class="fchip" data-lane="Data">Data</span>
+            <span class="fchip" data-lane="Financial">Financial</span>
+            <span class="fchip" data-lane="Infrastructure">Infrastructure</span>
+            <span class="fchip" data-lane="Application">Application</span>
+          </div>
+          <div class="fh" style="margin-top:9px">Refresh</div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-ghost" id="refreshBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              Refresh security data
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Dimensions</div>
+          <div class="form-grid">
+            <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+            <div class="fg"><label>Incident state</label><select id="fltStatus"></select></div>
+            <div class="fg"><label>Owner</label><select id="fltOwner"></select></div>
+            <div class="fg"><label>Region</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:8px">
+            <button class="btn btn-gold" id="fltApply">Apply filters</button>
+            <button class="btn btn-ghost" id="fltReset">Clear all</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="fltChips" style="margin-top:10px"></div>
+      <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+      <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ============ 1 · SECURITY OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div><h2>Security Overview</h2>
+          <p>One page for the whole posture — accounts, sessions, sign-ins, alerts, the database and today's events</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="ovStatusPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="secKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Security Posture</div>
+            <div class="panel-sub">Each meter is live: the values move as accounts, sessions and findings change</div></div>
+            <span class="qhint" id="ovStamp"></span></div>
+          <div id="secMeters"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Connection Status</div>
+            <div class="panel-sub">Supabase project health, right now</div></div>
+            <span class="badge b-ok" id="dbPill">Healthy</span></div>
+          <div id="dbStatusGrid"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Signals</div>
+          <div class="panel-sub">Sign-in outcomes, account states and where the alerts sit</div></div></div>
+        <div class="chartgrid" id="secGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Critical Security Alerts</div>
+            <div class="panel-sub">Critical and high incidents still open — click through to incident management</div></div>
+            <span class="badge b-gray" id="ovCritPill">0</span></div>
+          <div id="ovCrit"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Security Events</div>
+            <div class="panel-sub">The last few entries written to the security log</div></div></div>
+          <div id="ovFeed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · STAFF ACCOUNT SECURITY ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div><h2>Staff Account Security</h2>
+          <p>Every account, its state, and the controls to activate, suspend, unlock and force a password reset</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="acctPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="acctKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="acctGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Account Directory</div>
+          <div class="panel-sub">Click any account to review it, then act from the panel — every action is written to the change history</div></div>
+          <span class="badge b-gray" id="acctPill2">0</span></div>
+        <div class="tblwrap" style="max-height:400px"><table class="tbl2 dense"><thead id="acctHead"></thead><tbody id="acctBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Locked and Suspended Accounts</div>
+            <div class="panel-sub">Accounts that cannot sign in until they are restored</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="lockedHead"></thead><tbody id="lockedBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Activity Review</div>
+            <div class="panel-sub">Last sign-in, failed attempts and password age per account</div></div></div>
+          <div id="acctReview"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Account Change History</div>
+          <div class="panel-sub">Created, suspended, restored, unlocked and reset — in order</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="acctHistHead"></thead><tbody id="acctHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · AUTHENTICATION & LOGIN PROTECTION ============ -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div><h2>Authentication &amp; Login Protection</h2>
+          <p>Staff and customer sign-in, the password policy, lockout rules, session timeout and multi-factor enrolment</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="authPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="authKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Secure Login Controls</div>
+            <div class="panel-sub">What the sign-in path enforces today</div></div></div>
+          <div id="loginCtl"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Password Policy Enforcement</div>
+            <div class="panel-sub">Applies uniformly to staff and customer accounts</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="pwHead"></thead><tbody id="pwBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Multi-Factor Authentication</div>
+            <div class="panel-sub">Enrolment by role — administrators are mandatory</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="mfaHead"></thead><tbody id="mfaBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Lockout and Session Rules</div>
+            <div class="panel-sub">Failed-attempt limits, automatic lockout and session timeout</div></div></div>
+          <div id="lockRules"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authentication Event Logs</div>
+          <div class="panel-sub">Every sign-in attempt with device, address and outcome — sortable and drillable</div></div>
+          <span class="badge b-gray" id="authEvtPill">0</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="authEvtHead"></thead><tbody id="authEvtBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · ROLES & ACCESS CONTROL ============ -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div><h2>Roles &amp; Access Control</h2>
+          <p>What each role may do, who holds privileged access, and every permission change that was made</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="rolePill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="roleKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Roles and Permissions</div>
+          <div class="panel-sub">Full · Approve · Own · None — click a role to see who holds it</div></div></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="roleMatrixHead"></thead><tbody id="roleMatrixBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Privileged Access Review</div>
+            <div class="panel-sub">Administrator and super admin holders, last reviewed</div></div>
+            <span class="badge b-gray" id="privPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="privHead"></thead><tbody id="privBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Permission Change Log</div>
+            <div class="panel-sub">Granted, revoked and pending a second signature</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="permChgHead"></thead><tbody id="permChgBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Restricted Financial Actions</div>
+          <div class="panel-sub">Actions the platform refuses unless the role and a second approver both agree</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="finActHead"></thead><tbody id="finActBody"></tbody></table></div>
+      </div>
+    </section>
