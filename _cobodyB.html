@@ -1,0 +1,159 @@
+
+    <!-- ============ 4 · FINANCIAL TRANSACTION MONITORING ============ -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div><h2>Financial Transaction Monitoring</h2>
+          <p>Duplicate receipts, large movements, repeated failures, reversals, unallocated entries and the reconciliation exceptions they create</p></div>
+        <div class="sec-tools"><span class="qhint" id="txnRuleNote"></span></div>
+      </div>
+
+      <div class="kgrid" id="txnKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="txnGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Payment Detection</div>
+            <div class="panel-sub">Same facility, same amount, inside the monitoring window</div></div>
+            <span class="badge b-gray" id="dupPayPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dupPayHead"></thead><tbody id="dupPayBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Large or Unusual Transactions</div>
+            <div class="panel-sub">Above the monitoring threshold set in section 13</div></div>
+            <span class="badge b-gray" id="largePill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="largeHead"></thead><tbody id="largeBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transaction Reference Verification</div>
+            <div class="panel-sub">Channel reference checked against the receipt it should belong to</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="refHead"></thead><tbody id="refBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unallocated Payments</div>
+            <div class="panel-sub">Money received that is not yet against a facility</div></div>
+            <span class="badge b-gray" id="unallocPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="unallocHead"></thead><tbody id="unallocBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeated Failures and Reversals</div>
+            <div class="panel-sub">Payouts and receipts that failed, or were reversed after posting</div></div>
+            <span class="badge b-gray" id="failPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="failHead"></thead><tbody id="failBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Financial Reconciliation Exceptions</div>
+            <div class="panel-sub">Entries that do not yet agree with the cashbook</div></div>
+            <span class="badge b-gray" id="reconPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="reconHead"></thead><tbody id="reconBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transaction Investigation History</div>
+            <div class="panel-sub">What was examined and how it ended</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="txnInvHead"></thead><tbody id="txnInvBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 · FRAUD & SUSPICIOUS ACTIVITY ============ -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div><h2>Fraud &amp; Suspicious Activity Detection</h2>
+          <p>Identity overlap, failed sign-ins, unusual staff activity, suspicious application patterns and the records they produced</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="fraudPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="fraudKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="fraudGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Multiple Accounts with Similar Details</div>
+            <div class="panel-sub">Customers sharing identifiers — open a pair to compare the files</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="fraudDupHead"></thead><tbody id="fraudDupBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeated Failed Login Attempts</div>
+            <div class="panel-sub">Sign-ins that were refused, by staff member</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="fraudLoginHead"></thead><tbody id="fraudLoginBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Loan Application Patterns</div>
+            <div class="panel-sub">Applications that match a known pattern in the detection rules</div></div>
+            <span class="badge b-gray" id="suspAppPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="suspAppHead"></thead><tbody id="suspAppBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeated Payment Corrections</div>
+            <div class="panel-sub">Receipts edited after posting — and who approved the edit</div></div>
+            <span class="badge b-gray" id="corrPill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="corrHead"></thead><tbody id="corrBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unusual Disbursement Patterns</div>
+          <div class="panel-sub">Payouts released off-pattern: after hours, to a changed account, or above the approved figure</div></div>
+          <span class="badge b-gray" id="disbPatPill">0</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="disbPatHead"></thead><tbody id="disbPatBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fraud Investigation Records</div>
+          <div class="panel-sub">Every fraud case, its subject and the outcome so far</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="fraudRecHead"></thead><tbody id="fraudRecBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · CREDIT RISK INTELLIGENCE ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div><h2>Credit Risk Intelligence</h2>
+          <p>Where the exposure sits, how it has aged, who repeats and how the book has been classified over time</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="riskPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="riskKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="riskGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">High-Risk Loan Accounts</div>
+          <div class="panel-sub">Ranked by days past due, then arrears — click a row to open the facility</div></div>
+          <span class="badge b-gray" id="riskAcctPill">0</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="riskAcctHead"></thead><tbody id="riskAcctBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Exposure by Customer</div>
+            <div class="panel-sub">Largest open balances across the book</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="riskCustHead"></thead><tbody id="riskCustBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Exposure by Product</div>
+            <div class="panel-sub">Open principal, arrears and portfolio risk per product</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="riskProdHead"></thead><tbody id="riskProdBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeat Late Payment Patterns</div>
+            <div class="panel-sub">Customers with three or more late receipts</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="riskLateHead"></thead><tbody id="riskLateBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Risk Classification History</div>
+            <div class="panel-sub">How the book moved through the risk bands, month by month</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="riskHistHead"></thead><tbody id="riskHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>

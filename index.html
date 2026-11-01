@@ -391,6 +391,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/></svg>
       Charts &amp; Analytics
     </a>
+    <a class="nav-item" data-page="compliance" href="compliance.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="m9 12 2 2 4-4"/></svg>
+      Compliance &amp; Intelligence
+    </a>
     <div class="nav-label">Communication</div>
     <a class="nav-item" data-page="notifications" href="#notifications">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
@@ -1762,6 +1766,7 @@ const pageMeta = {
   audit:{title:'Audit Logs', sub:'Every action, who took it, when, and what changed'},
   analytics:{title:'Graphing & Tabulation', sub:'Charts, registers and financial summaries across the whole book'},
   charts:{title:'Charts & Analytics', sub:'Portfolio, repayment, arrears and channel analytics'},
+  compliance:{title:'Compliance & Intelligence', sub:'KYC, loan policy, transaction monitoring, fraud, cases and audit'},
   settings:{title:'Settings', sub:'Products, interest rates, fees and system rules'}
 };
 
@@ -1782,6 +1787,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'audit'){ window.location.href = 'audit.html'; return; }
     if(page === 'analytics'){ window.location.href = 'analytics.html'; return; }
     if(page === 'charts'){ window.location.href = 'charts.html'; return; }
+    if(page === 'compliance'){ window.location.href = 'compliance.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;

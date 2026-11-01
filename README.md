@@ -265,6 +265,63 @@ products (Salary, Business Boost, Emergency, Asset Finance, Group Lending) in fo
   chart type, table sorting, gridlines/legend/value labels and sensitive-data masking, with
   an access matrix per role.
 
+## Compliance & Intelligence module
+
+`compliance.html` is the control room: **15 sections** — compliance overview, customer
+verification & KYC, loan compliance, financial transaction monitoring, fraud & suspicious
+activity, credit risk intelligence, staff compliance & access, regulatory & policy, alerts &
+case management, audit & investigation, reports & analytics, customer data protection, rules
+& thresholds, the intelligence dashboard, and settings & security.
+
+It runs on the same seeded book as Charts & Analytics (60 customers, 77 facilities, 132
+applications, 86 payouts, 402 receipts, 512 transactions, five products, four regions,
+Airtel Money / TNM Mpamba / bank / cash) and derives every register from it:
+
+- **KYC register** — five document types weighted 30/20/10/20/20 into a completeness score,
+  contact and address verification, missing and expired documents, duplicate identity
+  groups, a review queue that can be approved or rejected (each decision is written to the
+  verification history and moves the overall compliance score).
+- **Loan compliance** — nine policy tests per facility (eligibility, approval authority,
+  amount limit, interest rate, fees & penalties, agreement, required documents, term and
+  approval workflow) with the breaches listed against each loan and an exception register.
+- **Transaction monitoring** — duplicate receipts inside a configurable window, large or
+  unusual movements above the threshold, channel-reference verification, unallocated
+  payments, reconciliation exceptions, repeated failures and reversals, and investigation
+  history.
+- **Fraud signals** — customers sharing identifiers, refused sign-ins, suspicious
+  application patterns, receipts edited after posting, unusual payout patterns and the
+  investigation records they produced.
+- **Credit risk** — exposure and arrears by customer and product, ageing buckets derived
+  from the instalment schedule, repeat-late patterns, PAR, default indicators and a monthly
+  risk-classification history.
+- **Staff & access** — permission reviews, privileged accounts, payouts released above the
+  approving officer's limit, segregation-of-duties checks, refused and after-hours access,
+  role changes and review history.
+- **Regulatory & policy** — twelve requirements with evidence status, internal lending and
+  data-protection policies, required disclosures, a task register, an evidence repository
+  and the quarterly reporting pack.
+- **Alerts & cases** — every case carries an owner, due date, severity, notes, evidence,
+  corrective actions and a full history; assign, escalate, resolve and close all mutate
+  state and recompute every other section.
+- **Audit** — finding register with ratings and recommendations, internal audit reviews,
+  corrective-action tracking, and the investigations raised from transactions, customers
+  and staff.
+- **Nine standing reports** — customer verification, loan compliance, suspicious
+  transactions, arrears & credit risk, staff access, policy exceptions, audit findings,
+  open cases and corrective-action status — each with a preview, CSV, a real `.xlsx`
+  workbook and PDF through the print dialog, plus the whole pack in one click.
+- **Data protection** — access monitoring with purpose checks, sensitive-field controls,
+  consent records, correction/export requests, retention rules, breach incidents and review
+  history.
+- **Rules & thresholds** — every test on the page reads its limit from one place; changing
+  a threshold and saving recalculates all fifteen sections and writes the old and new value
+  to the rule audit trail, with a rule-change approval queue.
+- **Intelligence dashboard** — ranked high-risk customers, staff access risk scoring,
+  repeated policy exceptions, unresolved cases and five prioritised actions that jump
+  straight to the section that fixes them.
+- **Filters drive all fifteen sections at once** — date range, lane, severity, case state,
+  owner, region, product and free text, with removable chips and a live result summary.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -294,6 +351,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Audit Logs | `audit.html` | 18 |
 | Graphing & Tabulation | `analytics.html` | 15 · 56 charts |
 | Charts & Analytics | `charts.html` | 15 · 78 charts |
+| Compliance & Intelligence | `compliance.html` | 15 · 26 charts · 9 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -313,6 +371,7 @@ clients.html            Module 9  (built · 14 customer sections)
 audit.html              Module 10 (built · 18 audit sections)
 analytics.html          Module 11 (built · 15 graphing sections)
 charts.html             Module 12 (built · 15 analytics sections)
+compliance.html         Module 13 (built · 15 compliance sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -325,6 +384,7 @@ _customers.css          page CSS for Customers
 _audit.css              page CSS for Audit Logs
 _analytics.css          page CSS for Graphing & Tabulation
 _charts.css             page CSS for Charts & Analytics
+_compliance.css         page CSS for Compliance & Intelligence
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -338,6 +398,7 @@ build-clients.sh        rebuilds clients.html from its partials
 build-audit.sh          rebuilds audit.html from its partials
 build-analytics.sh      rebuilds analytics.html from its partials
 build-charts.sh         rebuilds charts.html from its partials
+build-compliance.sh     rebuilds compliance.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -352,6 +413,7 @@ _cubodyA/B/C/D.html _cujsA/B/C/D.js    customers partials
 _audbodyA/B/C/D.html _audjsA/B/C/D.js  audit partials
 _anbodyA/B/C/D/E.html _anjsA/B/C/D/E.js graphing partials
 _chbodyA–E.html _chjsA–G.js  charts & analytics partials
+_cobodyA–D.html _cojsA–G.js  compliance & intelligence partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -370,6 +432,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-audit.sh          # audit.html
 ./build-analytics.sh      # analytics.html
 ./build-charts.sh         # charts.html
+./build-compliance.sh     # compliance.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

@@ -1,0 +1,242 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Compliance &amp; Intelligence</div>
+      <div class="page-sub">KYC, loan policy, transaction monitoring and case management · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search case, customer or receipt…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Open alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export pack
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · KYC</a>
+    <a class="snav" href="#s3">3 · Loan compliance</a>
+    <a class="snav" href="#s4">4 · Transactions</a>
+    <a class="snav" href="#s5">5 · Fraud</a>
+    <a class="snav" href="#s6">6 · Credit risk</a>
+    <a class="snav" href="#s7">7 · Staff &amp; access</a>
+    <a class="snav" href="#s8">8 · Regulatory</a>
+    <a class="snav" href="#s9">9 · Cases</a>
+    <a class="snav" href="#s10">10 · Audit</a>
+    <a class="snav" href="#s11">11 · Reports</a>
+    <a class="snav" href="#s12">12 · Data protection</a>
+    <a class="snav" href="#s13">13 · Rules</a>
+    <a class="snav" href="#s14">14 · Intelligence</a>
+    <a class="snav" href="#s15">15 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Compliance &amp; intelligence</h1>
+        <p>Every finding below is tested against the same customer, loan and transaction records the rest of the portal runs on — KYC files, policy limits, monitoring thresholds and open cases</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandScore">0</b><span>Compliance score</span></div>
+        <div class="band-stat"><b id="bandCases">0</b><span>Open cases</span></div>
+        <div class="band-stat"><b id="bandKyc">0</b><span>KYC to review</span></div>
+        <div class="band-stat"><b id="bandExceptions">0</b><span>Exceptions</span></div>
+        <div class="band-stat"><b id="bandOverdue">0</b><span>Overdue actions</span></div>
+      </div>
+    </div>
+
+    <!-- ============ filter bar (drives every section) ============ -->
+    <div class="card panel" id="filterBar">
+      <div class="panel-head"><div><div class="panel-title">Filter the compliance universe</div>
+        <div class="panel-sub">Every section below follows these controls — lane, severity, state, owner, region, product and free text</div></div>
+        <span class="badge b-gray" id="fltSummary">Date range only</span></div>
+      <div class="g3">
+        <div class="fgroup">
+          <div class="fh">Date range</div>
+          <div class="form-grid">
+            <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+            <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+          </div>
+          <div class="fh" style="margin-top:9px">Search</div>
+          <div class="fld" style="width:100%">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Case, customer, receipt…" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Lane</div>
+          <div class="chips" id="fltLaneChips">
+            <span class="fchip" data-lane="">All lanes</span>
+            <span class="fchip" data-lane="Compliance">Compliance</span>
+            <span class="fchip" data-lane="KYC">KYC</span>
+            <span class="fchip" data-lane="Transaction">Transaction</span>
+            <span class="fchip" data-lane="Fraud">Fraud</span>
+            <span class="fchip" data-lane="Access">Access</span>
+          </div>
+          <div class="fh" style="margin-top:9px">Refresh</div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-ghost" id="refreshBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              Refresh compliance data
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Dimensions</div>
+          <div class="form-grid">
+            <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+            <div class="fg"><label>Case state</label><select id="fltStatus"></select></div>
+            <div class="fg"><label>Owner</label><select id="fltOwner"></select></div>
+            <div class="fg"><label>Region</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:8px">
+            <button class="btn btn-gold" id="fltApply">Apply filters</button>
+            <button class="btn btn-ghost" id="fltReset">Clear all</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="fltChips" style="margin-top:10px"></div>
+      <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+      <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ============ 1 · COMPLIANCE OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div><h2>Compliance Overview</h2>
+          <p>Compliance standing across verification, documentation, transactions, access and the open case load</p></div>
+        <div class="sec-tools"><span class="qhint" id="ovStamp">Last refresh —</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Overall Compliance Status</div>
+          <div class="panel-sub">Ten headline measures — each ties to the section named beneath it</div></div>
+          <span class="badge b-gray" id="ovStatusPill">—</span></div>
+        <div class="kgrid" id="ovKpis"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compliance Posture</div>
+          <div class="panel-sub">The five control areas, scored from the records behind them</div></div></div>
+        <div class="g2">
+          <div class="meterrow" id="ovMeters"></div>
+          <div>
+            <div class="minihead">What needs attention today</div>
+            <div id="ovAttention"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compliance Activity Over Time</div>
+          <div class="panel-sub">Cases raised against cases closed, by month</div></div></div>
+        <div id="ovTrend"></div>
+        <div class="qhint" id="ovTrendNote"></div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Compliance Activities</div>
+            <div class="panel-sub">Newest first — click a line to open the record</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><div id="ovActivity"></div></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">High-Risk Alerts</div>
+            <div class="panel-sub">Critical and high cases still open</div></div>
+            <span class="badge b-gray" id="ovHighPill">0</span></div>
+          <div id="ovHigh"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · CUSTOMER VERIFICATION & KYC ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div><h2>Customer Verification &amp; KYC</h2>
+          <p>Identity, documents, contact and address checks — with the review queue and the full verification history</p></div>
+        <div class="sec-tools">
+          <button class="btn btn-ghost" id="kycExport">Export KYC register</button>
+        </div>
+      </div>
+
+      <div class="kgrid" id="kycKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Review Queue</div>
+            <div class="panel-sub">Files waiting for a decision — open one to approve or reject it</div></div>
+            <span class="badge b-gray" id="kycQueuePill">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="kycQueueHead"></thead><tbody id="kycQueueBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Information Completeness</div>
+            <div class="panel-sub">Weighted across the five required documents</div></div></div>
+          <div id="kycCompleteness"></div>
+          <div class="minihead" style="margin-top:10px">Identity, contact and address</div>
+          <div class="strip" id="kycChecks"></div>
+        </div>
+      </div>
+
+      <div class="chartgrid" id="kycGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Missing or Expired Documents</div>
+            <div class="panel-sub">Every document that blocks a file from being verified</div></div>
+            <span class="badge b-gray" id="docPill">0</span></div>
+          <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense"><thead id="docHead"></thead><tbody id="docBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Customer Detection</div>
+            <div class="panel-sub">Matches found on phone number, surname and region</div></div>
+            <span class="badge b-gray" id="dupPill">0</span></div>
+          <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense"><thead id="dupHead"></thead><tbody id="dupBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification History</div>
+          <div class="panel-sub">Every decision taken on a KYC file, who took it and when</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="kycHistHead"></thead><tbody id="kycHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · LOAN COMPLIANCE ============ -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div><h2>Loan Compliance</h2>
+          <p>Nine policy tests run against every facility: eligibility, authority, limits, rate, fees, agreement, documents, term and workflow</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="loanPassPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="loanKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="loanGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Policy Test Results</div>
+          <div class="panel-sub">Pass rate for each test across the facilities in view</div></div></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="loanTestHead"></thead><tbody id="loanTestBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Loan Policy Exceptions</div>
+          <div class="panel-sub">Each breach with its owner and status — click a row to open the facility</div></div>
+          <span class="badge b-gray" id="excPill">0</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="excHead"></thead><tbody id="excBody"></tbody></table></div>
+      </div>
+    </section>
