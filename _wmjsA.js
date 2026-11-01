@@ -2,8 +2,8 @@
 /* ============================================================
    WEBSITE MANAGEMENT & CONNECTIONS (1/7)
    Formatters, the seeded book every figure is built from, and the
-   inline-SVG chart engine. The same customers, loans, payouts and receipts
-   the rest of the portal runs on, generated once and deterministically.
+   inline-SVG chart engine. The book is generated once, deterministically,
+   so every security finding agrees with the registers it is drawn from.
    ============================================================ */
 const el = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
