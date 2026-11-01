@@ -3,70 +3,51 @@
       <div class="sec-head">
         <div class="sec-num">13</div>
         <div><h2>Website Performance</h2>
-          <p>Page loading, API and database response times, availability history, failed requests, resource use and mobile checks</p></div>
-        <div class="sec-tools"><span class="badge b-gray" id="perfPill">—</span></div>
+          <p>Page loading, API and database response times, availability history, failed request statistics, resource usage, mobile responsiveness and the performance reports</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="perfPill">—</span></div>
       </div>
 
       <div class="kgrid" id="perfKpis" style="margin-bottom:11px"></div>
-      <div class="chartgrid" id="perfGrid"></div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Page Loading Performance</div>
-          <div class="panel-sub">Load time, largest contentful paint, layout shift and the Lighthouse score</div></div>
-          <span class="badge b-gray" id="ppPill">—</span></div>
-        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ppHead"></thead><tbody id="ppBody"></tbody></table></div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">API Response Times</div>
-            <div class="panel-sub">p95 by route, worst first</div></div></div>
-          <div id="apiPerfBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Database Response Times</div>
-            <div class="panel-sub">Average and p95 for the heaviest queries</div></div></div>
-          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dbpHead"></thead><tbody id="dbpBody"></tbody></table></div>
-        </div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Website Availability History</div>
-            <div class="panel-sub">Daily uptime and minutes down</div></div></div>
-          <div id="availHistBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Failed Request Statistics</div>
-            <div class="panel-sub">By status code and by page</div></div></div>
-          <div id="failBox"></div>
-        </div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Resource Usage Monitoring</div>
-            <div class="panel-sub">What the site and its services are consuming</div></div></div>
-          <div id="resBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Mobile Responsiveness Checks</div>
-            <div class="panel-sub">Each page at 360 px, 390 px and 768 px</div></div>
-            <span class="badge b-gray" id="mobPill">—</span></div>
-          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="mobHead"></thead><tbody id="mobBody"></tbody></table></div>
-        </div>
+          <div class="panel-sub">Load time, largest contentful paint and the layout shift score per page</div></div>
+          <div class="sec-tools"><button class="btn btn-ghost" id="perfCsv">Performance report (CSV)</button></div></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="pagePerfHead"></thead><tbody id="pagePerfBody"></tbody></table></div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Performance Reports</div>
-          <div class="panel-sub">Take the performance register away as a file</div></div></div>
-        <div class="strip" id="perfReportBox"></div>
-        <div class="form-actions">
-          <button class="btn btn-ghost" data-preport="pages" data-fmt="csv">Pages · CSV</button>
-          <button class="btn btn-ghost" data-preport="pages" data-fmt="xlsx">Pages · Excel</button>
-          <button class="btn btn-ghost" data-preport="api" data-fmt="csv">API · CSV</button>
-          <button class="btn btn-ghost" data-preport="api" data-fmt="xlsx">API · Excel</button>
-          <button class="btn btn-ghost" data-preport="all" data-fmt="pdf">Print the whole register</button>
+        <div class="panel-head"><div><div class="panel-title">Response Times and Availability History</div>
+          <div class="panel-sub">API against database, and the uptime line behind both</div></div></div>
+        <div class="chartgrid" id="perfGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Resource Usage</div>
+            <div class="panel-sub">Compute, memory, storage and bandwidth</div></div>
+            <span class="badge b-ok" id="resPill">—</span></div>
+          <div id="resBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Mobile Responsiveness</div>
+            <div class="panel-sub">Six checks at 360, 390 and 768 pixels</div></div>
+            <span class="badge b-warn" id="mobPill">—</span></div>
+          <div id="mobBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Request Statistics</div>
+            <div class="panel-sub">Where the errors come from and how expensive they are</div></div>
+            <span class="badge b-gray" id="freqPill">—</span></div>
+          <div id="freqBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Performance Reports</div>
+            <div class="panel-sub">Generate a report for the current filters</div></div></div>
+          <div id="perfReportBox"></div>
         </div>
       </div>
     </section>
@@ -76,42 +57,37 @@
       <div class="sec-head">
         <div class="sec-num">14</div>
         <div><h2>Connection Diagnostics</h2>
-          <p>Run the eight probes — website, backend, Supabase, authentication, API routes, storage, integrations and DNS — and read the fix list</p></div>
-        <div class="sec-tools"><span class="badge b-gray" id="diagPill">—</span></div>
+          <p>Run the website connection test, the backend, Supabase, authentication, API, storage and integration probes — and read what to do about anything that fails</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="diagPill">—</span></div>
       </div>
 
       <div class="kgrid" id="diagKpis" style="margin-bottom:11px"></div>
 
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Diagnostic Tests</div>
+          <div class="panel-sub">Eight probes · run one, or run the whole set</div></div>
+          <div class="sec-tools"><button class="btn btn-gold" id="runAllDiag">Run all tests</button></div></div>
+        <div id="diagList"></div>
+      </div>
+
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Run Website Connection Test</div>
-            <div class="panel-sub">Each probe reports its own result; run one or run them all</div></div>
-            <button class="btn btn-gold" id="runAllDiag">Run all tests</button></div>
-          <div class="diag" id="diagList"></div>
-          <div class="form-actions">
-            <button class="btn btn-ghost" data-diag="DGN-01">Website</button>
-            <button class="btn btn-ghost" data-diag="DGN-02">Backend</button>
-            <button class="btn btn-ghost" data-diag="DGN-03">Supabase</button>
-            <button class="btn btn-ghost" data-diag="DGN-04">Authentication</button>
-            <button class="btn btn-ghost" data-diag="DGN-05">API endpoints</button>
-            <button class="btn btn-ghost" data-diag="DGN-06">Storage</button>
-            <button class="btn btn-ghost" data-diag="DGN-07">Integrations</button>
-            <button class="btn btn-ghost" data-diag="DGN-08">DNS and TLS</button>
-          </div>
+          <div class="panel-head"><div><div class="panel-title">Test Results</div>
+            <div class="panel-sub">Outcome, latency and the last time each probe ran</div></div>
+            <span class="badge b-gray" id="diagResPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="diagHead"></thead><tbody id="diagBody"></tbody></table></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Recommended Troubleshooting Actions</div>
-            <div class="panel-sub">Derived from the probes that failed or degraded</div></div>
-            <span class="badge b-gray" id="troPill">—</span></div>
-          <div id="troubleBox"></div>
-          <div class="form-actions"><button class="btn btn-ghost" id="copyTrouble">Copy the fix list</button></div>
+          <div class="panel-head"><div><div class="panel-title">Recommended Troubleshooting</div>
+            <div class="panel-sub">What to do about each failing probe</div></div></div>
+          <div id="recBox"></div>
         </div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Connection Test Results</div>
-          <div class="panel-sub">Target, result, latency and what the probe actually saw</div></div></div>
-        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dtHead"></thead><tbody id="dtBody"></tbody></table></div>
+        <div class="panel-head"><div><div class="panel-title">Connection Test History</div>
+          <div class="panel-sub">Pass and fail counts from the most recent sweeps</div></div></div>
+        <div class="chartgrid" id="diagGrid"></div>
       </div>
     </section>
 
@@ -120,64 +96,60 @@
       <div class="sec-head">
         <div class="sec-num">15</div>
         <div><h2>Deployment and Version Management</h2>
-          <p>The current production version, deployment status, what shipped last, the release notes, the environment checks and how a rollback works</p></div>
-        <div class="sec-tools"><span class="badge b-gray" id="relPill">—</span></div>
+          <p>The current production version, deployment status, the release history and notes, environment configuration checks, failed deployment alerts, rollback information and the pre-deployment health checks</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="depmPill">—</span></div>
       </div>
 
-      <div class="kgrid" id="relKpis" style="margin-bottom:11px"></div>
+      <div class="kgrid" id="depKpis" style="margin-bottom:11px"></div>
 
       <div class="g2">
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Current Production Version</div>
-            <div class="panel-sub">What every visitor is being served right now</div></div>
-            <span class="badge b-ok" id="curVerPill">—</span></div>
-          <div id="curVerBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Latest Deployed Version and Status</div>
-            <div class="panel-sub">The newest build and whether it reached production</div></div>
-            <span class="badge b-gray" id="depStatePill">—</span></div>
-          <div id="latestVerBox"></div>
-          <div class="form-actions"><button class="btn btn-gold" id="deployBtn">Deploy to production</button>
-            <button class="btn btn-ghost" id="stagingBtn">Deploy to staging</button></div>
-        </div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Release Notes</div>
-            <div class="panel-sub">What changed in each of the last releases</div></div></div>
-          <div id="notesBox"></div>
+            <div class="panel-sub">What is serving traffic right now</div></div>
+            <span class="badge b-ok" id="curPill">—</span></div>
+          <div id="curBox"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="prodBtn">Deploy to production</button>
+            <button class="btn btn-ghost" id="stagingBtn">Deploy to staging</button>
+          </div>
+          <div class="qhint" id="deployMsg" style="margin-top:6px"></div>
         </div>
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Pre-Deployment Health Checks</div>
-            <div class="panel-sub">All of these must pass before a production deploy</div></div>
-            <button class="btn btn-ghost" id="runPreDeploy">Run the checks</button></div>
+            <div class="panel-sub">All six must pass before a production release</div></div>
+            <span class="badge b-warn" id="prePill">—</span></div>
           <div id="preBox"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="runPre">Re-run pre-deployment checks</button></div>
         </div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Deployment History</div>
-          <div class="panel-sub">Roll back any release that is not the live one</div></div>
-          <span class="badge b-gray" id="relRowPill">—</span></div>
-        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="relHead"></thead><tbody id="relBody"></tbody></table></div>
+        <div class="panel-head"><div><div class="panel-title">Release History and Notes</div>
+          <div class="panel-sub">Every release, its notes, and the rollback entry point</div></div>
+          <span class="badge b-gray" id="relPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="relHead"></thead><tbody id="relBody"></tbody></table></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Environment Configuration Checks</div>
-            <div class="panel-sub">Every variable the deploy depends on</div></div>
+            <div class="panel-sub">Variables, runtime, credentials and feature flags</div></div>
             <span class="badge b-gray" id="envPill">—</span></div>
-          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="envHead"></thead><tbody id="envBody"></tbody></table></div>
+          <div id="envBox"></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Failed Deployment Alerts and Rollback Information</div>
-            <div class="panel-sub">What went wrong, and what was restored</div></div>
-            <span class="badge b-gray" id="fdPill">—</span></div>
-          <div id="fdBox"></div>
-          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="rbHead"></thead><tbody id="rbBody"></tbody></table></div>
+          <div class="panel-head"><div><div class="panel-title">Rollback Information</div>
+            <div class="panel-sub">What a rollback does, and what it has done</div></div>
+            <span class="badge b-gray" id="rbPill">—</span></div>
+          <div id="rbBox"></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="rbHead"></thead><tbody id="rbBody"></tbody></table></div>
         </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Failed Deployment Alerts and Build History</div>
+          <div class="panel-sub">Every build, with duration, commit and outcome</div></div></div>
+        <div class="chartgrid" id="depGrid"></div>
       </div>
     </section>
 
@@ -186,32 +158,36 @@
       <div class="sec-head">
         <div class="sec-num">16</div>
         <div><h2>Connection Alerts and Notifications</h2>
-          <p>Offline, disconnection, database, authentication, API, integration, certificate and deployment alerts — with the rules that raise them</p></div>
-        <div class="sec-tools"><span class="badge b-gray" id="alertPill">—</span></div>
+          <p>Website offline, backend disconnection, Supabase failure, authentication failure, API errors, integration failure, SSL expiry and deployment failure alerts — with the rules and the history</p></div>
+        <div class="sec-tools"><span class="badge b-crit" id="alPill">—</span></div>
       </div>
 
-      <div class="kgrid" id="alertKpis" style="margin-bottom:11px"></div>
-      <div class="chartgrid" id="alertGrid"></div>
+      <div class="kgrid" id="alKpis" style="margin-bottom:11px"></div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Active Connection Alerts</div>
-          <div class="panel-sub">Acknowledge or resolve straight from the row</div></div>
-          <span class="badge b-gray" id="alRowPill">—</span></div>
-        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="alHead"></thead><tbody id="alBody"></tbody></table></div>
+        <div class="panel-head"><div><div class="panel-title">Connection Alerts</div>
+          <div class="panel-sub">Acknowledge an alert or resolve it; the count in the band moves with you</div></div>
+          <span class="badge b-gray" id="alCount">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="alertHead"></thead><tbody id="alertBody"></tbody></table></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Alert Rules and Notification Channels</div>
-            <div class="panel-sub">What raises an alert, who is told and where it lands</div></div>
+          <div class="panel-head"><div><div class="panel-title">Alert Rules and Notifications</div>
+            <div class="panel-sub">The threshold, the channel and who is told</div></div>
             <span class="badge b-gray" id="rulePill">—</span></div>
-          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ruleHead"></thead><tbody id="ruleBody"></tbody></table></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="ruleHead"></thead><tbody id="ruleBody"></tbody></table></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Notification Channels and Alert History</div>
-            <div class="panel-sub">Which channels are wired, and what was sent</div></div></div>
-          <div id="chanBox"></div>
-          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="alhHead"></thead><tbody id="alhBody"></tbody></table></div>
+          <div class="panel-head"><div><div class="panel-title">Alerts by Kind</div>
+            <div class="panel-sub">Where this month's alert volume sits</div></div></div>
+          <div class="chartgrid" id="alGrid"></div>
         </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Alert History</div>
+          <div class="panel-sub">Every alert raised, acknowledged and resolved</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="alHistHead"></thead><tbody id="alHistBody"></tbody></table></div>
       </div>
     </section>

@@ -3,57 +3,38 @@
       <div class="sec-head">
         <div class="sec-num">17</div>
         <div><h2>Website Access and Permissions</h2>
-          <p>Who may manage the website, edit content, touch integrations, deploy, run tests and change configuration — and what needs approval</p></div>
+          <p>Who may manage the website, act as content editor, change the integration configuration, deploy, or run connection tests — with the approval rules and the configuration change history</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="permPill">—</span></div>
       </div>
 
       <div class="kgrid" id="permKpis" style="margin-bottom:11px"></div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Website Management Permissions</div>
-          <div class="panel-sub">Six roles against seven capabilities — click a cell to grant or withdraw it</div></div>
-          <span class="badge b-gray" id="permCellPill">—</span></div>
+        <div class="panel-head"><div><div class="panel-title">Capability Matrix</div>
+          <div class="panel-sub">Click a cell to grant or withdraw a capability — the change is recorded</div></div>
+          <span class="badge b-gray" id="permCount">—</span></div>
         <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="permHead"></thead><tbody id="permBody"></tbody></table></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Content Editor Permissions</div>
-            <div class="panel-sub">Who can write, approve and publish</div></div></div>
-          <div id="edPermBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Integration Configuration Permissions</div>
-            <div class="panel-sub">Who may add, edit or remove a connection</div></div></div>
-          <div id="intPermBox"></div>
-        </div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Deployment Permissions</div>
-            <div class="panel-sub">Who may ship to staging and to production</div></div></div>
-          <div id="depPermBox"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Connection Testing Permissions</div>
-            <div class="panel-sub">Who may run diagnostics and read the results</div></div></div>
-          <div id="testPermBox"></div>
-        </div>
-      </div>
-
-      <div class="g2">
-        <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Administrative Approval Requirements</div>
-            <div class="panel-sub">Configuration changes that need a second pair of eyes</div></div>
-            <span class="badge b-gray" id="aprPill">—</span></div>
-          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="aprHead"></thead><tbody id="aprBody"></tbody></table></div>
+            <div class="panel-sub">Changes that cannot go through without a second signature</div></div>
+            <span class="badge b-gray" id="apprPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="apprHead"></thead><tbody id="apprBody"></tbody></table></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Configuration Change History</div>
-            <div class="panel-sub">Configuration and integration changes only</div></div></div>
-          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="cfgHistHead"></thead><tbody id="cfgHistBody"></tbody></table></div>
+          <div class="panel-head"><div><div class="panel-title">Who Holds What</div>
+            <div class="panel-sub">One named officer per role, and the capabilities that come with it</div></div></div>
+          <div id="roleStaffBox"></div>
         </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Configuration Change History</div>
+          <div class="panel-sub">Website, integration and deployment settings changed by staff</div></div>
+          <span class="badge b-gray" id="cfgHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="cfgHistHead"></thead><tbody id="cfgHistBody"></tbody></table></div>
       </div>
     </section>
 
@@ -62,7 +43,7 @@
       <div class="sec-head">
         <div class="sec-num">18</div>
         <div><h2>Website Management Reports</h2>
-          <p>Eight standing reports — availability, connections, API performance, database, authentication, deployment, errors and integration reliability</p></div>
+          <p>Availability, connection health, API performance, database connectivity, authentication service, deployment, website error and integration reliability reports — each as PDF, Excel or CSV</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="repPill">—</span></div>
       </div>
 
@@ -70,28 +51,28 @@
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Report Library</div>
-          <div class="panel-sub">Every report is generated on demand from the current filters — nothing here is a stored copy</div></div></div>
+          <div class="panel-sub">Eight reports · preview on screen, or download a real file</div></div>
+          <span class="badge b-gray" id="repCount">—</span></div>
         <div class="repgrid" id="repCards"></div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">The Whole Connections Pack</div>
-          <div class="panel-sub">All eight reports in one file, stamped with the filters they ran under</div></div></div>
+        <div class="panel-head"><div><div class="panel-title">The Whole Pack</div>
+          <div class="panel-sub">Every report in one file, built from the current filters</div></div></div>
         <div class="form-actions">
-          <button class="btn btn-ghost" id="packCsv">Download pack · CSV</button>
-          <button class="btn btn-ghost" id="packXlsx">Download pack · Excel</button>
-          <button class="btn btn-ghost" id="packPdf">Print pack · PDF</button>
-          <button class="btn btn-ghost" id="packPrint">Open print preview</button>
+          <button class="btn btn-gold" id="packCsv">Download pack (CSV)</button>
+          <button class="btn btn-ghost" id="packXlsx">Download pack (Excel)</button>
+          <button class="btn btn-ghost" id="packPdf">Print pack (PDF)</button>
+          <button class="btn btn-ghost" id="packPrint">Print preview</button>
         </div>
+        <div class="qhint" id="packMsg" style="margin-top:6px"></div>
       </div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Export History</div>
-          <div class="panel-sub">What was exported, by whom and under which filters</div></div>
-          <span class="badge b-gray" id="expPill">—</span></div>
-        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense">
-          <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
-          <tbody id="expHistoryBody"></tbody></table></div>
+          <div class="panel-sub">What has been generated from this page</div></div>
+          <span class="badge b-gray" id="expCount">0</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead><tbody id="expHistoryBody"></tbody></table></div>
       </div>
     </section>
 
@@ -104,12 +85,12 @@
         <div class="sec-tools"><span class="badge b-gray" id="cfgState">—</span></div>
       </div>
 
-      <div class="kgrid" id="sysKpis" style="margin-bottom:11px"></div>
+      <div class="kgrid" id="cfgKpis" style="margin-bottom:11px"></div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Connection URLs and Public Application Configuration</div>
-            <div class="panel-sub">Public website URL, backend API base URL, Supabase project URL and the public application configuration</div></div></div>
+          <div class="panel-head"><div><div class="panel-title">Connection URLs</div>
+            <div class="panel-sub">Public website, backend API and Supabase project</div></div></div>
           <div class="form-grid">
             <div class="fg"><label>Public website URL</label><input id="cfgPublic" /></div>
             <div class="fg"><label>Backend API base URL</label><input id="cfgApi" /></div>
@@ -161,36 +142,36 @@
       <div class="sec-head">
         <div class="sec-num">20</div>
         <div><h2>Change History and Audit Trail</h2>
-          <p>Website content changes, branding and theme changes, connection configuration changes, integration changes and deployment activity — who made each one, when, and what the value was before and after</p></div>
+          <p>Content changes, branding and theme changes, connection configuration changes, integration changes and deployment activity — who made each one, when, and what the value was before</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="chgPill">—</span></div>
       </div>
 
       <div class="kgrid" id="chgKpis" style="margin-bottom:11px"></div>
-      <div class="chartgrid" id="chgGrid"></div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Change Categories</div>
-          <div class="panel-sub">Filter the trail by the kind of change</div></div>
+          <div class="panel-sub">Narrow the trail by the kind of change</div></div>
           <span class="badge b-gray" id="chgCatPill">—</span></div>
         <div class="chips" id="chgCats"></div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Change History and Audit Trail</div>
-          <div class="panel-sub">Previous and updated values, the staff member and the timestamp</div></div></div>
+        <div class="panel-head"><div><div class="panel-title">Audit Trail</div>
+          <div class="panel-sub">Every change with its previous and updated value</div></div>
+          <span class="badge b-gray" id="chgCount">—</span></div>
         <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="chgHead"></thead><tbody id="chgBody"></tbody></table></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Staff Member Responsible</div>
-            <div class="panel-sub">Change volume per person in the period</div></div></div>
+            <div class="panel-sub">Changes per officer in the current period</div></div></div>
           <div id="chgWhoBox"></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Change Activity Timeline</div>
-            <div class="panel-sub">The most recent entries, newest first</div></div></div>
-          <div id="chgTimelineBox"></div>
+          <div class="panel-head"><div><div class="panel-title">Change Activity</div>
+            <div class="panel-sub">Where change is concentrated</div></div></div>
+          <div class="chartgrid" id="chgGrid"></div>
         </div>
       </div>
     </section>
@@ -203,7 +184,7 @@
 <div class="modal" id="modal">
   <div class="modal-card">
     <div class="modal-head">
-      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
       <button class="x" id="modalClose" aria-label="Close">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>

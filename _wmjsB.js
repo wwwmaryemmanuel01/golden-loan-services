@@ -137,7 +137,7 @@ function sortOrPage(e){
     return true;
   }
   const row = e.target.closest('[data-tblrow]');
-  if(row && !e.target.closest('button, select, input, textarea, a')){
+  if(row && !e.target.closest('button')){
     const host = row.dataset.tblrow;
     const rec = (STORE_ROWS[host] || [])[Number(row.dataset.i)];
     if(rec && rec._open) rec._open();
@@ -175,10 +175,10 @@ const statTone = s => /^(Cleared|Compliant|Verified|Resolved|Closed|Approved|Pas
 
 /* ---------------- exports ---------------- */
 const EXPORTS = [
-  {when: TODAY + ' 08:40', report: 'Website Availability Report', format: 'CSV', rows: 14, by: 'Chikondi Mwale', filters: '01 Oct 2026 – 30 Oct 2026'},
-  {when: addDays(TODAY, -1) + ' 16:20', report: 'Connection Health Report', format: 'Excel', rows: 24, by: 'Tadala Msonthi', filters: '01 Sep 2026 – 29 Oct 2026'},
-  {when: addDays(TODAY, -2) + ' 11:05', report: 'API Performance Report', format: 'PDF', rows: 14, by: 'Linda Mhango', filters: '01 Jan 2026 – 30 Oct 2026'},
-  {when: addDays(TODAY, -5) + ' 09:12', report: 'Deployment Report', format: 'CSV', rows: 10, by: 'Chikondi Mwale', filters: '01 Jan 2026 – 30 Oct 2026'}
+  {when: TODAY + ' 08:42', report: 'Website Availability Report', format: 'CSV', rows: 14, by: 'Chikondi Mwale', filters: '01 Jan 2026 – 30 Oct 2026'},
+  {when: addDays(TODAY, -1) + ' 17:05', report: 'Connection Health Report', format: 'Excel', rows: 12, by: 'Chikondi Mwale', filters: '01 Oct 2026 – 29 Oct 2026'},
+  {when: addDays(TODAY, -2) + ' 09:18', report: 'API Performance Report', format: 'PDF', rows: 14, by: 'Thokozani Banda', filters: '01 Jan 2026 – 30 Oct 2026'},
+  {when: addDays(TODAY, -4) + ' 14:30', report: 'Integration Reliability Report', format: 'CSV', rows: 10, by: 'Grace Nyirenda', filters: '01 Sep 2026 – 30 Oct 2026'}
 ];
 function brandHtml(title, sub){
   return `<div class="brandblock"><div class="bm">G</div>
@@ -189,7 +189,7 @@ function brandHtml(title, sub){
 }
 function filterLine(){
   const bits = [`${fmtDate(FILTER.from)} – ${fmtDate(FILTER.to)}`];
-  if(FILTER.lane) bits.push('lane: ' + FILTER.lane);
+  if(FILTER.lane) bits.push('area: ' + FILTER.lane);
   if(FILTER.severity) bits.push('severity: ' + FILTER.severity);
   if(FILTER.status) bits.push('status: ' + FILTER.status);
   if(FILTER.owner) bits.push('owner: ' + staffName(FILTER.owner));

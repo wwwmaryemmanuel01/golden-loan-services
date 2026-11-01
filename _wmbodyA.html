@@ -5,13 +5,13 @@
     </button>
     <div>
       <div class="page-title">Website Management &amp; Connections</div>
-      <div class="page-sub">Website, hosting, backend, Supabase and every service the portal talks to · <span id="topRefresh">30 Oct 2026</span></div>
+      <div class="page-sub">The public site and every service behind it · <span id="topRefresh">30 Oct 2026</span></div>
     </div>
     <div class="search">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input placeholder="Search a page, route, service or alert…" id="globalSearch" autocomplete="off" />
+      <input placeholder="Search a page, endpoint, service or change…" id="globalSearch" autocomplete="off" />
     </div>
-    <button class="icon-btn" title="Open connection alerts" id="bellBtn">
+    <button class="icon-btn" title="Open alerts" id="bellBtn">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
       <span class="dot"></span>
     </button>
@@ -35,14 +35,14 @@
     <a class="snav" href="#s7">7 · Supabase</a>
     <a class="snav" href="#s8">8 · Integrations</a>
     <a class="snav" href="#s9">9 · Authentication</a>
-    <a class="snav" href="#s10">10 · Frontend links</a>
+    <a class="snav" href="#s10">10 · Frontend</a>
     <a class="snav" href="#s11">11 · Forms</a>
     <a class="snav" href="#s12">12 · Files &amp; media</a>
     <a class="snav" href="#s13">13 · Performance</a>
     <a class="snav" href="#s14">14 · Diagnostics</a>
     <a class="snav" href="#s15">15 · Deployment</a>
     <a class="snav" href="#s16">16 · Alerts</a>
-    <a class="snav" href="#s17">17 · Access</a>
+    <a class="snav" href="#s17">17 · Permissions</a>
     <a class="snav" href="#s18">18 · Reports</a>
     <a class="snav" href="#s19">19 · Configuration</a>
     <a class="snav" href="#s20">20 · Change history</a>
@@ -53,12 +53,12 @@
     <div class="modband">
       <div>
         <h1>Website &amp; connections</h1>
-        <p>One console for the public website, the admin portal, the backend and every service behind them — the same customers, loans, payouts and receipts the rest of the portal runs on, so each connection point below can be traced to a real record</p>
+        <p>The public site, the admin portal, the backend API, the Supabase project and the ten services they depend on — read from the same registers the rest of the portal runs on, so every alert here can be traced to a real record</p>
       </div>
       <div class="band-stats">
         <div class="band-stat"><b id="bandScore">0</b><span>Connection score</span></div>
-        <div class="band-stat"><b id="bandUptime">0</b><span>Website uptime</span></div>
-        <div class="band-stat"><b id="bandApis">0</b><span>API routes</span></div>
+        <div class="band-stat"><b id="bandUptime">0</b><span>Uptime 14 d</span></div>
+        <div class="band-stat"><b id="bandApis">0</b><span>API endpoints</span></div>
         <div class="band-stat"><b id="bandAlerts">0</b><span>Open alerts</span></div>
       </div>
     </div>
@@ -78,13 +78,13 @@
           <div class="fh" style="margin-top:9px">Search</div>
           <div class="fld" style="width:100%">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="fltSearch" placeholder="Page, route, service, alert…" autocomplete="off" style="width:100%" />
+            <input id="fltSearch" placeholder="Page, endpoint, service, record…" autocomplete="off" style="width:100%" />
           </div>
         </div>
         <div class="fgroup">
           <div class="fh">Area</div>
           <div class="chips" id="fltLaneChips">
-            <span class="fchip" data-lane="">All areas</span>
+            <span class="fchip on" data-lane="">All areas</span>
             <span class="fchip" data-lane="Website">Website</span>
             <span class="fchip" data-lane="Backend">Backend</span>
             <span class="fchip" data-lane="Supabase">Supabase</span>
@@ -96,7 +96,7 @@
           <div class="form-actions" style="margin-top:0">
             <button class="btn btn-ghost" id="refreshBtn">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
-              Re-check connections
+              Refresh connection data
             </button>
           </div>
         </div>
@@ -107,6 +107,7 @@
             <div class="fg"><label>State</label><select id="fltStatus"></select></div>
             <div class="fg"><label>Owner</label><select id="fltOwner"></select></div>
             <div class="fg"><label>Environment</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
           </div>
           <div class="form-actions" style="margin-top:8px">
             <button class="btn btn-gold" id="fltApply">Apply filters</button>
@@ -124,7 +125,7 @@
       <div class="sec-head">
         <div class="sec-num">1</div>
         <div><h2>Website Overview</h2>
-          <p>The website status at a glance — public website availability, the admin portal, the backend server, the Supabase connection and API health, with the last successful connection and today's warnings</p></div>
+          <p>Website status at a glance — public website availability, the admin portal, the backend server, the Supabase connection and API health, with the last successful connection and today's warnings</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="ovStatusPill">—</span></div>
       </div>
 
@@ -171,93 +172,83 @@
       <div class="sec-head">
         <div class="sec-num">2</div>
         <div><h2>Public Website Management</h2>
-          <p>Branding, theme, navigation, homepage sections, contact details, offices and social links — with a live preview and publish control</p></div>
-        <div class="sec-tools"><span class="badge b-gray" id="sitePill">—</span></div>
+          <p>The homepage, the logo and colours, the menu, the header and footer, the contact details, the four branches and social links — then publish or unpublish</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="sitePill">—</span></div>
       </div>
 
       <div class="kgrid" id="siteKpis" style="margin-bottom:11px"></div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Website Logo and Branding</div>
-            <div class="panel-sub">Logo, wordmark variant, theme and accent — the preview beside it updates as you choose</div></div>
+          <div class="panel-head"><div><div class="panel-title">Logo, Branding and Theme</div>
+            <div class="panel-sub">Identity, typeface and the colour set the site is painted with</div></div>
             <span class="badge b-gray" id="themePill">—</span></div>
           <div id="brandBox"></div>
         </div>
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Website Preview</div>
-            <div class="panel-sub">Rendered from the live branding, navigation and homepage sections</div></div>
-            <button class="btn btn-ghost" id="previewOpen">Open full preview</button></div>
+            <div class="panel-sub">A live render of the homepage with the current branding</div></div>
+            <div class="sec-tools"><button class="btn btn-ghost" id="previewOpen">Open full preview</button></div></div>
           <div id="previewBox"></div>
         </div>
       </div>
 
-      <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Homepage Sections</div>
-          <div class="panel-sub">Turn a block on or off and it appears or disappears in the preview</div></div>
-          <span class="badge b-gray" id="secPill">—</span></div>
-        <div id="sectionList"></div>
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Homepage Sections</div>
+            <div class="panel-sub">Switch a block on or off, in the order it appears</div></div>
+            <span class="badge b-gray" id="secPill">—</span></div>
+          <div id="sectionList"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Navigation Menu</div>
+            <div class="panel-sub">Order, visibility, and the items that reach the site menu</div></div>
+            <span class="badge b-gray" id="navPill">—</span></div>
+          <div id="navList"></div>
+          <div class="form-grid" style="margin-top:8px">
+            <div class="fg"><label>New item label</label><input id="navAddLabel" placeholder="Branch locator" /></div>
+            <div class="fg"><label>Path</label><input id="navAddPath" placeholder="/branches" /></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-ghost" id="navAdd">Add menu item</button></div>
+        </div>
       </div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Navigation Menu Management</div>
-            <div class="panel-sub">Order, rename and hide the items in the public menu</div></div>
-            <span class="badge b-gray" id="navPill">—</span></div>
-          <div class="pagelist" id="navList"></div>
-          <div class="form-grid" style="margin-top:9px">
-            <div class="fg"><label>New menu item</label><input id="navAddLabel" placeholder="Branch locator" /></div>
-            <div class="fg"><label>Path</label><input id="navAddPath" placeholder="/branches" /></div>
-          </div>
-          <div class="form-actions"><button class="btn btn-ghost" id="navAdd">Add menu item</button>
-            <button class="btn btn-ghost" id="navReset">Restore default menu</button></div>
+          <div class="panel-head"><div><div class="panel-title">Contact Information</div>
+            <div class="panel-sub">What the site prints in the footer and on the contact page</div></div></div>
+          <div class="form-grid" id="contactBox"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="contactSave">Save contact details</button>
+            <button class="btn btn-ghost" id="contactReset">Reset to published</button></div>
+          <div class="qhint" id="contactMsg" style="margin-top:6px"></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Contact Information</div>
-            <div class="panel-sub">What the header, footer and contact page show</div></div></div>
-          <div class="form-grid" id="contactBox">
-            <div class="fg"><label>Phone</label><input id="ctPhone" /></div>
-            <div class="fg"><label>WhatsApp</label><input id="ctWhatsapp" /></div>
-            <div class="fg"><label>General email</label><input id="ctEmail" /></div>
-            <div class="fg"><label>Support email</label><input id="ctSupport" /></div>
-          </div>
-          <div class="fg" style="margin-top:8px"><label>Head office address</label><input id="ctAddress" /></div>
-          <div class="form-actions"><button class="btn btn-gold" id="contactSave">Save contact details</button>
-            <button class="btn btn-ghost" id="contactReset">Reset</button></div>
-          <div class="qhint" id="contactNote" style="margin-top:7px"></div>
+          <div class="panel-head"><div><div class="panel-title">Header, Footer and Social Links</div>
+            <div class="panel-sub">Layout choices and the accounts the footer points at</div></div>
+            <span class="badge b-gray" id="hfPill">—</span></div>
+          <div id="hfBox"></div>
+          <div id="socialList"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="socialSave">Save social links</button></div>
         </div>
       </div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Office Locations and Business Hours</div>
-          <div class="panel-sub">Four branches, their addresses, phone lines and opening hours</div></div></div>
+          <div class="panel-sub">Four branches, published from the branch register</div></div>
+          <span class="badge b-gray" id="officePill">—</span></div>
         <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="officeHead"></thead><tbody id="officeBody"></tbody></table></div>
       </div>
 
-      <div class="g2">
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Social Media Links</div>
-            <div class="panel-sub">Which channels the footer carries, and whether they resolve</div></div>
-            <span class="badge b-gray" id="socialPill">—</span></div>
-          <div id="socialList"></div>
-        </div>
-        <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Header and Footer Management</div>
-            <div class="panel-sub">Layout, contact strip and the regulator line</div></div></div>
-          <div id="hfBox"></div>
-        </div>
-      </div>
-
-      <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Publish and Unpublish Content</div>
-          <div class="panel-sub">Publishing pushes the current draft live; unpublishing leaves the site in maintenance mode</div></div>
-          <span class="badge b-ok" id="publishState">—</span></div>
-        <div class="pfields" id="publishBox"></div>
+      <div class="card panel" id="publishPanel">
+        <div class="panel-head"><div><div class="panel-title">Publish and Unpublish</div>
+          <div class="panel-sub">Take the site live, or hold it in maintenance while the content is finished</div></div>
+          <span class="badge b-ok" id="publishState">Live</span></div>
+        <div id="publishBox"></div>
         <div class="form-actions">
-          <button class="btn btn-gold" id="publishBtn">Publish to production</button>
+          <button class="btn btn-gold" id="publishBtn">Publish website</button>
           <button class="btn btn-ghost" id="unpublishBtn">Unpublish (maintenance mode)</button>
-          <button class="btn btn-ghost" id="cacheBtn">Purge CDN cache</button>
         </div>
+        <div class="qhint" id="publishMsg" style="margin-top:6px"></div>
       </div>
     </section>
 
@@ -266,49 +257,38 @@
       <div class="sec-head">
         <div class="sec-num">3</div>
         <div><h2>Website Content Management</h2>
-          <p>About us, services, products, rates, FAQ, announcements, blog, terms, privacy and help — each with an editor, an approval step and a history</p></div>
+          <p>About us, services, loan products and terms, interest rates, the FAQ, announcements, the blog, the legal pages and help content — with the approval and publishing history behind each one</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="contentPill">—</span></div>
       </div>
 
       <div class="kgrid" id="contentKpis" style="margin-bottom:11px"></div>
-      <div class="chartgrid" id="contentGrid"></div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Content Register</div>
-          <div class="panel-sub">Click any row to open the editor for that item</div></div>
-          <span class="badge b-gray" id="contentRowPill">—</span></div>
+          <div class="panel-sub">Every page and feed the site serves · click a row to open the editor</div></div>
+          <span class="badge b-gray" id="contentCount">—</span></div>
         <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="contentHead"></thead><tbody id="contentBody"></tbody></table></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Content Editor</div>
-            <div class="panel-sub">Edit the headline and summary, then save a draft or send it for approval</div></div>
-            <span class="badge b-gray" id="edState">—</span></div>
+            <div class="panel-sub">Edit the item, then save it as a draft or send it for approval</div></div>
+            <span class="badge b-gray" id="edPill">—</span></div>
           <div id="editorBox"></div>
-          <div class="form-grid" style="margin-top:9px">
-            <div class="fg"><label>Headline</label><input id="edTitle" /></div>
-            <div class="fg"><label>Summary</label><input id="edSummary" /></div>
-          </div>
-          <div class="fg" style="margin-top:8px"><label>Body (plain text, first 220 characters shown on the site)</label>
-            <textarea id="edBody" rows="4" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:8px;font:inherit;font-size:11px"></textarea></div>
-          <div class="form-actions">
-            <button class="btn btn-gold" id="edSave">Save draft</button>
-            <button class="btn btn-ghost" id="edReview">Send for approval</button>
-            <button class="btn btn-ghost" id="edPublish">Publish now</button>
-          </div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Content Approval and Publishing History</div>
-            <div class="panel-sub">Every edit, approval and publish, newest first</div></div></div>
-          <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="chHead"></thead><tbody id="chBody"></tbody></table></div>
+          <div class="panel-head"><div><div class="panel-title">Approval and Publishing History</div>
+            <div class="panel-sub">Who published what, and when</div></div>
+            <span class="badge b-gray" id="chPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="chHead"></thead><tbody id="chBody"></tbody></table></div>
         </div>
       </div>
 
       <div class="card panel">
-        <div class="panel-head"><div><div class="panel-title">Publishing Pipeline</div>
-          <div class="panel-sub">Where each content item stands between draft and live</div></div></div>
-        <div class="strip" id="pipelineBox"></div>
+        <div class="panel-head"><div><div class="panel-title">Content Coverage</div>
+          <div class="panel-sub">Words published by type, and the items waiting on review</div></div></div>
+        <div class="chartgrid" id="contentGrid"></div>
       </div>
     </section>
 
@@ -317,53 +297,57 @@
       <div class="sec-head">
         <div class="sec-num">4</div>
         <div><h2>Website Pages Management</h2>
-          <p>Page directory, visibility, access, ordering, metadata and the broken-link and availability checks that watch them</p></div>
+          <p>The page directory with visibility and access, the order of the site, metadata and SEO, broken links, and the errors each page is throwing</p></div>
         <div class="sec-tools"><span class="badge b-gray" id="pagePill">—</span></div>
       </div>
 
       <div class="kgrid" id="pageKpis" style="margin-bottom:11px"></div>
-      <div class="chartgrid" id="pageGrid"></div>
 
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Page Directory</div>
-          <div class="panel-sub">Change visibility or access straight from the row; click a row to edit its metadata</div></div>
-          <span class="badge b-gray" id="pageRowPill">—</span></div>
+          <div class="panel-sub">Every route the website serves · visibility and access can be changed in place</div></div>
+          <span class="badge b-gray" id="pageCount">—</span></div>
         <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="pageHead"></thead><tbody id="pageBody"></tbody></table></div>
+        <div class="g3" style="margin-top:9px">
+          <div class="fg"><label>New page title</label><input id="npTitle" placeholder="Branch locator" /></div>
+          <div class="fg"><label>Path</label><input id="npPath" placeholder="/branches/locator" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="npCreate" style="width:100%">Create page</button></div>
+        </div>
+        <div class="qhint" id="npMsg" style="margin-top:6px"></div>
       </div>
 
       <div class="g2">
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Page Ordering</div>
-            <div class="panel-sub">The order the navigation and sitemap use</div></div></div>
-          <div class="pagelist" id="orderList"></div>
+            <div class="panel-sub">The order the menu and sitemap use</div></div></div>
+          <div id="orderList"></div>
         </div>
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Create and Edit Pages</div>
-            <div class="panel-sub">Add a page; it starts as a draft with staff-only access</div></div></div>
-          <div class="form-grid">
-            <div class="fg"><label>Title</label><input id="npTitle" placeholder="Branch locator" /></div>
-            <div class="fg"><label>Path</label><input id="npPath" placeholder="/branches" /></div>
-          </div>
-          <div class="form-actions"><button class="btn btn-gold" id="npCreate">Create page</button></div>
-          <div class="qhint" id="npMsg" style="margin-top:6px"></div>
-          <div class="minihead" style="margin-top:10px">Page metadata and SEO</div>
-          <div id="seoBox"></div>
+          <div class="panel-head"><div><div class="panel-title">Broken Link Detection</div>
+            <div class="panel-sub">Checked every night; repair a link in place</div></div>
+            <span class="badge b-crit" id="linkPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="linkHead"></thead><tbody id="linkBody"></tbody></table></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="linkScan">Scan links now</button></div>
         </div>
       </div>
 
       <div class="g2">
         <div class="card panel">
-          <div class="panel-head"><div><div class="panel-title">Broken Links Detection</div>
-            <div class="panel-sub">Every internal link checked in the last crawl</div></div>
-            <span class="badge b-gray" id="linkPill">—</span>
-            <button class="btn btn-ghost" id="fixAllLinks">Fix every broken link</button></div>
-          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="linkHead"></thead><tbody id="linkBody"></tbody></table></div>
-        </div>
-        <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Page Availability and Error Monitoring</div>
-            <div class="panel-sub">Pages that returned an error or a missing asset</div></div>
-            <span class="badge b-gray" id="errPill">—</span></div>
+            <div class="panel-sub">Errors the site has thrown, by route</div></div>
+            <span class="badge b-gray" id="pgerrPill">—</span></div>
           <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="pgerrHead"></thead><tbody id="pgerrBody"></tbody></table></div>
         </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Metadata and SEO</div>
+            <div class="panel-sub">Titles, descriptions and the signals search engines read</div></div></div>
+          <div id="seoBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Page Traffic and Edits</div>
+          <div class="panel-sub">Where visitors go, and how often each page changes</div></div></div>
+        <div class="chartgrid" id="pageGrid"></div>
       </div>
     </section>
