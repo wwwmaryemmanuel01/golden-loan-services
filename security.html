@@ -3022,7 +3022,7 @@ const REVOCATIONS = [
 
 /* ---------------- roles and permissions ---------------- */
 const CAPS = ['View customer records', 'Approve loans', 'Release disbursements', 'Record repayments',
-  'Reverse payments', 'Export reports', 'Change settings', 'Manage staff accounts',
+  'Reverse payments', 'View and export reports', 'Change system settings', 'Manage staff accounts',
   'View audit logs', 'Manage permissions'];
 const ROLES = ['Super Admin', 'Administrator', 'Head of Credit', 'Credit Analyst', 'Loan Officer',
   'Cashier', 'Collections Officer', 'Customer Care', 'Auditor'];
@@ -3068,7 +3068,10 @@ const FIELD_CONTROLS = [
   {fieldName: 'Document images', control: 'Secure viewer — no download', viewer: 'Compliance, credit', status: 'Enforced'},
   {fieldName: 'Declared income', control: 'Hidden from non-credit roles', viewer: 'Credit only', status: 'Enforced'},
   {fieldName: 'Next of kin', control: 'Masked in exports', viewer: 'Compliance only', status: 'Enforced'},
-  {fieldName: 'Guarantor contacts', control: 'Visible with consent on file', viewer: 'Credit and collections', status: 'Advisory'}
+  {fieldName: 'Guarantor contacts', control: 'Visible with consent on file', viewer: 'Credit and collections', status: 'Advisory'},
+  {fieldName: 'Identity document scans (national ID, passport)', control: 'Encrypted at rest, signed URL only, watermarked viewer', viewer: 'Compliance and credit', status: 'Enforced'},
+  {fieldName: 'Loan agreements and appraisal files', control: 'Read-only after approval, edits leave a diff', viewer: 'Credit, compliance and audit', status: 'Enforced'},
+  {fieldName: 'Repayment receipts and mobile money references', control: 'Immutable once posted, reversal-only correction', viewer: 'Repayments, finance and audit', status: 'Enforced'}
 ];
 const EXPORT_CONTROLS = [
   {what: 'Customer list export', rule: 'Blocked for customer care', test: 'Denied for 3 roles', status: 'Pass'},
@@ -3252,7 +3255,9 @@ const DB_CONFIG = [
   {check: 'Point-in-time recovery', value: 'Enabled, 7-day window', status: 'Healthy'},
   {check: 'Public schema exposure', value: 'No public tables reachable without RLS', status: 'Healthy'},
   {check: 'Service role key in the client', value: 'Not present in any bundle', status: 'Healthy'},
-  {check: 'Anon key restrictions', value: 'RLS required on every table', status: 'Review'}
+  {check: 'Anon key restrictions', value: 'RLS required on every table', status: 'Review'},
+  {check: 'Auth configuration — JWT expiry, OTP length, redirect allow-list', value: 'Checked 30 Oct 2026, no default left in place', status: 'Healthy'},
+  {check: 'Database access monitoring (pgaudit)', value: 'On — every role change and DDL is logged', status: 'Healthy'}
 ];
 
 /* ---------------- application and API ---------------- */
@@ -3312,6 +3317,8 @@ const SECRETS = [
   {name: 'AIRTEL_MONEY_API_KEY', scope: 'server', storage: 'Secret store', rotated: addDays(TODAY, -72), cycle: 90, sealed: true, exposed: false},
   {name: 'TNM_MPAMBA_KEY', scope: 'server', storage: 'Secret store', rotated: addDays(TODAY, -96), cycle: 90, sealed: true, exposed: false},
   {name: 'SMTP_PASSWORD', scope: 'server', storage: 'Secret store', rotated: addDays(TODAY, -141), cycle: 90, sealed: true, exposed: true},
+  {name: 'AIRTEL_MONEY_HASH_KEY', scope: 'server', storage: 'Secret store — payment provider', rotated: addDays(TODAY, -50), cycle: 60, sealed: true, exposed: false},
+  {name: 'TNM_MPAMBA_WEBHOOK_SECRET', scope: 'server', storage: 'Secret store — payment provider', rotated: addDays(TODAY, -50), cycle: 60, sealed: true, exposed: false},
   {name: 'SENTRY_DSN', scope: 'client', storage: 'Browser bundle (safe by design)', rotated: addDays(TODAY, -200), cycle: 365, sealed: false, exposed: false}
 ];
 const SECRET_ACCESS = [
@@ -3375,6 +3382,7 @@ const BACKUP_SCHEDULE = [
   {job: 'Document bucket snapshot', when: '03:30 daily', retention: '30 days', offsite: 'Yes'}
 ];
 const DR_PLAN = [
+  {item: 'Recovery procedure', value: 'Snapshot restore → PITR replay → integrity check → reopen branches'},
   {item: 'Recovery time objective', value: '4 hours'},
   {item: 'Recovery point objective', value: '15 minutes'},
   {item: 'Restore order', value: 'Auth → customers → loans → repayments → documents'},
@@ -3459,7 +3467,7 @@ const INCIDENTS = [];
 
 /* ---------------- audit log ---------------- */
 const LOG_CATS = ['Login', 'Permissions', 'Data access', 'Approvals', 'Disbursement', 'Repayment',
-  'Reversal', 'Settings', 'Export', 'Failed access', 'Backup', 'Admin activity'];
+  'Reversal', 'Configuration change', 'Export', 'Failed access', 'Backup', 'Admin activity'];
 const SEC_EVENTS = [];
 for(let i = 0; i < 110; i++){
   const acct = ACCOUNTS[(i * 3) % ACCOUNTS.length];
@@ -3472,7 +3480,8 @@ for(let i = 0; i < 110; i++){
     target: cat === 'Approvals' ? 'LN-24' + pad(1 + (i % 77), 2)
       : cat === 'Data access' ? CUSTOMERS[(i * 5) % CUSTOMERS.length].id
       : cat === 'Export' ? 'REP-' + (2100 + i)
-      : cat === 'Settings' ? 'security.settings'
+      : cat === 'Configuration change' ? 'security.settings'
+      : cat === 'Admin activity' ? 'staff.roles'
       : cat === 'Backup' ? 'BKP-' + (8200 - (i % 12))
       : 'TXN-' + (91000 + i),
     detail: ['Session opened from a registered device', 'Role scope re-checked on the server',
@@ -3552,6 +3561,8 @@ const SEC_EVIDENCE = [
   {id: 'EVD-605', what: 'Restore drill log', for: 'RCT-311', added: addDays(TODAY, -12), by: 'STF-009'},
   {id: 'EVD-606', what: 'MFA enrolment screenshots', for: 'SF-304', added: addDays(TODAY, -5), by: 'STF-009'},
   {id: 'EVD-607', what: 'Backup integrity report (30 days)', for: 'BKP-8200', added: addDays(TODAY, -1), by: 'System'},
+  {id: 'EVD-608', what: 'Quarterly security review report — Q3 2026', for: 'SF-301', added: addDays(TODAY, -18), by: 'STF-009'},
+  {id: 'EVD-609', what: 'Board security review report pack', for: 'SF-306', added: addDays(TODAY, -44), by: 'STF-004'},
   {id: 'EVD-608', what: 'Data protection review notes', for: 'ASS-208', added: addDays(TODAY, -96), by: 'STF-003'}
 ];
 const SEC_TESTS = [
@@ -3566,7 +3577,9 @@ const SEC_TESTS = [
   {id: 'TST-509', area: 'Database', name: 'Service-role key exposure scan', ran: addDays(TODAY, -5), result: 'Pass', findings: 0},
   {id: 'TST-510', area: 'API', name: 'Rate-limit test on auth endpoints', ran: addDays(TODAY, -9), result: 'Pass', findings: 0},
   {id: 'TST-511', area: 'Dependencies', name: 'Client bundle dependency review', ran: addDays(TODAY, -11), result: '2 patches', findings: 2},
-  {id: 'TST-512', area: 'Configuration', name: 'Secret scan of logs and builds', ran: addDays(TODAY, -15), result: '1 finding', findings: 1}
+  {id: 'TST-512', area: 'Configuration', name: 'Secret scan of logs and builds', ran: addDays(TODAY, -15), result: '1 finding', findings: 1},
+  {id: 'TST-513', area: 'Authentication flow', name: 'MFA enrolment, challenge and session-expiry walkthrough', ran: addDays(TODAY, -2), result: 'Pass', findings: 0},
+  {id: 'TST-514', area: 'Authentication flow', name: 'Password reset and lockout bypass attempt', ran: addDays(TODAY, -7), result: '1 gap', findings: 1}
 ];
 const VULNS = [
   {id: 'VUL-701', title: 'Legacy export route accepts a bare token', area: 'API', severity: 'Critical', found: addDays(TODAY, -9), status: 'In remediation', owner: 'STF-009', fixed: ''},
@@ -4594,6 +4607,15 @@ function renderIncidents(){
   else el('awBody').innerHTML = '<div class="empty">No incidents match these filters.</div>';
 }
 
+const ALERT_CATEGORY = {
+  Access: 'Failed-login and unauthorised access alert',
+  Identity: 'Identity and account-takeover alert',
+  Data: 'Customer data access alert',
+  Financial: 'Financial security alert',
+  Infrastructure: 'Database and infrastructure alert',
+  Application: 'Application error and API alert'
+};
+
 function renderIncidentWorkspace(i){
   el('awSub').textContent = `${i.id} · ${i.lane} · raised ${fmtDate(i.opened)}`;
   el('awStatus').className = 'badge ' + statTone(i.status);
@@ -4612,6 +4634,7 @@ function renderIncidentWorkspace(i){
     <div class="pfields">
       ${field('Subject', esc(subject))}
       ${field('Area', esc(i.lane))}
+      ${field('Alert category', esc(ALERT_CATEGORY[i.lane] || 'Security alert'))}
       ${field('Severity', badge(i.severity, sevTone(i.severity)))}
       ${field('Owner', esc(staffName(i.owner)))}
       ${field('Raised', fmtDate(i.opened))}
@@ -5340,7 +5363,11 @@ function renderSettings(){
     ['Backup retention', SEC_SET.backupRetention + ' days nightly', 'Enforced'],
     ['Off-site copy', SEC_SET.offsite ? 'Yes' : 'No', SEC_SET.offsite ? 'Enforced' : 'Gap'],
     ['Incident escalation', 'Compliance officer after ' + SEC_SET.escalateHours + ' hours', 'Enforced'],
-    ['Session timeout', SEC_SET.session + ' minutes', 'Enforced']
+    ['Session timeout', SEC_SET.session + ' minutes', 'Enforced'],
+    ['Staff permission policy', 'Least privilege, role-based, reviewed each quarter', 'Enforced'],
+    ['Sensitive transaction authorisation', 'Two officers above MK ' + num(SEC_SET.alertAmount), 'Enforced'],
+    ['Alert threshold', 'Large movement over MK ' + num(SEC_SET.alertAmount) + ', export over ' + num(SEC_SET.alertExport) + ' rows', 'Enforced'],
+    ['Incident escalation rule', 'Critical → compliance officer, then branch manager at 4 hours', 'Enforced']
   ].map(([a, b, c]) => `<tr><td>${esc(a)}</td><td>${esc(b)}</td><td>${okBadge(c)}</td></tr>`).join('');
 
   renderTable('secHistBody', [
@@ -5380,7 +5407,7 @@ function toggleMfa(key){
 }
 function logSec(what){
   SEC_EVENTS.unshift({id: 'EVT-' + pad(5500 + SEC_EVENTS.length, 4), when: TODAY + ' 09:30',
-    category: 'Settings', who: 'STF-009', staff: 'Chikondi Mwale', role: 'Administrator',
+    category: 'Configuration change', who: 'STF-009', staff: 'Chikondi Mwale', role: 'Administrator',
     ip: '41.87.12.44', target: 'security.settings', detail: what, outcome: 'Success'});
   SEC_HISTORY.unshift({when: TODAY, who: 'Chikondi Mwale', what});
 }

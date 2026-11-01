@@ -563,7 +563,11 @@ function renderSettings(){
     ['Backup retention', SEC_SET.backupRetention + ' days nightly', 'Enforced'],
     ['Off-site copy', SEC_SET.offsite ? 'Yes' : 'No', SEC_SET.offsite ? 'Enforced' : 'Gap'],
     ['Incident escalation', 'Compliance officer after ' + SEC_SET.escalateHours + ' hours', 'Enforced'],
-    ['Session timeout', SEC_SET.session + ' minutes', 'Enforced']
+    ['Session timeout', SEC_SET.session + ' minutes', 'Enforced'],
+    ['Staff permission policy', 'Least privilege, role-based, reviewed each quarter', 'Enforced'],
+    ['Sensitive transaction authorisation', 'Two officers above MK ' + num(SEC_SET.alertAmount), 'Enforced'],
+    ['Alert threshold', 'Large movement over MK ' + num(SEC_SET.alertAmount) + ', export over ' + num(SEC_SET.alertExport) + ' rows', 'Enforced'],
+    ['Incident escalation rule', 'Critical → compliance officer, then branch manager at 4 hours', 'Enforced']
   ].map(([a, b, c]) => `<tr><td>${esc(a)}</td><td>${esc(b)}</td><td>${okBadge(c)}</td></tr>`).join('');
 
   renderTable('secHistBody', [
@@ -603,7 +607,7 @@ function toggleMfa(key){
 }
 function logSec(what){
   SEC_EVENTS.unshift({id: 'EVT-' + pad(5500 + SEC_EVENTS.length, 4), when: TODAY + ' 09:30',
-    category: 'Settings', who: 'STF-009', staff: 'Chikondi Mwale', role: 'Administrator',
+    category: 'Configuration change', who: 'STF-009', staff: 'Chikondi Mwale', role: 'Administrator',
     ip: '41.87.12.44', target: 'security.settings', detail: what, outcome: 'Success'});
   SEC_HISTORY.unshift({when: TODAY, who: 'Chikondi Mwale', what});
 }

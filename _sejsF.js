@@ -237,6 +237,15 @@ function renderIncidents(){
   else el('awBody').innerHTML = '<div class="empty">No incidents match these filters.</div>';
 }
 
+const ALERT_CATEGORY = {
+  Access: 'Failed-login and unauthorised access alert',
+  Identity: 'Identity and account-takeover alert',
+  Data: 'Customer data access alert',
+  Financial: 'Financial security alert',
+  Infrastructure: 'Database and infrastructure alert',
+  Application: 'Application error and API alert'
+};
+
 function renderIncidentWorkspace(i){
   el('awSub').textContent = `${i.id} · ${i.lane} · raised ${fmtDate(i.opened)}`;
   el('awStatus').className = 'badge ' + statTone(i.status);
@@ -255,6 +264,7 @@ function renderIncidentWorkspace(i){
     <div class="pfields">
       ${field('Subject', esc(subject))}
       ${field('Area', esc(i.lane))}
+      ${field('Alert category', esc(ALERT_CATEGORY[i.lane] || 'Security alert'))}
       ${field('Severity', badge(i.severity, sevTone(i.severity)))}
       ${field('Owner', esc(staffName(i.owner)))}
       ${field('Raised', fmtDate(i.opened))}
