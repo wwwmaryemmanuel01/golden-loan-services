@@ -1,0 +1,265 @@
+    <!-- ============ 5 · DOMAIN AND HOSTING CONNECTIONS ============ -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div class="sec-num">5</div>
+        <div><h2>Domain and Hosting Connections</h2>
+          <p>The domain, its DNS records, the SSL certificate, the hosting provider, the production website and every deployment that reached it</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="hostPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="hostKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="hostGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Website Domain Information</div>
+            <div class="panel-sub">Registrar, registration, expiry and nameservers</div></div>
+            <span class="badge b-ok" id="domainPill">—</span></div>
+          <div id="domainBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Custom Domain Configuration</div>
+            <div class="panel-sub">The hostnames that resolve to this deployment</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Primary domain</label><input id="cdPrimary" /></div>
+            <div class="fg"><label>Admin portal host</label><input id="cdAdmin" /></div>
+            <div class="fg"><label>API host</label><input id="cdApi" /></div>
+            <div class="fg"><label>Force HTTPS</label><select id="cdHttps"><option>On</option><option>Off</option></select></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-gold" id="cdSave">Save domain configuration</button>
+            <button class="btn btn-ghost" id="cdVerify">Verify DNS</button></div>
+          <div class="qhint" id="cdNote" style="margin-top:7px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">DNS Configuration Status</div>
+            <div class="panel-sub">Every record the site depends on</div></div>
+            <span class="badge b-gray" id="dnsPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dnsHead"></thead><tbody id="dnsBody"></tbody></table></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="dnsCheck">Re-check records</button></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">SSL/TLS Certificate Status</div>
+            <div class="panel-sub">Issuer, validity window, protocol and HSTS</div></div>
+            <span class="badge b-ok" id="sslPill">—</span></div>
+          <div id="sslBox"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="sslRenew">Renew certificate</button></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Hosting Provider Information</div>
+            <div class="panel-sub">Where the site is built and served from</div></div></div>
+          <div id="hostingBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deployment Status</div>
+            <div class="panel-sub">What is live right now, and what is queued</div></div>
+            <span class="badge b-ok" id="depPill">—</span></div>
+          <div id="deployBox"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="redeployBtn">Trigger a new build</button></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deployment History</div>
+          <div class="panel-sub">Every build, its environment and how it ended</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dep2Head"></thead><tbody id="dep2Body"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Website Availability Checks</div>
+          <div class="panel-sub">Fourteen days of monitor results, with downtime and incidents</div></div>
+          <span class="badge b-gray" id="availPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="availHead"></thead><tbody id="availBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · BACKEND SERVER CONNECTION ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div class="sec-num">6</div>
+        <div><h2>Backend Server Connection</h2>
+          <p>Whether the API is up, how each route responds, what it errors on, and how to restart it safely</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="bePill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="beKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Backend Connection Status</div>
+            <div class="panel-sub">Runtime, region, instances and what it is doing right now</div></div>
+            <span class="badge b-ok" id="beStatusPill">—</span></div>
+          <div id="beBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Server Health Check</div>
+            <div class="panel-sub">Eight checks against the live API</div></div>
+            <button class="btn btn-ghost" id="healthBtn">Run health check</button></div>
+          <div id="beHealth"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">API Endpoint Directory</div>
+          <div class="panel-sub">Every route, its auth, p95 latency and error count for the period</div></div>
+          <span class="badge b-gray" id="apiPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="apiHead"></thead><tbody id="apiBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">API Response Status and Traffic</div>
+          <div class="panel-sub">Volume and error count per hour, and how the routes are spread</div></div></div>
+        <div class="chartgrid" id="beGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Server Error Monitoring</div>
+            <div class="panel-sub">What the API returned that it should not have</div></div>
+            <span class="badge b-gray" id="sePill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="seHead"></thead><tbody id="seBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Request and Response Monitoring</div>
+            <div class="panel-sub">p50 and p95 against the timeout budget</div></div></div>
+          <div id="reqBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Server Environment Status</div>
+            <div class="panel-sub">CPU, memory, disk, cache and queue</div></div></div>
+          <div id="beEnv"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Server Restart and Recovery</div>
+            <div class="panel-sub">Restarts in the last thirty days, and how long recovery took</div></div>
+            <button class="btn btn-ghost" id="restartBtn">Request a restart</button></div>
+          <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="rsHead"></thead><tbody id="rsBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · SUPABASE DATABASE CONNECTION ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div class="sec-num">7</div>
+        <div><h2>Supabase Database Connection</h2>
+          <p>Project connectivity, table inventory, schema version, migrations, query errors, row-level security and function status</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="dbPill2">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="dbGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Supabase Project Connection</div>
+            <div class="panel-sub">Project, region, engine, pool and size</div></div>
+            <span class="badge b-ok" id="supaPill">—</span></div>
+          <div id="supaBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Health Checks</div>
+            <div class="panel-sub">Eight checks, including the RLS gap</div></div>
+            <button class="btn btn-ghost" id="dbCheck">Run database checks</button></div>
+          <div id="dbHealth"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Table and Schema Inventory</div>
+          <div class="panel-sub">Row counts, size, policy and the last write for every table</div></div>
+          <span class="badge b-gray" id="tblPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="tblHead"></thead><tbody id="tblBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Schema Version and Migration History</div>
+            <div class="panel-sub">What has been applied, and what was rolled back</div></div>
+            <span class="badge b-gray" id="migPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="migHead"></thead><tbody id="migBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Query Errors</div>
+            <div class="panel-sub">SQLSTATE, the message Postgres returned and how often</div></div>
+            <span class="badge b-gray" id="qePill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="qeHead"></thead><tbody id="qeBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Row-Level Security Status</div>
+            <div class="panel-sub">Every table, its policy and the one table still open</div></div>
+            <button class="btn btn-ghost" id="rlsFix">Close the open policy</button></div>
+          <div id="rlsBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Function Status</div>
+            <div class="panel-sub">Functions, their execution rights and how often they run</div></div></div>
+          <div class="tblwrap" style="max-height:270px"><table class="tbl2 dense"><thead id="fnHead"></thead><tbody id="fnBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Connection and Query Performance</div>
+          <div class="panel-sub">The ten heaviest queries, with average and p95 timings</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="qpHead"></thead><tbody id="qpBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · API AND SERVICE INTEGRATIONS ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div class="sec-num">8</div>
+        <div><h2>API and Service Integrations</h2>
+          <p>Every connected service — the REST API connections, the authentication service, the email service, the SMS service, the payment service and file storage — with its credentials and integration test results</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="intPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="intKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="intGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Service Groups</div>
+            <div class="panel-sub">Authentication, email, SMS, payments, storage and monitoring</div></div></div>
+          <div class="statusgrid" id="groupGrid"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Integration Test Results</div>
+            <div class="panel-sub">The last end-to-end call made to each service</div></div>
+            <button class="btn btn-ghost" id="runIntTests">Run all integration tests</button></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="itHead"></thead><tbody id="itBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Connected Services Directory</div>
+          <div class="panel-sub">Verify any service to re-check its connection and latency</div></div>
+          <span class="badge b-gray" id="svcPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="svcHead"></thead><tbody id="svcBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">API Credentials Status</div>
+            <div class="panel-sub">Rotation dates, expiry and what still works</div></div>
+            <span class="badge b-gray" id="credPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="credHead"></thead><tbody id="credBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Third-Party Service Status</div>
+            <div class="panel-sub">Uptime and latency for the services outside our own stack</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="tpiHead"></thead><tbody id="tpiBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>

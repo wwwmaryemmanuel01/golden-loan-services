@@ -350,6 +350,34 @@ secrets, compliance & privacy, security reports, testing & maintenance, and secu
   sensitive-transaction thresholds, alert thresholds, audit retention and escalation rules are
   editable, validated, saved and recorded in a configuration change history.
 
+## Website Management & Connections module
+
+`website.html` is the public-facing control room: **20 sections** — website overview, public
+website management, content management, pages, domain & hosting, backend server connection,
+Supabase database connection, API & service integrations, authentication connections,
+frontend–backend integration, forms & data connections, files & media, performance,
+connection diagnostics, deployment & versions, connection alerts, access & permissions,
+reports, system configuration, and change history.
+
+- **Connection score** — a weighted index (uptime, endpoint health, integration failures,
+  RLS coverage, open connection alerts, SSL days remaining, deploy success) that moves as you
+  act on the page.
+- **Live mutations** — publish and unpublish the site, purge the CDN cache, switch theme and
+  accent, toggle homepage sections, reorder/hide/add navigation items, save contact details,
+  edit and publish content, change page visibility and access, create pages, repair broken
+  links, acknowledge page errors, re-check DNS, renew the certificate, restart the backend,
+  fix RLS gaps, rotate API credentials, verify an integration, run an auth or frontend test,
+  submit a test form entry, restore or purge a missing file, run diagnostics, deploy to
+  staging or production, roll back a release, acknowledge alerts, toggle alert rules, grant
+  or withdraw role capabilities, and save or reset configuration.
+- **Eight reports** — availability, connection health, API performance, database connectivity,
+  authentication service, deployment, website errors and integration reliability — each with
+  an on-screen preview, CSV, Excel (xlsx) and print/PDF output, plus a combined pack.
+- **Filters drive all twenty sections at once** — date range, area, severity, state, owner and
+  free text, with removable chips and a live result summary.
+- **Audit trail that writes itself** — every mutation lands in Change History with the area,
+  previous value, new value and responsible officer.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -381,6 +409,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Charts & Analytics | `charts.html` | 15 · 78 charts |
 | Compliance & Intelligence | `compliance.html` | 15 · 26 charts · 9 reports |
 | Security & Protection | `security.html` | 18 · 30 charts · 10 reports |
+| Website Management & Connections | `website.html` | 20 · 39 charts · 8 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -402,6 +431,7 @@ analytics.html          Module 11 (built · 15 graphing sections)
 charts.html             Module 12 (built · 15 analytics sections)
 compliance.html         Module 13 (built · 15 compliance sections)
 security.html           Module 14 (built · 18 security sections)
+website.html            Module 15 (built · 20 website & connection sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -415,6 +445,7 @@ _audit.css              page CSS for Audit Logs
 _analytics.css          page CSS for Graphing & Tabulation
 _charts.css             page CSS for Charts & Analytics
 _compliance.css         page CSS for Compliance & Intelligence
+_website.css            page CSS for Website Management & Connections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -430,6 +461,7 @@ build-analytics.sh      rebuilds analytics.html from its partials
 build-charts.sh         rebuilds charts.html from its partials
 build-compliance.sh     rebuilds compliance.html from its partials
 build-security.sh       rebuilds security.html from its partials
+build-website.sh        rebuilds website.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -446,6 +478,7 @@ _anbodyA/B/C/D/E.html _anjsA/B/C/D/E.js graphing partials
 _chbodyA–E.html _chjsA–G.js  charts & analytics partials
 _cobodyA–D.html _cojsA–G.js  compliance & intelligence partials
 _sebodyA–E.html _sejsA–G.js  security & protection partials
+_wmbodyA–E.html _wmjsA–G.js  website & connections partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -466,6 +499,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-charts.sh         # charts.html
 ./build-compliance.sh     # compliance.html
 ./build-security.sh       # security.html
+./build-website.sh        # website.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

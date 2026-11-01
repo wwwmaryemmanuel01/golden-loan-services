@@ -399,6 +399,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.4"/></svg>
       Security &amp; Protection
     </a>
+    <a class="nav-item" data-page="website" href="website.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+      Website &amp; Connections
+    </a>
     <div class="nav-label">Communication</div>
     <a class="nav-item" data-page="notifications" href="#notifications">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
@@ -1772,6 +1776,7 @@ const pageMeta = {
   charts:{title:'Charts & Analytics', sub:'Portfolio, repayment, arrears and channel analytics'},
   compliance:{title:'Compliance & Intelligence', sub:'KYC, loan policy, transaction monitoring, fraud, cases and audit'},
   security:{title:'Security & Protection', sub:'Accounts, sessions, access control, data protection, backups and incidents'},
+  website:{title:'Website Management & Connections', sub:'Site availability, content, hosting, API connections, integrations, deployment and audit'},
   settings:{title:'Settings', sub:'Products, interest rates, fees and system rules'}
 };
 
@@ -1794,6 +1799,7 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     if(page === 'charts'){ window.location.href = 'charts.html'; return; }
     if(page === 'compliance'){ window.location.href = 'compliance.html'; return; }
     if(page === 'security'){ window.location.href = 'security.html'; return; }
+    if(page === 'website'){ window.location.href = 'website.html'; return; }
     const meta = pageMeta[page] || {title:page, sub:''};
     el('pageTitle').textContent = meta.title;
     el('pageSub').textContent = meta.sub;
