@@ -1,0 +1,98 @@
+
+    <!-- ============ 6 · CUSTOMER ANALYTICS ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div><h2>Customer Analytics</h2>
+          <p>Registration trends, activity, product spread, regional spread, repeat borrowing and how customers repay</p></div>
+      </div>
+
+      <div class="kgrid" id="cuKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="cuGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeat Borrowers</div>
+            <div class="panel-sub">Customers holding more than one facility — click a row to open the customer</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2 dense"><thead id="cuRepeatHead"></thead><tbody id="cuRepeatBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customers by Region</div>
+            <div class="panel-sub">Registered base, lending and arrears per branch region</div></div></div>
+          <div class="tblwrap" style="max-height:330px">
+            <table class="tbl2 dense"><thead><tr><th>Region</th><th class="num">Customers</th><th class="num">With loans</th><th class="num">Disbursed</th><th class="num">Arrears</th></tr></thead>
+              <tbody id="cuRegionBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · STAFF PERFORMANCE ANALYTICS ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div><h2>Staff Performance Analytics</h2>
+          <p>Applications processed, loans approved, payouts released, receipts recorded and collections per officer</p></div>
+      </div>
+
+      <div class="kgrid" id="sfKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="sfGrid"></div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Performance</div>
+            <div class="panel-sub">Volume, collections, timing and target achievement — click a row to filter to that officer</div></div></div>
+          <div class="tblwrap" style="max-height:340px">
+            <table class="tbl2 dense"><thead id="sfTableHead"></thead><tbody id="sfTableBody"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Outstanding Assigned Tasks</div>
+            <div class="panel-sub">Open work items by owner and priority</div></div>
+            <span class="badge b-gray" id="sfTaskCount">0</span></div>
+          <div class="tblwrap" style="max-height:340px"><div id="sfTasks"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · ARREARS & CREDIT RISK ANALYTICS ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div><h2>Arrears &amp; Credit Risk Analytics</h2>
+          <p>Overdue exposure by ageing bucket, portfolio at risk, default rate, recovery trend and the accounts to watch</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="arRiskPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="arKpis" style="margin-bottom:11px"></div>
+      <div class="note gold" id="arNote" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="arGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">High-Risk Loan Accounts</div>
+          <div class="panel-sub">Ranked by days past due, then arrears value — click a row to open the loan</div></div>
+          <span class="badge b-gray" id="arHighPill">0</span></div>
+        <div class="tblwrap" style="max-height:340px">
+          <table class="tbl2 dense"><thead id="arHighHead"></thead><tbody id="arHighBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9 · LOAN APPLICATION ANALYTICS ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div><h2>Loan Application Analytics</h2>
+          <p>Volume received, the review queue, approval and rejection rates, processing time and how the pipeline is spread</p></div>
+      </div>
+
+      <div class="kgrid" id="apKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="apGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Applications Awaiting Review</div>
+          <div class="panel-sub">Oldest first — click a row to open the application</div></div>
+          <span class="badge b-gray" id="apPendingPill">0</span></div>
+        <div class="tblwrap" style="max-height:320px">
+          <table class="tbl2 dense"><thead id="apPendingHead"></thead><tbody id="apPendingBody"></tbody></table>
+        </div>
+      </div>
+    </section>
