@@ -1,0 +1,131 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Charts &amp; Analytics</div>
+      <div class="page-sub" id="pageSub">Portfolio, repayment, arrears and channel analytics · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search loan, receipt, customer…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Data accuracy" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export data
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Financial</a>
+    <a class="snav" href="#s3">3 · Portfolio</a>
+    <a class="snav" href="#s4">4 · Repayment</a>
+    <a class="snav" href="#s5">5 · Disbursements</a>
+    <a class="snav" href="#s6">6 · Customers</a>
+    <a class="snav" href="#s7">7 · Staff</a>
+    <a class="snav" href="#s8">8 · Arrears &amp; Risk</a>
+    <a class="snav" href="#s9">9 · Applications</a>
+    <a class="snav" href="#s10">10 · Payment Methods</a>
+    <a class="snav" href="#s11">11 · Comparisons</a>
+    <a class="snav" href="#s12">12 · Charts</a>
+    <a class="snav" href="#s13">13 · Filters</a>
+    <a class="snav" href="#s14">14 · Reports</a>
+    <a class="snav" href="#s15">15 · Accuracy</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Charts &amp; analytics</h1>
+        <p>One read-only view of the book: every card, chart and table below is computed from the same loan, receipt, application and transaction records</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandLoans">0</b><span>Loans</span></div>
+        <div class="band-stat"><b id="bandDisbursed">0</b><span>Disbursed</span></div>
+        <div class="band-stat"><b id="bandCollected">0</b><span>Collected</span></div>
+        <div class="band-stat"><b id="bandOutstanding">0</b><span>Outstanding</span></div>
+        <div class="band-stat"><b id="bandArrears">0</b><span>Arrears</span></div>
+      </div>
+    </div>
+
+    <!-- ============ 1 · ANALYTICS OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div><h2>Analytics Overview</h2>
+          <p>Total loans, disbursed value, collections, outstanding balance, arrears, interest, active customers and the pending pipeline for the selected period</p></div>
+        <div class="sec-tools"><span class="qhint" id="ovStamp">Last refresh —</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Key Indicators</div>
+          <div class="panel-sub">Headline figures — each one ties to the section and table named beneath it</div></div></div>
+        <div class="kgrid" id="ovKpis"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Overall Portfolio Performance</div>
+          <div class="panel-sub">Collection strength, risk, approval quality and book utilisation combined into one score</div></div>
+          <span class="badge b-gray" id="ovScorePill">—</span></div>
+        <div class="g2">
+          <div class="meterrow" id="ovPerf"></div>
+          <div>
+            <div class="minihead">What the numbers say</div>
+            <div id="ovInsights"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Financial Performance Trends</div>
+          <div class="panel-sub">Disbursed against collected, by the period type chosen in section 13</div></div></div>
+        <div id="ovTrend"></div>
+        <div class="qhint" id="ovTrendNote"></div>
+      </div>
+
+      <div class="split">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Latest Receipts</div>
+            <div class="panel-sub">Newest payments posted to the book — click a row to open the receipt</div></div></div>
+          <div class="tblwrap" style="max-height:290px">
+            <table class="tbl2 dense"><thead><tr><th>Date</th><th>Receipt</th><th>Customer</th><th>Method</th><th class="num">Amount</th><th>Timing</th></tr></thead>
+              <tbody id="ovRecent"></tbody></table>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Worth a Look</div>
+            <div class="panel-sub">Items the figures flag for review</div></div>
+            <span class="badge b-gray" id="ovAttentionPill">0</span></div>
+          <div id="ovAttention"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · FINANCIAL PERFORMANCE CHARTS ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div><h2>Financial Performance Charts</h2>
+          <p>Disbursement and repayment flows, balances, income, penalties, cash flow and growth across the period</p></div>
+        <div class="sec-tools"><span class="qhint" id="fpGrainNote"></span></div>
+      </div>
+
+      <div class="chartgrid" id="fpGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Chart Totals</div>
+          <div class="panel-sub">The series the charts above are drawn from — the totals here are the totals up there</div></div></div>
+        <div class="tblwrap" style="max-height:330px">
+          <table class="tbl2 dense"><thead id="fpTableHead"></thead><tbody id="fpTableBody"></tbody><tfoot id="fpTableFoot"></tfoot></table>
+        </div>
+      </div>
+    </section>

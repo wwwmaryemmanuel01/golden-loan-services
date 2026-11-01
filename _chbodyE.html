@@ -1,0 +1,254 @@
+
+    <!-- ============ 13 · FILTERS & DATA EXPLORATION ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div><h2>Filters &amp; Data Exploration</h2>
+          <p>These controls drive every section above — change one and every card, chart and table follows</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="fltSummary">No filters</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Filter the Book</div>
+          <div class="panel-sub">Date range, period view, product, status, customer, staff, method, region and free-text search</div></div>
+          <button class="btn btn-gold" id="fltApply">Apply filters</button></div>
+
+        <div class="g3">
+          <div class="fgroup">
+            <div class="fh">Date range</div>
+            <div class="form-grid">
+              <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+              <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+            </div>
+            <div class="chips" id="fltPreset" style="margin-top:8px">
+              <span class="fchip" data-preset="7d">Last 7 days</span>
+              <span class="fchip" data-preset="30d">Last 30 days</span>
+              <span class="fchip" data-preset="qtd">Quarter to date</span>
+              <span class="fchip" data-preset="ytd">Year to date</span>
+              <span class="fchip" data-preset="12m">Last 12 months</span>
+              <span class="fchip" data-preset="all">All time</span>
+            </div>
+          </div>
+
+          <div class="fgroup">
+            <div class="fh">Period view</div>
+            <div class="chips" id="fltGrain">
+              <span class="fchip" data-grain="day">Daily</span>
+              <span class="fchip" data-grain="week">Weekly</span>
+              <span class="fchip on" data-grain="month">Monthly</span>
+              <span class="fchip" data-grain="year">Annual</span>
+            </div>
+            <div class="fh" style="margin-top:10px">Search</div>
+            <div class="fld" style="width:100%">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="fltSearch" placeholder="Loan, receipt or customer number…" autocomplete="off" style="width:100%" />
+            </div>
+            <div class="fh" style="margin-top:10px">Refresh</div>
+            <div class="form-actions" style="margin-top:0">
+              <button class="btn btn-ghost" id="refreshBtn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+                Refresh analytics
+              </button>
+            </div>
+            <div class="qhint" id="refreshStamp"></div>
+          </div>
+
+          <div class="fgroup">
+            <div class="fh">Dimensions</div>
+            <div class="form-grid">
+              <div class="fg"><label>Loan product</label><select id="fltProduct"></select></div>
+              <div class="fg"><label>Loan status</label><select id="fltStatus"></select></div>
+              <div class="fg"><label>Staff member</label><select id="fltStaff"></select></div>
+              <div class="fg"><label>Payment method</label><select id="fltMethod"></select></div>
+              <div class="fg"><label>Branch / region</label><select id="fltRegion"></select></div>
+              <div class="fg"><label>Customer</label><select id="fltCustomer"></select></div>
+            </div>
+            <div class="form-actions" style="margin-top:8px">
+              <button class="btn btn-ghost" id="fltReset">Clear all</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chips" id="fltChips" style="margin-top:10px"></div>
+        <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+        <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compare Selected Periods</div>
+          <div class="panel-sub">Set a second range and see the two windows side by side, independent of section 11</div></div></div>
+        <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+          <div class="fg"><label>First period from</label><input type="date" id="cmpFrom2" /></div>
+          <div class="fg"><label>First period to</label><input type="date" id="cmpTo2" /></div>
+          <div class="fg"><label>Second period from</label><input type="date" id="cmpFrom3" /></div>
+          <div class="fg"><label>Second period to</label><input type="date" id="cmpTo3" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="cmpPeriodBtn">Compare periods</button>
+          <button class="btn btn-ghost" id="cmpPeriodClear">Clear comparison</button>
+        </div>
+        <div id="cmpPeriodOut" style="margin-top:9px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Explore the Filtered Records</div>
+          <div class="panel-sub">Individual loans in the current selection — sort any column, page through, click a row to open it</div></div></div>
+        <div class="tblwrap" style="max-height:360px">
+          <table class="tbl2 dense"><thead id="fltTableHead"></thead><tbody id="fltTableBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · ANALYTICS REPORTS & EXPORTS ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div><h2>Analytics Reports &amp; Exports</h2>
+          <p>Seven ready reports, chart images, Excel, CSV and PDF — every export is logged with the filters it was run under</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="expCount">0</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Report Library</div>
+          <div class="panel-sub">Each report is built live from the current filters — preview it, then take it away</div></div></div>
+        <div class="repgrid" id="repCards"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Whole Analytics Pack</div>
+          <div class="panel-sub">All seven reports in one file, or the chart on screen as an image</div></div></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="packCsv">All reports · CSV</button>
+          <button class="btn btn-ghost" id="packXlsx">All reports · Excel</button>
+          <button class="btn btn-ghost" id="packPdf">All reports · PDF</button>
+          <button class="btn btn-ghost" id="packPrint">Print analytics</button>
+        </div>
+        <div class="form-actions" style="margin-top:8px">
+          <div class="fg" style="max-width:280px"><label>Chart to export as image</label>
+            <select id="expImgPick">
+              <option value="galChart">Chart builder (section 12)</option>
+              <option value="ovTrend">Portfolio performance trend (section 1)</option>
+              <option value="fpGrid">Financial charts (section 2)</option>
+              <option value="arGrid">Arrears and risk charts (section 8)</option>
+            </select></div>
+          <button class="btn btn-ghost" id="expImgBtn">Export image</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Export History</div>
+          <div class="panel-sub">Who exported what, when, and under which filters</div></div></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2 dense">
+            <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+            <tbody id="expHistoryBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · DATA ACCURACY & ANALYTICS SETTINGS ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div><h2>Data Accuracy &amp; Analytics Settings</h2>
+          <p>Chart totals checked against source records, calculation validation, data quality, display defaults and access</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="accPill">—</span></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Accuracy Checks</div>
+            <div class="panel-sub">Recalculated on every render, not cached</div></div>
+            <span class="badge b-ok" id="accScore">—</span></div>
+          <div id="accChecks"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Provenance</div>
+            <div class="panel-sub">Where these figures come from and how fresh they are</div></div></div>
+          <div class="pfields">
+            <div class="pfield"><div class="pk">Last refresh</div><div class="pv" id="accRefresh">—</div></div>
+            <div class="pfield"><div class="pk">Data source</div><div class="pv" id="accSource">—</div></div>
+            <div class="pfield"><div class="pk">Records in scope</div><div class="pv" id="accScope">—</div></div>
+            <div class="pfield"><div class="pk">Sensitive data</div><div class="pv" id="accSensitive">—</div></div>
+          </div>
+          <div class="minihead" style="margin-top:10px">Missing and duplicate records</div>
+          <div id="accMissing"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Figures Checked Against Source Records</div>
+          <div class="panel-sub">Each dashboard figure beside the record set it is built from — anything that disagrees is flagged</div></div></div>
+        <div class="tblwrap" style="max-height:320px">
+          <table class="tbl2 dense"><thead id="accTableHead"></thead><tbody id="accTableBody"></tbody></table>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Display &amp; Access Settings</div>
+          <div class="panel-sub">Formats, chart defaults, table sorting and who may see the sensitive figures</div></div>
+          <span class="badge b-ok" id="savestate">Saved</span></div>
+
+        <div class="g3">
+          <div>
+            <div class="minihead">Formats</div>
+            <div class="form-grid">
+              <div class="fg"><label>Currency display</label>
+                <select id="setCurrency"><option value="MK">MK 1,234,567</option><option value="MWK">MWK 1,234,567</option><option value="K">K 1,234,567</option></select></div>
+              <div class="fg"><label>Decimal precision</label>
+                <select id="setDecimals"><option value="0">0 places</option><option value="1">1 place</option><option value="2">2 places</option></select></div>
+              <div class="fg"><label>Number format</label>
+                <select id="setFormat"><option value="comma">1,234,567</option><option value="space">1 234 567</option><option value="dot">1.234.567</option></select></div>
+              <div class="fg"><label>Default date range</label>
+                <select id="setRange">
+                  <option value="30d">Last 30 days</option><option value="qtd">Quarter to date</option>
+                  <option value="ytd">Year to date</option><option value="12m" selected>Last 12 months</option>
+                  <option value="all">All time</option>
+                </select></div>
+              <div class="fg"><label>Default chart type</label>
+                <select id="setChartType"><option value="bar">Bar</option><option value="line">Line</option><option value="area">Area</option><option value="stacked">Stacked bar</option><option value="donut">Donut</option></select></div>
+              <div class="fg"><label>Default table sorting</label>
+                <select id="setSort">
+                  <option value="date:desc">Newest first</option><option value="date:asc">Oldest first</option>
+                  <option value="amount:desc">Largest amount first</option><option value="amount:asc">Smallest amount first</option>
+                </select></div>
+            </div>
+            <div class="fh" style="margin-top:10px">Chart display</div>
+            <div class="chips" id="setChartOpts">
+              <label class="fchip"><input type="checkbox" id="setGrid" checked /> Gridlines</label>
+              <label class="fchip"><input type="checkbox" id="setLegend" checked /> Legend</label>
+              <label class="fchip"><input type="checkbox" id="setValues" /> Value labels</label>
+            </div>
+            <div class="fh" style="margin-top:10px">Sensitive financial data</div>
+            <div class="chips">
+              <label class="fchip"><input type="checkbox" id="setSensitive" checked /> Show customer names and balances</label>
+            </div>
+            <div class="qhint" id="setPreview"></div>
+          </div>
+
+          <div style="grid-column:span 2">
+            <div class="minihead">Access permissions</div>
+            <div class="tblwrap"><table class="tbl2 dense">
+              <thead><tr><th>Role</th><th>Scope</th><th>View</th><th>Export</th><th>Configure</th><th>Sensitive figures</th></tr></thead>
+              <tbody id="setAccessBody"></tbody></table></div>
+            <div class="form-actions" style="margin-top:9px">
+              <button class="btn btn-gold" id="setSave">Save settings</button>
+              <button class="btn btn-ghost" id="setReset">Reset defaults</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

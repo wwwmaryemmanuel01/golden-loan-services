@@ -1,0 +1,121 @@
+
+    <!-- ============ 10 · PAYMENT METHOD ANALYTICS ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div><h2>Payment Method Analytics</h2>
+          <p>Airtel Money, TNM Mpamba, bank transfer and cash — who carries the money in and out, and what fails</p></div>
+      </div>
+
+      <div class="kgrid" id="pmKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="pmGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unreconciled Transactions</div>
+          <div class="panel-sub">Failed, reversed or unmatched entries that do not sit against a posted receipt or release</div></div>
+          <span class="badge b-gray" id="pmUnrecPill">0</span></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2 dense"><thead id="pmUnrecHead"></thead><tbody id="pmUnrecBody"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · COMPARISON & TREND ANALYSIS ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div><h2>Comparison &amp; Trend Analysis</h2>
+          <p>This period against the one before it, month-on-month and year-on-year growth, and performance against target</p></div>
+        <div class="sec-tools"><span class="qhint" id="cmpRange"></span></div>
+      </div>
+
+      <div class="kgrid" id="cmpKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="cmpGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Current vs Previous Period</div>
+            <div class="panel-sub">Equal-length window immediately before the current one</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Measure</th><th class="num">Current</th><th class="num">Previous</th><th class="num">Change</th><th class="num">Difference</th></tr></thead>
+            <tbody id="cmpBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Month-on-Month Growth</div>
+            <div class="panel-sub">Each month against the month before</div></div></div>
+          <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense"><thead id="momHead"></thead><tbody id="momBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Year-on-Year Growth</div>
+            <div class="panel-sub">The same month a year earlier</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Measure</th><th class="num">Last year</th><th class="num">This year</th><th class="num">Change</th></tr></thead>
+            <tbody id="yoyBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Performance Comparison</div>
+            <div class="panel-sub">Officers ranked on the value they brought in against what they released</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense">
+            <thead><tr><th>Officer</th><th class="num">Applications</th><th class="num">Released</th><th class="num">Collected</th><th class="num">Cover</th></tr></thead>
+            <tbody id="cmpStaffBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · INTERACTIVE CHARTS & VISUALIZATIONS ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div><h2>Interactive Charts &amp; Visualizations</h2>
+          <p>Line, bar, stacked bar, pie, donut and area charts, KPI cards, trend lines, hover tooltips and drill-down into the records</p></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Chart Builder</div>
+          <div class="panel-sub" id="galTitle">Disbursements · bar</div></div>
+          <div class="sec-tools">
+            <span class="fchip" id="galTrend">Trend line: off</span>
+            <button class="btn btn-ghost" id="galImg">Save as image</button>
+          </div></div>
+
+        <div class="fh" style="font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted-2);margin-bottom:6px">Measure</div>
+        <div class="chips" id="galMetric">
+          <span class="fchip on" data-met="disbursed">Disbursements</span>
+          <span class="fchip" data-met="collected">Collections</span>
+          <span class="fchip" data-met="loans">Loans issued</span>
+          <span class="fchip" data-met="outstanding">Outstanding</span>
+          <span class="fchip" data-met="interest">Interest collected</span>
+          <span class="fchip" data-met="fees">Fees &amp; penalties</span>
+          <span class="fchip" data-met="arrears">Arrears</span>
+          <span class="fchip" data-met="customers">New customers</span>
+          <span class="fchip" data-met="applications">Applications</span>
+        </div>
+
+        <div class="fh" style="font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted-2);margin:10px 0 6px">Chart type</div>
+        <div class="chips" id="galType">
+          <span class="fchip" data-type="line">Line</span>
+          <span class="fchip on" data-type="bar">Bar</span>
+          <span class="fchip" data-type="stacked">Stacked bar</span>
+          <span class="fchip" data-type="area">Area</span>
+          <span class="fchip" data-type="pie">Pie</span>
+          <span class="fchip" data-type="donut">Donut</span>
+        </div>
+
+        <div class="kgrid" id="galKpis" style="margin-top:11px"></div>
+        <div id="galChart" style="margin-top:6px"></div>
+        <div class="qhint" id="galHint"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Detailed Data Table</div>
+            <div class="panel-sub">The exact series behind the chart above</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="galTableHead"></thead><tbody id="galTableBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Drill Down</div>
+            <div class="panel-sub">Records behind the top period in the chart — click to open one</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="galDrillHead"></thead><tbody id="galDrillBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
