@@ -1,0 +1,194 @@
+<!-- ============ 13 · DATA BACKUP & RECOVERY ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div class="sec-num">13</div>
+        <div><h2>Data Backup &amp; Recovery</h2>
+          <p>Backup health, the schedule behind it, integrity checks, restore authorisation and the drills that prove a restore works</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="bkPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="bkKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="bkGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Backup Status</div>
+            <div class="panel-sub">Latest run, size, duration and where the copy sits</div></div>
+            <span class="badge b-gray" id="bkStatusPill">0</span></div>
+          <div id="bkStatusGrid"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Backup Schedule Configuration</div>
+            <div class="panel-sub">Runs, retention and the off-site copy</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="bkSchedHead"></thead><tbody id="bkSchedBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Backup History</div>
+            <div class="panel-sub">Fifteen runs, newest first</div></div></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="bkHistHead"></thead><tbody id="bkHistBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Backup Integrity Verification</div>
+            <div class="panel-sub">Checksum, decrypt and row-count tests on the copy</div></div>
+            <span class="badge b-gray" id="bkIntegPill">0</span></div>
+          <div id="bkIntegGrid"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recovery Testing History</div>
+            <div class="panel-sub">Restores actually performed, and how long they took</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rctHead"></thead><tbody id="rctBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Restoration Authorization</div>
+            <div class="panel-sub">Who asked, who approved, and what was restored</div></div>
+            <span class="badge b-gray" id="restorePill">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="restoreHead"></thead><tbody id="restoreBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disaster Recovery Plan</div>
+            <div class="panel-sub">Objectives and the order of restoration</div></div></div>
+          <div id="drGrid"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Loss Incident Records</div>
+            <div class="panel-sub">What was lost, how much, and whether it was recovered</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="lossHead"></thead><tbody id="lossBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recovery Activity Audit Trail</div>
+          <div class="panel-sub">Every backup, verification and restore attempt</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="bkAuditHead"></thead><tbody id="bkAuditBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · ENCRYPTION & SECRET MANAGEMENT ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div class="sec-num">14</div>
+        <div><h2>Encryption &amp; Secret Management</h2>
+          <p>TLS, hashing, environment variables, key rotation and every read of a secret</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="encPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="encKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">HTTPS / TLS Configuration</div>
+            <div class="panel-sub">Transport security as the edge presents it</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="tlsHead"></thead><tbody id="tlsBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Encryption and Hashing</div>
+            <div class="panel-sub">Passwords, tokens, documents and backups at rest</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="encBodyHead"></thead><tbody id="encBodyTable"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Server Environment Variables and API Credentials</div>
+          <div class="panel-sub">Scope, storage, last rotation and whether the value can reach a browser — rotate from the row</div></div>
+          <span class="badge b-gray" id="secretPill">0</span></div>
+        <div class="tblwrap" style="max-height:400px"><table class="tbl2 dense"><thead id="secretHead"></thead><tbody id="secretBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Secret Rotation Procedures</div>
+            <div class="panel-sub">Cadence, owner and what happens on rotation</div></div></div>
+          <div id="rotateGrid"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Secret Access Audit History</div>
+            <div class="panel-sub">Every read, rotation and exposure</div></div>
+            <span class="badge b-gray" id="secAccPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="secAccHead"></thead><tbody id="secAccBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Token Handling and Log Hygiene</div>
+          <div class="panel-sub">How tokens are issued, stored and kept out of logs</div></div></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="tokHead"></thead><tbody id="tokBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · SECURITY COMPLIANCE & PRIVACY ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div class="sec-num">15</div>
+        <div><h2>Security Compliance &amp; Privacy</h2>
+          <p>Policies, retention, assessments, findings, breaches, corrective actions and the evidence that proves each one</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="compPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="compKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="compGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Policy Management</div>
+          <div class="panel-sub">Owner, version, last review and whether it is due again</div></div>
+          <span class="badge b-gray" id="polPill">0</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="polHead"></thead><tbody id="polBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Privacy Controls</div>
+            <div class="panel-sub">What the platform does with customer data, by control</div></div></div>
+          <div id="privCtlGrid"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Retention Rules</div>
+            <div class="panel-sub">How long each record type is kept, and where</div></div>
+            <span class="badge b-gray" id="retPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="retHead9"></thead><tbody id="retBody9"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Security Assessment History</div>
+            <div class="panel-sub">Internal reviews, penetration tests and audits</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="assessHead"></thead><tbody id="assessBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Breach Documentation</div>
+            <div class="panel-sub">What happened, how many people, and who was told</div></div>
+            <span class="badge b-gray" id="breachPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="breachHead2"></thead><tbody id="breachBody2"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compliance Findings and Corrective Action Tracking</div>
+          <div class="panel-sub">Open a finding to record its corrective action or close it</div></div>
+          <span class="badge b-gray" id="secFindPill">0</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="secFindHead"></thead><tbody id="secFindBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Sensitive Data Access Reviews</div>
+            <div class="panel-sub">Quarterly reviews of who may read what</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="accRevHead"></thead><tbody id="accRevBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compliance Evidence Records</div>
+            <div class="panel-sub">The artefacts behind each finding and report</div></div>
+            <span class="badge b-gray" id="evidPill9">0</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="evidHead9"></thead><tbody id="evidBody9"></tbody></table></div>
+        </div>
+      </div>
+    </section>

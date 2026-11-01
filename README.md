@@ -322,6 +322,34 @@ Airtel Money / TNM Mpamba / bank / cash) and derives every register from it:
 - **Filters drive all fifteen sections at once** — date range, lane, severity, case state,
   owner, region, product and free text, with removable chips and a live result summary.
 
+## Security & Protection module
+
+`security.html` is the security control room: **18 sections** — security overview, staff
+account security, authentication, roles & access control, sessions & devices, customer data
+protection, financial transaction security, database & Supabase security, application & API
+security, fraud monitoring, alerts & incidents, audit logs, backup & recovery, encryption &
+secrets, compliance & privacy, security reports, testing & maintenance, and security settings.
+
+- **Security score** — a weighted index (account hygiene, failed sign-ins, open critical
+  incidents, MFA coverage, remediated vulnerabilities, RLS coverage, closed findings) that
+  moves as you act on the page.
+- **Live mutations** — lock, unlock, suspend, restore, deactivate and re-activate accounts,
+  force password resets, revoke one session or every session for an officer, approve payment
+  reversals and financial adjustments, progress data export/correction requests, rotate
+  secrets, remediate vulnerabilities and file/close incidents from the case workspace.
+- **Incident workspace** — assign a reviewer, add investigation notes and evidence, record
+  corrective actions, escalate and resolve; each change is written to the incident history
+  and to the section's audit rows.
+- **Filters drive all eighteen sections at once** — date range, lane, severity, state, owner,
+  region and free text, with removable chips and a live result summary.
+- **Ten security reports** — daily summary, failed logins, staff account security, privileged
+  access, suspicious activity, financial security incidents, database, API, backup and
+  incident resolution — each with an on-screen preview, CSV, Excel (xlsx) and print/PDF
+  output, plus a combined security pack.
+- **Settings that bite** — password rules, attempt limits, lockout, session timeout, MFA,
+  sensitive-transaction thresholds, alert thresholds, audit retention and escalation rules are
+  editable, validated, saved and recorded in a configuration change history.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -352,6 +380,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Graphing & Tabulation | `analytics.html` | 15 · 56 charts |
 | Charts & Analytics | `charts.html` | 15 · 78 charts |
 | Compliance & Intelligence | `compliance.html` | 15 · 26 charts · 9 reports |
+| Security & Protection | `security.html` | 18 · 30 charts · 10 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -372,6 +401,7 @@ audit.html              Module 10 (built · 18 audit sections)
 analytics.html          Module 11 (built · 15 graphing sections)
 charts.html             Module 12 (built · 15 analytics sections)
 compliance.html         Module 13 (built · 15 compliance sections)
+security.html           Module 14 (built · 18 security sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -399,6 +429,7 @@ build-audit.sh          rebuilds audit.html from its partials
 build-analytics.sh      rebuilds analytics.html from its partials
 build-charts.sh         rebuilds charts.html from its partials
 build-compliance.sh     rebuilds compliance.html from its partials
+build-security.sh       rebuilds security.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -414,6 +445,7 @@ _audbodyA/B/C/D.html _audjsA/B/C/D.js  audit partials
 _anbodyA/B/C/D/E.html _anjsA/B/C/D/E.js graphing partials
 _chbodyA–E.html _chjsA–G.js  charts & analytics partials
 _cobodyA–D.html _cojsA–G.js  compliance & intelligence partials
+_sebodyA–E.html _sejsA–G.js  security & protection partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -433,6 +465,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-analytics.sh      # analytics.html
 ./build-charts.sh         # charts.html
 ./build-compliance.sh     # compliance.html
+./build-security.sh       # security.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```
