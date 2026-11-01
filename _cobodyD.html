@@ -1,0 +1,292 @@
+
+    <!-- ============ 11 · COMPLIANCE REPORTS & ANALYTICS ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div><h2>Compliance Reports &amp; Analytics</h2>
+          <p>Nine standing reports, each built live from the current filters — preview, then take it away as PDF, Excel or CSV</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="expCount">0</span></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Report Library</div>
+          <div class="panel-sub">Row counts update as the filters change</div></div></div>
+        <div class="repgrid" id="repCards"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Whole Compliance Pack</div>
+          <div class="panel-sub">Every report in one file, or the chart on screen as an image</div></div></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="packCsv">All reports · CSV</button>
+          <button class="btn btn-ghost" id="packXlsx">All reports · Excel</button>
+          <button class="btn btn-ghost" id="packPdf">All reports · PDF</button>
+          <button class="btn btn-ghost" id="packPrint">Print pack</button>
+        </div>
+        <div class="form-actions" style="margin-top:8px">
+          <div class="fg" style="max-width:300px"><label>Chart to export as image</label>
+            <select id="expImgPick">
+              <option value="ovTrend">Compliance activity trend (section 1)</option>
+              <option value="kycGrid">Verification charts (section 2)</option>
+              <option value="txnGrid">Monitoring charts (section 4)</option>
+              <option value="riskGrid">Credit risk charts (section 6)</option>
+              <option value="intelGrid">Intelligence charts (section 14)</option>
+            </select></div>
+          <button class="btn btn-ghost" id="expImgBtn">Export image</button>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Export History</div>
+          <div class="panel-sub">Who took what, when, and under which filters</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense">
+          <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+          <tbody id="expHistoryBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · CUSTOMER DATA PROTECTION ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div><h2>Customer Data Protection</h2>
+          <p>Access to customer records, consent, correction and export requests, retention, secure documents and breach records</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="dpPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dpKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Data Access Monitoring</div>
+            <div class="panel-sub">Who looked at sensitive records, and whether they had a reason</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dpAccessHead"></thead><tbody id="dpAccessBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Sensitive Record Access Controls</div>
+            <div class="panel-sub">Which fields are masked, for whom, and why</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dpCtrlHead"></thead><tbody id="dpCtrlBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Privacy &amp; Consent Records</div>
+            <div class="panel-sub">Purpose, channel, state and when it expires</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="consentHead"></thead><tbody id="consentBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Correction &amp; Export Requests</div>
+            <div class="panel-sub">Customer rights requests and how long they have been open</div></div>
+            <span class="badge b-gray" id="dpReqPill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dpReqHead"></thead><tbody id="dpReqBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Retention Compliance</div>
+            <div class="panel-sub">Retention rule against the store that holds it</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="retRuleHead"></thead><tbody id="retRuleBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Data Breach Incident Records</div>
+            <div class="panel-sub">Notifiable incidents and the action taken</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="breachHead"></thead><tbody id="breachBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Secure Document Access &amp; Data Protection Review History</div>
+          <div class="panel-sub">Document downloads and the reviews that followed</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dpHistHead"></thead><tbody id="dpHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 13 · COMPLIANCE RULES & THRESHOLDS ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div><h2>Compliance Rules &amp; Thresholds</h2>
+          <p>The limits every test on this page runs against. Change one, save, and the findings across all fifteen sections recalculate</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="ruleState">Saved</span></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Monitoring Thresholds &amp; Limits</div>
+            <div class="panel-sub">Transaction, duplication, sign-in and exposure limits</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Large transaction threshold (MWK)</label><input type="number" id="ruleLarge" min="100000" step="100000" /></div>
+            <div class="fg"><label>Duplicate payment window (days)</label><input type="number" id="ruleDup" min="1" max="30" /></div>
+            <div class="fg"><label>Failed sign-ins before blocking</label><input type="number" id="ruleLogin" min="1" max="20" /></div>
+            <div class="fg"><label>Maximum single facility (MWK)</label><input type="number" id="ruleMaxLoan" min="100000" step="100000" /></div>
+            <div class="fg"><label>KYC refresh cycle (months)</label><input type="number" id="ruleKyc" min="1" max="60" /></div>
+            <div class="fg"><label>Escalation window (hours)</label><input type="number" id="ruleEsc" min="1" max="240" /></div>
+          </div>
+          <div class="form-actions" style="margin-top:9px">
+            <button class="btn btn-gold" id="ruleSave">Save thresholds</button>
+            <button class="btn btn-ghost" id="ruleReset">Reset defaults</button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval Authority Limits</div>
+            <div class="panel-sub">The most one officer may approve without a second signature</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Role</th><th class="num">May approve up to</th><th class="num">Facilities above</th></tr></thead>
+            <tbody id="authBody"></tbody></table></div>
+          <div class="minihead" style="margin-top:10px">Required verification rules</div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Rule</th><th>Applies to</th><th>State</th></tr></thead>
+            <tbody id="verifyRulesBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Risk Alert Conditions &amp; Detection Rules</div>
+            <div class="panel-sub">The conditions that raise an alert, and what they have caught</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="condHead"></thead><tbody id="condBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rule Change Approval</div>
+            <div class="panel-sub">Changes that need a second signature before they take effect</div></div>
+            <span class="badge b-gray" id="ruleQueuePill">0</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ruleQueueHead"></thead><tbody id="ruleQueueBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compliance Rule Audit Trail</div>
+          <div class="panel-sub">Every change to a rule, who made it and who approved it</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ruleHistHead"></thead><tbody id="ruleHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · INTELLIGENCE DASHBOARD ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div><h2>Intelligence Dashboard</h2>
+          <p>Where the risk is concentrated, what is trending the wrong way, and what management should do first</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="intelPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="intelKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="intelGrid"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">High-Risk Customer Accounts</div>
+            <div class="panel-sub">Customers combining exposure, arrears and repeated lateness</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="intelCustHead"></thead><tbody id="intelCustBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Access Risk Indicators</div>
+            <div class="panel-sub">Failed sign-ins, off-branch sessions and corrections</div></div></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="intelStaffHead"></thead><tbody id="intelStaffBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repeated Policy Exceptions</div>
+            <div class="panel-sub">The same rule broken more than once</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="intelExcHead"></thead><tbody id="intelExcBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unresolved Investigation Cases</div>
+            <div class="panel-sub">Oldest first, with the owner and days open</div></div></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="intelCaseHead"></thead><tbody id="intelCaseBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Priority Actions for Management</div>
+          <div class="panel-sub">Ranked from the score, the open cases and the regulatory position</div></div></div>
+        <div id="intelActions"></div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · COMPLIANCE SETTINGS & SECURITY ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div><h2>Compliance Settings &amp; Security</h2>
+          <p>Officer permissions, workflows, assignment rules, severity handling, retention and the configuration history</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="setState">Saved</span></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compliance Officer Permissions</div>
+            <div class="panel-sub">Who may see cases, take decisions and change the configuration</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Officer</th><th>Scope</th><th>View cases</th><th>Take decisions</th><th>Configure</th></tr></thead>
+            <tbody id="officerBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Compliance Review Workflows</div>
+            <div class="panel-sub">How each kind of decision gets made</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Workflow</th><th>Route</th><th>Sign-off</th><th>Active</th></tr></thead>
+            <tbody id="workflowBody"></tbody></table></div>
+          <div class="minihead" style="margin-top:10px">Case assignment rules</div>
+          <div class="chips" id="assignChips">
+            <span class="fchip" data-assign="round">Round-robin within the analyst pool</span>
+            <span class="fchip" data-assign="lane">By lane (KYC, transaction, access)</span>
+            <span class="fchip" data-assign="severity">Critical cases to the compliance officer</span>
+          </div>
+          <div class="qhint" id="assignNote"></div>
+        </div>
+      </div>
+
+      <div class="g3">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Alert Severity Levels</div>
+            <div class="panel-sub">How fast each level must move</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Level</th><th>Target</th><th>Escalates to</th></tr></thead>
+            <tbody id="severityBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Evidence Access Permissions</div>
+            <div class="panel-sub">Who may open or download case evidence</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Role</th><th>View</th><th>Download</th><th>Delete</th></tr></thead>
+            <tbody id="evidPermBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Investigation Retention &amp; Notifications</div>
+            <div class="panel-sub">How long records are kept and who is told</div></div></div>
+          <div class="tblwrap"><table class="tbl2 dense">
+            <thead><tr><th>Record</th><th>Kept for</th></tr></thead>
+            <tbody id="retentionBody"></tbody></table></div>
+          <div class="chips" id="notifyChips" style="margin-top:9px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Regulatory Requirement Configuration</div>
+          <div class="panel-sub">Which requirements are tracked, their owner and review cycle</div></div></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="regCfgHead"></thead><tbody id="regCfgBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Compliance Configuration History</div>
+          <div class="panel-sub">Every settings change, in order</div></div></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="cfgHead"></thead><tbody id="cfgBody"></tbody></table></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Title</h3><p id="modalSub">Subtitle</p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
