@@ -1,0 +1,236 @@
+    <!-- ============ 9 · TRANSACTION PROCESSING ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div><h2>Transaction Processing</h2>
+          <p>Pending, processing, completed, failed, rejected, cancelled and reversed transactions, reference search, receipt generation, status updates, duplicate prevention and the processing history</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="tpPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="tpKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Whole Register</div>
+          <div class="panel-sub">Filter by state, search any reference, then act on the selected transaction</div></div>
+          <span class="badge b-gray" id="tpCount">—</span></div>
+        <div class="chips" id="tpStatusChips" style="margin-bottom:9px"></div>
+        <div class="form-grid">
+          <div class="fg"><label>Reference search</label><input id="tpSearch" placeholder="DEP-005101, WDR-007101, MM-440118" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="tpSearchBtn" style="width:100%">Search the register</button></div>
+        </div>
+        <div id="tpSearchBox" style="margin-top:8px"></div>
+        <div class="tblwrap" style="max-height:420px;margin-top:8px"><table class="tbl2 dense"><thead id="tpHead"></thead><tbody id="tpBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Selected Transaction</div>
+            <div class="panel-sub">Its state, its provider response and the next step</div></div>
+            <span class="badge b-gray" id="tpSelPill">—</span></div>
+          <div id="tpDetailBox"></div>
+          <div class="form-grid" style="margin-top:8px">
+            <div class="fg"><label>Move it to</label><select id="tpStatusSel"></select></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="tpStatusBtn" style="width:100%">Update the status</button></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-gold" id="tpReceiptBtn">Generate a receipt</button></div>
+          <div id="tpReceiptBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Prevention and Processing History</div>
+            <div class="panel-sub">The reference window, and every status change made today</div></div>
+            <span class="badge b-gray" id="tpDupPill">—</span></div>
+          <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="tpDupHead"></thead><tbody id="tpDupBody"></tbody></table></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="tpDupBtn">Scan for duplicates</button></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="tpHistHead"></thead><tbody id="tpHistBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Volume by State</div>
+          <div class="panel-sub">Where the transactions sit, and what they are worth</div></div></div>
+        <div class="chartgrid" id="tpGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · BALANCE AND LEDGER MANAGEMENT ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div><h2>Balance and Ledger Management</h2>
+          <p>Opening and available balance, reserved withdrawal funds, confirmed deposits, completed withdrawals, how a pending transaction is treated, the ledger entries, debits and credits, recalculation, reconciliation and corrections</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="blPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="blKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Balance Composition</div>
+            <div class="panel-sub">Across every customer account</div></div>
+            <span class="badge b-gray" id="blCompPill">—</span></div>
+          <div id="blCompBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Pending Transaction Treatment</div>
+            <div class="panel-sub">What a pending deposit or withdrawal does to the balance</div></div>
+            <span class="badge b-gray" id="blPendPill">—</span></div>
+          <div id="blPendingBox"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="blRecalcBtn">Recalculate every balance</button>
+            <button class="btn btn-ghost" id="blReconBtn">Reconcile the ledger</button>
+          </div>
+          <div class="qhint" id="blMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Ledger Entries</div>
+          <div class="panel-sub">Every debit and credit, with the balance it left behind</div></div>
+          <span class="badge b-gray" id="blLedgerPill">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="blLedgerHead"></thead><tbody id="blLedgerBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Balance Discrepancy Alerts</div>
+            <div class="panel-sub">Where the ledger and the stored balance disagree</div></div>
+            <span class="badge b-crit" id="blDiscPill">—</span></div>
+          <div id="blDiscBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Correction and Adjustment Records</div>
+            <div class="panel-sub">A correction writes a ledger entry, never an edit</div></div>
+            <span class="badge b-gray" id="blCorrPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Account</label><select id="blCorrAcct"></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="blCorrAmount" type="number" step="100" placeholder="Use a minus to debit" /></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Reason</label><input id="blCorrReason" placeholder="Rounding, duplicated fee, timing…" /></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="blCorrBtn">Post the adjustment</button></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="blCorrHead"></thead><tbody id="blCorrBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · LIMITS AND FEES ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div><h2>Limits and Fees</h2>
+          <p>The minimum and maximum deposit and withdrawal, the daily and per-customer limits, the method ceilings, deposit and withdrawal fees, who pays them, how a fee is worked out and every change with its date</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="lfPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="lfKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Limits and Fees by Method</div>
+          <div class="panel-sub">Deposit and withdrawal ceilings sit beside the fees</div></div>
+          <span class="badge b-gray" id="lfCount">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="lfHead"></thead><tbody id="lfBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="lfSaveBtn">Save the limit and fee changes</button></div>
+        <div class="qhint" id="lfMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Daily Limit Consumption</div>
+            <div class="panel-sub">What has gone through today against the ceiling</div></div>
+            <span class="badge b-gray" id="lfDailyPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="lfDailyHead"></thead><tbody id="lfDailyBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fee Calculation</div>
+            <div class="panel-sub">Work out what a deposit or a payout would cost</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Movement</label><select id="lfCalcType"><option>Deposit</option><option>Withdrawal</option></select></div>
+            <div class="fg"><label>Method</label><select id="lfCalcMethod"></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="lfCalcAmount" type="number" step="500" value="200000" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="lfCalcBtn" style="width:100%">Calculate the fee</button></div>
+          </div>
+          <div id="lfCalcBox" style="margin-top:8px"></div>
+          <div id="lfRuleBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Per-Customer Limits</div>
+            <div class="panel-sub">The customers closest to their ceiling today</div></div>
+            <span class="badge b-gray" id="lfCustPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="lfCustHead"></thead><tbody id="lfCustBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Limits and Fee Change History</div>
+            <div class="panel-sub">Every change with the date it took effect</div></div>
+            <span class="badge b-gray" id="lfHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="lfHistHead"></thead><tbody id="lfHistBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fees Collected</div>
+          <div class="panel-sub">Deposit and withdrawal fees, by method and by who paid</div></div></div>
+        <div class="chartgrid" id="lfGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · REFUNDS AND REVERSALS ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div><h2>Refunds and Reversals</h2>
+          <p>Deposit and withdrawal reversal requests, duplicate deposits, failed payout recovery, eligibility, the approval workflow, the opposite ledger entry, the provider reconciliation, the customer notice and the audit trail</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="rrPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="rrKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reversal and Refund Requests</div>
+          <div class="panel-sub">Approve, post or reject a request — the ledger and the account move with it</div></div>
+          <span class="badge b-gray" id="rrReqPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="rrReqHead"></thead><tbody id="rrReqBody"></tbody></table></div>
+        <div class="qhint" id="rrMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Deposits and Failed Payouts</div>
+            <div class="panel-sub">What needs a decision, and what has already been recovered</div></div>
+            <span class="badge b-gray" id="rrDupPill">—</span></div>
+          <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="rrDupHead"></thead><tbody id="rrDupBody"></tbody></table></div>
+          <div class="tblwrap" style="max-height:230px;margin-top:8px"><table class="tbl2 dense"><thead id="rrFailHead"></thead><tbody id="rrFailBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Eligibility and Approval Workflow</div>
+            <div class="panel-sub">What may be reversed, and who signs it</div></div>
+            <span class="badge b-gray" id="rrEligPill">—</span></div>
+          <div id="rrEligBox"></div>
+          <div id="rrFlowBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Correct Ledger Reversal Entries</div>
+            <div class="panel-sub">Every reversal writes the opposite entry</div></div>
+            <span class="badge b-gray" id="rrLedgerPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rrLedgerHead"></thead><tbody id="rrLedgerBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider and Database Reconciliation</div>
+            <div class="panel-sub">The provider record against ours, and the customer notice</div></div>
+            <span class="badge b-gray" id="rrReconPill">—</span></div>
+          <div id="rrReconBox"></div>
+          <div id="rrNotifyBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reversal Audit Trail</div>
+          <div class="panel-sub">Every request, decision and posting</div></div>
+          <span class="badge b-gray" id="rrAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="rrAuditHead"></thead><tbody id="rrAuditBody"></tbody></table></div>
+      </div>
+    </section>
