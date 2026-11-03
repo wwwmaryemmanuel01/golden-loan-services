@@ -401,7 +401,7 @@ function renderReports(){
   if(el('rpAuthHead')) el('rpAuthHead').innerHTML = '<tr><th>Report</th><th>Allowed format</th><th>Authorised by</th><th>Last run</th><th>State</th></tr>';
   if(el('rpAuthBody')) el('rpAuthBody').innerHTML = SV_REPORTS.slice(0, 8).map((r, i) => `<tr>
       <td>${esc(r.title)}</td><td>CSV, Excel, PDF</td><td>${esc(staffName(i % 2 ? 'STF-009' : 'STF-001'))}</td>
-      <td>${esc(EXPORTS[i] ? EXPORTS[i].when : 'Not run')}</td><td>${okb('Authorised')}</td></tr>`).join('');
+      <td>${esc(EXPORTS[i] ? svWhen(EXPORTS[i].when) : 'Not run')}</td><td>${okb('Authorised')}</td></tr>`).join('');
   if(el('rpAuthMsg') && !String(el('rpAuthMsg').textContent || '').trim())
     el('rpAuthMsg').textContent = 'Every export writes a row into the generation history below, with your name and the filters.';
 

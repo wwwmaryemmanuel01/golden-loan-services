@@ -3758,7 +3758,7 @@ const FAILED_REQUESTS = [
   {when: addDays(TODAY, -3) + ' 15:32', origin: 'Customer portal', path: '/api/payments', code: '409', count: 3, status: 'Resolved', lane: 'Backend', severity: 'Low', owner: 'STF-001', region: 'Lilongwe'}
 ];
 const FE_ERRORS = [
-  {when: TODAY + ' 07:44', page: '/apply', error: 'TypeError: cannot read properties of undefined (reading “phone”)', count: 4, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
+  {when: TODAY + ' 07:44', page: '/apply', error: 'Script error while reading the contact phone field', count: 4, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
   {when: TODAY + ' 06:58', page: '/calculator', error: 'Chunk load failed for calculator widget', count: 9, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
   {when: addDays(TODAY, -1) + ' 20:10', page: '/blog', error: 'Hydration mismatch on the post list', count: 2, severity: 'Medium', status: 'Monitoring', lane: 'Website', owner: 'STF-005', region: 'Blantyre'},
   {when: addDays(TODAY, -2) + ' 11:25', page: '/', error: 'Console warning: missing alt text on two images', count: 1, severity: 'Low', status: 'Resolved', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
@@ -6918,9 +6918,12 @@ function publishSite(on){
     if (!table || table.getAttribute('data-nosheet') !== null) return;
     if (modalOpen()) return;
     var before = document.body.textContent.length;
+    var clickedAt = Date.now();
     setTimeout(function(){
       if (modalOpen()) return;                        /* the module opened its own sheet */
-      if (!closeEnough(before, document.body.textContent.length)) return;  /* a panel updated */
+      /* a date sweep landing inside the window changes lengths by itself */
+      var sweepRan = lastSweep > clickedAt;
+      if (!sweepRan && !closeEnough(before, document.body.textContent.length)) return;  /* a panel updated */
       var sheet = null;
       try { sheet = sheetFromRow(tr); } catch(err){ sheet = null; }
       if (!sheet) return;
@@ -6929,8 +6932,61 @@ function publishSite(on){
     }, 60);
   }, false);
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ watch(0); });
-  else watch(0);
+  /* ---- 3. table cells print dates as dates, not as 2026-10-30 08:12 ---- */
+  var ISO_CELL = /^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/;
+
+  function fixCells(root){
+    if (!root || root.nodeType !== 1) return;
+    var cells;
+    if (root.matches && root.matches('td,th')) cells = [root];
+    else if (root.querySelectorAll) cells = root.querySelectorAll('td,th');
+    else return;
+    for (var i = 0; i < cells.length; i++){
+      var td = cells[i];
+      if (td.children.length) continue;            /* keep badges and links intact */
+      var t = td.textContent.trim();
+      if (t.length > 16 || !ISO_CELL.test(t)) continue;
+      td.textContent = dateText(t);
+    }
+  }
+
+  var pending = false;
+  var lastSweep = 0;
+  function sweep(){
+    pending = false;
+    try { fixCells(document.body); } catch(e){}
+    lastSweep = Date.now();
+  }
+  function queueSweep(){
+    if (pending) return;
+    pending = true;
+    if (window.requestAnimationFrame) requestAnimationFrame(sweep);
+    else setTimeout(sweep, 40);
+  }
+
+  function watchTables(){
+    try {
+      var mo = new MutationObserver(function(list){
+        for (var i = 0; i < list.length; i++){
+          var added = list[i].addedNodes;
+          for (var j = 0; j < added.length; j++){
+            var n = added[j];
+            if (n.nodeType === 1 && (n.tagName === 'TR' || n.tagName === 'TD' || n.tagName === 'TD' || n.tagName === 'TABLE')) {
+              queueSweep(); return;
+            }
+          }
+          if (list[i].type === 'characterData'){ queueSweep(); return; }
+        }
+      });
+      mo.observe(document.body, {childList: true, subtree: true, characterData: true});
+    } catch(e){}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ watch(0); queueSweep(); watchTables(); });
+  } else {
+    watch(0); queueSweep(); watchTables();
+  }
 })();
 
 </script>

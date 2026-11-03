@@ -3171,6 +3171,23 @@ function countBy(items, dateOf){
 
 /* ---------------- sortable, paginated tables ---------------- */
 const TBL = {}, TBL_CFG = {}, STORE_ROWS = {};
+/* a plain column still reads properly: dates as dates, months as months */
+function svCell(col, v){
+  if(v === null || v === undefined || v === '') return '<span class="muted">—</span>';
+  const s = String(v);
+  if(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(s)) return esc(svDateText(s));
+  if(/^(month|period)$/i.test(col.k) && /^\d{4}-\d{2}$/.test(s)) return esc(monthLabel(s));
+  if(/^yes$|^no$/i.test(s) && /verified|approved|restricted|flagged/i.test(col.k)) return badge(s, /^yes$/i.test(s) ? 'b-ok' : 'b-gray');
+  return esc(s);
+}
+/* a column that prints its value raw still gets a readable date */
+function svCellHtml(col, row){
+  const html = col.html ? String(col.html(row[col.k], row)) : svCell(col, row[col.k]);
+  const t = html.trim();
+  if(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(t)) return esc(svDateText(t));
+  if(/^<span[^>]*>\s*\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?\s*<\/span>$/.test(t)) return esc(svDateText(t.replace(/<[^>]+>/g, '').trim()));
+  return html;
+}
 function renderTable(hostId, cols, rows, opts = {}){
   const st = TBL[hostId] = TBL[hostId] || {sort: opts.sort || (cols.find(c => c.num) || cols[0]).k,
     dir: opts.dir || 'desc', page: 1};
@@ -3193,7 +3210,7 @@ function renderTable(hostId, cols, rows, opts = {}){
   const body = slice.map((r, i) => {
     const idx = (st.page - 1) * pageSize + i;
     return `<tr${clickable ? ` class="rowlink" data-tblrow="${hostId}" data-i="${idx}"` : ''}>`
-      + cols.map(c => `<td${c.num ? ' class="num"' : ''}>${c.html ? c.html(r[c.k], r) : esc(r[c.k])}</td>`).join('')
+      + cols.map(c => `<td${c.num ? ' class="num"' : ''}>${svCellHtml(c, r)}</td>`).join('')
       + '</tr>';
   }).join('') || `<tr><td colspan="${cols.length}" class="empty">Nothing matches the current filters.</td></tr>`;
   const host = el(hostId);
@@ -3424,7 +3441,7 @@ function renderExportHistory(){
   if(count) count.textContent = EXPORTS.length;
   if(!body) return;
   body.innerHTML = EXPORTS.slice(0, 12).map((x, i) => `<tr class="rowlink" data-exp="${i}">
-    <td style="white-space:nowrap">${esc(x.when)}</td><td>${esc(x.report)}</td><td>${x.format}</td>
+    <td style="white-space:nowrap">${esc(svWhen(x.when))}</td><td>${esc(x.report)}</td><td>${x.format}</td>
     <td class="num">${num(x.rows)}</td><td>${esc(x.by)}</td><td style="font-size:9.5px">${esc(x.filters)}</td></tr>`).join('')
     || '<tr><td colspan="6" class="empty">No exports yet — generate a report below.</td></tr>';
 }
@@ -4527,7 +4544,8 @@ const SV_SEV = s => s === 'Critical' || s === 'High' ? 'b-crit' : s === 'Medium'
 const put = (id, html) => { const n = el(id); if(n) n.innerHTML = html; };
 const svM = v => 'MK ' + num(Math.round(Number(v) || 0));
 const svIsos = v => String(v == null ? '' : v).slice(0, 10);
-const svWhen = v => String(v == null ? '' : v).slice(0, 16);
+/* a timestamp reads as a date and time everywhere it is printed */
+const svWhen = v => v == null || v === '' ? '' : svDateText(String(v).slice(0, 16));
 const svNow = () => new Date().toTimeString().slice(0, 5);
 const SV_AUDIT_LOG = [];
 const SV_ACC_HISTORY = [];
@@ -6442,7 +6460,7 @@ function renderReports(){
   if(el('rpAuthHead')) el('rpAuthHead').innerHTML = '<tr><th>Report</th><th>Allowed format</th><th>Authorised by</th><th>Last run</th><th>State</th></tr>';
   if(el('rpAuthBody')) el('rpAuthBody').innerHTML = SV_REPORTS.slice(0, 8).map((r, i) => `<tr>
       <td>${esc(r.title)}</td><td>CSV, Excel, PDF</td><td>${esc(staffName(i % 2 ? 'STF-009' : 'STF-001'))}</td>
-      <td>${esc(EXPORTS[i] ? EXPORTS[i].when : 'Not run')}</td><td>${okb('Authorised')}</td></tr>`).join('');
+      <td>${esc(EXPORTS[i] ? svWhen(EXPORTS[i].when) : 'Not run')}</td><td>${okb('Authorised')}</td></tr>`).join('');
   if(el('rpAuthMsg') && !String(el('rpAuthMsg').textContent || '').trim())
     el('rpAuthMsg').textContent = 'Every export writes a row into the generation history below, with your name and the filters.';
 
@@ -7984,9 +8002,12 @@ window.SAVINGS_APP = {
     if (!table || table.getAttribute('data-nosheet') !== null) return;
     if (modalOpen()) return;
     var before = document.body.textContent.length;
+    var clickedAt = Date.now();
     setTimeout(function(){
       if (modalOpen()) return;                        /* the module opened its own sheet */
-      if (!closeEnough(before, document.body.textContent.length)) return;  /* a panel updated */
+      /* a date sweep landing inside the window changes lengths by itself */
+      var sweepRan = lastSweep > clickedAt;
+      if (!sweepRan && !closeEnough(before, document.body.textContent.length)) return;  /* a panel updated */
       var sheet = null;
       try { sheet = sheetFromRow(tr); } catch(err){ sheet = null; }
       if (!sheet) return;
@@ -7995,8 +8016,61 @@ window.SAVINGS_APP = {
     }, 60);
   }, false);
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ watch(0); });
-  else watch(0);
+  /* ---- 3. table cells print dates as dates, not as 2026-10-30 08:12 ---- */
+  var ISO_CELL = /^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/;
+
+  function fixCells(root){
+    if (!root || root.nodeType !== 1) return;
+    var cells;
+    if (root.matches && root.matches('td,th')) cells = [root];
+    else if (root.querySelectorAll) cells = root.querySelectorAll('td,th');
+    else return;
+    for (var i = 0; i < cells.length; i++){
+      var td = cells[i];
+      if (td.children.length) continue;            /* keep badges and links intact */
+      var t = td.textContent.trim();
+      if (t.length > 16 || !ISO_CELL.test(t)) continue;
+      td.textContent = dateText(t);
+    }
+  }
+
+  var pending = false;
+  var lastSweep = 0;
+  function sweep(){
+    pending = false;
+    try { fixCells(document.body); } catch(e){}
+    lastSweep = Date.now();
+  }
+  function queueSweep(){
+    if (pending) return;
+    pending = true;
+    if (window.requestAnimationFrame) requestAnimationFrame(sweep);
+    else setTimeout(sweep, 40);
+  }
+
+  function watchTables(){
+    try {
+      var mo = new MutationObserver(function(list){
+        for (var i = 0; i < list.length; i++){
+          var added = list[i].addedNodes;
+          for (var j = 0; j < added.length; j++){
+            var n = added[j];
+            if (n.nodeType === 1 && (n.tagName === 'TR' || n.tagName === 'TD' || n.tagName === 'TD' || n.tagName === 'TABLE')) {
+              queueSweep(); return;
+            }
+          }
+          if (list[i].type === 'characterData'){ queueSweep(); return; }
+        }
+      });
+      mo.observe(document.body, {childList: true, subtree: true, characterData: true});
+    } catch(e){}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ watch(0); queueSweep(); watchTables(); });
+  } else {
+    watch(0); queueSweep(); watchTables();
+  }
 })();
 
 </script>
