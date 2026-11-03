@@ -1,0 +1,301 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Data Recovery, Backup &amp; Factory Reset</div>
+      <div class="page-sub">Backups, verified recovery points, safe reset modes and the audit trail behind them · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a backup, a job, an operator…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="exportBtn">Export CSV</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-ghost" id="bellBtn" aria-label="Alerts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Backups</a>
+    <a class="snav" href="#s2">2 · Schedule &amp; retention</a>
+    <a class="snav" href="#s3">3 · Recovery</a>
+    <a class="snav" href="#s4">4 · System backup</a>
+    <a class="snav" href="#s5">5 · Reset modes</a>
+    <a class="snav" href="#s6">6 · Reset protection</a>
+    <a class="snav" href="#s7">7 · Disaster scenarios</a>
+    <a class="snav" href="#s8">8 · Testing &amp; health</a>
+    <a class="snav" href="#s9">9 · Access control</a>
+    <a class="snav" href="#s10">10 · Admin dashboard</a>
+    <a class="snav" href="#s11">11 · Supabase &amp; hosting</a>
+    <a class="snav" href="#s12">12 · Implementation order</a>
+  </nav>
+
+  <div class="modband">
+    <div>
+      <h1>Recover without gambling the ledger</h1>
+      <p>What is backed up, where the recovery points sit, what each one can restore, and what a reset may never touch.
+        Nothing destructive runs on a single click, and no recovery is promised until a restore has actually been tested.</p>
+    </div>
+    <div class="band-stats" id="bandStats"></div>
+    <div class="mb-actions">
+      <button class="btn btn-gold" id="quickBackup">Run a backup now</button>
+      <button class="btn btn-ghost" id="quickRestore">Open recovery</button>
+    </div>
+  </div>
+
+  <div class="envbar" id="envBar" style="margin-bottom:12px"></div>
+
+  <!-- ============ 1 · DATA BACKUP MANAGEMENT ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Data Backup Management</h2>
+        <p>The scheduled and manual backup record — what each copy holds, when it ran, whether it was verified, how long it is kept and who asked for it</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="bkPill">—</span></div>
+    </div>
+
+    <div id="bkAlerts" style="margin-bottom:11px"></div>
+
+    <div class="kgrid" id="bkKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Selected Backup</div>
+          <div class="panel-sub">Scope, size, checksum and protection before anyone relies on it</div></div>
+          <span class="badge b-gray" id="bkSelPill">—</span></div>
+        <div class="fg"><label>Recovery point</label><select id="bkSel"></select></div>
+        <div id="bkDetail" style="margin-top:8px"></div>
+        <div class="form-actions" style="margin-top:8px">
+          <button class="btn btn-gold" id="bkVerifyBtn">Verify integrity</button>
+          <button class="btn btn-ghost" id="bkRetainBtn">Extend retention</button>
+          <button class="btn btn-ghost" id="bkDownloadBtn">Request a copy</button>
+        </div>
+        <div class="qhint" id="bkMsg"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What a Database Backup Holds</div>
+          <div class="panel-sub">Included, excluded, and covered by the hosting provider instead</div></div>
+          <span class="badge b-gray">scope</span></div>
+        <div id="bkScope"></div>
+        <div class="note red" style="margin-top:9px"><div><b>Secrets never enter a backup.</b>
+          A Supabase service-role key, a database password, an SMTP or SMS token is not copied into any archive,
+          manifest or export. Only the variable names are documented, in section 4.</div></div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Backup History</div>
+        <div class="panel-sub">Every copy on file, with its type, scope, size, verification and retention deadline</div></div>
+        <div class="lockrow">
+          <select id="bkType" class="fsel">
+            <option value="">Every type</option>
+            <option>Database (full)</option>
+            <option>Schema only</option>
+            <option>Storage manifest</option>
+            <option>Pre-release point</option>
+            <option>Configuration</option>
+          </select>
+          <select id="bkStatus" class="fsel">
+            <option value="">Every outcome</option>
+            <option>Verified</option>
+            <option>Completed</option>
+            <option>Running</option>
+            <option>Failed</option>
+            <option>Expired</option>
+          </select>
+          <span class="badge b-gray" id="bkCount">—</span>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:400px"><table class="tbl2 dense"><thead id="bkHead"></thead><tbody id="bkBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="bkGrid" style="margin-top:11px"></div>
+  </section>
+
+  <!-- ============ 2 · BACKUP SCHEDULE AND RETENTION ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Backup Schedule and Retention</h2>
+        <p>How often a copy is taken, how long each class is kept, which recovery points are protected from deletion, and what is honestly not covered</p></div>
+      <div class="sec-tools"><span class="badge b-info" id="schPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="schKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Schedule</div>
+          <div class="panel-sub">Frequency, retention and the point-in-time window on the active plan</div></div>
+          <span class="badge b-gray" id="schStatePill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Daily backup at</label><input id="schDaily" type="time" /></div>
+          <div class="fg"><label>Weekly backup</label><select id="schWeekly">
+            <option>Sunday 03:00</option><option>Saturday 23:00</option><option>Monday 01:00</option></select></div>
+          <div class="fg"><label>Monthly backup</label><select id="schMonthly">
+            <option>1st of the month 04:00</option><option>Last day of the month 23:30</option></select></div>
+          <div class="fg"><label>Point-in-time window (hours)</label><input id="schPitr" type="number" min="0" max="168" step="1" /></div>
+          <div class="fg"><label>Keep daily copies (days)</label><input id="schRetDaily" type="number" min="1" step="1" /></div>
+          <div class="fg"><label>Keep weekly copies (weeks)</label><input id="schRetWeekly" type="number" min="1" step="1" /></div>
+          <div class="fg"><label>Keep monthly copies (months)</label><input id="schRetMonthly" type="number" min="1" step="1" /></div>
+          <div class="fg"><label>Off-site independent copy</label><select id="schOffsite">
+            <option>Enabled — separate account</option><option>Enabled — same account</option><option>Not configured</option></select></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="schSaveBtn">Save the schedule</button>
+          <button class="btn btn-ghost" id="schPreviewBtn">Preview the next runs</button>
+        </div>
+        <div class="qhint" id="schMsg"></div>
+        <div class="minihead">Next scheduled runs</div>
+        <div id="schNext"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Protected Recovery Points</div>
+          <div class="panel-sub">Copies taken before releases and migrations, held beyond ordinary retention</div></div>
+          <span class="badge b-ok" id="rpPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="rpHead"></thead><tbody id="rpBody"></tbody></table></div>
+        <div class="minihead">Retention and secure deletion</div>
+        <div class="tblwrap" style="max-height:210px"><table class="tbl2 dense"><thead id="retHead"></thead><tbody id="retBody"></tbody></table></div>
+        <div class="form-actions" style="margin-top:8px">
+          <button class="btn btn-ghost" id="retPurgeBtn">Purge expired copies</button>
+        </div>
+        <div class="qhint" id="retMsg"></div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="note gold"><div><b>Independent copy.</b> <span id="schIndepText">—</span></div></div>
+      <div class="note red"><div><b>What this is not.</b> A database backup is not a copy of the whole application environment.
+        It does not carry authentication users, uploaded files in storage, hosting configuration, environment secrets or provider settings.
+        Those are listed in section 4 and section 11, with the manual steps where no automated copy exists.</div></div>
+    </div>
+
+    <div class="chartgrid" id="schGrid" style="margin-top:11px"></div>
+  </section>
+
+  <!-- ============ 3 · DATA RECOVERY AND RESTORATION ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Data Recovery and Restoration</h2>
+        <p>Pick a verified point, see exactly what would be lost, restore to staging first, and only then — with a second name — consider production</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="rsPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="rsKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Recovery Point</div>
+          <div class="panel-sub">Date, type, scope and verification before anything is restored</div></div>
+          <span class="badge b-gray" id="rsPointPill">—</span></div>
+        <div class="fg"><label>Choose a verified backup</label><select id="rsPoint"></select></div>
+        <div id="rsDetail" style="margin-top:8px"></div>
+        <div class="minihead">What would be overwritten</div>
+        <div id="rsWarnBox"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="rsVerifyBtn">Verify integrity and compatibility</button>
+          <button class="btn btn-ghost" id="rsStageBtn">Restore to staging</button>
+          <button class="btn btn-ghost" id="rsProdBtn">Restore production…</button>
+        </div>
+        <div class="qhint" id="rsMsg"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification Before Restore</div>
+          <div class="panel-sub">Checksum, schema version, migration position and function compatibility</div></div>
+          <span class="badge b-gray" id="rsVerPill">not run</span></div>
+        <div id="rsVerifyBox"></div>
+        <div class="minihead">Restore progress</div>
+        <div id="rsStageOut"></div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Post-Restore Verification</div>
+          <div class="panel-sub">Records, relationships, policies and connectivity rechecked after every restore</div></div>
+          <span class="badge b-gray" id="rsCheckPill">—</span></div>
+        <div id="rsChecks"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="rsCheckBtn">Run the verification</button>
+        </div>
+        <div class="qhint" id="rsCheckMsg"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">If the Restore Fails</div>
+          <div class="panel-sub">The documented rollback and the alternative route</div></div>
+          <span class="badge b-warn">runbook</span></div>
+        <ul class="runbook" id="rsRollback"></ul>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Recovery Log</div>
+        <div class="panel-sub">Every restoration attempt, its operator, its approver, its result and any error</div></div>
+        <span class="badge b-gray" id="rlogCount">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rlogHead"></thead><tbody id="rlogBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · SYSTEM BACKUP ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>System Backup</h2>
+        <p>Source code, dependency manifests, migrations, deployment instructions and the configuration names — kept apart from the database copy, never instead of it</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="sbPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="sbKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">System Artefacts</div>
+        <div class="panel-sub">Every recoverable non-database asset, where its protected copy lives and when it was last verified</div></div>
+        <div class="lockrow">
+          <select id="sbKind" class="fsel">
+            <option value="">Every kind</option>
+            <option>Source code</option>
+            <option>Dependencies</option>
+            <option>Migrations</option>
+            <option>Documentation</option>
+            <option>Configuration</option>
+            <option>Content</option>
+            <option>Storage</option>
+          </select>
+          <button class="btn btn-ghost" id="sbVerifyBtn">Verify all</button>
+          <span class="badge b-gray" id="sbCount">—</span>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:330px"><table class="tbl2 dense"><thead id="sbHead"></thead><tbody id="sbBody"></tbody></table></div>
+      <div class="qhint" id="sbMsg"></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Environment Variable Names</div>
+          <div class="panel-sub">Names and requirements only — no value is ever shown or backed up</div></div>
+          <span class="badge b-crit">values never exported</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="evHead"></thead><tbody id="evBody"></tbody></table></div>
+        <div class="note red" style="margin-top:9px"><div>Secret values live in the hosting provider's encrypted store. Only the names and their purpose are documented and backed up.
+          A service-role key must never appear in the browser bundle, a backup export or a repository.</div></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Version Matrix</div>
+          <div class="panel-sub">The application, schema and dependency versions tied to each recovery point</div></div>
+          <span class="badge b-gray" id="verPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="verHead"></thead><tbody id="verBody"></tbody></table></div>
+        <div class="minihead">Hosting requirements</div>
+        <div id="sbHost"></div>
+        <div class="note red" style="margin-top:9px"><div><b>A source-code backup is not a database backup.</b>
+          The repository gives back the application, not the customers' records. Both are needed, in that order:
+          restore the code, then the data — never one as a substitute for the other.</div></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="sbGrid" style="margin-top:11px"></div>
+  </section>

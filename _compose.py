@@ -53,7 +53,7 @@ if __name__ == "__main__":
     css_path = ROOT / "_module.css"
     extra = css_path.read_text() if css_path.exists() else ""
     slug = sys.argv[2] if len(sys.argv)>2 else ""
-    css_name = {"clients": "_customers.css"}.get(slug, "_%s.css" % slug)
+    css_name = sys.argv[3] if len(sys.argv) > 3 else {"clients": "_customers.css"}.get(slug, "_%s.css" % slug)
     page_css = ROOT / css_name
     if page_css.exists():
         extra += "\n" + page_css.read_text()
