@@ -1,0 +1,241 @@
+  <!-- ============ 5 · SALARY DEDUCTIONS AND STATUTORY ITEMS ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Salary Deductions and Statutory Items</h2>
+        <p>The authorised deductions, the staff loan recoveries and the salary advances, the tax and statutory records, the pension contributions employee and employer, the calculation rules, the review and approval, the payslip breakdown, statutory reporting, history and the compliance checks</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="ddPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ddKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Every Deduction in Force</div>
+        <div class="panel-sub">What is taken, on what basis, and where it is remitted</div></div>
+        <span class="badge b-gray" id="ddTypePill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ddTypeHead"></thead><tbody id="ddTypeBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deduction Calculation Rules</div>
+          <div class="panel-sub">Each rule is checked on every payroll run</div></div></div>
+        <div id="ddRuleBox"></div>
+        <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Deduction Review and Approval</div>
+          <div class="panel-sub">Who signs the deduction schedule</div></div></div>
+        <div id="ddApprBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payslip Breakdown</div>
+          <div class="panel-sub">Pick a staff member to see exactly what is taken</div></div>
+          <span class="badge b-gray" id="ddSlipPill">—</span></div>
+        <div class="fg" style="margin-bottom:8px"><label>Staff member</label><select id="ddStaff"></select></div>
+        <div id="ddSlipBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Statutory Records and Remittances</div>
+        <div class="panel-sub">PAYE, pension and NHIMA, with the due date and the receipt</div></div>
+        <span class="badge b-crit" id="ddStatPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="ddStatHead"></thead><tbody id="ddStatBody"></tbody></table></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="ddRemitBtn">Remit the outstanding statutory items</button>
+        <button class="btn btn-ghost" id="ddReportBtn">Build the statutory report</button>
+      </div>
+      <div id="ddStatBox" style="margin-top:8px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff on a Loan or an Advance</div>
+          <div class="panel-sub">Recoveries that were authorised in writing</div></div>
+          <span class="badge b-gray" id="ddLoanPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ddLoanHead"></thead><tbody id="ddLoanBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deduction History</div>
+          <div class="panel-sub">What has changed on the deduction schedule</div></div>
+          <span class="badge b-gray" id="ddHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ddHistHead"></thead><tbody id="ddHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ddGrid"></div>
+  </section>
+
+  <!-- ============ 6 · STAFF PAYSLIPS AND RECORDS ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Staff Payslips and Records</h2>
+        <p>Generating a payslip, viewing one, downloading or printing it, the gross, the allowances, the deductions and the net, the payment date and the reference, the correction workflow, who may see what, the delivery notifications and the payslip history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="psPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="psKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Build a Payslip</div>
+        <div class="panel-sub">Pick a period and a staff member, then print or download it</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Period</label><select id="psPeriod"></select></div>
+        <div class="fg"><label>Staff member</label><select id="psStaff"></select></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="psBuildBtn" style="width:100%">Generate the payslip</button></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="psCsvBtn" style="width:100%">Download the payslip register</button></div>
+      </div>
+      <div id="psBox" style="margin-top:10px"></div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="psPrintBtn">Print or save as PDF</button>
+        <button class="btn btn-ghost" id="psMailBtn">Send it to the employee</button>
+      </div>
+      <div class="qhint" id="psMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payslip Register</div>
+          <div class="panel-sub">Every payslip issued, corrected or reissued</div></div>
+          <span class="badge b-gray" id="psCount">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="psHead"></thead><tbody id="psBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Corrections and Access</div>
+          <div class="panel-sub">What was corrected, and who may read a payslip</div></div>
+          <span class="badge b-gray" id="psCorrPill">—</span></div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="psCorrHead"></thead><tbody id="psCorrBody"></tbody></table></div>
+        <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="psPermHead"></thead><tbody id="psPermBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Delivery and Payslip History</div>
+        <div class="panel-sub">How each payslip reached the employee</div></div>
+        <span class="badge b-gray" id="psDelPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="psDelHead"></thead><tbody id="psDelBody"></tbody></table></div>
+      <div class="qhint" id="psRuleBox" style="margin-top:6px"></div>
+    </div>
+
+    <div class="chartgrid" id="psGrid"></div>
+  </section>
+
+  <!-- ============ 7 · STAFF EXPENSE CLAIMS ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Staff Expense Claims</h2>
+        <p>Submitting a claim for a staff member with its date, category, description, amount, receipt, department and project — then reviewing it, approving or rejecting it with notes, processing the reimbursement and keeping the history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="clPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="clKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Submit an Expense Claim</div>
+        <div class="panel-sub">A receipt is required above the receipt limit</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Staff member</label><select id="clStaff"></select></div>
+        <div class="fg"><label>Expense date</label><input id="clDate" type="date" /></div>
+        <div class="fg"><label>Category</label><select id="clCategory"></select></div>
+        <div class="fg"><label>Claimed amount (MWK)</label><input id="clAmount" type="number" step="500" value="35000" /></div>
+        <div class="fg"><label>Department</label><select id="clDept"></select></div>
+        <div class="fg"><label>Project</label><select id="clProject"><option>Operations</option><option>Field recovery drive</option><option>Branch expansion</option><option>Systems upgrade</option></select></div>
+        <div class="fg" style="grid-column:span 2"><label>Description</label><input id="clDescription" placeholder="Fuel for field visits" /></div>
+        <div class="fg"><label>Receipt attached</label><select id="clReceipt"><option>Yes</option><option>No</option></select></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="clSubmitBtn" style="width:100%">Submit the claim</button></div>
+      </div>
+      <div class="qhint" id="clMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Claims</div>
+        <div class="panel-sub">Approve, reject or return a claim — the decision is written to the history</div></div>
+        <span class="badge b-gray" id="clCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="clHead"></thead><tbody id="clBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Review a Claim</div>
+          <div class="panel-sub">The whole claim, with the approval notes</div></div>
+          <span class="badge b-gray" id="clSelPill">—</span></div>
+        <div id="clDetail"></div>
+        <div class="fg" style="margin-top:8px"><label>Approval notes</label><input id="clNotes" placeholder="Why the decision was taken" /></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="clApproveBtn">Approve</button>
+          <button class="btn btn-ghost" id="clRejectBtn">Reject</button>
+          <button class="btn btn-ghost" id="clReturnBtn">Return for detail</button>
+          <button class="btn btn-ghost" id="clPayBtn">Reimburse</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Claim History and Reimbursements</div>
+          <div class="panel-sub">Every claim paid, with the reference</div></div>
+          <span class="badge b-gray" id="clHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="clHistHead"></thead><tbody id="clHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="clGrid"></div>
+  </section>
+
+  <!-- ============ 8 · BUSINESS OPERATING EXPENSES ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Business Operating Expenses</h2>
+        <p>Rent, electricity, water, internet and telephone, office supplies, furniture and equipment, repairs, transport and fuel, travel, security, insurance, professional services, marketing, licences and anything else approved — each with its supplier, invoice, cost centre and state</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="bxPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="bxKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Record an Operating Expense</div>
+        <div class="panel-sub">Charged to a category, a department and a cost centre</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Category</label><select id="bxCategory"></select></div>
+        <div class="fg"><label>Supplier</label><select id="bxSupplier"></select></div>
+        <div class="fg"><label>Amount (MWK)</label><input id="bxAmount" type="number" step="500" value="120000" /></div>
+        <div class="fg"><label>Expense date</label><input id="bxDate" type="date" /></div>
+        <div class="fg"><label>Department</label><select id="bxDept"></select></div>
+        <div class="fg"><label>Invoice number</label><input id="bxInvoice" placeholder="INV-4321" /></div>
+        <div class="fg" style="grid-column:span 2"><label>Description</label><input id="bxDescription" placeholder="What the money bought" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="bxAddBtn">Record the expense</button>
+        <button class="btn btn-ghost" id="bxClearBtn">Clear</button>
+      </div>
+      <div class="qhint" id="bxMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Expenses by Category</div>
+        <div class="panel-sub">What each category has cost this month, against its limit</div></div>
+        <span class="badge b-gray" id="bxCatPill">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="bxCatHead"></thead><tbody id="bxCatBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Every Expense</div>
+          <div class="panel-sub">Newest first, with the invoice and the payment reference</div></div>
+          <span class="badge b-gray" id="bxCount">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="bxHead"></thead><tbody id="bxBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Selected Expense</div>
+          <div class="panel-sub">Approve it or mark it paid once the money has gone</div></div>
+          <span class="badge b-gray" id="bxSelPill">—</span></div>
+        <div id="bxDetail"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="bxApproveBtn">Approve</button>
+          <button class="btn btn-ghost" id="bxPayBtn">Mark it paid</button>
+          <button class="btn btn-ghost" id="bxReceiptBtn">Show the invoice</button>
+        </div>
+        <div id="bxReceiptBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="bxGrid"></div>
+  </section>

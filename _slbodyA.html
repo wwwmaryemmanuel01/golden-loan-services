@@ -1,0 +1,314 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Salaries, Expenses &amp; Operating Charges</div>
+      <div class="page-sub">Payroll, staff claims, business expenses and every system charge · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a staff member, supplier, invoice or reference…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="quickCsv">Export CSV</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-ghost" id="bellBtn" aria-label="Alerts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Salaries</a>
+    <a class="snav" href="#s3">3 · Payroll</a>
+    <a class="snav" href="#s4">4 · Allowances</a>
+    <a class="snav" href="#s5">5 · Deductions</a>
+    <a class="snav" href="#s6">6 · Payslips</a>
+    <a class="snav" href="#s7">7 · Claims</a>
+    <a class="snav" href="#s8">8 · Expenses</a>
+    <a class="snav" href="#s9">9 · System charges</a>
+    <a class="snav" href="#s10">10 · Recurring</a>
+    <a class="snav" href="#s11">11 · Categories</a>
+    <a class="snav" href="#s12">12 · Budgets</a>
+    <a class="snav" href="#s13">13 · Payments</a>
+    <a class="snav" href="#s14">14 · Approvals</a>
+    <a class="snav" href="#s15">15 · Ledger</a>
+    <a class="snav" href="#s16">16 · Staff &amp; suppliers</a>
+    <a class="snav" href="#s17">17 · Notifications</a>
+    <a class="snav" href="#s18">18 · Security</a>
+    <a class="snav" href="#s19">19 · Database</a>
+    <a class="snav" href="#s20">20 · Reports</a>
+  </nav>
+
+  <div class="band">
+    <div><div class="bl">Financial health</div><div class="bv" id="bandScore">—</div></div>
+    <div><div class="bl">Monthly payroll</div><div class="bv" id="bandPayroll">—</div></div>
+    <div><div class="bl">Staff</div><div class="bv" id="bandStaff">—</div></div>
+    <div><div class="bl">Operating costs</div><div class="bv" id="bandCost">—</div></div>
+    <div><div class="bl">Open alerts</div><div class="bv" id="bandAlerts">—</div></div>
+    <div class="band-refresh"><button class="btn btn-ghost" id="refreshBtn">Refresh</button></div>
+  </div>
+
+  <div class="card panel" id="filterBar">
+    <div class="panel-head">
+      <div><div class="panel-title">Filters</div>
+        <div class="panel-sub" id="fltSummary">Date range only</div></div>
+      <div class="chips" id="fltLaneChips">
+        <button class="chip on" data-lane="">All areas</button>
+        <button class="chip" data-lane="Salaries">Salaries</button>
+        <button class="chip" data-lane="Payroll">Payroll</button>
+        <button class="chip" data-lane="Allowances">Allowances</button>
+        <button class="chip" data-lane="Claims">Claims</button>
+        <button class="chip" data-lane="Expenses">Expenses</button>
+        <button class="chip" data-lane="System">System</button>
+        <button class="chip" data-lane="Suppliers">Suppliers</button>
+        <button class="chip" data-lane="Budgets">Budgets</button>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label>From</label><input id="fltFrom" type="date" /></div>
+      <div class="fg"><label>To</label><input id="fltTo" type="date" /></div>
+      <div class="fg"><label>Search</label><input id="fltSearch" placeholder="Staff, supplier, invoice, reference…" /></div>
+      <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+      <div class="fg"><label>State</label><select id="fltStatus"></select></div>
+      <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+      <div class="fg"><label>Department</label><select id="fltDept"></select></div>
+      <div class="fg"><label>Category</label><select id="fltCategory"></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-gold" id="fltApply">Apply the filters</button>
+      <button class="btn btn-ghost" id="fltReset">Clear everything</button>
+    </div>
+    <div class="chips" id="fltChips" style="margin-top:8px"></div>
+    <div class="strip" id="fltCounts" style="margin-top:8px"></div>
+    <div class="qhint" id="fltResult" style="margin-top:6px"></div>
+  </div>
+
+  <!-- ============ 1 · FINANCIAL OVERVIEW ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Financial Overview</h2>
+        <p>What the payroll costs, what has been paid and what is still outstanding, the allowances and bonuses, the business expenses and the system operating charges, what is waiting for a claim or a payment approval, the operating cost in total, the budget utilisation and the latest financial activity</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ovKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">How the money stands</div>
+          <div class="panel-sub">Payroll, budget and cost lines</div></div>
+          <span class="badge b-gray" id="ovMeterPill">—</span></div>
+        <div id="ovMeters"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Where the cost sits</div>
+          <div class="panel-sub">Payroll, business expenses and system charges</div></div>
+          <span class="badge b-gray" id="ovBoardPill">—</span></div>
+        <div id="ovBoard"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What needs attention</div>
+          <div class="panel-sub">Click a line to jump to the section that fixes it</div></div>
+          <span class="badge b-crit" id="ovAlertPill">—</span></div>
+        <div id="ovAlerts"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recent Financial Activity</div>
+          <div class="panel-sub">The latest payments, approvals and changes</div></div>
+          <span class="badge b-gray" id="ovFeedPill">—</span></div>
+        <div id="ovFeed"></div>
+        <div class="qhint" id="ovStamp" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ovGrid"></div>
+  </section>
+
+  <!-- ============ 2 · STAFF SALARY MANAGEMENT ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Staff Salary Management</h2>
+        <p>Every salary record with its basic, frequency, effective date and net; creating a record, assigning a salary, recording an increase or a reduction, the payment history, the outstanding balances and the audit trail</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="saPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="saKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Create or Assign a Salary Record</div>
+        <div class="panel-sub">Monthly or contractual, with the effective date that starts it</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Staff member</label><select id="saStaff"></select></div>
+        <div class="fg"><label>Basic salary (MWK)</label><input id="saBasic" type="number" step="500" value="450000" /></div>
+        <div class="fg"><label>Frequency</label><select id="saFrequency"><option>Monthly</option><option>Contractual</option></select></div>
+        <div class="fg"><label>Effective date</label><input id="saEffective" type="date" /></div>
+        <div class="fg"><label>Band</label><select id="saBand"><option>Standard</option><option>Contract</option><option>Management</option></select></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="saCreateBtn" style="width:100%">Assign the salary</button></div>
+      </div>
+      <div class="qhint" id="saMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Salary Records</div>
+        <div class="panel-sub">Click a record to load it into the panel below</div></div>
+        <span class="badge b-gray" id="saCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="saHead"></thead><tbody id="saBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Record and Its Breakdown</div>
+          <div class="panel-sub">Basic, allowances, deductions, net and what is still owed</div></div>
+          <span class="badge b-gray" id="saSelPill">—</span></div>
+        <div id="saDetail"></div>
+        <div id="saBreakdown" style="margin-top:8px"></div>
+        <div class="form-grid" style="margin-top:8px">
+          <div class="fg"><label>Adjustment</label><select id="saAdjType"><option>Increase</option><option>Reduction</option></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="saAdjAmount" type="number" step="500" value="50000" /></div>
+          <div class="fg"><label>Effective date</label><input id="saAdjDate" type="date" /></div>
+          <div class="fg"><label>Reason</label><input id="saAdjReason" placeholder="Annual review" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="saAdjBtn">Record the adjustment</button>
+          <button class="btn btn-ghost" id="saStmtBtn">Build a salary history</button>
+        </div>
+        <div id="saStmtBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Increases and Reductions</div>
+          <div class="panel-sub">Every adjustment, who asked for it and who signed it</div></div>
+          <span class="badge b-gray" id="saAdjPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="saAdjHead"></thead><tbody id="saAdjBody"></tbody></table></div>
+        <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Salary Record Audit Trail</div>
+          <div class="panel-sub">Who touched the record, and when</div></div></div>
+        <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="saAuditHead"></thead><tbody id="saAuditBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="saGrid"></div>
+  </section>
+
+  <!-- ============ 3 · PAYROLL PROCESSING ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Payroll Processing</h2>
+        <p>Creating a period, the eligible staff, the gross, the allowances, the bonuses and commissions, the approved deductions and the net — then review, approve, pay, record the references, confirm the payments and handle the failures</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="prPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="prKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Open Period</div>
+        <div class="panel-sub">Locked on the cut-off day; approved once and paid once</div></div>
+        <span class="badge b-gray" id="prPeriodPill">—</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Period</label><select id="prPeriod"></select></div>
+        <div class="fg"><label>Cut-off date</label><input id="prCutOff" type="date" /></div>
+        <div class="fg"><label>Pay date</label><input id="prPayDate" type="date" /></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="prCreateBtn" style="width:100%">Create the period</button></div>
+      </div>
+      <div class="strip" id="prSummary" style="margin-top:9px"></div>
+      <div id="prCalcBox" style="margin-top:9px"></div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="prCalcBtn">Calculate the payroll</button>
+        <button class="btn btn-ghost" id="prApproveBtn">Approve the payroll</button>
+        <button class="btn btn-gold" id="prPayBtn">Pay the salaries</button>
+        <button class="btn btn-ghost" id="prRetryBtn">Retry the failed lines</button>
+      </div>
+      <div class="qhint" id="prMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payroll Lines</div>
+        <div class="panel-sub">Every eligible staff member, with the net and the payment reference</div></div>
+        <span class="badge b-gray" id="prLinePill">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="prLineHead"></thead><tbody id="prLineBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Review and Sign Off</div>
+          <div class="panel-sub">The checks that must pass before the money moves</div></div>
+          <span class="badge b-gray" id="prChkPill">—</span></div>
+        <div id="prChecks"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payroll History</div>
+          <div class="panel-sub">Every period, what it cost and who approved it</div></div>
+          <span class="badge b-gray" id="prHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="prHistHead"></thead><tbody id="prHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="prGrid"></div>
+  </section>
+
+  <!-- ============ 4 · STAFF ALLOWANCES AND BENEFITS ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Staff Allowances and Benefits</h2>
+        <p>Transport, housing, communication, meal and travel allowances, the overtime, the performance bonuses and the commissions, everything else approved — with the eligibility rules, the approval workflow and the payment history</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="awPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="awKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Allowance Types and Eligibility Rules</div>
+        <div class="panel-sub">What is paid, on what basis, and who may approve it</div></div>
+        <span class="badge b-gray" id="awRulePill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="awRuleHead"></thead><tbody id="awRuleBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Record an Allowance</div>
+          <div class="panel-sub">It lands on the next payroll for that employee</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Staff member</label><select id="awStaff"></select></div>
+          <div class="fg"><label>Allowance</label><select id="awType"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="awAmount" type="number" step="500" value="45000" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="awAddBtn" style="width:100%">Record it</button></div>
+        </div>
+        <div class="qhint" id="awMsg" style="margin-top:6px"></div>
+        <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Allowance Approval Workflow</div>
+          <div class="panel-sub">What has to happen before it is paid</div></div></div>
+        <div id="awFlow"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Allowances on This Payroll</div>
+          <div class="panel-sub">Every line, with its state</div></div>
+          <span class="badge b-gray" id="awLinePill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="awLineHead"></thead><tbody id="awLineBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Allowance Payment History</div>
+          <div class="panel-sub">What each type has cost, and when it last changed</div></div>
+          <span class="badge b-gray" id="awHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="awHistHead"></thead><tbody id="awHistBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Bonuses and Commissions</div>
+          <div class="panel-sub">Performance and collection payouts this period</div></div>
+          <span class="badge b-gray" id="awBonusPill">—</span></div>
+        <div id="awBonusBox"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="awGrid"></div>
+  </section>
