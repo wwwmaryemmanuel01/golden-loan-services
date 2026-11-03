@@ -1329,6 +1329,7 @@ function renderAll(){
   renderNotifications();
   renderReports();
   renderStats();
+  if(el('fqReasonPill') && el('rvBody')) el('fqReasonPill').textContent = num(el('rvBody').children.length) + ' reasons';
 }
 
 /* ===================== wiring ===================== */

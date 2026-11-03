@@ -153,7 +153,8 @@ function runDiag(id){
   const res = diagResult(t);
   t.status = res;
   t.detail = diagDetail(t, res);
-  t.ms = res === 'Fail' ? 1840 : 80 + (id.charCodeAt(4)() % 7) * 40;
+  const seed = parseInt(String(id).replace(/\D/g, ''), 10) || String(id).length;
+  t.ms = res === 'Fail' ? 1840 : 80 + (seed % 7) * 40;
   t.lastRun = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   logChange('Diagnostics', t.name, 'previous result', res);
   renderDiagnostics(); renderOverview(); renderChanges();
@@ -163,7 +164,8 @@ function runAllDiag(){
   DIAG_TESTS.forEach(t => {
     t.status = diagResult(t);
     t.detail = diagDetail(t, t.status);
-    t.ms = t.status === 'Fail' ? 1840 : 80 + (t.id.charCodeAt(4)() % 7) * 40;
+    const seed = parseInt(String(t.id).replace(/\D/g, ''), 10) || String(t.id).length;
+    t.ms = t.status === 'Fail' ? 1840 : 80 + (seed % 7) * 40;
     t.lastRun = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   });
   const pass = DIAG_TESTS.filter(t => t.status === 'Pass').length;
