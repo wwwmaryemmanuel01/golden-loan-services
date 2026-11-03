@@ -406,6 +406,40 @@ reports, system configuration, and change history.
 - **Self-writing audit trail** — every mutation lands in Change History with its area, the
   previous value, the updated value and the officer responsible.
 
+## Methods of Payment Management & Connections module
+
+`payments.html` is the money-in control room: **20 sections** — payment overview, payment
+methods management, mobile money, bank transfer, cash, gateway connections, the customer
+payment experience, transaction monitoring, verification, the loan repayment connection,
+reconciliation, fees and limits, receipts and statements, notifications, security and access,
+refunds, reversals and disputes, the Supabase/database connections, API and webhook
+monitoring, reports, and settings with its audit history.
+
+- **Every rail in one place** — Airtel Money, TNM Mpamba, FDH and Standard Bank transfers,
+  cash at the branch, the PayChangu gateway and the agent tills, each with its merchant
+  number, reference rule, limits, fee and connection state.
+- **Live mutations** — add, enable, disable, reorder, default and archive a payment method;
+  save mobile money, bank and gateway configuration; test a provider connection; toggle
+  sandbox; rotate credentials; replay a signed webhook; import and reconcile statements;
+  issue and verify cash receipts; verify, auto-confirm or reject a payment; allocate a payment
+  across principal, interest and fees; run provider, bank and cash reconciliation; add
+  adjustments and sign a run off; switch who pays a fee; generate, verify and print a receipt;
+  build a customer statement; toggle notifications; grant or withdraw role capabilities;
+  approve a sensitive change; approve, reject or post a refund; reverse a payment; resolve a
+  dispute; fix an RLS gap; run consistency checks and diagnostics; retry a failed webhook;
+  and save, validate or reset the payment settings.
+- **Twelve reports** — daily, weekly and monthly payment, by method, by provider, by staff
+  member, successful and failed, processing fees, unreconciled payments, loan repayment
+  collections, verification and refunds/reversals — each with an on-screen preview, CSV,
+  Excel (xlsx) and print/PDF output, plus a combined pack.
+- **Filters drive all twenty sections at once** — date range, area, severity, payment state,
+  officer, branch, product and free text, with removable chips and a live result summary.
+- **Reconciliation that adds up** — provider statements, bank lines and cash receipts are
+  matched to the same receipts the rest of the portal runs on; the gaps, the adjustments, the
+  daily summary and the audit trail all follow the filters.
+- **Audit trail that writes itself** — every mutation lands in Configuration Change History
+  with the area, the previous value, the updated value and the responsible officer.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -439,6 +473,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Security & Protection | `security.html` | 18 · 30 charts · 10 reports |
 | Website Management & Connections | `website.html` | 20 · 32 charts · 8 reports |
 | Website Management & Connections | `website.html` | 20 · 39 charts · 8 reports |
+| Methods of Payment Management | `payments.html` | 20 · 31 charts · 12 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -462,6 +497,7 @@ compliance.html         Module 13 (built · 15 compliance sections)
 security.html           Module 14 (built · 18 security sections)
 website.html            Module 15 (built · 20 website & connection sections)
 website.html            Module 15 (built · 20 website & connection sections)
+payments.html           Module 16 (built · 20 payment & connection sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -477,6 +513,7 @@ _charts.css             page CSS for Charts & Analytics
 _compliance.css         page CSS for Compliance & Intelligence
 _website.css            page CSS for Website Management & Connections
 _website.css            page CSS for Website Management & Connections
+_payments.css           page CSS for Methods of Payment Management & Connections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -494,6 +531,7 @@ build-compliance.sh     rebuilds compliance.html from its partials
 build-security.sh       rebuilds security.html from its partials
 build-website.sh        rebuilds website.html from its partials
 build-website.sh        rebuilds website.html from its partials
+build-payments.sh       rebuilds payments.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -512,6 +550,7 @@ _cobodyA–D.html _cojsA–G.js  compliance & intelligence partials
 _sebodyA–E.html _sejsA–G.js  security & protection partials
 _wmbodyA–E.html _wmjsA–G.js  website & connections partials
 _wmbodyA–E.html _wmjsA–G.js  website & connections partials
+_pmbodyA–E.html _pmjsA–G.js  methods of payment partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -534,6 +573,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-security.sh       # security.html
 ./build-website.sh        # website.html
 ./build-website.sh        # website.html
+./build-payments.sh       # payments.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

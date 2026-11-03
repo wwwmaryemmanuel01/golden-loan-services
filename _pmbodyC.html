@@ -1,0 +1,250 @@
+    <!-- ============ 9 · PAYMENT VERIFICATION ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div><h2>Payment Verification</h2>
+          <p>Manual and automatic confirmation, provider checks, reference and amount validation, customer and loan matching, duplicate receipt prevention, the approval workflow, history and rejections</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="vPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="vKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification Queue</div>
+          <div class="panel-sub">Verify or reject each payment — the section above moves with you</div></div>
+          <span class="badge b-gray" id="vqPill">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="vqHead"></thead><tbody id="vqBody"></tbody></table></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="vAuto">Run automatic confirmation</button>
+          <button class="btn btn-ghost" id="vApproveAll">Approve everything awaiting a second signature</button>
+        </div>
+        <div class="qhint" id="vMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Checks</div>
+            <div class="panel-sub">What every payment must pass before it is posted</div></div>
+            <span class="badge b-gray" id="vCheckPill">—</span></div>
+          <div id="vChecksBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Automatic Confirmation and Approval Workflow</div>
+            <div class="panel-sub">Provider callback, amount, reference, then a signature if the value is large</div></div>
+            <span class="badge b-ok" id="vAutoPill">—</span></div>
+          <div id="vAutoBox"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="vToggleAuto">Toggle automatic confirmation</button>
+            <button class="btn btn-ghost" id="vToggleApproval">Toggle second signature</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification History</div>
+            <div class="panel-sub">Who verified or rejected what, and why</div></div>
+            <span class="badge b-gray" id="vHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="vHistHead"></thead><tbody id="vHistBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rejected Payment Records</div>
+            <div class="panel-sub">Refused payments, kept for the trail</div></div>
+            <span class="badge b-gray" id="vRejPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="vRejHead"></thead><tbody id="vRejBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification Outcomes</div>
+          <div class="panel-sub">Manual against automatic, and what was refused</div></div></div>
+        <div class="chartgrid" id="vGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · LOAN REPAYMENT CONNECTION ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div><h2>Loan Repayment Connection</h2>
+          <p>How a payment finds its customer and loan, how it splits into principal, interest and fees, and what that does to the outstanding balance and the repayment schedule</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="alPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="alKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Allocate a Payment</div>
+            <div class="panel-sub">Pick a loan and an amount — the split is calculated live</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Loan</label><select id="aLoan"></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="aAmount" type="number" min="0" step="500" /></div>
+          </div>
+          <div id="aSplitBox" style="margin-top:8px"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="aAllocate">Allocate to the loan</button></div>
+          <div class="qhint" id="aMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Outstanding Balance and Schedule</div>
+            <div class="panel-sub">What the allocation did to the loan</div></div>
+            <span class="badge b-gray" id="balPill">—</span></div>
+          <div id="balBox"></div>
+          <div id="schedBox" style="margin-top:8px"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="recalcBtn">Recalculate the balance</button></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment to Loan Allocation History</div>
+          <div class="panel-sub">Every allocation with its principal, interest and fee split</div></div>
+          <span class="badge b-gray" id="allocPill">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="allocHead"></thead><tbody id="allocBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Allocation Alerts</div>
+            <div class="panel-sub">Payments that could not be posted to a loan</div></div>
+            <span class="badge b-crit" id="failAllocPill">—</span></div>
+          <div id="failAllocBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repayment Receipt Generation and Allocation Trail</div>
+            <div class="panel-sub">The receipt produced by each allocation</div></div>
+            <span class="badge b-gray" id="allocHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="allocHistHead"></thead><tbody id="allocHistBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Allocation Split</div>
+          <div class="panel-sub">Principal, interest and fees across the period</div></div></div>
+        <div class="chartgrid" id="alGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · PAYMENT RECONCILIATION ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div><h2>Payment Reconciliation</h2>
+          <p>Provider statements, bank lines and cash receipts matched to the ledger — with the missing, duplicate and differing items, adjustments, approval, the daily summary and the audit trail</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="recPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="recKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="recGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reconciliation Dashboard</div>
+          <div class="panel-sub">Every reconciliation run, its matches and what it found</div></div>
+          <span class="badge b-gray" id="recCount">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="recHead"></thead><tbody id="recBody"></tbody></table></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="matchBtn">Match provider transactions</button>
+          <button class="btn btn-ghost" id="matchBankBtn">Match bank statements</button>
+          <button class="btn btn-ghost" id="matchCashBtn">Match cash receipts</button>
+        </div>
+        <div class="qhint" id="recMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Missing, Duplicate and Differing Items</div>
+            <div class="panel-sub">What reconciliation could not tie up</div></div>
+            <span class="badge b-crit" id="gapPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="gapHead"></thead><tbody id="gapBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unmatched Payment Records</div>
+            <div class="panel-sub">Receipts still waiting for a statement line</div></div>
+            <span class="badge b-warn" id="unmPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="unmHead"></thead><tbody id="unmBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reconciliation Adjustments</div>
+            <div class="panel-sub">Bank charges, round-offs and timing differences</div></div>
+            <span class="badge b-gray" id="adjPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Kind</label><select id="adjKind"><option>Bank charge</option><option>Round-off</option><option>Timing</option><option>Write-off</option></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="adjAmount" type="number" step="50" /></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Reason</label><input id="adjReason" placeholder="Wire fee deducted on the statement line" /></div>
+          <div class="form-actions"><button class="btn btn-gold" id="adjAdd">Add adjustment</button></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="adjHead"></thead><tbody id="adjBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reconciliation Approval and Daily Summary</div>
+            <div class="panel-sub">A run is signed off before the day closes</div></div>
+            <span class="badge b-gray" id="apprRecPill">—</span></div>
+          <div id="apprRecBox"></div>
+          <div class="tblwrap" style="max-height:240px;margin-top:8px"><table class="tbl2 dense"><thead id="dailyHead"></thead><tbody id="dailyBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reconciliation Audit Trail</div>
+          <div class="panel-sub">Every match, adjustment and approval, with the officer</div></div>
+          <span class="badge b-gray" id="recAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="recAuditHead"></thead><tbody id="recAuditBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · PAYMENT FEES AND LIMITS ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div><h2>Payment Fees and Limits</h2>
+          <p>Processing fees and who pays them, the minimum and maximum amounts, daily and provider limits, how a fee is calculated, and every change with the date it took effect</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="feePill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="feeKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fees and Limits by Method</div>
+          <div class="panel-sub">Customer-paid and company-paid fees sit side by side</div></div>
+          <span class="badge b-gray" id="feeCount">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="feeHead"></thead><tbody id="feeBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="feeSave">Recalculate the fee summary</button></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Who Pays the Fee</div>
+            <div class="panel-sub">Toggle the payer per method — the customer total moves</div></div>
+            <span class="badge b-gray" id="payerPill">—</span></div>
+          <div id="payerBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider-Specific Limits</div>
+            <div class="panel-sub">Daily ceilings the provider enforces, against what we send</div></div>
+            <span class="badge b-gray" id="limitPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="limitHead"></thead><tbody id="limitBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fee Calculation Rules</div>
+            <div class="panel-sub">How the fee is worked out, and what it must never do</div></div></div>
+          <div id="feeRuleBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fee Change History</div>
+            <div class="panel-sub">Every fee and limit change with its date</div></div>
+            <span class="badge b-gray" id="feeHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="feeHistHead"></thead><tbody id="feeHistBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fee Collection</div>
+          <div class="panel-sub">Fees charged per method, and who carried them</div></div></div>
+        <div class="chartgrid" id="feeGrid"></div>
+      </div>
+    </section>

@@ -1,0 +1,365 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Methods of Payment Management</div>
+      <div class="page-sub">Every way a customer can pay, and every connection behind it · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a receipt, reference, customer or provider…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Open payment alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export pack
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Methods</a>
+    <a class="snav" href="#s3">3 · Mobile money</a>
+    <a class="snav" href="#s4">4 · Bank transfer</a>
+    <a class="snav" href="#s5">5 · Cash</a>
+    <a class="snav" href="#s6">6 · Gateways</a>
+    <a class="snav" href="#s7">7 · Customer journey</a>
+    <a class="snav" href="#s8">8 · Transactions</a>
+    <a class="snav" href="#s9">9 · Verification</a>
+    <a class="snav" href="#s10">10 · Allocations</a>
+    <a class="snav" href="#s11">11 · Reconciliation</a>
+    <a class="snav" href="#s12">12 · Fees &amp; limits</a>
+    <a class="snav" href="#s13">13 · Receipts</a>
+    <a class="snav" href="#s14">14 · Notifications</a>
+    <a class="snav" href="#s15">15 · Security</a>
+    <a class="snav" href="#s16">16 · Refunds</a>
+    <a class="snav" href="#s17">17 · Database</a>
+    <a class="snav" href="#s18">18 · API &amp; webhooks</a>
+    <a class="snav" href="#s19">19 · Reports</a>
+    <a class="snav" href="#s20">20 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Methods of payment</h1>
+        <p>Airtel Money, TNM Mpamba, bank transfer, cash at the counter and the card gateway — read from the same receipts, loans and allocations the rest of the portal runs on, so every figure below reconciles to a real payment</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandScore">0</b><span>Payment health</span></div>
+        <div class="band-stat"><b id="bandPayments">0</b><span>Payments</span></div>
+        <div class="band-stat"><b id="bandVolume">0</b><span>Collected</span></div>
+        <div class="band-stat"><b id="bandAlerts">0</b><span>Open issues</span></div>
+      </div>
+    </div>
+
+    <!-- ============ filter bar ============ -->
+    <div class="card panel" id="filterBar">
+      <div class="panel-head"><div><div class="panel-title">Filter the payment register</div>
+        <div class="panel-sub">Every section follows these controls — area, severity, payment state, officer, branch and free text</div></div>
+        <span class="badge b-gray" id="fltSummary">Date range only</span></div>
+      <div class="g3">
+        <div class="fgroup">
+          <div class="fh">Date range</div>
+          <div class="form-grid">
+            <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+            <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+          </div>
+          <div class="fh" style="margin-top:9px">Search</div>
+          <div class="fld" style="width:100%">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Receipt, reference, customer, provider…" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Area</div>
+          <div class="chips" id="fltLaneChips">
+            <span class="fchip on" data-lane="">All areas</span>
+            <span class="fchip" data-lane="Mobile money">Mobile money</span>
+            <span class="fchip" data-lane="Bank">Bank</span>
+            <span class="fchip" data-lane="Cash">Cash</span>
+            <span class="fchip" data-lane="Gateway">Gateway</span>
+            <span class="fchip" data-lane="Ledger">Ledger</span>
+            <span class="fchip" data-lane="Verification">Verification</span>
+            <span class="fchip" data-lane="Database">Database</span>
+            <span class="fchip" data-lane="Security">Security</span>
+          </div>
+          <div class="fh" style="margin-top:9px">Refresh</div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-ghost" id="refreshBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              Refresh payment data
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Dimensions</div>
+          <div class="form-grid">
+            <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+            <div class="fg"><label>Payment state</label><select id="fltStatus"></select></div>
+            <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+            <div class="fg"><label>Branch</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:8px">
+            <button class="btn btn-gold" id="fltApply">Apply filters</button>
+            <button class="btn btn-ghost" id="fltReset">Clear all</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="fltChips" style="margin-top:10px"></div>
+      <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+      <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ============ 1 · PAYMENT OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div><h2>Payment Overview</h2>
+          <p>Configured, active and disabled payment methods, the connected services, pending confirmations, successful and failed payments, unreconciled money and the latest activity</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="pmKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Health</div>
+            <div class="panel-sub">Each meter is live — verify a payment or fix a provider and the bars move</div></div>
+            <span class="qhint" id="ovStamp"></span></div>
+          <div id="pmMeters"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Method and Service Status</div>
+            <div class="panel-sub">Each rail, the gateway, the bank feeds and the notification channel</div></div>
+            <span class="badge b-ok" id="ovConnPill">—</span></div>
+          <div class="statusgrid" id="pmBoard"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment Volume and Outcomes</div>
+          <div class="panel-sub">Money collected by method, and how each payment ended</div></div></div>
+        <div class="chartgrid" id="pmGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Open Payment Issues</div>
+            <div class="panel-sub">Failed payments, pending confirmations and reconciliation gaps</div></div>
+            <span class="badge b-gray" id="ovAlertPill">0</span></div>
+          <div id="pmAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Payment Activity</div>
+            <div class="panel-sub">The newest receipts, whatever the method</div></div></div>
+          <div id="pmFeed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · PAYMENT METHODS MANAGEMENT ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div><h2>Payment Methods Management</h2>
+          <p>Every configured method with its default flag, display order, availability, amount limits, instructions and logo — plus archive and the change history</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="mPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="mKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">All Payment Methods</div>
+          <div class="panel-sub">Enable, disable, reorder, set the default or open a method to edit it</div></div>
+          <span class="badge b-gray" id="mCount">—</span></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="mHead"></thead><tbody id="mBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Add a Payment Method</div>
+            <div class="panel-sub">A new rail starts disabled until its limits and instructions are set</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Method name</label><input id="mNewName" placeholder="Bank transfer — NBS Bank" /></div>
+            <div class="fg"><label>Type</label><select id="mNewType"><option>Mobile money</option><option>Bank transfer</option><option>Cash</option><option>Gateway</option><option>Agent</option></select></div>
+            <div class="fg"><label>Provider</label><input id="mNewProvider" placeholder="NBS Bank" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="mAdd" style="width:100%">Add payment method</button></div>
+          </div>
+          <div class="qhint" id="mMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Default, Availability and Limits</div>
+            <div class="panel-sub">Edit the selected method without leaving the page</div></div>
+            <span class="badge b-gray" id="mSelPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Method</label><select id="mSel"></select></div>
+            <div class="fg"><label>Availability</label><select id="mAvail"><option>All channels</option><option>Customer portal</option><option>Branch only</option></select></div>
+            <div class="fg"><label>Minimum amount (MWK)</label><input id="mMin" type="number" min="0" step="100" /></div>
+            <div class="fg"><label>Maximum amount (MWK)</label><input id="mMax" type="number" min="0" step="1000" /></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Payment instructions shown to the customer</label>
+            <textarea id="mInstr" rows="3" style="width:100%"></textarea></div>
+          <div class="form-grid" style="margin-top:8px">
+            <div class="fg"><label>Logo or mark</label><select id="mLogo"></select></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="mUpload" style="width:100%">Upload logo</button></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="mSave">Save method</button>
+            <button class="btn btn-ghost" id="mDefault">Make default</button>
+            <button class="btn btn-ghost" id="mArchive">Archive method</button>
+          </div>
+          <div class="qhint" id="mSelMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment Method Change History</div>
+          <div class="panel-sub">Every method change, with the previous and updated value</div></div>
+          <span class="badge b-gray" id="mchgPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="mchgHead"></thead><tbody id="mchgBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · MOBILE MONEY MANAGEMENT ============ -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div><h2>Mobile Money Management</h2>
+          <p>Airtel Money and TNM Mpamba configuration, merchant and till numbers, the reference rules, the API connection, requests, confirmations, live status monitoring and reconciliation</p></div>
+        <div class="sec-tools"><span class="badge b-crit" id="mmPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="mmKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Airtel Money Configuration</div>
+            <div class="panel-sub">Merchant account, code, reference rule and the API connection</div></div>
+            <span class="badge b-ok" id="mmAirPill">—</span></div>
+          <div class="form-grid" id="mmAirtelBox"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="mmAirSave">Save Airtel Money</button>
+            <button class="btn btn-ghost" id="mmAirTest">Test connection</button></div>
+          <div class="qhint" id="mmAirMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">TNM Mpamba Configuration</div>
+            <div class="panel-sub">Merchant account, bill number, reference rule and the API connection</div></div>
+            <span class="badge b-crit" id="mmTnmPill">—</span></div>
+          <div class="form-grid" id="mmTnmBox"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="mmTnmSave">Save TNM Mpamba</button>
+            <button class="btn btn-ghost" id="mmTnmTest">Test connection</button></div>
+          <div class="qhint" id="mmTnmMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Merchant Account, Till and Reference Requirements</div>
+            <div class="panel-sub">What a customer must type, and where the money lands</div></div></div>
+          <div id="mmMerchantBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Request and Confirmation Connection</div>
+            <div class="panel-sub">How a request is pushed, and how the confirmation comes back</div></div>
+            <span class="badge b-gray" id="mmConnPill">—</span></div>
+          <div id="mmConnBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transaction Status Monitoring</div>
+          <div class="panel-sub">Every mobile money request, its stage and its latency</div></div>
+          <span class="badge b-gray" id="mmStatusPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="mmHead"></thead><tbody id="mmBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Mobile Money Reconciliation</div>
+          <div class="panel-sub">Provider statement against the ledger, day by day</div></div>
+          <button class="btn btn-ghost" id="mmReconBtn">Run reconciliation</button></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="mmrecHead"></thead><tbody id="mmrecBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Mobile Money Volume</div>
+          <div class="panel-sub">Airtel Money against TNM Mpamba, by day</div></div></div>
+        <div class="chartgrid" id="mmGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · BANK TRANSFER MANAGEMENT ============ -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div><h2>Bank Transfer Management</h2>
+          <p>Bank name, account and branch details, routing information, transfer references, supported currencies, verification, statement import and reconciliation</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="bankPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="bankKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Bank Account Details</div>
+            <div class="panel-sub">Name, number, branch, routing, currency and the reference instruction</div></div>
+            <span class="badge b-gray" id="bankSelPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Bank</label><select id="bankSel"></select></div>
+            <div class="fg"><label>Account name</label><input id="bankName" /></div>
+            <div class="fg"><label>Account number</label><input id="bankAcct" /></div>
+            <div class="fg"><label>Branch name</label><input id="bankBranch" /></div>
+            <div class="fg"><label>Branch code / routing</label><input id="bankCode" /></div>
+            <div class="fg"><label>Supported currency</label><select id="bankCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Transfer reference instructions</label>
+            <input id="bankRef" /></div>
+          <div class="form-actions"><button class="btn btn-gold" id="bankSave">Save bank details</button>
+            <button class="btn btn-ghost" id="bankVerify">Verify account</button></div>
+          <div class="qhint" id="bankMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Bank Payment Verification and Statement Import</div>
+            <div class="panel-sub">Statements arrive by secure file every morning at 09:00</div></div>
+            <span class="badge b-gray" id="stmtPill">—</span></div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-gold" id="stmtImport">Import today's statements</button>
+            <button class="btn btn-ghost" id="stmtRecon">Reconcile bank lines</button>
+          </div>
+          <div class="qhint" id="stmtMsg" style="margin-top:6px"></div>
+          <div class="tblwrap" style="max-height:250px;margin-top:8px"><table class="tbl2 dense"><thead id="stmtHead"></thead><tbody id="stmtBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Registered Bank Accounts</div>
+            <div class="panel-sub">Every account a customer can transfer to</div></div>
+            <span class="badge b-gray" id="bankAcctPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="bankHead"></thead><tbody id="bankBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Bank Transfer Reconciliation</div>
+            <div class="panel-sub">Statement lines against the receipts they should match</div></div>
+            <span class="badge b-warn" id="bankRecPill">—</span></div>
+          <div id="bankRecBox"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Bank Transfer Volume</div>
+          <div class="panel-sub">Value received by account, and the unmatched lines</div></div></div>
+        <div class="chartgrid" id="bankGrid"></div>
+      </div>
+    </section>
