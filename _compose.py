@@ -26,6 +26,7 @@ def sidebar(active):
     s = s.replace('data-page="repayments" href="#"', 'data-page="repayments" href="repayments.html"')
     s = s.replace('data-page="applications" href="#"', 'data-page="applications" href="applications.html"')
     s = s.replace('data-page="clients" href="#"', 'data-page="clients" href="clients.html"')
+    s = s.replace('data-page="payments" href="#payments"', 'data-page="payments" href="payments.html"')
     # mark active item
     s = re.sub(r'<a class="nav-item" (data-page="%s")' % re.escape(active),
                r'<a class="nav-item active" \1', s)
