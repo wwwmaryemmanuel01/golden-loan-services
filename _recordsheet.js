@@ -70,9 +70,46 @@
   try { if (typeof STAFF !== 'undefined') STAFF_ARR = STAFF; } catch(e){}
   try { if (typeof CUSTOMERS !== 'undefined') CUST_ARR = CUSTOMERS; } catch(e){}
 
-  function human(v){
+  /* a bare number reading under a money label becomes MK 1,234,567; a rate
+     reads as a percentage. Modules that already format keep their text. */
+  var MONEY_LABEL = /(amount|fee|fees|balance|paid|payment|total|subtotal|net|gross|basic|salary|value|cost|price|charge|charges|deduction|deductions|allowance|allowances|bonus|loan|principal|interest|arrears|outstanding|collected|waived|reversed|deposit|withdrawal|limit|budget|actual|expected|credit|debit|vat|tax|paye|pension|nhima|premium|claim|revenue|income|refund|excess|shortfall|contribution|commission|penalty)/i;
+  var RATE_LABEL = /(\brate\b|percent|%|margin|apy|apr)/i;
+  function thousands(n){
+    var neg = n < 0, a = Math.abs(n);
+    var s = String(a);
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (neg ? '-' : '') + parts.join('.');
+  }
+  function moneyText(s){
+    var raw = String(s).trim().replace(/\s/g, '');
+    if (!/^-?\d{1,3}(,\d{3})+(\.\d{1,2})?$/.test(raw) && !/^-?\d+(\.\d{1,2})?$/.test(raw)) return null;
+    var n = Number(raw.replace(/,/g, ''));
+    if (!isFinite(n)) return null;
+    var dec = /\.\d{1,2}$/.test(raw) ? raw.split('.')[1].length : 0;
+    return 'MK ' + thousands(Number(n.toFixed(dec)));
+  }
+  function rateText(s){
+    var t = String(s).trim().replace(/%$/, '');
+    if (!/^-?\d+(\.\d+)?$/.test(t)) return null;
+    var n = Number(t);
+    if (!isFinite(n)) return null;
+    if (n > 0 && n <= 1) return (Math.round(n * 1000) / 10) + '%';
+    if (n > 1 && n <= 100) return (Math.round(n * 100) / 100) + '%';
+    return null;
+  }
+
+  function human(v, lab){
     var s = String(v == null ? '' : v).trim();
     if (!s || s === 'null' || s === 'undefined' || s === '—' || s === '-') return '';
+    if (lab && RATE_LABEL.test(String(lab)) && !/%/.test(s)) {
+      var rt = rateText(s);
+      if (rt) return rt;
+    }
+    if (lab && MONEY_LABEL.test(String(lab)) && !/%/.test(s) && /\d/.test(s)) {
+      var mt2 = moneyText(s);
+      if (mt2 && Math.abs(Number(String(s).replace(/[\s,]/g, ''))) >= 100) return mt2;
+    }
     if (s === 'true') return 'Yes';
     if (s === 'false') return 'No';
     if (s.charAt(0) === '{' || s.charAt(0) === '['){
@@ -105,7 +142,7 @@
       seen[key] = 1;
       var wide = text.length > 88 || LONG_LABEL.test(lab.replace(/[^a-z]/gi, ''));
       out.push('<div class="pfield' + (wide ? ' wide' : '') + '"><div class="pk">' + esc(lab) + '</div>' +
-               '<div class="pv">' + (p.html != null ? p.html : esc(human(text))) + '</div></div>');
+               '<div class="pv">' + (p.html != null ? p.html : esc(human(text, lab))) + '</div></div>');
     });
     return out;
   }

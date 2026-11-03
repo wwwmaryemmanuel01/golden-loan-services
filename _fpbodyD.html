@@ -1,0 +1,230 @@
+  <!-- ============ 13 · CUSTOMER NOTIFICATIONS ============ -->
+  <section class="sec" id="s13">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div><h2>Customer Notifications</h2>
+        <p>The notice a customer gets when a fee or penalty is raised, the reminder before it is due, the warning before a penalty starts, the confirmation when it is paid, the waiver decision and the correction — by SMS and by email, with the delivery history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="ntPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ntKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notice Rules</div>
+          <div class="panel-sub">Switch a notice off and the customer simply is not told</div></div>
+          <span class="badge b-gray" id="ntRulePill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ntRuleHead"></thead><tbody id="ntRuleBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">SMS and Email Connections</div>
+          <div class="panel-sub">Both rails, the sender, the balance and the last message</div></div>
+          <span class="badge b-gray" id="ntConnPill">—</span></div>
+        <div id="ntConn"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="ntTestSms">Send a test SMS</button>
+          <button class="btn btn-ghost" id="ntTestEmail">Send a test email</button>
+        </div>
+        <div class="qhint" id="ntMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Charges Due a Reminder</div>
+          <div class="panel-sub">Outstanding, inside the reminder window, and not yet chased today</div></div>
+          <span class="badge b-warn" id="ntDuePill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="ntDueHead"></thead><tbody id="ntDueBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Penalties About to Start</div>
+          <div class="panel-sub">The grace period is nearly up, so this is the warning</div></div>
+          <span class="badge b-warn" id="ntWarnPill">—</span></div>
+        <div id="ntWarnBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Notification Delivery History</div>
+        <div class="panel-sub">Every message, the channel it went by, the reference it carried and whether it arrived</div></div>
+        <span class="badge b-gray" id="ntLogPill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ntLogHead"></thead><tbody id="ntLogBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="ntGrid"></div>
+  </section>
+
+  <!-- ============ 14 · ACCOUNTING AND LEDGER CONNECTIONS ============ -->
+  <section class="sec" id="s14">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div><h2>Accounting and Ledger Connections</h2>
+        <p>Every assessment, collection, waiver and reversal posts a balanced pair of entries; charges are kept apart from loan principal and from interest; assessed is reconciled against collected; and the same charge is never posted twice</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="lgPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="lgKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Journal</div>
+        <div class="panel-sub">Every entry, the account it moved and the charge it came from</div></div>
+        <span class="badge b-gray" id="lgCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="lgHead"></thead><tbody id="lgBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reconcile Assessed Against Collected</div>
+          <div class="panel-sub">The check that says the charge book and the ledger agree</div></div>
+          <span class="badge b-ok" id="lgReconPill">—</span></div>
+        <div id="lgReconBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="lgReconBtn">Run the reconciliation</button></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Balance and Separation</div>
+          <div class="panel-sub">Debits against credits, and charges against principal and interest</div></div>
+          <span class="badge b-gray" id="lgBalPill">—</span></div>
+        <div id="lgBalBox"></div>
+        <div id="lgSplitBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Duplicate Entry Protection</div>
+          <div class="panel-sub">One assessment, one collection, one waiver — one set of entries</div></div>
+          <span class="badge b-ok" id="lgDupPill">—</span></div>
+        <div id="lgDupBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Ledger by Account</div>
+          <div class="panel-sub">What each account carries, debits and credits</div></div>
+          <span class="badge b-gray" id="lgSumPill">—</span></div>
+        <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="lgSumHead"></thead><tbody id="lgSumBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="lgGrid"></div>
+  </section>
+
+  <!-- ============ 15 · PAYMENT AND REPAYMENT CONNECTIONS ============ -->
+  <section class="sec" id="s15">
+    <div class="sec-head">
+      <div class="sec-num">15</div>
+      <div><h2>Payment and Repayment Connections</h2>
+        <p>How the charge book stays tied to the repayment records, the schedules, the receipts and the allocations — the eligible allocations, the balance update after every payment, partial and failed payments, reversals and the reconciliation</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="cnPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="cnKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">What This Module Reads and Writes</div>
+        <div class="panel-sub">Every connection, the direction of the link and its health</div></div>
+        <span class="badge b-gray" id="cnMapPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="cnMapHead"></thead><tbody id="cnMapBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Repayments That Carried a Charge</div>
+          <div class="panel-sub">The instalment, the split and the fee or penalty collected with it</div></div>
+          <span class="badge b-gray" id="cnRepayPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="cnRepayHead"></thead><tbody id="cnRepayBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Repayment Schedules</div>
+          <div class="panel-sub">The instalments the penalty engine walks</div></div>
+          <span class="badge b-gray" id="cnSchedPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="cnSchedHead"></thead><tbody id="cnSchedBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Receipts and Allocations</div>
+          <div class="panel-sub">Every receipt, and the charge allocation behind it</div></div>
+          <span class="badge b-gray" id="cnReceiptPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="cnReceiptHead"></thead><tbody id="cnReceiptBody"></tbody></table></div>
+        <div class="minihead" style="margin-top:10px">Allocations</div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="cnAllocHead"></thead><tbody id="cnAllocBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Methods, Partials and Failures</div>
+          <div class="panel-sub">How charges are paid, what is part paid and what failed</div></div>
+          <span class="badge b-gray" id="cnMethodPill">—</span></div>
+        <div id="cnMethodBox"></div>
+        <div id="cnPartialBox" style="margin-top:8px"></div>
+        <div class="minihead" style="margin-top:10px">Failed and reversed</div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="cnFailHead"></thead><tbody id="cnFailBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payment Reconciliation</div>
+          <div class="panel-sub">Collections against the charge balances they settled</div></div>
+        <span class="badge b-ok" id="cnReconPill">—</span></div>
+      <div id="cnReconBox"></div>
+    </div>
+
+    <div class="chartgrid" id="cnGrid"></div>
+  </section>
+
+  <!-- ============ 16 · SECURITY AND PERMISSIONS ============ -->
+  <section class="sec" id="s16">
+    <div class="sec-head">
+      <div class="sec-num">16</div>
+      <div><h2>Security and Permissions</h2>
+        <p>Who may read a charge, create a fee, change a rate, assess a fee or a penalty, approve a waiver, approve a reversal, change the thresholds — and the log of every sensitive action, including the ones that were refused</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="scPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="scKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Role and Capability Matrix</div>
+        <div class="panel-sub">A tick means the role holds that right on this module</div></div>
+        <span class="badge b-gray" id="scMatrixPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="scMatrixHead"></thead><tbody id="scMatrixBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Capabilities in Plain Words</div>
+          <div class="panel-sub">What each right actually allows</div></div>
+          <span class="badge b-gray" id="scCapPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="scCapHead"></thead><tbody id="scCapBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Thresholds and Sensitive Actions</div>
+          <div class="panel-sub">What needs a second signature, and what only the head of credit may do</div></div>
+          <span class="badge b-gray" id="scThrPill">—</span></div>
+        <div id="scThrBox"></div>
+        <div id="scSensBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Staff Actions on Charges</div>
+        <div class="panel-sub">Every action, allowed or refused, with the record it touched</div></div>
+        <span class="badge b-gray" id="scActPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="scActHead"></thead><tbody id="scActBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unauthorised Changes Detected</div>
+          <div class="panel-sub">A change made without the right, or outside the hours</div></div>
+          <span class="badge b-crit" id="scUnauthPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="scUnauthHead"></thead><tbody id="scUnauthBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Audit Log</div>
+          <div class="panel-sub">The append-only record this module writes to</div></div>
+          <span class="badge b-gray" id="scAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="scAuditHead"></thead><tbody id="scAuditBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="scGrid"></div>
+  </section>

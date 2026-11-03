@@ -1,0 +1,286 @@
+  <!-- ============ 17 · SUPABASE AND DATABASE CONNECTIONS ============ -->
+  <section class="sec" id="s17">
+    <div class="sec-head">
+      <div class="sec-num">17</div>
+      <div><h2>Supabase and Database Connections</h2>
+        <p>The tables this module leans on — loans, products, repayments, schedules, receipts, allocations and the charge records themselves — plus the database functions, the row level security check, the integrity checks and the errors</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="dbPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Tables Behind This Module</div>
+        <div class="panel-sub">Read, written or both, and the last round trip for each</div></div>
+        <span class="badge b-gray" id="dbTablePill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dbTableHead"></thead><tbody id="dbTableBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Database Functions</div>
+          <div class="panel-sub">The calculations and guards that run in the database, not the browser</div></div>
+          <span class="badge b-gray" id="dbFuncPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="dbFuncHead"></thead><tbody id="dbFuncBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Row Level Security</div>
+          <div class="panel-sub">Every table closed, every policy named and every check passed</div></div>
+          <span class="badge b-ok" id="dbRlsPill">—</span></div>
+        <div id="dbRlsBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="dbRlsBtn">Verify RLS on every table</button></div>
+        <div class="qhint" id="dbRlsMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Integrity and Duplicate Protection</div>
+          <div class="panel-sub">A charge cannot land twice, and a transaction cannot half happen</div></div>
+          <span class="badge b-ok" id="dbIntPill">—</span></div>
+        <div id="dbIntBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="dbIntBtn">Run the integrity checks</button></div>
+        <div class="qhint" id="dbIntMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Schema Compatibility</div>
+          <div class="panel-sub">The columns this build expects and the columns it finds</div></div>
+          <span class="badge b-gray" id="dbSchemaPill">—</span></div>
+        <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="dbSchemaHead"></thead><tbody id="dbSchemaBody"></tbody></table></div>
+        <div class="minihead" style="margin-top:10px">Migrations applied</div>
+        <div id="dbMigBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Error Monitoring</div>
+        <div class="panel-sub">Rejected writes, timeouts and constraint violations, with the request that caused them</div></div>
+        <span class="badge b-warn" id="dbErrPill">—</span></div>
+      <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="dbGrid"></div>
+  </section>
+
+  <!-- ============ 18 · REPORTS AND ANALYTICS ============ -->
+  <section class="sec" id="s18">
+    <div class="sec-head">
+      <div class="sec-num">18</div>
+      <div><h2>Reports and Analytics</h2>
+        <p>Fees assessed, penalties assessed, fees collected, penalties collected, what is outstanding, what was waived and what was reversed — by product, by customer, by staff member, month by month, with a reconciliation report</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="rpPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="rpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Choose a Report</div>
+          <div class="panel-sub">Every report here can be exported or sent to the printer</div></div>
+        <span class="badge b-gray" id="rpSelPill">—</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Report</label><select id="rpSel"></select></div>
+        <div class="fg"><label>Group by</label><select id="rpGroup"><option value="auto">As the report defines it</option><option value="product">Loan product</option><option value="customer">Customer</option><option value="staff">Staff member</option><option value="month">Month</option></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="rpRunBtn">Run the report</button>
+        <button class="btn btn-ghost" id="rpCsvBtn">Export to CSV</button>
+        <button class="btn btn-ghost" id="rpPrintBtn">Print it</button>
+      </div>
+      <div class="qhint" id="rpMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Report Output</div>
+          <div class="panel-sub">Totals first, then the lines behind them</div></div>
+        <span class="badge b-gray" id="rpOutPill">—</span></div>
+      <div id="rpSummary"></div>
+      <div class="tblwrap" style="max-height:340px;margin-top:8px"><table class="tbl2 dense"><thead id="rpHead"></thead><tbody id="rpBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Twelve Reports</div>
+          <div class="panel-sub">What each one answers</div></div>
+          <span class="badge b-gray" id="rpListPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rpListHead"></thead><tbody id="rpListBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Monthly Fee Revenue</div>
+          <div class="panel-sub">Fees and penalties collected, month by month</div></div>
+          <span class="badge b-ok" id="rpMonthPill">—</span></div>
+        <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="rpMonthHead"></thead><tbody id="rpMonthBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="rpGrid"></div>
+  </section>
+
+  <!-- ============ 19 · SETTINGS AND COMPLIANCE ============ -->
+  <section class="sec" id="s19">
+    <div class="sec-head">
+      <div class="sec-num">19</div>
+      <div><h2>Settings and Compliance</h2>
+        <p>The fee types, the penalty rules, the grace periods, the caps, the effective dates and the approval requirements — plus what the customer must be told, what Malawi requires, and how a change to policy is reviewed, approved and kept on the file</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="stPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="stKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fee Type Configuration</div>
+          <div class="panel-sub">Twenty charge types, switched on or off, with their basis and rate</div></div>
+          <span class="badge b-gray" id="stTypePill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="stTypeHead"></thead><tbody id="stTypeBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Penalty Rule Settings</div>
+          <div class="panel-sub">Grace, daily rate, fixed amount, missed payment rate and both caps</div></div>
+          <span class="badge b-gray" id="stRulePill">—</span></div>
+        <div id="stRuleBox"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="stSaveBtn">Propose the change</button>
+          <button class="btn btn-ghost" id="stResetBtn">Reset to the saved figures</button>
+        </div>
+        <div class="qhint" id="stMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Grace Periods</div>
+          <div class="panel-sub">Days before a penalty may start, by type</div></div></div>
+        <div id="stGraceBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Caps</div>
+          <div class="panel-sub">The ceiling on a single charge and on the overdue share</div></div></div>
+        <div id="stCapBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Requirements</div>
+          <div class="panel-sub">What needs a second signature, and at what amount</div></div></div>
+        <div id="stApprBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Effective Dates</div>
+          <div class="panel-sub">Nothing changes until its date, and every old rate keeps working on old charges</div></div>
+        <span class="badge b-gray" id="stEffPill">—</span></div>
+      <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="stEffHead"></thead><tbody id="stEffBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Disclosure Requirements</div>
+          <div class="panel-sub">What must be in writing and agreed before a charge can be raised</div></div>
+          <span class="badge b-ok" id="stDiscPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="stDiscHead"></thead><tbody id="stDiscBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Malawi Regulatory Requirements</div>
+          <div class="panel-sub">The Reserve Bank of Malawi rules this module is built to satisfy</div></div>
+          <span class="badge b-ok" id="stRegPill">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="stRegHead"></thead><tbody id="stRegBody"></tbody></table></div>
+        <div class="qhint" id="stRegMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Policy Change Review and Approval</div>
+          <div class="panel-sub">A proposed change waits here until it is reviewed and approved</div></div>
+        <span class="badge b-warn" id="stPendPill">—</span></div>
+      <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="stPendHead"></thead><tbody id="stPendBody"></tbody></table></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Historical Configurations</div>
+          <div class="panel-sub">Every configuration this module has ever run under, and when each one was in force</div></div>
+        <span class="badge b-gray" id="stHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="stHistHead"></thead><tbody id="stHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="stGrid"></div>
+  </section>
+
+  <!-- ============ 20 · AUDIT HISTORY ============ -->
+  <section class="sec" id="s20">
+    <div class="sec-head">
+      <div class="sec-num">20</div>
+      <div><h2>Audit History</h2>
+        <p>Every change to a fee, a rate, a penalty rule or a cap; every assessment, waiver, reversal and correction — with the staff member, the date and time, the value before and the value after, the reason, and an authorised export of the lot</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="auPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="auKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Audit Trail</div>
+          <div class="panel-sub">Append only. Nothing here can be edited or deleted.</div></div>
+        <span class="badge b-gray" id="auCount">—</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Show</label><select id="auFilter"></select></div>
+        <div class="fg"><label>Search</label><input id="auSearch" placeholder="staff, record, reason…" /></div>
+      </div>
+      <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="auHead"></thead><tbody id="auBody"></tbody></table></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="auExportBtn">Export the authorised audit report</button>
+        <button class="btn btn-ghost" id="auPrintBtn">Print the trail</button>
+      </div>
+      <div class="qhint" id="auMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Configuration Changes</div>
+          <div class="panel-sub">Fee types, rates, grace periods, caps and thresholds — before and after</div></div>
+          <span class="badge b-gray" id="auCfgPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="auCfgHead"></thead><tbody id="auCfgBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Rule and Rate Changes</div>
+          <div class="panel-sub">The penalty rules as they moved, and who moved them</div></div>
+          <span class="badge b-gray" id="auRulePill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="auRuleHead"></thead><tbody id="auRuleBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Charge Assessment History</div>
+          <div class="panel-sub">Every charge raised, and the rule it was raised under</div></div>
+          <span class="badge b-gray" id="auAssessPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="auAssessHead"></thead><tbody id="auAssessBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Waiver, Reversal and Correction History</div>
+          <div class="panel-sub">The decisions, the reasons and the amounts</div></div>
+          <span class="badge b-gray" id="auDecPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="auDecHead"></thead><tbody id="auDecBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Staff Responsible</div>
+          <div class="panel-sub">Who touched this module, how often and in what way</div></div>
+        <span class="badge b-gray" id="auStaffPill">—</span></div>
+      <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="auStaffHead"></thead><tbody id="auStaffBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="auGrid"></div>
+  </section>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

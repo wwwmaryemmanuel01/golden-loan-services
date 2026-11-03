@@ -1,0 +1,252 @@
+  <!-- ============ 9 · CUSTOMER FEE ACCOUNTS ============ -->
+  <section class="sec" id="s9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Customer Fee Accounts</h2>
+        <p>One customer at a time: every charge raised against them, what is still outstanding for fees and for penalties, the loans and repayment schedules those charges hang from, what has been paid, waived and reversed, and a statement you can print</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="caPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="caKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Customer</div>
+          <div class="panel-sub">Pick a customer to read their whole charge account</div></div>
+          <span class="badge b-gray" id="caSelPill">—</span></div>
+        <div class="fg"><label>Customer</label><select id="caSel"></select></div>
+        <div id="caDetail" style="margin-top:8px"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="caStmtBtn">Build the charge statement</button></div>
+        <div class="qhint" id="caStmtMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Outstanding Fees and Penalties</div>
+          <div class="panel-sub">The two balances side by side, with what falls due next</div></div>
+          <span class="badge b-warn" id="caOutPill">—</span></div>
+        <div id="caOutBox"></div>
+        <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="caOutHead"></thead><tbody id="caOutBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Linked to Loans and Schedules</div>
+          <div class="panel-sub">Every charge points at the loan and the instalment it came from</div></div>
+          <span class="badge b-gray" id="caLinkPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="caLinkHead"></thead><tbody id="caLinkBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Assessed, Paid, Waived and Reversed</div>
+          <div class="panel-sub">Where every shilling of this customer's charges went</div></div>
+          <span class="badge b-gray" id="caMixPill">—</span></div>
+        <div id="caMixBox"></div>
+        <div class="tblwrap" style="max-height:150px;margin-top:8px"><table class="tbl2 dense"><thead id="caWaivedHead"></thead><tbody id="caWaivedBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Customer Charge History</div>
+        <div class="panel-sub">Every assessment, collection, waiver, reversal and notice on this account</div></div>
+        <span class="badge b-gray" id="caHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="caHistHead"></thead><tbody id="caHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="caGrid"></div>
+  </section>
+
+  <!-- ============ 10 · FEE AND PENALTY COLLECTIONS ============ -->
+  <section class="sec" id="s10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Fee and Penalty Collections</h2>
+        <p>Record a payment against a charge, allocate it, keep principal, interest, fees and penalties apart, see what is part paid, fully paid and still open, issue the receipt and reconcile what was collected</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="clPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="clKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Record a Charge Payment</div>
+          <div class="panel-sub">Fees and penalties are collected against the charge, never against the principal</div></div>
+          <span class="badge b-gray" id="clFormPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Charge</label><select id="clCharge"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="clAmount" type="number" step="500" /></div>
+          <div class="fg"><label>Method</label><select id="clMethod"></select></div>
+          <div class="fg"><label>Receipt</label><input id="clReceipt" placeholder="RCP-00000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="clPayBtn">Record the payment</button>
+          <button class="btn btn-ghost" id="clReceiptBtn">Issue the receipt</button></div>
+        <div class="qhint" id="clMsg" style="margin-top:6px"></div>
+        <div id="clAllocBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">How a Payment Is Split</div>
+          <div class="panel-sub">Principal, interest, fees and penalties are kept apart on every receipt</div></div>
+          <span class="badge b-gray" id="clSplitPill">—</span></div>
+        <div id="clSplitBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="clReconBtn">Reconcile the collections</button></div>
+        <div class="qhint" id="clReconMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Partially Paid</div>
+          <div class="panel-sub">Charges with something paid and something left</div></div>
+          <span class="badge b-warn" id="clPartPill">—</span></div>
+        <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="clPartHead"></thead><tbody id="clPartBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fully Paid</div>
+          <div class="panel-sub">Settled in full, with the receipt</div></div>
+          <span class="badge b-ok" id="clFullPill">—</span></div>
+        <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="clFullHead"></thead><tbody id="clFullBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Outstanding</div>
+          <div class="panel-sub">Nothing collected yet</div></div>
+          <span class="badge b-crit" id="clOutPill">—</span></div>
+        <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="clOutHead"></thead><tbody id="clOutBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Collection History</div>
+        <div class="panel-sub">Every allocation against a charge, with the method, the receipt and the officer</div></div>
+        <span class="badge b-gray" id="clHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="clHistHead"></thead><tbody id="clHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="clGrid"></div>
+  </section>
+
+  <!-- ============ 11 · FEE WAIVERS AND EXEMPTIONS ============ -->
+  <section class="sec" id="s11">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>Fee Waivers and Exemptions</h2>
+        <p>Submit a fee or penalty waiver, give the reason and attach the evidence, then review, approve, reject, or grant a partial or full waiver — with the guard that stops anybody approving their own request</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="wvPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="wvKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Submit a Waiver Request</div>
+          <div class="panel-sub">The evidence is recorded with the request, not after it</div></div>
+          <span class="badge b-gray" id="wvFormPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Charge</label><select id="wvCharge"></select></div>
+          <div class="fg"><label>Scope</label><select id="wvScope"><option>Full waiver</option><option>Partial waiver</option></select></div>
+          <div class="fg"><label>Reason</label><select id="wvReason"></select></div>
+          <div class="fg"><label>Amount to waive (MWK)</label><input id="wvAmount" type="number" step="500" /></div>
+          <div class="fg"><label>Supporting document</label><select id="wvDoc"></select></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="wvSubmitBtn">Submit the request</button></div>
+        <div class="qhint" id="wvMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Request Under Review</div>
+          <div class="panel-sub">Read it, then approve, reject or grant a part of it</div></div>
+          <span class="badge b-gray" id="wvDetailPill">—</span></div>
+        <div id="wvDetail"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="wvApproveBtn">Approve the waiver</button>
+          <button class="btn btn-ghost" id="wvRejectBtn">Reject it</button>
+          <button class="btn btn-ghost" id="wvSelfBtn">Try to approve my own</button>
+        </div>
+        <div class="qhint" id="wvSelfMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Waiver Requests</div>
+        <div class="panel-sub">Every request with its reason, evidence, decision and approver</div></div>
+        <span class="badge b-gray" id="wvQueuePill">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="wvQueueHead"></thead><tbody id="wvQueueBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authorised Exemptions</div>
+          <div class="panel-sub">Customers or categories that never carry this charge</div></div>
+          <span class="badge b-ok" id="wvExemptPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="wvExemptHead"></thead><tbody id="wvExemptBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Waiver Approval History</div>
+          <div class="panel-sub">Who asked, who decided, when, and what was waived</div></div>
+          <span class="badge b-gray" id="wvHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="wvHistHead"></thead><tbody id="wvHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="wvGrid"></div>
+  </section>
+
+  <!-- ============ 12 · REVERSALS AND CORRECTIONS ============ -->
+  <section class="sec" id="s12">
+    <div class="sec-head">
+      <div class="sec-num">12</div>
+      <div><h2>Reversals and Corrections</h2>
+        <p>An incorrect or duplicate charge is corrected by reversing it, never by editing it — the request, the review, the approval, the recalculated balance, what happens to money already collected, the reason, and the original row kept forever</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="rvPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="rvKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Submit a Correction Request</div>
+          <div class="panel-sub">Name the charge and the reason; the original stays on the file</div></div>
+          <span class="badge b-gray" id="rvFormPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Charge</label><select id="rvCharge"></select></div>
+          <div class="fg"><label>Reason</label><select id="rvReason"></select></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="rvSubmitBtn">Submit for review</button></div>
+        <div class="qhint" id="rvMsg" style="margin-top:6px"></div>
+        <div class="minihead" style="margin-top:10px">Money already collected</div>
+        <div id="rvRefundBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Request Under Review</div>
+          <div class="panel-sub">Approve the reversal, and the balance is recalculated at once</div></div>
+          <span class="badge b-gray" id="rvDetailPill">—</span></div>
+        <div id="rvDetail"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="rvApproveBtn">Approve the reversal</button>
+          <button class="btn btn-ghost" id="rvRejectBtn">Reject it</button>
+          <button class="btn btn-ghost" id="rvRecalcBtn">Recalculate outstanding</button>
+        </div>
+        <div class="qhint" id="rvRecalcMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Correction Requests</div>
+        <div class="panel-sub">Every request, its reason and the decision</div></div>
+        <span class="badge b-gray" id="rvQueuePill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rvQueueHead"></thead><tbody id="rvQueueBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Duplicate Charge Detection</div>
+          <div class="panel-sub">The same fee, on the same loan, inside the guard window</div></div>
+          <span class="badge b-crit" id="rvDupPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rvDupHead"></thead><tbody id="rvDupBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reversal and Correction History</div>
+          <div class="panel-sub">The original figure, the restated figure, who approved it and why</div></div>
+          <span class="badge b-gray" id="rvHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rvHistHead"></thead><tbody id="rvHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="rvGrid"></div>
+  </section>
