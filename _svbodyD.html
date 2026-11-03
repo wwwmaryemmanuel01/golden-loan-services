@@ -1,0 +1,236 @@
+  <!-- ============ 13 · FEES, LIMITS AND PENALTIES ============ -->
+  <section class="sec" id="s13">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div><h2>Fees, Limits and Penalties</h2>
+        <p>Account maintenance, withdrawal and transfer fees, the minimum and maximum deposit limits, the daily withdrawal limits, the early withdrawal penalty, the dormant account rules, the waivers and the change history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="flPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="flKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Deposit and Withdrawal Limits</div>
+        <div class="panel-sub">Editable — saving writes a configuration change with your name on it</div></div>
+        <span class="badge b-gray" id="flCount">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="flLimitsHead"></thead><tbody id="flLimitsBody"></tbody></table></div>
+      <div class="form-actions"><button class="btn btn-gold" id="flSaveBtn">Save the limits</button></div>
+      <div class="qhint" id="flMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fees and Penalties</div>
+          <div class="panel-sub">What is charged, on what basis, and how often it is waived</div></div></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="flFeesHead"></thead><tbody id="flFeesBody"></tbody></table></div>
+        <div id="flPenaltyBox" style="margin-top:8px"></div>
+        <div id="flDormantBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fee Waivers</div>
+          <div class="panel-sub">A waiver needs a reason and a signature</div></div>
+          <span class="badge b-gray" id="flWaiverPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Customer</label><select id="flWaiverCust"></select></div>
+          <div class="fg"><label>Fee</label><select id="flWaiverFee"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="flWaiverAmount" type="number" step="500" value="2500" /></div>
+          <div class="fg"><label>Reason</label><input id="flWaiverReason" placeholder="Why the fee is being waived" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost" id="flWaiverBtn">Request the waiver</button></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="flWaiverHead"></thead><tbody id="flWaiverBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Fee and Limit Change History</div>
+        <div class="panel-sub">Every change, with the previous and the updated value</div></div>
+        <span class="badge b-gray" id="flHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="flHistHead"></thead><tbody id="flHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="flGrid"></div>
+  </section>
+
+  <!-- ============ 14 · SAVINGS TRANSFERS ============ -->
+  <section class="sec" id="s14">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div><h2>Savings Transfers</h2>
+        <p>Between a customer's own savings and current accounts, to another eligible customer, or to a loan repayment — with the approval requirement, the reference, the status, the failure handling, the duplicate prevention, the reconciliation and the audit trail</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="smPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="smKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Make a Transfer</div>
+        <div class="panel-sub">Pick the source, then the destination — the checks run before anything moves</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>From</label><select id="smFrom"></select></div>
+        <div class="fg"><label>To</label><select id="smTo"></select></div>
+        <div class="fg"><label>Amount (MWK)</label><input id="smAmount" type="number" step="500" value="25000" /></div>
+        <div class="fg"><label>Purpose</label><input id="smPurpose" placeholder="Why the money is moving" /></div>
+      </div>
+      <div id="smChecks" style="margin-top:8px"></div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="smCheckBtn">Run the checks</button>
+        <button class="btn btn-gold" id="smSubmitBtn">Post the transfer</button>
+      </div>
+      <div class="qhint" id="smMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transfer to a Loan Repayment</div>
+          <div class="panel-sub">A savings balance paying down a live facility</div></div>
+          <span class="badge b-gray" id="smLoanPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Loan</label><select id="smLoan"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="smLoanAmount" type="number" step="500" value="50000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="smLoanBtn">Pay the loan from savings</button></div>
+        <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="smLoanHead"></thead><tbody id="smLoanBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Status, Failures and Duplicates</div>
+          <div class="panel-sub">Where the transfers stand, and what was refused</div></div></div>
+        <div id="smTrack"></div>
+        <div id="smDupBox" style="margin-top:8px"></div>
+        <div class="tblwrap" style="max-height:170px;margin-top:8px"><table class="tbl2 dense"><thead id="smFailHead"></thead><tbody id="smFailBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Transfers</div>
+        <div class="panel-sub">Every transfer between accounts, newest first</div></div>
+        <span class="badge b-gray" id="smHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="smHead"></thead><tbody id="smBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transfer Reconciliation</div>
+          <div class="panel-sub">What left one account and arrived in the other</div></div></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="smReconBtn">Reconcile the transfers</button></div>
+        <div id="smReconBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transfer Audit Trail</div>
+          <div class="panel-sub">Who moved what, and when</div></div>
+          <span class="badge b-gray" id="smAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="smAuditHead"></thead><tbody id="smAuditBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 15 · NOTIFICATIONS AND REMINDERS ============ -->
+  <section class="sec" id="s15">
+    <div class="sec-head">
+      <div class="sec-num">15</div>
+      <div><h2>Notifications and Reminders</h2>
+        <p>Deposit confirmations, withdrawal status, interest credits, low balance alerts, goal reminders, fixed-term maturity, dormant account notices — over the SMS and email connections, with the delivery history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="ntPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ntKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+        <div class="panel-sub">Every event, its channel, who receives it and whether it is on</div></div>
+        <span class="badge b-gray" id="ntRulePill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ntHead"></thead><tbody id="ntBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">SMS and Email Connections</div>
+          <div class="panel-sub">The two channels every message travels over</div></div></div>
+        <div id="ntConn"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="ntTestSms">Send a test SMS</button>
+          <button class="btn btn-ghost" id="ntTestEmail">Send a test email</button>
+        </div>
+        <div class="qhint" id="ntMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Alerts and Reminders</div>
+          <div class="panel-sub">Low balances, goal reminders, maturities and dormancy</div></div></div>
+        <div id="ntLowBox"></div>
+        <div id="ntGoalBox" style="margin-top:8px"></div>
+        <div id="ntMatBox" style="margin-top:8px"></div>
+        <div id="ntDormBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
+          <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+          <span class="badge b-gray" id="ntDelPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntDelHead"></thead><tbody id="ntDelBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification History</div>
+          <div class="panel-sub">Every message sent about a savings account</div></div>
+          <span class="badge b-gray" id="ntHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntHistHead"></thead><tbody id="ntHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ntGrid"></div>
+  </section>
+
+  <!-- ============ 16 · DORMANT AND RESTRICTED ACCOUNTS ============ -->
+  <section class="sec" id="s16">
+    <div class="sec-head">
+      <div class="sec-num">16</div>
+      <div><h2>Dormant and Restricted Accounts</h2>
+        <p>Dormant account detection against the configured period, restricted and suspended accounts, reactivation requests, identity re-verification, unclaimed savings and the restriction history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="drPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="drKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Dormancy Configuration and Detection</div>
+        <div class="panel-sub">Change the period and the register is re-detected at once</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Dormancy after (days)</label><input id="drCfgDays" type="number" min="30" max="730" step="30" /></div>
+        <div class="fg"><label>Dormancy fee (MWK per month)</label><input id="drCfgFee" type="number" step="500" /></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="drCfgSave" style="width:100%">Save and re-detect</button></div>
+      </div>
+      <div class="qhint" id="drMsg" style="margin-top:6px"></div>
+      <div class="tblwrap" style="max-height:280px;margin-top:8px"><table class="tbl2 dense"><thead id="drHead"></thead><tbody id="drBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Restricted Accounts</div>
+          <div class="panel-sub">A restriction stops a withdrawal until it is lifted</div></div>
+          <span class="badge b-gray" id="drRestrictPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="drRestrictHead"></thead><tbody id="drRestrictBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Suspended Accounts and Reactivation</div>
+          <div class="panel-sub">Approve a request, or re-verify the customer's identity</div></div>
+          <span class="badge b-gray" id="drReqPill">—</span></div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="drSuspHead"></thead><tbody id="drSuspBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="drReverifyBtn">Re-verify the selected customer</button></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="drReqHead"></thead><tbody id="drReqBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unclaimed Savings Records</div>
+          <div class="panel-sub">Balances untouched for years, and where they sit</div></div></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="drUncHead"></thead><tbody id="drUncBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Restriction and Reactivation History</div>
+          <div class="panel-sub">Every restriction applied, lifted or re-applied</div></div>
+          <span class="badge b-gray" id="drHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="drHistHead"></thead><tbody id="drHistBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>

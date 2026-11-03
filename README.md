@@ -453,6 +453,52 @@ reports with the settings and audit history.
 - **Audit trail that writes itself** — every mutation lands in Configuration Change History and
   the module audit log with the previous value, the updated value, the officer and the timestamp.
 
+## Savings Management & Connections module
+
+`savings.html` is the customer savings book: **20 sections** — the savings overview, savings
+account management, customer savings profiles, savings deposits, savings withdrawals, balance and
+ledger management, interest management, savings products and plans, savings goals, payment method
+connections, transaction monitoring, statements and receipts, fees, limits and penalties,
+transfers, notifications and reminders, dormant and restricted accounts, security and fraud
+prevention, the Supabase/database connections, reports and analytics, and the settings with the
+audit history.
+
+- **One book for every savings product** — 240 customer accounts (120 savings, 120 current),
+  six products from Standard Savings at 6.5% to Fixed-Term 12 months at 11.5%, ~390 recorded
+  transactions, twenty goals, eighteen beneficiaries, a double-entry ledger, receipts,
+  interest accrual and the monthly postings all read from the same customers the rest of the
+  portal runs on.
+- **Live mutations** — open an account (the number is generated from the configured prefix and
+  sequence) and watch it appear in the register; edit the permitted details; activate, restrict,
+  suspend or close (a close with money in it is refused); record a deposit and verify it so the
+  balance, the ledger and a receipt all follow; raise a withdrawal after verifying the identity,
+  then verify, approve, reject, cancel or process it; recalculate balances from the ledger and
+  reconcile them; post an adjustment with a reason (a change without one is refused); change the
+  interest rate and the accrual follows; calculate interest on an amount; build a goal, contribute
+  to it, move its date, complete or cancel it; pause or resume a rail; record, verify and receipt
+  a deposit; search the register by state; verify a receipt; reconcile the rails and the
+  transfers; save fees through an editable panel; request a fee waiver; post a transfer between
+  accounts and pay a loan out of savings; toggle permission grants, notification rules and
+  dormancy detection; fix the RLS gap; run the integrity and schema checks; send a test SMS or
+  email; export any report; and save or restore the module settings.
+- **Twelve reports** — total savings, growth, deposits and withdrawals, by customer, by product,
+  interest accrual, interest paid, dormant accounts, pending transactions, reconciliation, fees
+  and penalties, and the export-authorised list — each with an on-screen preview, CSV, Excel
+  (xlsx) and print/PDF output, plus a combined pack and a generation history.
+- **Filters drive all twenty sections at once** — date range, area (savings, deposits,
+  withdrawals, interest, goals, dormant, security, database), severity, transaction state,
+  officer, branch, product and free text, with removable chips and a live result summary.
+- **Money that reconciles** — available = opening balance + confirmed credits − completed debits −
+  reserved, and available plus reserved equals the ledger entry for entry; two accounts are
+  deliberately short so the discrepancy checks bite, and every correction writes an opposite
+  ledger row instead of editing a figure.
+- **Rules that cannot be bypassed** — a deposit is credited only after verification, a duplicate
+  reference inside the window is held, a payout needs a verified identity and refuses to break
+  the minimum balance, and the approval route follows the configured thresholds.
+- **Audit trail that writes itself** — every mutation lands in the configuration change history
+  and the module audit log with the previous value, the updated value, the officer and the
+  timestamp.
+
 ## Deposits & Withdrawals Management & Connections module
 
 `deposits.html` is the money-movement register: **18 sections** — financial overview, deposit
@@ -525,6 +571,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Methods of Payment Management | `payments.html` | 20 · 31 charts · 12 reports |
 | Deposits & Withdrawals Management | `deposits.html` | 18 · 21 charts · 12 reports |
 | Transfers Management | `transfers.html` | 20 · 17 charts · 12 reports |
+| Savings Management | `savings.html` | 20 · 22 charts · 12 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -567,6 +614,7 @@ _website.css            page CSS for Website Management & Connections
 _payments.css           page CSS for Methods of Payment Management & Connections
 _deposits.css           page CSS for Deposits & Withdrawals Management & Connections
 _transfers.css          page CSS for Transfers Management & Connections
+_savings.css            page CSS for Savings Management & Connections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -586,6 +634,7 @@ build-website.sh        rebuilds website.html from its partials
 build-payments.sh       rebuilds payments.html from its partials
 build-deposits.sh       rebuilds deposits.html from its partials
 build-transfers.sh      rebuilds transfers.html from its partials
+build-savings.sh        rebuilds savings.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
