@@ -75,6 +75,23 @@ function countBy(items, dateOf){
 
 /* ---------------- sortable, paginated tables ---------------- */
 const TBL = {}, TBL_CFG = {}, STORE_ROWS = {};
+/* a plain column still reads properly: dates as dates, months as months */
+function svCell(col, v){
+  if(v === null || v === undefined || v === '') return '<span class="muted">—</span>';
+  const s = String(v);
+  if(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(s)) return esc(svDateText(s));
+  if(/^(month|period)$/i.test(col.k) && /^\d{4}-\d{2}$/.test(s)) return esc(monthLabel(s));
+  if(/^yes$|^no$/i.test(s) && /verified|approved|restricted|flagged/i.test(col.k)) return badge(s, /^yes$/i.test(s) ? 'b-ok' : 'b-gray');
+  return esc(s);
+}
+/* a column that prints its value raw still gets a readable date */
+function svCellHtml(col, row){
+  const html = col.html ? String(col.html(row[col.k], row)) : svCell(col, row[col.k]);
+  const t = html.trim();
+  if(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(t)) return esc(svDateText(t));
+  if(/^<span[^>]*>\s*\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?\s*<\/span>$/.test(t)) return esc(svDateText(t.replace(/<[^>]+>/g, '').trim()));
+  return html;
+}
 function renderTable(hostId, cols, rows, opts = {}){
   const st = TBL[hostId] = TBL[hostId] || {sort: opts.sort || (cols.find(c => c.num) || cols[0]).k,
     dir: opts.dir || 'desc', page: 1};
@@ -97,7 +114,7 @@ function renderTable(hostId, cols, rows, opts = {}){
   const body = slice.map((r, i) => {
     const idx = (st.page - 1) * pageSize + i;
     return `<tr${clickable ? ` class="rowlink" data-tblrow="${hostId}" data-i="${idx}"` : ''}>`
-      + cols.map(c => `<td${c.num ? ' class="num"' : ''}>${c.html ? c.html(r[c.k], r) : esc(r[c.k])}</td>`).join('')
+      + cols.map(c => `<td${c.num ? ' class="num"' : ''}>${svCellHtml(c, r)}</td>`).join('')
       + '</tr>';
   }).join('') || `<tr><td colspan="${cols.length}" class="empty">Nothing matches the current filters.</td></tr>`;
   const host = el(hostId);
@@ -258,12 +275,26 @@ function openRecord(host, rec){
     extras.push({k, label, html});
   });
   const meta = ['owner', 'region', 'lane', 'severity'].filter(k => rec[k] !== undefined && rec[k] !== '');
+  /* the rest of the record reads in blocks: money first, then dates, then the rest */
+  const SV_GROUPS = [
+    {title: 'Balances and amounts', test: k => SV_MONEY_KEY.test(k)},
+    {title: 'Dates and timing', test: k => SV_DATE_KEY.test(k) || /(month|period|frequency|cycle)/i.test(k)},
+    {title: 'Other details', test: () => true}
+  ];
+  const buckets = SV_GROUPS.map(g => ({title: g.title, rows: []}));
+  extras.forEach(f => {
+    const i = SV_GROUPS.findIndex(g => g.test(f.k));
+    buckets[i < 0 ? buckets.length - 1 : i].rows.push(f);
+  });
+  const sections = buckets.filter(b => b.rows.length)
+    .map(b => `<div class="recsub">${esc(b.title)}</div>
+        <div class="recgrid">${b.rows.map(f => svField(f.k, f.html, f.label)).join('')}</div>`).join('');
   openModal(String(head),
     (cols.length ? num((cfg.rows || []).length) + ' records in this register' : 'The whole record') + ' · ' + filterLine(),
     `<div class="recsheet">
+      <div class="recsub" style="margin-top:0;padding-top:0;border-top:0">At a glance</div>
       <div class="recgrid">${main.map(f => svField(f.k, f.html, f.label)).join('')}</div>
-      ${extras.length ? `<div class="recsub">Everything else on this record</div>
-        <div class="recgrid">${extras.map(f => svField(f.k, f.html, f.label)).join('')}</div>` : ''}
+      ${sections}
       ${meta.length ? `<div class="recmeta">${meta.map(k => `<span><b>${esc(svLabel(k))}</b>${svVal(k, rec[k])}</span>`).join('')}</div>` : ''}
     </div>`,
     [{label: 'Close', act: 'close'}]);
@@ -314,7 +345,7 @@ function renderExportHistory(){
   if(count) count.textContent = EXPORTS.length;
   if(!body) return;
   body.innerHTML = EXPORTS.slice(0, 12).map((x, i) => `<tr class="rowlink" data-exp="${i}">
-    <td style="white-space:nowrap">${esc(x.when)}</td><td>${esc(x.report)}</td><td>${x.format}</td>
+    <td style="white-space:nowrap">${esc(svWhen(x.when))}</td><td>${esc(x.report)}</td><td>${x.format}</td>
     <td class="num">${num(x.rows)}</td><td>${esc(x.by)}</td><td style="font-size:9.5px">${esc(x.filters)}</td></tr>`).join('')
     || '<tr><td colspan="6" class="empty">No exports yet — generate a report below.</td></tr>';
 }

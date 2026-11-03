@@ -153,7 +153,7 @@ function runDiag(id){
   const res = diagResult(t);
   t.status = res;
   t.detail = diagDetail(t, res);
-  t.ms = res === 'Fail' ? 1840 : 80 + (id.charCodeAt(4) % 7) * 40;
+  t.ms = res === 'Fail' ? 1840 : 80 + (id.charCodeAt(4)() % 7) * 40;
   t.lastRun = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   logChange('Diagnostics', t.name, 'previous result', res);
   renderDiagnostics(); renderOverview(); renderChanges();
@@ -163,7 +163,7 @@ function runAllDiag(){
   DIAG_TESTS.forEach(t => {
     t.status = diagResult(t);
     t.detail = diagDetail(t, t.status);
-    t.ms = t.status === 'Fail' ? 1840 : 80 + (t.id.charCodeAt(4) % 7) * 40;
+    t.ms = t.status === 'Fail' ? 1840 : 80 + (t.id.charCodeAt(4)() % 7) * 40;
     t.lastRun = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   });
   const pass = DIAG_TESTS.filter(t => t.status === 'Pass').length;
@@ -359,7 +359,7 @@ function renderAlerts(){
       value: ALERTS.length + ' alerts'});
 
   renderTable('alHistBody', [
-    {k: 'when', label: 'When', html: v => esc(String(v).slice(0, 16))},
+    {k: 'raised', label: 'When', html: v => esc(String(v).slice(0, 16))},
     {k: 'kind', label: 'Alert'},
     {k: 'note', label: 'What happened'},
     {k: 'owner', label: 'Owner', html: v => esc(staffName(v))},

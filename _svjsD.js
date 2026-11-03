@@ -19,7 +19,8 @@ const SV_SEV = s => s === 'Critical' || s === 'High' ? 'b-crit' : s === 'Medium'
 const put = (id, html) => { const n = el(id); if(n) n.innerHTML = html; };
 const svM = v => 'MK ' + num(Math.round(Number(v) || 0));
 const svIsos = v => String(v == null ? '' : v).slice(0, 10);
-const svWhen = v => String(v == null ? '' : v).slice(0, 16);
+/* a timestamp reads as a date and time everywhere it is printed */
+const svWhen = v => v == null || v === '' ? '' : svDateText(String(v).slice(0, 16));
 const svNow = () => new Date().toTimeString().slice(0, 5);
 const SV_AUDIT_LOG = [];
 const SV_ACC_HISTORY = [];

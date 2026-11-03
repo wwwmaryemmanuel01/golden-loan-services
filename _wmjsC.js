@@ -405,7 +405,7 @@ const FE_CONFIG = [
 const VALIDATION_CHECKS = [
   {check: 'Request payload schema', scope: 'All write routes', status: 'Pass', detail: 'Zod schema on 38 routes, unknown keys dropped', lane: 'Backend', severity: 'High', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Response shape matches the client contract', scope: '12 client calls', status: 'Pass', detail: 'Checked nightly against the OpenAPI document', lane: 'Backend', severity: 'Medium', owner: 'STF-001', region: 'Frankfurt'},
-  {check: 'Nullability handling', scope: 'Customer and loan objects', status: 'Review', detail: 'Three optional fields rendered as “undefined”', lane: 'Website', severity: 'Medium', owner: 'STF-009', region: 'Lilongwe'},
+  {check: 'Nullability handling', scope: 'Customer and loan objects', status: 'Review', detail: 'Three optional fields rendered blank on the apply form', lane: 'Website', severity: 'Medium', owner: 'STF-009', region: 'Lilongwe'},
   {check: 'Numeric precision (MWK)', scope: 'Money fields', status: 'Pass', detail: 'Integer tambala, no float arithmetic in the client', lane: 'Backend', severity: 'High', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Pagination contract', scope: 'List endpoints', status: 'Pass', detail: 'cursor + limit honoured on all six list routes', lane: 'Backend', severity: 'Low', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Error envelope consistency', scope: 'All routes', status: 'Review', detail: 'Two legacy routes return a bare string', lane: 'Backend', severity: 'Medium', owner: 'STF-001', region: 'Frankfurt'}
@@ -429,7 +429,7 @@ const FAILED_REQUESTS = [
   {when: addDays(TODAY, -3) + ' 15:32', origin: 'Customer portal', path: '/api/payments', code: '409', count: 3, status: 'Resolved', lane: 'Backend', severity: 'Low', owner: 'STF-001', region: 'Lilongwe'}
 ];
 const FE_ERRORS = [
-  {when: TODAY + ' 07:44', page: '/apply', error: 'TypeError: cannot read properties of undefined (reading “phone”)', count: 4, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
+  {when: TODAY + ' 07:44', page: '/apply', error: 'Script error while reading the contact phone field', count: 4, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
   {when: TODAY + ' 06:58', page: '/calculator', error: 'Chunk load failed for calculator widget', count: 9, severity: 'High', status: 'Open', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
   {when: addDays(TODAY, -1) + ' 20:10', page: '/blog', error: 'Hydration mismatch on the post list', count: 2, severity: 'Medium', status: 'Monitoring', lane: 'Website', owner: 'STF-005', region: 'Blantyre'},
   {when: addDays(TODAY, -2) + ' 11:25', page: '/', error: 'Console warning: missing alt text on two images', count: 1, severity: 'Low', status: 'Resolved', lane: 'Website', owner: 'STF-009', region: 'Lilongwe'},
