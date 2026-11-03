@@ -1,0 +1,255 @@
+  <!-- ============ 5 · SAVINGS WITHDRAWALS ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Savings Withdrawals</h2>
+        <p>A withdrawal request with the identity check, the available balance, the limits, the method, the approval workflow, the processing, the rejection or cancellation, the receipt and the history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="wdPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="wdKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Submit a Withdrawal Request</div>
+        <div class="panel-sub">Nothing leaves the account until identity, balance and limits all clear</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Customer</label><select id="wdCust"></select></div>
+        <div class="fg"><label>Savings account</label><select id="wdAcct"></select></div>
+        <div class="fg"><label>Amount (MWK)</label><input id="wdAmount" type="number" min="0" step="500" value="60000" /></div>
+        <div class="fg"><label>Withdrawal method</label><select id="wdMethod"></select></div>
+        <div class="fg"><label>Destination</label><input id="wdDest" placeholder="Wallet number or bank account" /></div>
+        <div class="fg"><label>Reason</label><input id="wdReason" placeholder="School fees, rent…" /></div>
+        <div class="fg"><label>Identity document</label><select id="wdIdType"><option>National ID</option><option>Passport</option><option>Driver licence</option></select></div>
+        <div class="fg"><label>Document number</label><input id="wdIdNum" placeholder="MW123456" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="wdIdVerifyBtn">Verify identity</button>
+        <button class="btn btn-gold" id="wdReqBtn">Submit the request</button>
+      </div>
+      <div class="qhint" id="wdMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Checks Before Release</div>
+          <div class="panel-sub">Identity, available balance, limits and the account state</div></div>
+          <span class="badge b-gray" id="wdChkPill">—</span></div>
+        <div id="wdChecks"></div>
+        <div id="wdBalBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Limits and Workflow</div>
+          <div class="panel-sub">What the customer may take, and who must sign it</div></div></div>
+        <div id="wdLimitBox"></div>
+        <div id="wdFlowBox" style="margin-top:8px"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="wdReceiptBtn">Generate the withdrawal receipt</button>
+        </div>
+        <div id="wdReceiptBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Pending Withdrawal Requests</div>
+        <div class="panel-sub">Approve, process, reject or cancel one — the balance and the reservation follow</div></div>
+        <span class="badge b-gray" id="wdPendPill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="wdPendHead"></thead><tbody id="wdPendBody"></tbody></table></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Withdrawal History</div>
+        <div class="panel-sub">Every payout from a savings account</div></div>
+        <span class="badge b-gray" id="wdHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="wdHistHead"></thead><tbody id="wdHistBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · SAVINGS BALANCE AND LEDGER ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Savings Balance and Ledger</h2>
+        <p>Opening, available, pending and reserved balances beside the confirmed deposits, the completed withdrawals, the interest credits and the authorised adjustments — with the recalculation, the reconciliation, the discrepancies and the audit trail</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="blPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="blKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Balance Composition</div>
+          <div class="panel-sub">What makes up the savings book right now</div></div>
+          <span class="badge b-gray" id="blCompPill">—</span></div>
+        <div id="blComp"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="blRecalc">Recalculate every balance</button>
+          <button class="btn btn-ghost" id="blRecon">Reconcile the ledger</button>
+        </div>
+        <div class="qhint" id="blMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Ledger Flow</div>
+          <div class="panel-sub">Debits against credits, seven days</div></div></div>
+        <div id="blFlow"></div>
+        <div id="blGuard" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Ledger</div>
+        <div class="panel-sub">Every entry, with the balance it left behind</div></div>
+        <span class="badge b-gray" id="blLedgerPill">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="blLedgerHead"></thead><tbody id="blLedgerBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Balance Discrepancies</div>
+          <div class="panel-sub">Where the ledger and the balance disagree</div></div>
+          <span class="badge b-crit" id="blDiscPill">—</span></div>
+        <div id="blDiscBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authorised Adjustment</div>
+          <div class="panel-sub">A correction writes an opposite ledger entry, never an edited figure</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Account</label><select id="blAdjAcct"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="blAdjAmount" type="number" step="100" placeholder="Negative to debit" /></div>
+          <div class="fg"><label>Reason</label><input id="blAdjReason" placeholder="Why the adjustment is needed" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="blAdjBtn">Post the adjustment</button></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="blAdjHead"></thead><tbody id="blAdjBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · INTEREST MANAGEMENT ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Interest Management</h2>
+        <p>The rate and whether it is fixed or variable, the daily, monthly and annual calculation, the accrual history, the posting schedule, the compounding and simple rules, the minimum balance, the eligibility, the statements and the verification</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="itPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="itKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Interest Rate</div>
+        <div class="panel-sub">Saving the rate writes a configuration change with your name on it</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Annual rate (%)</label><input id="itRate" type="number" step="0.1" min="0" max="40" /></div>
+        <div class="fg"><label>Rate type</label><select id="itRateType"><option>Fixed</option><option>Variable</option></select></div>
+        <div class="fg"><label>Compounding</label><select id="itCompounding"><option>Monthly</option><option>Quarterly</option><option>Annual</option><option>None (simple)</option></select></div>
+        <div class="fg"><label>Accrual basis</label><select id="itBasis"><option>Daily balance</option><option>Average monthly balance</option><option>Minimum monthly balance</option></select></div>
+        <div class="fg"><label>Posting schedule</label><select id="itSchedule"><option>Last day of the month</option><option>First day of the month</option><option>At maturity</option></select></div>
+        <div class="fg"><label>Minimum balance for interest (MWK)</label><input id="itMinBal" type="number" step="500" /></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-gold" id="itSave">Save the interest configuration</button></div>
+      <div class="qhint" id="itMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Interest Calculator</div>
+          <div class="panel-sub">Day, month or year, against a real account balance</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Basis</label><select id="itCalcMode"><option>Daily</option><option>Monthly</option><option>Annual</option></select></div>
+          <div class="fg"><label>Account</label><select id="itCalcAcct"></select></div>
+          <div class="fg"><label>Amount to test (MWK)</label><input id="itCalcAmount" type="number" step="500" value="250000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost" id="itCalcBtn">Calculate</button></div>
+        <div id="itCalcBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Rules in Force</div>
+          <div class="panel-sub">Compounding, simple interest, the minimum balance and eligibility</div></div></div>
+        <div id="itRuleBox"></div>
+        <div id="itEligBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Interest Accrual History</div>
+        <div class="panel-sub">Accrued this month against what has been posted, account by account</div></div>
+        <span class="badge b-gray" id="itAccrualPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="itAccrualHead"></thead><tbody id="itAccrualBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Interest Postings</div>
+          <div class="panel-sub">Six months of accrual and posting</div></div>
+          <span class="badge b-gray" id="itHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="itHistHead"></thead><tbody id="itHistBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Interest Statements and Verification</div>
+          <div class="panel-sub">Prove the rate was applied correctly</div></div></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="itStmtBtn">Build an interest statement</button>
+          <button class="btn btn-ghost" id="itVerifyBtn">Verify the calculation</button>
+        </div>
+        <div id="itStmtBox" style="margin-top:8px"></div>
+        <div id="itVerifyBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="itGrid"></div>
+  </section>
+
+  <!-- ============ 8 · SAVINGS PRODUCTS AND PLANS ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Savings Products and Plans</h2>
+        <p>Standard, fixed-term and goal-based plans with the minimum opening deposit, the minimum balance, the permitted deposit frequency, the withdrawal restrictions, the interest rules, the availability and the terms</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="prPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="prKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Create or Edit a Savings Product</div>
+        <div class="panel-sub">Click a product in the table below to load it, then save</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Product name</label><input id="prName" placeholder="Fixed-Term Savings · 9 months" /></div>
+        <div class="fg"><label>Kind</label><select id="prKind"><option>Standard</option><option>Fixed-term</option><option>Goal-based</option></select></div>
+        <div class="fg"><label>Annual rate (%)</label><input id="prRate" type="number" step="0.1" min="0" /></div>
+        <div class="fg"><label>Rate type</label><select id="prRateType"><option>Fixed</option><option>Variable</option></select></div>
+        <div class="fg"><label>Minimum opening (MWK)</label><input id="prMinOpen" type="number" step="500" /></div>
+        <div class="fg"><label>Minimum balance (MWK)</label><input id="prMinBal" type="number" step="500" /></div>
+        <div class="fg"><label>Deposit frequency</label><select id="prFreq"><option>Any time</option><option>At least once a month</option><option>Once at opening</option></select></div>
+        <div class="fg"><label>Withdrawal rule</label><input id="prWithdrawal" placeholder="Any time, two free withdrawals a month" /></div>
+        <div class="fg"><label>Availability</label><select id="prAvail"><option>All branches</option><option>All branches and mobile</option><option>Selected branches</option><option>Paused</option></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="prSaveBtn">Save the product</button>
+        <button class="btn btn-ghost" id="prResetBtn">Start a new product</button>
+      </div>
+      <div class="qhint" id="prMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Products</div>
+        <div class="panel-sub">Accounts, balances and rates for each plan</div></div>
+        <span class="badge b-gray" id="prCount">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="prHead"></thead><tbody id="prBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Plan Rules</div>
+          <div class="panel-sub">What each kind of plan allows</div></div>
+          <span class="badge b-gray" id="prSelPill">—</span></div>
+        <div id="prDetail"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Product Availability and Terms</div>
+          <div class="panel-sub">Where each plan can be opened, and on what terms</div></div></div>
+        <div id="prTermsBox"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="prGrid"></div>
+  </section>

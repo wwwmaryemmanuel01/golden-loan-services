@@ -1,0 +1,274 @@
+  <!-- ============ 17 · SECURITY AND FRAUD PREVENTION ============ -->
+  <section class="sec" id="s17">
+    <div class="sec-head">
+      <div class="sec-num">17</div>
+      <div><h2>Security and Fraud Prevention</h2>
+        <p>Who may open accounts, verify deposits and approve withdrawals, the large-transaction approval, the suspicious activity and duplicate prevention, the unauthorised balance change alerts, the staff activity, the data protection and the audit logs</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="secPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="secKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Savings Management Permissions</div>
+          <div class="panel-sub">Click a cell to grant or withdraw a capability</div></div>
+          <span class="badge b-gray" id="secPermPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="secPermHead"></thead><tbody id="secPermBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification and Approval Rights</div>
+          <div class="panel-sub">Deposit verification beside withdrawal approval</div></div></div>
+        <div id="secDepPermBody"></div>
+        <div id="secWdrPermBody" style="margin-top:8px"></div>
+        <div id="secDupBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Large Transactions Needing a Signature</div>
+          <div class="panel-sub">Above the first threshold, two names are required</div></div>
+          <span class="badge b-gray" id="secLargePill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="secLargeHead"></thead><tbody id="secLargeBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Suspicious Activity and Balance Changes</div>
+          <div class="panel-sub">Patterns the rules flagged, and balances touched outside a transaction</div></div>
+          <span class="badge b-gray" id="secSuspPill">—</span></div>
+        <div class="tblwrap" style="max-height:150px"><table class="tbl2 dense"><thead id="secSuspHead"></thead><tbody id="secSuspBody"></tbody></table></div>
+        <div class="tblwrap" style="max-height:150px;margin-top:8px"><table class="tbl2 dense"><thead id="secChangeHead"></thead><tbody id="secChangeBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Activity</div>
+          <div class="panel-sub">What each officer touched, and when</div></div>
+          <span class="badge b-gray" id="secStaffPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="secStaffHead"></thead><tbody id="secStaffBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Data Protection</div>
+          <div class="panel-sub">What is masked, who may see it, and how it is held</div></div></div>
+        <div id="secDataBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Audit Logs</div>
+        <div class="panel-sub">Every security event and every action taken here</div></div>
+        <span class="badge b-gray" id="secAuditPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="secAuditHead"></thead><tbody id="secAuditBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="secGrid"></div>
+  </section>
+
+  <!-- ============ 18 · SUPABASE AND DATABASE CONNECTIONS ============ -->
+  <section class="sec" id="s18">
+    <div class="sec-head">
+      <div class="sec-num">18</div>
+      <div><h2>Supabase and Database Connections</h2>
+        <p>The customer, account, savings, transaction, ledger, interest, goal and payment tables, the functions behind them, row-level security, transaction integrity, duplicate submission protection, error monitoring and schema compatibility</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="dbPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+    <div class="chartgrid" id="dbGrid"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Table Connections</div>
+        <div class="panel-sub">Every table a savings transaction touches</div></div>
+        <span class="badge b-gray" id="dbTblPill">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="dbTblHead"></thead><tbody id="dbTblBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Database Function Connections</div>
+          <div class="panel-sub">The routines a deposit or a withdrawal runs through</div></div>
+          <span class="badge b-gray" id="dbFnPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="dbFnHead"></thead><tbody id="dbFnBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Row-Level Security and Integrity</div>
+          <div class="panel-sub">One savings table is readable without a policy</div></div>
+          <span class="badge b-crit" id="dbRlsPill">—</span></div>
+        <div id="dbRls"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="dbRlsFix">Enable RLS on the gap</button></div>
+        <div id="dbAtomic" style="margin-top:8px"></div>
+        <div id="dbDup" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Database Error Monitoring</div>
+          <div class="panel-sub">Grouped by SQLSTATE, with the constraint that raised it</div></div>
+          <span class="badge b-gray" id="dbErrPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Integrity and Schema Checks</div>
+          <div class="panel-sub">One debit, one credit, one receipt</div></div>
+          <span class="badge b-gray" id="dbChkPill">—</span></div>
+        <div id="dbChecksBody"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="dbCheck">Run the integrity checks</button>
+          <button class="btn btn-ghost" id="dbSchemaBtn">Check schema compatibility</button>
+        </div>
+        <div id="dbSchemaBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Schema and Migration Compatibility</div>
+        <div class="panel-sub">What has been applied, and what is still waiting</div></div>
+        <span class="badge b-gray" id="dbMigPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="dbMigHead"></thead><tbody id="dbMigBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 19 · REPORTS AND ANALYTICS ============ -->
+  <section class="sec" id="s19">
+    <div class="sec-head">
+      <div class="sec-num">19</div>
+      <div><h2>Reports and Analytics</h2>
+        <p>Total savings, growth, deposits and withdrawals, savings by customer and by product, the interest accrual and what has been paid, the dormant accounts, the pending transactions, the reconciliation, the fees and penalties, and the exports you are authorised for</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="rpPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="rpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Report Library</div>
+        <div class="panel-sub">Twelve reports · preview on screen, or download a real file</div></div>
+        <span class="badge b-gray" id="rpCount">—</span></div>
+      <div class="repgrid" id="rpCards"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Whole Pack</div>
+        <div class="panel-sub">Every report in one file, built from the current filters</div></div></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="packCsv">Download pack (CSV)</button>
+        <button class="btn btn-ghost" id="packXlsx">Download pack (Excel)</button>
+        <button class="btn btn-ghost" id="packPdf">Print pack (PDF)</button>
+        <button class="btn btn-ghost" id="packPrint">Print preview</button>
+      </div>
+      <div class="qhint" id="packMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Report Generation History</div>
+        <div class="panel-sub">What has been generated from this page, and by whom</div></div>
+        <span class="badge b-gray" id="expCount">0</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense">
+        <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+        <tbody id="expHistoryBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Configuration Change History</div>
+          <div class="panel-sub">Every change, with the previous and the updated value</div></div>
+          <span class="badge b-gray" id="chgPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="chgHead"></thead><tbody id="chgBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Officer, Timestamp and Change Detail</div>
+          <div class="panel-sub">Who changed what, when, and what the record holds</div></div>
+          <span class="badge b-gray" id="chgWhoPill">—</span></div>
+        <div id="chgWho"></div>
+        <div id="chgStamp" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Export Authorised Reports</div>
+        <div class="panel-sub">The reports this officer may export, and the format allowed</div></div>
+        <span class="badge b-gray" id="rpAuthPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rpAuthHead"></thead><tbody id="rpAuthBody"></tbody></table></div>
+      <div class="form-actions"><button class="btn btn-gold" id="rpExportAll">Export every authorised report</button></div>
+      <div class="qhint" id="rpAuthMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="chartgrid" id="rpGrid"></div>
+  </section>
+
+  <!-- ============ 20 · SAVINGS SETTINGS AND AUDIT HISTORY ============ -->
+  <section class="sec" id="s20">
+    <div class="sec-head">
+      <div class="sec-num">20</div>
+      <div><h2>Savings Settings and Audit History</h2>
+        <p>The product and interest configuration, the deposit and withdrawal rules, the account number generation, the approval thresholds, the fees and limits, the notification settings, the authorised staff roles, and every change with the officer and the timestamp</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="setPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="setKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Savings Configuration</div>
+        <div class="panel-sub">Saving writes a change-history row with the previous and the updated value</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Currency</label><select id="setCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+        <div class="fg"><label>Savings interest rate (%)</label><input id="setRate" type="number" step="0.1" min="0" /></div>
+        <div class="fg"><label>Rate type</label><select id="setRateType"><option>Fixed</option><option>Variable</option></select></div>
+        <div class="fg"><label>Minimum balance (MWK)</label><input id="setMinBal" type="number" step="500" /></div>
+        <div class="fg"><label>Minimum deposit (MWK)</label><input id="setMinDep" type="number" step="100" /></div>
+        <div class="fg"><label>Maximum deposit (MWK)</label><input id="setMaxDep" type="number" step="1000" /></div>
+        <div class="fg"><label>Daily withdrawal limit (MWK)</label><input id="setDailyWdr" type="number" step="1000" /></div>
+        <div class="fg"><label>Per-customer daily (MWK)</label><input id="setPerCust" type="number" step="1000" /></div>
+        <div class="fg"><label>First approval above (MWK)</label><input id="setAppr1" type="number" step="10000" /></div>
+        <div class="fg"><label>Second approval above (MWK)</label><input id="setAppr2" type="number" step="10000" /></div>
+        <div class="fg"><label>Account maintenance fee (MWK)</label><input id="setMaintFee" type="number" step="100" /></div>
+        <div class="fg"><label>Withdrawal fee (%)</label><input id="setWdrFeePct" type="number" step="0.1" /></div>
+        <div class="fg"><label>Withdrawal fee flat (MWK)</label><input id="setWdrFeeFlat" type="number" step="100" /></div>
+        <div class="fg"><label>Transfer fee (MWK)</label><input id="setTransferFee" type="number" step="100" /></div>
+        <div class="fg"><label>Early withdrawal penalty (%)</label><input id="setPenalty" type="number" step="0.1" /></div>
+        <div class="fg"><label>Dormancy after (days)</label><input id="setDormDays" type="number" step="30" /></div>
+        <div class="fg"><label>Account number prefix</label><input id="setPrefix" maxlength="4" /></div>
+        <div class="fg"><label>Account number digits</label><input id="setDigits" type="number" min="3" max="8" /></div>
+        <div class="fg"><label>SMS notifications</label><select id="setNotifySms"><option>On</option><option>Off</option></select></div>
+        <div class="fg"><label>Email notifications</label><select id="setNotifyEmail"><option>On</option><option>Off</option></select></div>
+      </div>
+      <div id="setRuleBox" style="margin-top:8px"></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="setSave">Save the settings</button>
+        <button class="btn btn-ghost" id="setReset">Restore the defaults</button>
+      </div>
+      <div class="qhint" id="setMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authorised Staff Roles</div>
+          <div class="panel-sub">Who may change the savings configuration</div></div></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="setRolesHead"></thead><tbody id="setRolesBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Change Audit Trail</div>
+          <div class="panel-sub">Every action taken in this module, with the officer and the timestamp</div></div>
+          <span class="badge b-gray" id="setAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="setAuditHead"></thead><tbody id="setAuditBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+

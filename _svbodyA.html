@@ -1,0 +1,324 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Savings Management</div>
+      <div class="page-sub">Every savings account, deposit, withdrawal and interest posting · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search an account, customer, reference or amount…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="quickCsv">Export CSV</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-ghost" id="bellBtn" aria-label="Notifications">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Accounts</a>
+    <a class="snav" href="#s3">3 · Customer profiles</a>
+    <a class="snav" href="#s4">4 · Deposits</a>
+    <a class="snav" href="#s5">5 · Withdrawals</a>
+    <a class="snav" href="#s6">6 · Balance &amp; ledger</a>
+    <a class="snav" href="#s7">7 · Interest</a>
+    <a class="snav" href="#s8">8 · Products</a>
+    <a class="snav" href="#s9">9 · Goals</a>
+    <a class="snav" href="#s10">10 · Payment methods</a>
+    <a class="snav" href="#s11">11 · Monitoring</a>
+    <a class="snav" href="#s12">12 · Statements</a>
+    <a class="snav" href="#s13">13 · Fees &amp; limits</a>
+    <a class="snav" href="#s14">14 · Transfers</a>
+    <a class="snav" href="#s15">15 · Notifications</a>
+    <a class="snav" href="#s16">16 · Dormant</a>
+    <a class="snav" href="#s17">17 · Security</a>
+    <a class="snav" href="#s18">18 · Database</a>
+    <a class="snav" href="#s19">19 · Reports</a>
+    <a class="snav" href="#s20">20 · Settings</a>
+  </nav>
+
+  <div class="band">
+    <div><div class="bl">Savings health</div><div class="bv" id="bandScore">—</div></div>
+    <div><div class="bl">Savings accounts</div><div class="bv" id="bandAccounts">—</div></div>
+    <div><div class="bl">Customer savings</div><div class="bv" id="bandBalance">—</div></div>
+    <div><div class="bl">Deposits today</div><div class="bv" id="bandDeposits">—</div></div>
+    <div><div class="bl">Open alerts</div><div class="bv" id="bandAlerts">—</div></div>
+    <div class="band-refresh"><button class="btn btn-ghost" id="refreshBtn">Refresh</button></div>
+  </div>
+
+  <div class="card panel" id="filterBar">
+    <div class="panel-head">
+      <div><div class="panel-title">Filters</div>
+        <div class="panel-sub" id="fltSummary">Date range only</div></div>
+      <div class="chips" id="fltLaneChips">
+        <button class="chip on" data-lane="">All areas</button>
+        <button class="chip" data-lane="Savings">Savings</button>
+        <button class="chip" data-lane="Deposits">Deposits</button>
+        <button class="chip" data-lane="Withdrawals">Withdrawals</button>
+        <button class="chip" data-lane="Interest">Interest</button>
+        <button class="chip" data-lane="Goals">Goals</button>
+        <button class="chip" data-lane="Dormant">Dormant</button>
+        <button class="chip" data-lane="Security">Security</button>
+        <button class="chip" data-lane="Database">Database</button>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label>From</label><input id="fltFrom" type="date" /></div>
+      <div class="fg"><label>To</label><input id="fltTo" type="date" /></div>
+      <div class="fg"><label>Search</label><input id="fltSearch" placeholder="Account, customer, reference…" /></div>
+      <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+      <div class="fg"><label>State</label><select id="fltStatus"></select></div>
+      <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+      <div class="fg"><label>Branch</label><select id="fltRegion"></select></div>
+      <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-gold" id="fltApply">Apply the filters</button>
+      <button class="btn btn-ghost" id="fltReset">Clear everything</button>
+    </div>
+    <div class="chips" id="fltChips" style="margin-top:8px"></div>
+    <div class="strip" id="fltCounts" style="margin-top:8px"></div>
+    <div class="qhint" id="fltResult" style="margin-top:6px"></div>
+  </div>
+
+  <!-- ============ 1 · SAVINGS OVERVIEW ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Savings Overview</h2>
+        <p>How many savings accounts the bank carries, what customers hold between them, what has gone in and out, what is waiting, and how much interest has accrued against how much has been paid</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ovKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Savings Position</div>
+          <div class="panel-sub">The ten figures that matter, against their ceilings</div></div>
+          <span class="badge b-gray" id="ovStamp">—</span></div>
+        <div id="ovMeters"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Account States</div>
+          <div class="panel-sub">Active, dormant, restricted and suspended</div></div>
+          <span class="badge b-gray" id="ovBoardPill">—</span></div>
+        <div id="ovBoard"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ovGrid" style="margin-top:11px"></div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Open Alerts</div>
+          <div class="panel-sub">Discrepancies, duplicates, failures and suspended accounts</div></div>
+          <span class="badge b-crit" id="ovAlertPill">—</span></div>
+        <div id="ovAlerts"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recent Movement</div>
+          <div class="panel-sub">The newest deposits and withdrawals, whatever the rail</div></div></div>
+        <div id="ovFeed"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · SAVINGS ACCOUNT MANAGEMENT ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Savings Account Management</h2>
+        <p>Every savings account with its number, product, opening date and status — open a new one, link it to a customer profile, edit the permitted details, then activate, suspend, reactivate or close it with the history kept</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="amPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="amKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Open a Savings Account</div>
+        <div class="panel-sub">Pick the customer and the product — the account number is generated as you save</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Customer</label><select id="amCust"></select></div>
+        <div class="fg"><label>Account type</label><select id="amType"><option>Savings</option><option>Current</option></select></div>
+        <div class="fg"><label>Savings product</label><select id="amProduct"></select></div>
+        <div class="fg"><label>Account number</label><input id="amNumber" readonly /></div>
+        <div class="fg"><label>Opening deposit (MWK)</label><input id="amOpening" type="number" min="0" step="500" value="25000" /></div>
+        <div class="fg"><label>Branch</label><select id="amBranch"><option>Lilongwe</option><option>Blantyre</option><option>Mzuzu</option><option>Zomba</option></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="amOpenBtn">Open the account</button>
+        <button class="btn btn-ghost" id="amClearBtn">Clear the form</button>
+      </div>
+      <div class="qhint" id="amMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">All Savings Accounts</div>
+        <div class="panel-sub">Click a row to load it into the detail and edit panels</div></div>
+        <span class="badge b-gray" id="amCount">—</span></div>
+      <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="amHead"></thead><tbody id="amBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Account Details and History</div>
+          <div class="panel-sub">Ownership, dates, balances and every state change</div></div>
+          <span class="badge b-gray" id="amSelPill">—</span></div>
+        <div id="amDetail"></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="amHistHead"></thead><tbody id="amHistBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Edit, Activate, Suspend or Close</div>
+          <div class="panel-sub">Only the permitted details may be edited; the state buttons write the history</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Account holder</label><input id="amHolder" readonly /></div>
+          <div class="fg"><label>Statement cycle</label><select id="amCycle"><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div>
+          <div class="fg"><label>Contact phone</label><input id="amPhone" placeholder="+265 991 000 111" /></div>
+          <div class="fg"><label>Contact email</label><input id="amEmail" placeholder="customer@mail.mw" /></div>
+          <div class="fg"><label>Account nickname</label><input id="amNick" placeholder="School fees, rent…" /></div>
+          <div class="fg"><label>Reason for a change</label><input id="amReason" placeholder="Why the detail is being changed" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="amSaveBtn">Save the permitted details</button>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="amActivate">Activate</button>
+          <button class="btn btn-ghost" id="amSuspend">Suspend</button>
+          <button class="btn btn-ghost" id="amReactivate">Reactivate</button>
+          <button class="btn btn-ghost" id="amClose">Close the account</button>
+        </div>
+        <div class="qhint" id="amActMsg" style="margin-top:6px"></div>
+        <div id="amMeta" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · CUSTOMER SAVINGS PROFILES ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Customer Savings Profiles</h2>
+        <p>Identification, contact details, linked savings accounts, the combined balance, the transaction history, goals, verification, statements and any restriction on the customer</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="cpPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="cpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Customers with Savings</div>
+        <div class="panel-sub">Click a row to open the profile on the right</div></div>
+        <span class="badge b-gray" id="cpCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="cpHead"></thead><tbody id="cpBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Identification and Contact</div>
+          <div class="panel-sub">Who the customer is, and how we reach them</div></div>
+          <span class="badge b-gray" id="cpSelPill">—</span></div>
+        <div id="cpIdBox"></div>
+        <div id="cpContactBox" style="margin-top:8px"></div>
+        <div id="cpVerifyBox" style="margin-top:8px"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="cpVerifyBtn">Verify the customer</button></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Linked Accounts and Balance</div>
+          <div class="panel-sub">Every account the customer holds, and what they add up to</div></div></div>
+        <div id="cpBalBox"></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="cpAcctHead"></thead><tbody id="cpAcctBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transaction History</div>
+          <div class="panel-sub">Everything on the customer's savings account</div></div>
+          <span class="badge b-gray" id="cpTxnPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="cpTxnHead"></thead><tbody id="cpTxnBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Goals, Statements and Restrictions</div>
+          <div class="panel-sub">What the customer is saving for, and what limits them</div></div></div>
+        <div id="cpGoalsBox"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="cpStmtBtn">Build a savings statement</button>
+        </div>
+        <div id="cpStmtBox" style="margin-top:8px"></div>
+        <div id="cpRestrictBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · SAVINGS DEPOSITS ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Savings Deposits</h2>
+        <p>A customer-initiated or staff-recorded deposit with its amount, currency, reference, date and method, the proof uploaded, the verification, the approval, the duplicate check, the receipt and the history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="dpPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="dpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Record a Savings Deposit</div>
+        <div class="panel-sub">The amount and the reference are checked before anything is credited</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Customer</label><select id="dpCust"></select></div>
+        <div class="fg"><label>Savings account</label><select id="dpAcct"></select></div>
+        <div class="fg"><label>Raised by</label><select id="dpSource"><option>Customer-initiated</option><option>Staff-recorded</option></select></div>
+        <div class="fg"><label>Amount (MWK)</label><input id="dpAmount" type="number" min="0" step="500" value="50000" /></div>
+        <div class="fg"><label>Currency</label><select id="dpCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+        <div class="fg"><label>Payment method</label><select id="dpMethod"></select></div>
+        <div class="fg"><label>Deposit reference</label><input id="dpRef" placeholder="AMT-123456" /></div>
+        <div class="fg"><label>Date and time</label><input id="dpWhen" type="datetime-local" /></div>
+        <div class="fg"><label>Proof of payment</label><input id="dpProof" type="file" /></div>
+        <div class="fg"><label>Notes</label><input id="dpNotes" placeholder="Where the money came from" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="dpRecord">Record the deposit</button>
+        <button class="btn btn-ghost" id="dpReset">Clear the form</button>
+      </div>
+      <div class="qhint" id="dpMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deposit Verification</div>
+          <div class="panel-sub">The checks a deposit must pass before it reaches the ledger</div></div>
+          <span class="badge b-gray" id="dpChkPill">—</span></div>
+        <div id="dpChecks"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="dpVerifyBtn">Verify the selected deposit</button>
+          <button class="btn btn-ghost" id="dpApproveBtn">Approve the confirmed deposit</button>
+        </div>
+        <div id="dpReceiptBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Duplicate and Receipt</div>
+          <div class="panel-sub">A reference seen inside the window is held; a genuine deposit gets a receipt</div></div>
+          <span class="badge b-gray" id="dpDupPill">—</span></div>
+        <div id="dpDupBox"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="dpScanBtn">Scan for duplicates</button>
+          <button class="btn btn-ghost" id="dpReceiptBtn">Generate the receipt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Deposit History</div>
+        <div class="panel-sub">Every deposit recorded, newest first</div></div>
+        <span class="badge b-gray" id="dpCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="dpHead"></thead><tbody id="dpBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="dpGrid"></div>
+  </section>

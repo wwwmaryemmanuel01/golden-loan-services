@@ -1,0 +1,218 @@
+  <!-- ============ 9 · SAVINGS GOALS ============ -->
+  <section class="sec" id="s9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Savings Goals</h2>
+        <p>A goal with its target amount and date, the progress against it, the contributions recorded, the completion percentage, the update and the completed or cancelled history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="glPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="glKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Create a Savings Goal</div>
+        <div class="panel-sub">A goal belongs to one customer and one savings account</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Customer</label><select id="glCust"></select></div>
+        <div class="fg"><label>Goal name</label><input id="glName" placeholder="School fees 2027" /></div>
+        <div class="fg"><label>Target amount (MWK)</label><input id="glTarget" type="number" step="1000" value="300000" /></div>
+        <div class="fg"><label>Target date</label><input id="glDate" type="date" /></div>
+        <div class="fg"><label>Savings account</label><select id="glAcct"></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="glAddBtn">Create the goal</button>
+        <button class="btn btn-ghost" id="glClearBtn">Clear the form</button>
+      </div>
+      <div class="qhint" id="glMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">All Savings Goals</div>
+        <div class="panel-sub">Click a goal to load it into the progress panel</div></div>
+        <span class="badge b-gray" id="glCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="glHead"></thead><tbody id="glBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Goal Progress</div>
+          <div class="panel-sub">Target, saved, remaining and the percentage reached</div></div>
+          <span class="badge b-gray" id="glSelPill">—</span></div>
+        <div id="glDetail"></div>
+        <div id="glProgress" style="margin-top:8px"></div>
+        <div class="form-grid" style="margin-top:8px">
+          <div class="fg"><label>Contribution (MWK)</label><input id="glAmount" type="number" step="500" value="5000" /></div>
+          <div class="fg"><label>Target date</label><input id="glNewDate" type="date" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="glContribBtn">Record a contribution</button>
+          <button class="btn btn-ghost" id="glUpdateBtn">Update the goal</button>
+          <button class="btn btn-ghost" id="glCloseBtn">Mark it complete</button>
+          <button class="btn btn-ghost" id="glCancelBtn">Cancel the goal</button>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Contributions and Closed Goals</div>
+          <div class="panel-sub">Every contribution, completion and cancellation</div></div>
+          <span class="badge b-gray" id="glHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="glHistHead"></thead><tbody id="glHistBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · PAYMENT METHOD CONNECTIONS ============ -->
+  <section class="sec" id="s10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Payment Method Connections</h2>
+        <p>Airtel Money, TNM Mpamba, bank transfer and cash in, and mobile money, bank transfer and cash out — with the availability, the provider references, the confirmation monitoring, the failures and the reconciliation</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="pmPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="pmKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Method Connections</div>
+        <div class="panel-sub">Turn a rail on or off — a paused rail refuses new requests at once</div></div>
+        <span class="badge b-gray" id="pmCount">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="pmHead"></thead><tbody id="pmBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Money In</div>
+          <div class="panel-sub">Deposits by rail, with the references the provider returned</div></div>
+          <span class="badge b-gray" id="pmDepPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="pmDepHead"></thead><tbody id="pmDepBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Money Out</div>
+          <div class="panel-sub">Withdrawals by rail, and what came back</div></div>
+          <span class="badge b-gray" id="pmWdrPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="pmWdrHead"></thead><tbody id="pmWdrBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Provider References</div>
+          <div class="panel-sub">Every reference the rails returned</div></div>
+          <span class="badge b-gray" id="pmRefPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="pmRefHead"></thead><tbody id="pmRefBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Confirmation Monitoring and Failures</div>
+          <div class="panel-sub">Callbacks received, and the ones that never arrived</div></div>
+          <span class="badge b-crit" id="pmFailPill">—</span></div>
+        <div id="pmConfirmBody"></div>
+        <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="pmFailHead"></thead><tbody id="pmFailBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payment Reconciliation</div>
+        <div class="panel-sub">Provider totals against what the ledger holds</div></div></div>
+      <div class="form-actions"><button class="btn btn-gold" id="pmReconBtn">Reconcile the rails</button></div>
+      <div id="pmReconBox" style="margin-top:8px"></div>
+    </div>
+
+    <div class="chartgrid" id="pmGrid"></div>
+  </section>
+
+  <!-- ============ 11 · SAVINGS TRANSACTION MONITORING ============ -->
+  <section class="sec" id="s11">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>Savings Transaction Monitoring</h2>
+        <p>Every savings transaction by state — pending, completed, failed, rejected, cancelled and reversed — with duplicate detection, the search, the details and the status history</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="txPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="txKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Transactions</div>
+        <div class="panel-sub">Pick a state, search the register, then click a row for the detail</div></div>
+        <span class="badge b-gray" id="txCount">—</span></div>
+      <div class="chips" id="txChips" style="margin-bottom:8px"></div>
+      <div class="form-grid">
+        <div class="fg"><label>Search</label><input id="txSearch" placeholder="Reference, customer, account or amount" /></div>
+        <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="txSearchBtn" style="width:100%">Search the register</button></div>
+      </div>
+      <div id="txSearchBox" style="margin-top:8px"></div>
+      <div class="tblwrap" style="max-height:340px;margin-top:8px"><table class="tbl2 dense"><thead id="txHead"></thead><tbody id="txBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transaction Detail and Status History</div>
+          <div class="panel-sub">The whole record, and every state it has passed through</div></div>
+          <span class="badge b-gray" id="txSelPill">—</span></div>
+        <div id="txDetail"></div>
+        <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="txHistHead"></thead><tbody id="txHistBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Duplicate Transactions</div>
+          <div class="panel-sub">A reference seen twice inside the window is held</div></div>
+          <span class="badge b-crit" id="txDupPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="txDupHead"></thead><tbody id="txDupBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="txDupBtn">Scan the register again</button></div>
+        <div id="txDupBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12 · SAVINGS STATEMENTS AND RECEIPTS ============ -->
+  <section class="sec" id="s12">
+    <div class="sec-head">
+      <div class="sec-num">12</div>
+      <div><h2>Savings Statements and Receipts</h2>
+        <p>Individual, daily, monthly and annual statements, the deposit and withdrawal receipts, the interest statements, the download and print, the receipt verification and the generation history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="stPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="stKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Build a Statement</div>
+        <div class="panel-sub">Individual, daily, monthly or annual — printed or downloaded as a real file</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Statement type</label><select id="stType"><option>Individual</option><option>Daily</option><option>Monthly</option><option>Annual</option></select></div>
+        <div class="fg"><label>Customer</label><select id="stCust"></select></div>
+        <div class="fg"><label>From</label><input id="stFrom" type="date" /></div>
+        <div class="fg"><label>To</label><input id="stTo" type="date" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="stBuild">Build the statement</button>
+        <button class="btn btn-ghost" id="stPrint">Print or save as PDF</button>
+        <button class="btn btn-ghost" id="stCsv">Download CSV</button>
+      </div>
+      <div id="stBox" style="margin-top:10px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Receipts</div>
+          <div class="panel-sub">Deposit and withdrawal receipts, and the interest statements</div></div>
+          <span class="badge b-gray" id="rcpPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rcpHead"></thead><tbody id="rcpBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Receipt Verification and Corrections</div>
+          <div class="panel-sub">Check a receipt against the register, and see what has been corrected</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Receipt number</label><input id="rcpVerifyInput" placeholder="SVR-04201" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="rcpVerifyBtn" style="width:100%">Verify the receipt</button></div>
+        </div>
+        <div id="rcpVerifyBox" style="margin-top:8px"></div>
+        <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="rcpReissueHead"></thead><tbody id="rcpReissueBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Statement Generation History</div>
+        <div class="panel-sub">Every statement built from this page, and by whom</div></div>
+        <span class="badge b-gray" id="stGenPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="stGenHead"></thead><tbody id="stGenBody"></tbody></table></div>
+    </div>
+  </section>
