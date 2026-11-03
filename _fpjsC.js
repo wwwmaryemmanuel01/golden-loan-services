@@ -35,6 +35,24 @@ const FEE_TYPES = [
 ];
 const FEE_TYPE_BY_CODE = Object.fromEntries(FEE_TYPES.map(t => [t.code, t]));
 const FEE_TYPE_NAME = code => (FEE_TYPE_BY_CODE[code] || {}).name || code;
+/* who a charge may be raised on — the eligible-customer segments */
+const FP_SEGMENTS = [
+  ['all',     'All customers'],
+  ['salary',  'Salaried employees'],
+  ['business','Business owners'],
+  ['group',   'Group lending members'],
+  ['civil',   'Civil servants'],
+  ['women',   'Women-led enterprises'],
+  ['first',   'First-time borrowers'],
+  ['repeat',  'Repeat customers']
+];
+const FP_SEG_BY_KEY = Object.fromEntries(FP_SEGMENTS.map(([k, l]) => [k, l]));
+const FP_SEG_DEFAULT = { ESF: ['business', 'salary'], RSF: ['all'], CAF: ['business', 'group'],
+  AMF: ['all'], STF: ['all'], OSC: ['all'] };
+const fpSegmentsOf = t => (t && t.segments && t.segments.length) ? t.segments
+  : (FP_SEG_DEFAULT[t && t.code] || ['all']);
+const fpSegNames = t => fpSegmentsOf(t).map(k => FP_SEG_BY_KEY[k] || k).join(', ');
+
 const FEE_PENALTY_TYPES = FEE_TYPES.filter(t => t.group === 'Penalty');
 const FEE_CHARGE_TYPES  = FEE_TYPES.filter(t => t.group !== 'Penalty');
 
@@ -515,9 +533,13 @@ const FEE_REPORTS = [
 const FEE_AUDIT = [];
 let auSeq = 1;
 function fpAudit(kind, what, from, to, by, reason, lane){
-  FEE_AUDIT.push({id: 'FAU-2026-' + pad(auSeq++, 4), when: TODAY + ' ' + pad(8 + (auSeq % 9), 2) + ':' + pad((auSeq * 7) % 60, 2),
+  const stamp = TODAY + ' ' + fpNow();
+  const latest = FEE_AUDIT.reduce((m, a) => (a.when > m ? a.when : m), '');
+  const entry = {id: 'FAU-2026-' + pad(auSeq++, 4), when: stamp > latest ? stamp : latest,
     kind, what, from, to, by, reason, lane: lane || 'Configuration',
-    severity: kind === 'Penalty rule' ? 'High' : 'Medium', owner: by, region: (STAFF_BY_ID[by] || {}).branch || 'Lilongwe'});
+    severity: kind === 'Penalty rule' ? 'High' : 'Medium', owner: by, region: (STAFF_BY_ID[by] || {}).branch || 'Lilongwe'};
+  FEE_AUDIT.push(entry);
+  return entry;
 }
 fpAudit('Fee configuration', 'Application processing fee (APF)', '1.00% · max MK 75,000', '1.00% · max MK 75,000 · unchanged', 'STF-009', 'Quarterly tariff review — no change', 'Configuration');
 fpAudit('Fee configuration', 'Loan processing fee (LPF)', '1.25%', '1.50%', 'STF-003', 'Cost of funds increased in July', 'Configuration');
@@ -606,4 +628,13 @@ function fpIssues(){
   }));
   return out;
 }
+/* keep the history views live: a change written now appears in the history at once */
+(function(){
+  const base = fpAudit;
+  fpAudit = function(kind, what, from, to, by, reason, lane){
+    const e = base(kind, what, from, to, by, reason, lane);
+    if(e) (kind === 'Penalty rule' ? FEE_RULE_HISTORY : FEE_CONFIG_HISTORY).unshift(e);
+    return e;
+  };
+})();
 </script>

@@ -22,7 +22,7 @@ function renderOverview(){
     ['Penalties collected', fpM(s.collectedPens), pct(s.collectedPens, s.assessedPens).toFixed(1) + '% of the penalties', ''],
     ['Outstanding fees', fpM(s.outstandingFees), 'Still owed to the business', s.outstandingFees ? 'amber' : ''],
     ['Outstanding penalties', fpM(s.outstandingPens), 'Unpaid penalty balances', s.outstandingPens ? 'red' : ''],
-    ['Pending assessments', num(s.pendingAssess), 'Above the approval line', s.pendingAssess ? 'amber' : ''],
+    ['Pending fee assessments', num(s.pendingAssess), 'Above the approval line', s.pendingAssess ? 'amber' : ''],
     ['Pending waivers', num(s.pendingWaivers), 'Waiting on the head of credit', s.pendingWaivers ? 'amber' : ''],
     ['Reversed charges', num(s.reversedCount), fpM(s.reversed) + ' taken off', ''],
     ['At the cap', num(s.atCap), 'No more may be added', '']
@@ -126,7 +126,7 @@ function renderFeeTypes(){
     ['Configurations on file', num(FEE_CONFIG_HISTORY.length), 'Every change kept', '']
   ].map(([l, v, s, k]) => kpiCard(l, v, s, k)).join(''));
 
-  if(el('ftCount')) el('ftCount').textContent = num(types.length) + ' charge types';
+  if(el('ftCount')) el('ftCount').textContent = num(FEE_TYPES.length) + ' charge types';
   renderTable('ftBody', [
     {k: 'code', label: 'Code'},
     {k: 'name', label: 'Charge'},
@@ -157,6 +157,7 @@ function renderFeeTypes(){
     ['Effective from', esc(fmtDate(t.effective))],
     ['Grace days', num(t.graceDays)],
     ['Owner', esc(staffName(t.owner))],
+    ['Eligible customers', esc(fpSegNames(t))],
     ['Description', esc(t.description)],
     ['Charges raised', num(CHARGES.filter(c => c.type === t.code).length)]
   ].map(([k, v]) => kvRow(k, v)).join(''));
@@ -172,6 +173,10 @@ function renderFeeTypes(){
   if(el('ftProducts')) el('ftProducts').innerHTML = PRODUCTS.map(p => {
     const on2 = (t.products || []).indexOf(p.id) >= 0;
     return `<button class="chip${on2 ? ' on' : ''}" data-ftprod="${esc(p.id)}">${esc(p.id)} · ${esc(p.name)}</button>`;
+  }).join('');
+  if(el('ftSegments')) el('ftSegments').innerHTML = FP_SEGMENTS.map(([k, label]) => {
+    const on3 = fpSegmentsOf(t).indexOf(k) >= 0;
+    return `<button class="chip${on3 ? ' on' : ''}" data-ftseg="${esc(k)}">${esc(label)}</button>`;
   }).join('');
 
   if(el('ftHistPill')) el('ftHistPill').textContent = num(FEE_CONFIG_HISTORY.length) + ' changes';
@@ -243,6 +248,77 @@ function fpFeeProduct(prod){
     'Product assignment changed', 'Configuration');
   renderAll();
   toast(t.code + ' now applies to ' + (list.length ? list.join(', ') : 'no product'));
+}
+
+function fpFeeSegment(key){
+  const t = FEE_TYPE_BY_CODE[FP_SEL.fee];
+  if(!t) return;
+  const list = fpSegmentsOf(t).slice();
+  const i = list.indexOf(key);
+  if(i >= 0){ if(list.length === 1){ toast('A fee must stay eligible for at least one customer group', 'err'); return; } list.splice(i, 1); }
+  else list.push(key);
+  t.segments = list;
+  const names = list.map(k => FP_SEG_BY_KEY[k] || k).join(', ');
+  fpAudit('Fee eligibility', t.code + ' · ' + t.name, '—', names, FEE_STAFF_REF,
+    'Eligible customer groups changed', 'Configuration');
+  renderAll();
+  toast(t.code + ' is now raised on ' + names.toLowerCase());
+}
+function fpFeeNew(){
+  const groups = ['Application', 'Origination', 'Administrative', 'Penalty'];
+  openModal('Create a fee type', 'A new line in the tariff, with its basis, floor, ceiling and effective date',
+    `<div class="note gold"><div>A new fee only reaches a customer once it is saved, enabled and effective. The rate it is created at is the rate kept on every charge raised against it.</div></div>
+     <div class="form-grid" style="margin-top:10px">
+       <div class="fg"><label>Code</label><input id="nfCode" maxlength="4" placeholder="e.g. DSF" /></div>
+       <div class="fg"><label>Name</label><input id="nfName" placeholder="e.g. Document search fee" /></div>
+       <div class="fg"><label>Group</label><select id="nfGroup">${groups.map(g => `<option>${esc(g)}</option>`).join('')}</select></div>
+       <div class="fg"><label>Basis</label><select id="nfBasis"><option>Fixed</option><option>Percentage</option><option>Daily</option></select></div>
+       <div class="fg"><label>Percentage (%)</label><input id="nfPct" type="number" step="0.05" value="0" /></div>
+       <div class="fg"><label>Fixed amount (MWK)</label><input id="nfFixed" type="number" step="500" value="10000" /></div>
+       <div class="fg"><label>Minimum (MWK)</label><input id="nfMin" type="number" step="500" value="0" /></div>
+       <div class="fg"><label>Maximum (MWK)</label><input id="nfMax" type="number" step="500" value="100000" /></div>
+       <div class="fg"><label>Effective from</label><input id="nfEffective" type="date" value="${esc(TODAY)}" /></div>
+       <div class="fg"><label>Description</label><input id="nfDesc" placeholder="What the charge is for" /></div>
+     </div>
+     <div class="qhint" id="nfMsg">The code must be unique, three or four letters. The fee is created disabled-or-enabled and can be attached to products afterwards.</div>`,
+    [{label: 'Create the fee type', cls: 'btn-gold', act: () => fpFeeCreate()},
+     {label: 'Cancel', act: 'close'}]);
+}
+function fpFeeCreate(){
+  const code = ((el('nfCode') && el('nfCode').value) || '').trim().toUpperCase();
+  const name = ((el('nfName') && el('nfName').value) || '').trim();
+  const desc = ((el('nfDesc') && el('nfDesc').value) || '').trim();
+  const group = fpPicked('nfGroup', 'Administrative');
+  const basis = fpPicked('nfBasis', 'Fixed');
+  const pctv = fpNum('nfPct', 0);
+  const fixed = fpNum('nfFixed', 0);
+  const min = fpNum('nfMin', 0);
+  const max = fpNum('nfMax', 0);
+  const effective = fpPicked('nfEffective', TODAY);
+  const fail = m => { if(el('nfMsg')) el('nfMsg').textContent = m; toast(m, 'err'); };
+  if(!/^[A-Z]{3,4}$/.test(code)) return fail('The code must be three or four letters');
+  if(FEE_TYPE_BY_CODE[code]) return fail('That code is already in the tariff');
+  if(!name) return fail('A fee type needs a name');
+  if(basis === 'Percentage' && (pctv <= 0 || pctv > 20)) return fail('A percentage charge must sit between 0 and 20%');
+  if(basis === 'Fixed' && fixed <= 0) return fail('A fixed charge must be above zero');
+  if(max && min && max < min) return fail('The ceiling cannot sit below the floor');
+
+  const t = {code, name, group, basis, pct: pctv, fixed, min, max, products: [],
+    graceDays: group === 'Penalty' ? FEE_RULES.graceDays : 0, enabled: true, effective,
+    status: 'Active', lane: group === 'Penalty' ? 'Penalties' : 'Fees',
+    severity: group === 'Penalty' ? 'High' : 'Low', owner: FEE_STAFF_REF, region: 'Head office',
+    description: desc || 'Added to the tariff from the fee screen.', segments: ['all']};
+  FEE_TYPES.push(t);
+  FEE_TYPE_BY_CODE[code] = t;
+  (group === 'Penalty' ? FEE_PENALTY_TYPES : FEE_CHARGE_TYPES).push(t);
+  fpAudit('Fee configuration', code + ' · ' + name, '—',
+    (basis === 'Fixed' ? fpM(fixed) : fpPct(pctv)) + ', effective ' + fmtDate(effective),
+    FEE_STAFF_REF, 'New fee type created in the tariff', 'Configuration');
+  FP_SEL.fee = code;
+  closeModal(); renderAll();
+  if(el('ftMsg')) el('ftMsg').textContent = code + ' · ' + name + ' was created on ' + fmtDate(effective)
+    + ', eligible for all customers. Attach it to a product and switch it on before it can be charged.';
+  toast(code + ' created — attach it to a product next');
 }
 
 /* ---------------- 3 · APPLICATION FEES ---------------- */
@@ -607,6 +683,9 @@ function wireAll(){
     const prodBtn = e.target.closest('[data-ftprod]');
     if(prodBtn){ fpFeeProduct(prodBtn.dataset.ftprod); return; }
 
+    const segBtn = e.target.closest('[data-ftseg]');
+    if(segBtn){ fpFeeSegment(segBtn.dataset.ftseg); return; }
+
     const notif = e.target.closest('[data-fpnotif]');
     if(notif){ fpNotifyToggle(Number(notif.dataset.fpnotif)); return; }
 
@@ -624,6 +703,7 @@ function wireAll(){
     /* 2 · fee management */
     if(e.target.closest('#ftSaveBtn')){ fpFeeSave(); return; }
     if(e.target.closest('#ftToggleBtn')){ fpFeeToggle(); return; }
+    if(e.target.closest('#ftNewBtn')){ fpFeeNew(); return; }
     /* 3 · application fees */
     if(e.target.closest('#afRefundBtn')){ fpRefundRequest(); return; }
     /* 6 · calculation */

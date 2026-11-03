@@ -1420,9 +1420,12 @@ tr[data-rsc-hit]{cursor:pointer}
         </div>
         <div class="minihead" style="margin-top:8px">Assign to loan products</div>
         <div class="chips" id="ftProducts"></div>
+        <div class="minihead" style="margin-top:9px">Assign to eligible customers</div>
+        <div class="chips" id="ftSegments"></div>
         <div class="form-actions">
           <button class="btn btn-gold" id="ftSaveBtn">Save the configuration</button>
           <button class="btn btn-ghost" id="ftToggleBtn">Enable or disable</button>
+          <button class="btn btn-ghost" id="ftNewBtn">＋ Create a fee type</button>
         </div>
         <div class="qhint" id="ftMsg" style="margin-top:6px"></div>
       </div>
@@ -3596,6 +3599,24 @@ const FEE_TYPES = [
 ];
 const FEE_TYPE_BY_CODE = Object.fromEntries(FEE_TYPES.map(t => [t.code, t]));
 const FEE_TYPE_NAME = code => (FEE_TYPE_BY_CODE[code] || {}).name || code;
+/* who a charge may be raised on — the eligible-customer segments */
+const FP_SEGMENTS = [
+  ['all',     'All customers'],
+  ['salary',  'Salaried employees'],
+  ['business','Business owners'],
+  ['group',   'Group lending members'],
+  ['civil',   'Civil servants'],
+  ['women',   'Women-led enterprises'],
+  ['first',   'First-time borrowers'],
+  ['repeat',  'Repeat customers']
+];
+const FP_SEG_BY_KEY = Object.fromEntries(FP_SEGMENTS.map(([k, l]) => [k, l]));
+const FP_SEG_DEFAULT = { ESF: ['business', 'salary'], RSF: ['all'], CAF: ['business', 'group'],
+  AMF: ['all'], STF: ['all'], OSC: ['all'] };
+const fpSegmentsOf = t => (t && t.segments && t.segments.length) ? t.segments
+  : (FP_SEG_DEFAULT[t && t.code] || ['all']);
+const fpSegNames = t => fpSegmentsOf(t).map(k => FP_SEG_BY_KEY[k] || k).join(', ');
+
 const FEE_PENALTY_TYPES = FEE_TYPES.filter(t => t.group === 'Penalty');
 const FEE_CHARGE_TYPES  = FEE_TYPES.filter(t => t.group !== 'Penalty');
 
@@ -4076,9 +4097,13 @@ const FEE_REPORTS = [
 const FEE_AUDIT = [];
 let auSeq = 1;
 function fpAudit(kind, what, from, to, by, reason, lane){
-  FEE_AUDIT.push({id: 'FAU-2026-' + pad(auSeq++, 4), when: TODAY + ' ' + pad(8 + (auSeq % 9), 2) + ':' + pad((auSeq * 7) % 60, 2),
+  const stamp = TODAY + ' ' + fpNow();
+  const latest = FEE_AUDIT.reduce((m, a) => (a.when > m ? a.when : m), '');
+  const entry = {id: 'FAU-2026-' + pad(auSeq++, 4), when: stamp > latest ? stamp : latest,
     kind, what, from, to, by, reason, lane: lane || 'Configuration',
-    severity: kind === 'Penalty rule' ? 'High' : 'Medium', owner: by, region: (STAFF_BY_ID[by] || {}).branch || 'Lilongwe'});
+    severity: kind === 'Penalty rule' ? 'High' : 'Medium', owner: by, region: (STAFF_BY_ID[by] || {}).branch || 'Lilongwe'};
+  FEE_AUDIT.push(entry);
+  return entry;
 }
 fpAudit('Fee configuration', 'Application processing fee (APF)', '1.00% · max MK 75,000', '1.00% · max MK 75,000 · unchanged', 'STF-009', 'Quarterly tariff review — no change', 'Configuration');
 fpAudit('Fee configuration', 'Loan processing fee (LPF)', '1.25%', '1.50%', 'STF-003', 'Cost of funds increased in July', 'Configuration');
@@ -4167,6 +4192,15 @@ function fpIssues(){
   }));
   return out;
 }
+/* keep the history views live: a change written now appears in the history at once */
+(function(){
+  const base = fpAudit;
+  fpAudit = function(kind, what, from, to, by, reason, lane){
+    const e = base(kind, what, from, to, by, reason, lane);
+    if(e) (kind === 'Penalty rule' ? FEE_RULE_HISTORY : FEE_CONFIG_HISTORY).unshift(e);
+    return e;
+  };
+})();
 </script>
 <script>
 /* ============================================================
@@ -4572,6 +4606,7 @@ function renderProducts(){
 
   fpFillSel('ppPreviewProduct', fpProdOptions(), FP_SEL.product || 'SL');
   if(el('ppPreviewPill')) el('ppPreviewPill').textContent = 'live';
+  if(el('ppPreviewBox') && !el('ppPreviewBox').innerHTML.trim() && el('ppPreviewAmount')) fpPreviewRun(true);
 
   if(el('ppHistPill')) el('ppHistPill').textContent = num(FEE_CONFIG_HISTORY.length) + ' changes';
   renderTable('ppHistBody', [
@@ -4592,7 +4627,7 @@ function renderProducts(){
       cats: prodNames, value: num(FEE_TYPES.length) + ' types',
       series: [{name: 'Fee types', data: PRODUCTS.map(p => fpProductFees(p.id).length), colour: '#1E9E6A'}]}));
 }
-function fpPreviewRun(){
+function fpPreviewRun(quiet){
   const prod = fpPicked('ppPreviewProduct', 'SL');
   const amount = fpNum('ppPreviewAmount', 1200000);
   const term = fpNum('ppPreviewTerm', 12);
@@ -4607,7 +4642,7 @@ function fpPreviewRun(){
   const lines = fpPreviewCharges(prod, amount, term);
   const upfront = sum(lines, l => l.amount);
   const perMonth = p.rate * amount * term;
-  logExport('Charge preview · ' + p.name, 'Preview', lines.length);
+  if(!quiet) logExport('Charge preview · ' + p.name, 'Preview', lines.length);
   if(box) box.innerHTML = `<div class="minihead">Before approval</div>` + strip([
     ['Loan amount', fpM(amount)],
     ['Term', num(term) + ' months'],
@@ -6418,7 +6453,7 @@ function renderOverview(){
     ['Penalties collected', fpM(s.collectedPens), pct(s.collectedPens, s.assessedPens).toFixed(1) + '% of the penalties', ''],
     ['Outstanding fees', fpM(s.outstandingFees), 'Still owed to the business', s.outstandingFees ? 'amber' : ''],
     ['Outstanding penalties', fpM(s.outstandingPens), 'Unpaid penalty balances', s.outstandingPens ? 'red' : ''],
-    ['Pending assessments', num(s.pendingAssess), 'Above the approval line', s.pendingAssess ? 'amber' : ''],
+    ['Pending fee assessments', num(s.pendingAssess), 'Above the approval line', s.pendingAssess ? 'amber' : ''],
     ['Pending waivers', num(s.pendingWaivers), 'Waiting on the head of credit', s.pendingWaivers ? 'amber' : ''],
     ['Reversed charges', num(s.reversedCount), fpM(s.reversed) + ' taken off', ''],
     ['At the cap', num(s.atCap), 'No more may be added', '']
@@ -6522,7 +6557,7 @@ function renderFeeTypes(){
     ['Configurations on file', num(FEE_CONFIG_HISTORY.length), 'Every change kept', '']
   ].map(([l, v, s, k]) => kpiCard(l, v, s, k)).join(''));
 
-  if(el('ftCount')) el('ftCount').textContent = num(types.length) + ' charge types';
+  if(el('ftCount')) el('ftCount').textContent = num(FEE_TYPES.length) + ' charge types';
   renderTable('ftBody', [
     {k: 'code', label: 'Code'},
     {k: 'name', label: 'Charge'},
@@ -6553,6 +6588,7 @@ function renderFeeTypes(){
     ['Effective from', esc(fmtDate(t.effective))],
     ['Grace days', num(t.graceDays)],
     ['Owner', esc(staffName(t.owner))],
+    ['Eligible customers', esc(fpSegNames(t))],
     ['Description', esc(t.description)],
     ['Charges raised', num(CHARGES.filter(c => c.type === t.code).length)]
   ].map(([k, v]) => kvRow(k, v)).join(''));
@@ -6568,6 +6604,10 @@ function renderFeeTypes(){
   if(el('ftProducts')) el('ftProducts').innerHTML = PRODUCTS.map(p => {
     const on2 = (t.products || []).indexOf(p.id) >= 0;
     return `<button class="chip${on2 ? ' on' : ''}" data-ftprod="${esc(p.id)}">${esc(p.id)} · ${esc(p.name)}</button>`;
+  }).join('');
+  if(el('ftSegments')) el('ftSegments').innerHTML = FP_SEGMENTS.map(([k, label]) => {
+    const on3 = fpSegmentsOf(t).indexOf(k) >= 0;
+    return `<button class="chip${on3 ? ' on' : ''}" data-ftseg="${esc(k)}">${esc(label)}</button>`;
   }).join('');
 
   if(el('ftHistPill')) el('ftHistPill').textContent = num(FEE_CONFIG_HISTORY.length) + ' changes';
@@ -6639,6 +6679,77 @@ function fpFeeProduct(prod){
     'Product assignment changed', 'Configuration');
   renderAll();
   toast(t.code + ' now applies to ' + (list.length ? list.join(', ') : 'no product'));
+}
+
+function fpFeeSegment(key){
+  const t = FEE_TYPE_BY_CODE[FP_SEL.fee];
+  if(!t) return;
+  const list = fpSegmentsOf(t).slice();
+  const i = list.indexOf(key);
+  if(i >= 0){ if(list.length === 1){ toast('A fee must stay eligible for at least one customer group', 'err'); return; } list.splice(i, 1); }
+  else list.push(key);
+  t.segments = list;
+  const names = list.map(k => FP_SEG_BY_KEY[k] || k).join(', ');
+  fpAudit('Fee eligibility', t.code + ' · ' + t.name, '—', names, FEE_STAFF_REF,
+    'Eligible customer groups changed', 'Configuration');
+  renderAll();
+  toast(t.code + ' is now raised on ' + names.toLowerCase());
+}
+function fpFeeNew(){
+  const groups = ['Application', 'Origination', 'Administrative', 'Penalty'];
+  openModal('Create a fee type', 'A new line in the tariff, with its basis, floor, ceiling and effective date',
+    `<div class="note gold"><div>A new fee only reaches a customer once it is saved, enabled and effective. The rate it is created at is the rate kept on every charge raised against it.</div></div>
+     <div class="form-grid" style="margin-top:10px">
+       <div class="fg"><label>Code</label><input id="nfCode" maxlength="4" placeholder="e.g. DSF" /></div>
+       <div class="fg"><label>Name</label><input id="nfName" placeholder="e.g. Document search fee" /></div>
+       <div class="fg"><label>Group</label><select id="nfGroup">${groups.map(g => `<option>${esc(g)}</option>`).join('')}</select></div>
+       <div class="fg"><label>Basis</label><select id="nfBasis"><option>Fixed</option><option>Percentage</option><option>Daily</option></select></div>
+       <div class="fg"><label>Percentage (%)</label><input id="nfPct" type="number" step="0.05" value="0" /></div>
+       <div class="fg"><label>Fixed amount (MWK)</label><input id="nfFixed" type="number" step="500" value="10000" /></div>
+       <div class="fg"><label>Minimum (MWK)</label><input id="nfMin" type="number" step="500" value="0" /></div>
+       <div class="fg"><label>Maximum (MWK)</label><input id="nfMax" type="number" step="500" value="100000" /></div>
+       <div class="fg"><label>Effective from</label><input id="nfEffective" type="date" value="${esc(TODAY)}" /></div>
+       <div class="fg"><label>Description</label><input id="nfDesc" placeholder="What the charge is for" /></div>
+     </div>
+     <div class="qhint" id="nfMsg">The code must be unique, three or four letters. The fee is created disabled-or-enabled and can be attached to products afterwards.</div>`,
+    [{label: 'Create the fee type', cls: 'btn-gold', act: () => fpFeeCreate()},
+     {label: 'Cancel', act: 'close'}]);
+}
+function fpFeeCreate(){
+  const code = ((el('nfCode') && el('nfCode').value) || '').trim().toUpperCase();
+  const name = ((el('nfName') && el('nfName').value) || '').trim();
+  const desc = ((el('nfDesc') && el('nfDesc').value) || '').trim();
+  const group = fpPicked('nfGroup', 'Administrative');
+  const basis = fpPicked('nfBasis', 'Fixed');
+  const pctv = fpNum('nfPct', 0);
+  const fixed = fpNum('nfFixed', 0);
+  const min = fpNum('nfMin', 0);
+  const max = fpNum('nfMax', 0);
+  const effective = fpPicked('nfEffective', TODAY);
+  const fail = m => { if(el('nfMsg')) el('nfMsg').textContent = m; toast(m, 'err'); };
+  if(!/^[A-Z]{3,4}$/.test(code)) return fail('The code must be three or four letters');
+  if(FEE_TYPE_BY_CODE[code]) return fail('That code is already in the tariff');
+  if(!name) return fail('A fee type needs a name');
+  if(basis === 'Percentage' && (pctv <= 0 || pctv > 20)) return fail('A percentage charge must sit between 0 and 20%');
+  if(basis === 'Fixed' && fixed <= 0) return fail('A fixed charge must be above zero');
+  if(max && min && max < min) return fail('The ceiling cannot sit below the floor');
+
+  const t = {code, name, group, basis, pct: pctv, fixed, min, max, products: [],
+    graceDays: group === 'Penalty' ? FEE_RULES.graceDays : 0, enabled: true, effective,
+    status: 'Active', lane: group === 'Penalty' ? 'Penalties' : 'Fees',
+    severity: group === 'Penalty' ? 'High' : 'Low', owner: FEE_STAFF_REF, region: 'Head office',
+    description: desc || 'Added to the tariff from the fee screen.', segments: ['all']};
+  FEE_TYPES.push(t);
+  FEE_TYPE_BY_CODE[code] = t;
+  (group === 'Penalty' ? FEE_PENALTY_TYPES : FEE_CHARGE_TYPES).push(t);
+  fpAudit('Fee configuration', code + ' · ' + name, '—',
+    (basis === 'Fixed' ? fpM(fixed) : fpPct(pctv)) + ', effective ' + fmtDate(effective),
+    FEE_STAFF_REF, 'New fee type created in the tariff', 'Configuration');
+  FP_SEL.fee = code;
+  closeModal(); renderAll();
+  if(el('ftMsg')) el('ftMsg').textContent = code + ' · ' + name + ' was created on ' + fmtDate(effective)
+    + ', eligible for all customers. Attach it to a product and switch it on before it can be charged.';
+  toast(code + ' created — attach it to a product next');
 }
 
 /* ---------------- 3 · APPLICATION FEES ---------------- */
@@ -7003,6 +7114,9 @@ function wireAll(){
     const prodBtn = e.target.closest('[data-ftprod]');
     if(prodBtn){ fpFeeProduct(prodBtn.dataset.ftprod); return; }
 
+    const segBtn = e.target.closest('[data-ftseg]');
+    if(segBtn){ fpFeeSegment(segBtn.dataset.ftseg); return; }
+
     const notif = e.target.closest('[data-fpnotif]');
     if(notif){ fpNotifyToggle(Number(notif.dataset.fpnotif)); return; }
 
@@ -7020,6 +7134,7 @@ function wireAll(){
     /* 2 · fee management */
     if(e.target.closest('#ftSaveBtn')){ fpFeeSave(); return; }
     if(e.target.closest('#ftToggleBtn')){ fpFeeToggle(); return; }
+    if(e.target.closest('#ftNewBtn')){ fpFeeNew(); return; }
     /* 3 · application fees */
     if(e.target.closest('#afRefundBtn')){ fpRefundRequest(); return; }
     /* 6 · calculation */
