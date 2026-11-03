@@ -1,0 +1,332 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Transfers Management</div>
+      <div class="page-sub">Every movement between accounts, banks and wallets · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a reference, customer, beneficiary or amount…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Open transfer alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export pack
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Transfers</a>
+    <a class="snav" href="#s3">3 · Internal</a>
+    <a class="snav" href="#s4">4 · Savings</a>
+    <a class="snav" href="#s5">5 · Loan-related</a>
+    <a class="snav" href="#s6">6 · Bank</a>
+    <a class="snav" href="#s7">7 · Mobile money</a>
+    <a class="snav" href="#s8">8 · Verification</a>
+    <a class="snav" href="#s9">9 · Approvals</a>
+    <a class="snav" href="#s10">10 · Processing</a>
+    <a class="snav" href="#s11">11 · Balance &amp; ledger</a>
+    <a class="snav" href="#s12">12 · Fees &amp; limits</a>
+    <a class="snav" href="#s13">13 · Beneficiaries</a>
+    <a class="snav" href="#s14">14 · Receipts</a>
+    <a class="snav" href="#s15">15 · Failures &amp; reversals</a>
+    <a class="snav" href="#s16">16 · Security</a>
+    <a class="snav" href="#s17">17 · Connections</a>
+    <a class="snav" href="#s18">18 · Database</a>
+    <a class="snav" href="#s19">19 · Notifications</a>
+    <a class="snav" href="#s20">20 · Reports</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Transfers</h1>
+        <p>Between a customer's own accounts, into savings, against a loan, to a bank or to a wallet — all read from the same accounts, loans and ledger the rest of the portal runs on</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandScore">0</b><span>Transfer health</span></div>
+        <div class="band-stat"><b id="bandTransfers">0</b><span>Transfers</span></div>
+        <div class="band-stat"><b id="bandVolume">0</b><span>Value moved</span></div>
+        <div class="band-stat"><b id="bandAlerts">0</b><span>Open issues</span></div>
+      </div>
+    </div>
+
+    <!-- ============ filter bar ============ -->
+    <div class="card panel" id="filterBar">
+      <div class="panel-head"><div><div class="panel-title">Filter the transfer register</div>
+        <div class="panel-sub">Every section follows these controls — area, severity, state, officer, branch and free text</div></div>
+        <span class="badge b-gray" id="fltSummary">Date range only</span></div>
+      <div class="g3">
+        <div class="fgroup">
+          <div class="fh">Date range</div>
+          <div class="form-grid">
+            <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+            <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+          </div>
+          <div class="fh" style="margin-top:9px">Search</div>
+          <div class="fld" style="width:100%">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Reference, customer, beneficiary…" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Area</div>
+          <div class="chips" id="fltLaneChips">
+            <span class="fchip on" data-lane="">All areas</span>
+            <span class="fchip" data-lane="Internal">Internal</span>
+            <span class="fchip" data-lane="Savings">Savings</span>
+            <span class="fchip" data-lane="Loan">Loan</span>
+            <span class="fchip" data-lane="Bank">Bank</span>
+            <span class="fchip" data-lane="Mobile money">Mobile money</span>
+            <span class="fchip" data-lane="Gateway">Gateway</span>
+            <span class="fchip" data-lane="Ledger">Ledger</span>
+            <span class="fchip" data-lane="Reversals">Reversals</span>
+            <span class="fchip" data-lane="Security">Security</span>
+            <span class="fchip" data-lane="Database">Database</span>
+            <span class="fchip" data-lane="Receipts">Receipts</span>
+            <span class="fchip" data-lane="Notifications">Notifications</span>
+          </div>
+          <div class="fh" style="margin-top:9px">Refresh</div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-ghost" id="refreshBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              Refresh transfer data
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Dimensions</div>
+          <div class="form-grid">
+            <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+            <div class="fg"><label>Transfer state</label><select id="fltStatus"></select></div>
+            <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+            <div class="fg"><label>Branch</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:8px">
+            <button class="btn btn-gold" id="fltApply">Apply filters</button>
+            <button class="btn btn-ghost" id="fltReset">Clear all</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="fltChips" style="margin-top:10px"></div>
+      <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+      <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ============ 1 · TRANSFERS OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div><h2>Transfers Overview</h2>
+          <p>Total transfers and the value behind them, what moved today, the transfers waiting for an approval, those at a provider, and the completed, failed, rejected, cancelled and reversed counts</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="ovKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transfer Health</div>
+            <div class="panel-sub">Each meter is live — verify a transfer or approve a payout and the bars move</div></div>
+            <span class="qhint" id="ovStamp"></span></div>
+          <div id="ovMeters"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Status Board</div>
+            <div class="panel-sub">Where every transfer sits right now</div></div>
+            <span class="badge b-gray" id="ovBoardPill">—</span></div>
+          <div class="statusgrid" id="ovBoard"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Volume and Value</div>
+          <div class="panel-sub">By rail, by state and across the last seven days</div></div></div>
+        <div class="chartgrid" id="ovGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Open Transfer Issues</div>
+            <div class="panel-sub">Failures, unverified destinations, duplicates and provider warnings</div></div>
+            <span class="badge b-gray" id="ovAlertPill">0</span></div>
+          <div id="ovAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Transfers</div>
+            <div class="panel-sub">The newest movements, whatever the rail</div></div></div>
+          <div id="ovFeed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · TRANSFER MANAGEMENT ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div><h2>Transfer Management</h2>
+          <p>Every transfer with its reference, date, amount and currency, description, category, priority, who raised it and where it has reached — plus the form that creates a new one</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="tmPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="tmKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Create a New Transfer</div>
+          <div class="panel-sub">Customer-initiated or staff-recorded — the reference is issued as you save</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Who is raising it</label><select id="tmNewSource"><option>Customer-initiated</option><option>Staff-initiated</option></select></div>
+          <div class="fg"><label>Transfer reference</label><input id="tmNewRef" readonly /></div>
+          <div class="fg"><label>Date and time</label><input id="tmNewWhen" type="datetime-local" /></div>
+          <div class="fg"><label>Transfer type</label><select id="tmNewType">
+            <option>Internal</option><option>Savings</option><option>Loan</option><option>Bank</option><option>Mobile</option></select></div>
+          <div class="fg"><label>Transfer category</label><select id="tmNewCategory"></select></div>
+          <div class="fg"><label>Priority</label><select id="tmNewPriority"><option>Normal</option><option>High</option><option>Urgent</option></select></div>
+          <div class="fg"><label>Source account</label><select id="tmNewSourceAcct"></select></div>
+          <div class="fg"><label>Destination account or beneficiary</label><select id="tmNewDest"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="tmNewAmount" type="number" min="0" step="500" value="120000" /></div>
+          <div class="fg"><label>Currency</label><select id="tmNewCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          <div class="fg"><label>Description</label><input id="tmNewDesc" placeholder="What the transfer is for" /></div>
+          <div class="fg"><label>Supporting document</label><input id="tmNewDocs" type="file" /></div>
+        </div>
+        <div id="tmPreview" style="margin-top:8px"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="tmCreate">Create the transfer</button>
+          <button class="btn btn-ghost" id="tmReset">Clear the form</button>
+        </div>
+        <div class="qhint" id="tmMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">All Transfers</div>
+          <div class="panel-sub">Click a row for the full transfer, its parties and its references</div></div>
+          <span class="badge b-gray" id="tmCount">—</span></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="tmHead"></thead><tbody id="tmBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Status Tracking</div>
+            <div class="panel-sub">How many sit at each stage, and what they are worth</div></div>
+            <span class="badge b-gray" id="tmTrackPill">—</span></div>
+          <div id="tmTrack"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transfer History</div>
+            <div class="panel-sub">Every transfer recorded, newest first</div></div>
+            <span class="badge b-gray" id="tmHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="tmHistHead"></thead><tbody id="tmHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · INTERNAL ACCOUNT TRANSFERS ============ -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div><h2>Internal Account Transfers</h2>
+          <p>Between a customer's own accounts, between two different customers, between eligible savings accounts — with ownership checks, the available balance, a confirmation step and a receipt</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="itPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="itKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Move Money Between Accounts</div>
+          <div class="panel-sub">Pick the source first — the destination list follows what that customer may reach</div></div>
+          <span class="badge b-gray" id="itMode">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Source account</label><select id="itSource"></select></div>
+          <div class="fg"><label>Destination account</label><select id="itDest"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="itAmount" type="number" min="0" step="500" value="75000" /></div>
+          <div class="fg"><label>Description</label><input id="itDesc" placeholder="Reason for the movement" /></div>
+        </div>
+        <div id="itOwnBox" style="margin-top:8px"></div>
+        <div id="itChecks" style="margin-top:8px"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="itVerifyOwnership">Verify account ownership</button>
+          <button class="btn btn-ghost" id="itConfirm">Confirm the details</button>
+          <button class="btn btn-gold" id="itSubmit">Make the transfer</button>
+        </div>
+        <div class="qhint" id="itMsg" style="margin-top:6px"></div>
+        <div id="itReceiptBox" style="margin-top:8px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Internal Transfers</div>
+            <div class="panel-sub">Every movement that stayed inside the ledger</div></div>
+            <span class="badge b-gray" id="itBodyPill">—</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="itHead"></thead><tbody id="itBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Ineligible Accounts</div>
+            <div class="panel-sub">Suspended, dormant or restricted — nothing may be sent to them</div></div>
+            <span class="badge b-warn" id="itIneligPill">—</span></div>
+          <div id="itIneligBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · SAVINGS TRANSFERS ============ -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div><h2>Savings Transfers</h2>
+          <p>Into savings, out of savings and between eligible savings accounts — with the withdrawal restriction, the available balance, the fee, the savings ledger and statement, a receipt and the history</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="svPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="svKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Move Money To or From Savings</div>
+          <div class="panel-sub">The restriction check runs before the transfer is accepted</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Direction</label><select id="svDir"><option>Into savings</option><option>Out of savings</option><option>Between savings accounts</option></select></div>
+          <div class="fg"><label>Savings account</label><select id="svAccount"></select></div>
+          <div class="fg"><label>Other side</label><select id="svDest"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="svAmount" type="number" min="0" step="500" value="50000" /></div>
+        </div>
+        <div class="g2" style="margin-top:8px">
+          <div id="svRestrict"></div>
+          <div id="svFee"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="svCheck">Run the savings checks</button>
+          <button class="btn btn-gold" id="svSubmit">Make the savings transfer</button>
+        </div>
+        <div class="qhint" id="svMsg" style="margin-top:6px"></div>
+        <div id="svReceiptBox" style="margin-top:8px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Savings Ledger</div>
+            <div class="panel-sub">Every movement on the selected savings account</div></div>
+            <span class="badge b-gray" id="svLedgerPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="svLedgerHead"></thead><tbody id="svLedgerBody"></tbody></table></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="svStmtBtn">Build the savings statement</button></div>
+          <div id="svStmt" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Savings Transfer History</div>
+            <div class="panel-sub">Every savings movement, newest first</div></div>
+            <span class="badge b-gray" id="svHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="svHistHead"></thead><tbody id="svHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>

@@ -1,0 +1,252 @@
+    <!-- ============ 13 · BENEFICIARY MANAGEMENT ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div class="sec-num">13</div>
+        <div><h2>Beneficiary Management</h2>
+          <p>Every saved beneficiary — bank, mobile money and internal — with add, edit, verify, enable and disable, the security checks a new one passes and the history of every change</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="bnPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="bnKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Saved Beneficiaries</div>
+            <div class="panel-sub">Click a row to load it into the form</div></div>
+            <span class="badge b-gray" id="bnCount">—</span></div>
+          <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="bnHead"></thead><tbody id="bnBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Add or Edit a Beneficiary</div>
+            <div class="panel-sub">A new payee passes the security checks before it can be used</div></div>
+            <span class="badge b-gray" id="bnSelPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Customer</label><select id="bnCust"></select></div>
+            <div class="fg"><label>Beneficiary name</label><input id="bnName" placeholder="Account holder or wallet name" /></div>
+            <div class="fg"><label>Kind</label><select id="bnKind"><option>Bank account</option><option>Mobile money</option><option>Internal account</option></select></div>
+            <div class="fg"><label>Bank or network</label><select id="bnBank"></select></div>
+            <div class="fg"><label>Account or wallet number</label><input id="bnAcct" placeholder="0123 4567 8901 or 0991 000 111" /></div>
+            <div class="fg"><label>Currency</label><select id="bnCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          </div>
+          <div id="bnChecks" style="margin-top:8px"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="bnAdd">Add the beneficiary</button>
+            <button class="btn btn-ghost" id="bnUpdate">Save the changes</button>
+            <button class="btn btn-ghost" id="bnVerify">Verify it</button>
+            <button class="btn btn-ghost" id="bnToggle">Enable or disable</button>
+          </div>
+          <div class="qhint" id="bnMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Beneficiary Detail</div>
+            <div class="panel-sub">The payee as the rails see it</div></div>
+            <span class="badge b-gray" id="bnDetailPill">—</span></div>
+          <div id="bnDetail"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Beneficiary Change History</div>
+            <div class="panel-sub">Every addition, edit and verification</div></div>
+            <span class="badge b-gray" id="bnHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="bnHistHead"></thead><tbody id="bnHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · TRANSFER RECEIPTS AND STATEMENTS ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div class="sec-num">14</div>
+        <div><h2>Transfer Receipts and Statements</h2>
+          <p>Every receipt with the sender, the recipient, the amount and fees, the transfer and provider references, the date and status — printed, downloaded, verified and reissued, with a statement of the movements</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="rcPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="rcKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipts</div>
+            <div class="panel-sub">Open one to print, download or verify it</div></div>
+            <span class="badge b-gray" id="rcCount">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="rcHead"></thead><tbody id="rcBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipt Preview</div>
+            <div class="panel-sub">Sender, recipient, amount, fees and both references</div></div>
+            <span class="badge b-gray" id="rcSelPill">—</span></div>
+          <div id="rcPreview"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="rcPrint">Print the receipt</button>
+            <button class="btn btn-ghost" id="rcCsv">Download it</button>
+          </div>
+          <div id="rcPartyBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipt Verification</div>
+            <div class="panel-sub">Check any receipt number against the ledger</div></div>
+            <span class="badge b-gray" id="rcVerPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Receipt number</label><input id="rcVerifyInput" placeholder="TRC-03204" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="rcVerifyBtn" style="width:100%">Verify the receipt</button></div>
+          </div>
+          <div id="rcVerifyBox" style="margin-top:8px"></div>
+          <div class="minihead" style="margin-top:10px">Reissue history</div>
+          <div class="tblwrap" style="max-height:190px"><table class="tbl2 dense"><thead id="rcReissueHead"></thead><tbody id="rcReissueBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Transfer Statement</div>
+            <div class="panel-sub">Pick a customer and a range, then print or download it</div></div>
+            <span class="badge b-gray" id="rcStmtPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Customer</label><select id="rcStmtCust"></select></div>
+            <div class="fg"><label>From</label><input id="rcFrom" type="date" /></div>
+            <div class="fg"><label>To</label><input id="rcTo" type="date" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="rcStmtBtn" style="width:100%">Build the statement</button></div>
+          </div>
+          <div id="rcStmtBox" style="margin-top:8px"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="rcStmtPrint">Print the statement</button>
+            <button class="btn btn-ghost" id="rcStmtCsv">Download it</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · FAILED TRANSFERS AND REVERSALS ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div class="sec-num">15</div>
+        <div><h2>Failed Transfers and Reversals</h2>
+          <p>The failed queue and its reasons, a safe retry, cancellation, reversal requests and their approval, funds restored, the provider reversal verified, duplicate refunds blocked, the reconciliation, the notice and the audit trail</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="fqPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="fqKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Failed Transfer Queue</div>
+          <div class="panel-sub">Every failure with the reason and whether it may be retried</div></div>
+          <span class="badge b-crit" id="fqQueuePill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="fqHead"></thead><tbody id="fqBody"></tbody></table></div>
+        <div class="qhint" id="fqMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failure Reasons and the Safe Retry</div>
+            <div class="panel-sub">What went wrong, and what a retry must not do</div></div>
+            <span class="badge b-gray" id="fqReasonPill">—</span></div>
+          <div id="fqReason"></div>
+          <div id="fqGuard" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reversal Requests</div>
+            <div class="panel-sub">Decide one — approve, post, or reject it</div></div>
+            <span class="badge b-gray" id="rvPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rvHead"></thead><tbody id="rvBody"></tbody></table></div>
+          <div class="qhint" id="rvMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Workflow, Funds and Provider Verification</div>
+            <div class="panel-sub">Who signs, what is restored, and what the provider says</div></div>
+            <span class="badge b-gray" id="rvFlowPill">—</span></div>
+          <div id="rvFlow"></div>
+          <div id="rvRestore" style="margin-top:8px"></div>
+          <div id="rvProvider" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Refunds, Reconciliation and Notice</div>
+            <div class="panel-sub">A reversal must not pay twice, and the customer must be told</div></div>
+            <span class="badge b-gray" id="rvDupPill">—</span></div>
+          <div id="rvDup"></div>
+          <div id="rvRecon" style="margin-top:8px"></div>
+          <div id="rvNotify" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reversal Audit Trail</div>
+          <div class="panel-sub">Every request, decision and posting</div></div>
+          <span class="badge b-gray" id="rvAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="rvAuditHead"></thead><tbody id="rvAuditBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 16 · FRAUD PREVENTION AND SECURITY ============ -->
+    <section class="sec" id="s16">
+      <div class="sec-head">
+        <div class="sec-num">16</div>
+        <div><h2>Fraud Prevention and Security</h2>
+          <p>Identity checks, suspicious transfers, unusual amounts, rapid repeats, duplicate detection, beneficiary changes, limit enforcement, staff permissions, sensitive approvals, unauthorised activity, the audit log and data protection</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="frPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="frKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Identity Verification</div>
+            <div class="panel-sub">Checked before a transfer leaves, every time</div></div>
+            <span class="badge b-gray" id="frIdPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="frIdHead"></thead><tbody id="frIdBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Activity</div>
+            <div class="panel-sub">Transfers that do not look right</div></div>
+            <span class="badge b-crit" id="frSuspPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="frSuspHead"></thead><tbody id="frSuspBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unusual Amounts, Duplicates and Rapid Repeats</div>
+            <div class="panel-sub">Three patterns that catch most of it</div></div>
+            <span class="badge b-gray" id="frPatPill">—</span></div>
+          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="frAmtHead"></thead><tbody id="frAmtBody"></tbody></table></div>
+          <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="frDupHead"></thead><tbody id="frDupBody"></tbody></table></div>
+          <div id="frVel" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Beneficiary Changes and Limit Enforcement</div>
+            <div class="panel-sub">A changed payee is the most common fraud route</div></div>
+            <span class="badge b-gray" id="frBenPill">—</span></div>
+          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="frBenHead"></thead><tbody id="frBenBody"></tbody></table></div>
+          <div id="frLimit" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Permissions and Sensitive Approvals</div>
+            <div class="panel-sub">Click a capability to grant or withdraw it</div></div>
+            <span class="badge b-gray" id="frPermPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="frPermHead"></thead><tbody id="frPermBody"></tbody></table></div>
+          <div class="minihead" style="margin-top:10px">Sensitive transfers awaiting a signature</div>
+          <div class="tblwrap" style="max-height:190px"><table class="tbl2 dense"><thead id="frSensHead"></thead><tbody id="frSensBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Unauthorised Activity and Audit Logs</div>
+            <div class="panel-sub">Every movement, with the officer and the moment</div></div>
+            <span class="badge b-gray" id="frAuditPill">—</span></div>
+          <div id="frAlerts"></div>
+          <div class="tblwrap" style="max-height:260px;margin-top:8px"><table class="tbl2 dense"><thead id="frAuditHead"></thead><tbody id="frAuditBody"></tbody></table></div>
+          <div id="frData" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Risk by Kind</div>
+          <div class="panel-sub">Where the exposure sits</div></div></div>
+        <div class="chartgrid" id="frGrid"></div>
+      </div>
+    </section>

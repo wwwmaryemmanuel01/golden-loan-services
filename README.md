@@ -412,6 +412,47 @@ monitoring, reports, and settings with its audit history.
 - **Audit trail that writes itself** — every mutation lands in Configuration Change History
   with the area, the previous value, the updated value and the responsible officer.
 
+## Transfers Management & Connections module
+
+`transfers.html` is the movement register: **20 sections** — the transfers overview, transfer
+management, internal account transfers, savings transfers, loan-related transfers, external bank
+transfers, mobile money transfers, transfer verification, approvals, status tracking and
+processing, balance and ledger management, fees and limits, beneficiary management, receipts and
+statements, failed transfers and reversals, fraud prevention and security, the transfer,
+payment-gateway and service connections, the Supabase/database connections, notifications, and
+reports with the settings and audit history.
+
+- **One book for every rail** — internal, savings, loan, bank, Airtel Money, TNM Mpamba and the
+  card gateway are read from the same customer accounts, loans and ledger the rest of the portal
+  runs on: 120 current and savings accounts, ~390 transfers, a live ledger, twelve approvals,
+  a verification queue, 26 beneficiaries and 70 receipts.
+- **Live mutations** — create a transfer in any state; post an internal transfer between own or
+  third-party accounts (ownership, restriction and balance checks run first, then both ledger
+  sides and a receipt are written); move money into, out of or between savings accounts; apply a
+  repayment or disbursement to a loan and watch the outstanding balance follow; submit bank and
+  wallet payouts after verifying the beneficiary; verify, reject, bulk-verify or auto-verify the
+  queue; give first-level and management approval (self-approval is refused); move a transfer
+  between states; issue a receipt; scan duplicate provider references; recalculate balances;
+  reconcile the ledger; post an adjustment; edit and save per-rail limits and fees; add, edit,
+  verify, enable or disable a beneficiary; print a receipt or a customer statement; retry a
+  failed payout; approve, post or reject a reversal; test and rotate a provider connection;
+  acknowledge a connection alert; fix the RLS gap; run the integrity and schema checks; send a
+  test SMS or email; toggle a notification rule; export any report; and save or reset the module
+  settings.
+- **Twelve reports** — daily, weekly and monthly, by method, by customer, by staff member,
+  high-value, failed and reversed, fees, reconciliation, beneficiaries and authorised transfers —
+  each with an on-screen preview, CSV, Excel (xlsx) and print/PDF output, plus a combined pack and
+  an export-you-are-authorised-for list.
+- **Filters drive all twenty sections at once** — date range, area (internal, savings, loan,
+  bank, mobile money, reversals, receipts, security, database), severity, transfer state, officer,
+  branch, product and free text, with removable chips and a live result summary.
+- **Balance work that adds up** — available, reserved and ledger balances are derived from the
+  transfers themselves; discrepancies are shown against the ledger; every correction writes an
+  opposite ledger entry instead of editing a figure, and a transfer may never write a loan
+  balance directly.
+- **Audit trail that writes itself** — every mutation lands in Configuration Change History and
+  the module audit log with the previous value, the updated value, the officer and the timestamp.
+
 ## Deposits & Withdrawals Management & Connections module
 
 `deposits.html` is the money-movement register: **18 sections** — financial overview, deposit
@@ -483,6 +524,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Website Management & Connections | `website.html` | 20 · 39 charts · 8 reports |
 | Methods of Payment Management | `payments.html` | 20 · 31 charts · 12 reports |
 | Deposits & Withdrawals Management | `deposits.html` | 18 · 21 charts · 12 reports |
+| Transfers Management | `transfers.html` | 20 · 17 charts · 12 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -507,6 +549,7 @@ security.html           Module 14 (built · 18 security sections)
 website.html            Module 15 (built · 20 website & connection sections)
 payments.html           Module 16 (built · 20 payment & connection sections)
 deposits.html           Module 17 (built · 18 deposit & withdrawal sections)
+transfers.html          Module 18 (built · 20 transfer sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -523,6 +566,7 @@ _compliance.css         page CSS for Compliance & Intelligence
 _website.css            page CSS for Website Management & Connections
 _payments.css           page CSS for Methods of Payment Management & Connections
 _deposits.css           page CSS for Deposits & Withdrawals Management & Connections
+_transfers.css          page CSS for Transfers Management & Connections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -541,6 +585,7 @@ build-security.sh       rebuilds security.html from its partials
 build-website.sh        rebuilds website.html from its partials
 build-payments.sh       rebuilds payments.html from its partials
 build-deposits.sh       rebuilds deposits.html from its partials
+build-transfers.sh      rebuilds transfers.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -560,6 +605,7 @@ _sebodyA–E.html _sejsA–G.js  security & protection partials
 _wmbodyA–E.html _wmjsA–G.js  website & connections partials
 _pmbodyA–E.html _pmjsA–G.js  methods of payment partials
 _dwbodyA–E.html _dwjsA–G.js  deposits & withdrawals partials
+_trbodyA–E.html _trjsA–H.js  transfers partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -583,6 +629,7 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-website.sh        # website.html
 ./build-payments.sh       # payments.html
 ./build-deposits.sh       # deposits.html
+./build-transfers.sh      # transfers.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```
