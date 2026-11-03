@@ -1,0 +1,218 @@
+  <!-- ============ 5 · REPAYMENT PENALTIES ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Repayment Penalties</h2>
+        <p>Late repayment and missed payment penalties, the overdue instalment charge, the partial payment rule, the repeated late rule, the grace period, the start date, the fixed amount, the percentage, the daily rule and the cap</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="pnPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="pnKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Every Penalty Assessed</div>
+        <div class="panel-sub">Late, missed and overdue instalment penalties with the days past due</div></div>
+        <span class="badge b-gray" id="pnCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="pnHead"></thead><tbody id="pnBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Penalty Rule in Force</div>
+          <div class="panel-sub">Grace, basis, cap and the repeated late rule</div></div>
+          <span class="badge b-gray" id="pnRulePill">—</span></div>
+        <div id="pnRuleBox"></div>
+        <div class="minihead" style="margin-top:10px">Grace period and start date</div>
+        <div id="pnGraceBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Penalties at the Cap</div>
+          <div class="panel-sub">Where the maximum has been reached and no more can be added</div></div>
+          <span class="badge b-warn" id="pnCapPill">—</span></div>
+        <div class="tblwrap" style="max-height:190px"><table class="tbl2 dense"><thead id="pnCapHead"></thead><tbody id="pnCapBody"></tbody></table></div>
+        <div class="g2" style="margin-top:10px">
+          <div><div class="minihead">Fixed penalty</div><div id="pnFixedBox"></div></div>
+          <div><div class="minihead">Percentage and daily</div><div id="pnPctBox"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Penalty Assessment History</div>
+        <div class="panel-sub">Every penalty raised, with the calculation and the officer</div></div>
+        <span class="badge b-gray" id="pnHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="pnHistHead"></thead><tbody id="pnHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="pnGrid"></div>
+  </section>
+
+  <!-- ============ 6 · PENALTY CALCULATION RULES ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Penalty Calculation Rules</h2>
+        <p>The engine itself — days past due, the overdue instalments, the eligible amount, the grace period, the approved rate, the cap, the duplicate guard, partial repayments, recalculation after payment or reversal, the working kept for every charge and the historical rules reproduced</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="pcPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="pcKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Work a Penalty Out</div>
+          <div class="panel-sub">Change the inputs and the engine recalculates the charge step by step</div></div>
+          <span class="badge b-gray" id="pcCalcPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Loan</label><select id="pcLoan"></select></div>
+          <div class="fg"><label>Instalment due</label><input id="pcDue" type="date" /></div>
+          <div class="fg"><label>Amount paid so far (MWK)</label><input id="pcPaid" type="number" step="1000" value="0" /></div>
+          <div class="fg"><label>Calculated as at</label><input id="pcAsAt" type="date" /></div>
+          <div class="fg"><label>Overdue instalment (MWK)</label><input id="pcOverdue" type="number" step="1000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="pcCalcBtn">Calculate the penalty</button>
+          <button class="btn btn-ghost" id="pcDupBtn">Check for a duplicate</button>
+          <button class="btn btn-ghost" id="pcVerifyBtn">Verify the arithmetic</button></div>
+        <div class="qhint" id="pcMsg" style="margin-top:6px"></div>
+        <div id="pcWork" style="margin-top:10px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Working, Step by Step</div>
+          <div class="panel-sub">Every step the engine takes, in order, with the figure it produces</div></div>
+          <span class="badge b-gray" id="pcStepPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="pcStepHead"></thead><tbody id="pcStepBody"></tbody></table></div>
+        <div class="qhint" id="pcVerifyMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Rules and Rates in Force</div>
+          <div class="panel-sub">Read-only — change them in Settings, section 19</div></div>
+          <span class="badge b-gray" id="pcRulePill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="pcRuleHead"></thead><tbody id="pcRuleBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Historical Rules and Rates</div>
+          <div class="panel-sub">A charge keeps the rule it was assessed under, even after the rule changes</div></div>
+          <span class="badge b-gray" id="pcHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="pcHistHead"></thead><tbody id="pcHistBody"></tbody></table></div>
+        <div class="qhint" id="pcDupMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="pcGrid"></div>
+  </section>
+
+  <!-- ============ 7 · OTHER ADMINISTRATIVE CHARGES ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Other Administrative Charges</h2>
+        <p>Account maintenance, statements, payment processing, failed payments, approved rescheduling, contract amendments, early settlement and any other approved service charge — with the eligibility rule, the disclosure and the receipt</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="ocPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ocKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Every Administrative Charge</div>
+        <div class="panel-sub">The eight charge types that are neither an application nor an origination fee</div></div>
+        <span class="badge b-gray" id="ocCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="ocHead"></thead><tbody id="ocBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Charge Eligibility Rules</div>
+          <div class="panel-sub">When each charge may and may not be raised</div></div>
+          <span class="badge b-ok" id="ocEligPill">—</span></div>
+        <div id="ocEligBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Disclosure and Receipts</div>
+          <div class="panel-sub">The customer is told before the charge is raised, and gets a receipt after</div></div>
+          <span class="badge b-gray" id="ocReceiptPill">—</span></div>
+        <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="ocReceiptHead"></thead><tbody id="ocReceiptBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="ocDiscloseBtn">Show the disclosure text</button></div>
+        <div class="qhint" id="ocDiscloseMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ocGrid"></div>
+  </section>
+
+  <!-- ============ 8 · FEES BY LOAN PRODUCT ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Fees by Loan Product</h2>
+        <p>Which fees and penalties attach to which product, the product-specific rates, the minimum and maximum loan thresholds, the grace period and the cap per product, and a preview of the charges before approval and before disbursement</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="ppPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ppKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Product and Fee Matrix</div>
+        <div class="panel-sub">A tick shows the fee is switched on for that product</div></div>
+        <span class="badge b-gray" id="ppMatrixPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ppMatrixHead"></thead><tbody id="ppMatrixBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Product Fee Rates</div>
+          <div class="panel-sub">The percentage or flat charge that applies to each product</div></div>
+          <span class="badge b-gray" id="ppRatePill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="ppRateHead"></thead><tbody id="ppRateBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Product Penalty Settings</div>
+          <div class="panel-sub">Grace period, penalty rate and cap for each product</div></div>
+          <span class="badge b-gray" id="ppPenPill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="ppPenHead"></thead><tbody id="ppPenBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Minimum Thresholds</div>
+          <div class="panel-sub">The smallest loan each product will write</div></div></div>
+        <div id="ppMinBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Maximum Thresholds</div>
+          <div class="panel-sub">The largest loan each product will write</div></div></div>
+        <div id="ppMaxBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Grace and Caps</div>
+          <div class="panel-sub">Days before a penalty starts, and the ceiling per charge</div></div></div>
+        <div id="ppCapBox"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Preview the Charges</div>
+        <div class="panel-sub">Pick a product and an amount — the exact charges are shown before approval and before disbursement</div></div>
+        <span class="badge b-gray" id="ppPreviewPill">—</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Loan product</label><select id="ppPreviewProduct"></select></div>
+        <div class="fg"><label>Loan amount (MWK)</label><input id="ppPreviewAmount" type="number" step="50000" value="1200000" /></div>
+        <div class="fg"><label>Term (months)</label><input id="ppPreviewTerm" type="number" step="1" value="12" /></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-gold" id="ppPreviewBtn">Preview the charges</button></div>
+      <div class="qhint" id="ppPreviewMsg" style="margin-top:6px"></div>
+      <div id="ppPreviewBox" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Product Fee History</div>
+        <div class="panel-sub">Every change to a product's fee assignment, rate or threshold</div></div>
+        <span class="badge b-gray" id="ppHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="ppHistHead"></thead><tbody id="ppHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="ppGrid"></div>
+  </section>

@@ -1,0 +1,302 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Fees &amp; Penalties Management</div>
+      <div class="page-sub">Every fee assessed, every penalty calculated, every waiver and every correction · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a charge, customer, loan or reference…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="quickCsv">Export CSV</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-ghost" id="bellBtn" aria-label="Alerts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Fees</a>
+    <a class="snav" href="#s3">3 · Application fees</a>
+    <a class="snav" href="#s4">4 · Origination fees</a>
+    <a class="snav" href="#s5">5 · Penalties</a>
+    <a class="snav" href="#s6">6 · Calculation</a>
+    <a class="snav" href="#s7">7 · Other charges</a>
+    <a class="snav" href="#s8">8 · By product</a>
+    <a class="snav" href="#s9">9 · Customer accounts</a>
+    <a class="snav" href="#s10">10 · Collections</a>
+    <a class="snav" href="#s11">11 · Waivers</a>
+    <a class="snav" href="#s12">12 · Reversals</a>
+    <a class="snav" href="#s13">13 · Notifications</a>
+    <a class="snav" href="#s14">14 · Accounting</a>
+    <a class="snav" href="#s15">15 · Payments</a>
+    <a class="snav" href="#s16">16 · Security</a>
+    <a class="snav" href="#s17">17 · Database</a>
+    <a class="snav" href="#s18">18 · Reports</a>
+    <a class="snav" href="#s19">19 · Settings</a>
+    <a class="snav" href="#s20">20 · Audit</a>
+  </nav>
+
+  <div class="band">
+    <div><div class="bl">Charge health</div><div class="bv" id="bandScore">—</div></div>
+    <div><div class="bl">Fees assessed</div><div class="bv" id="bandFees">—</div></div>
+    <div><div class="bl">Penalties assessed</div><div class="bv" id="bandPen">—</div></div>
+    <div><div class="bl">Outstanding</div><div class="bv" id="bandOut">—</div></div>
+    <div><div class="bl">Open items</div><div class="bv" id="bandAlerts">—</div></div>
+    <div class="band-refresh"><button class="btn btn-ghost" id="refreshBtn">Refresh</button></div>
+  </div>
+
+  <div class="card panel" id="filterBar">
+    <div class="panel-head">
+      <div><div class="panel-title">Filters</div>
+        <div class="panel-sub" id="fltSummary">Date range only</div></div>
+      <div class="chips" id="fltLaneChips">
+        <button class="chip on" data-lane="">All areas</button>
+        <button class="chip" data-lane="Fees">Fees</button>
+        <button class="chip" data-lane="Penalties">Penalties</button>
+        <button class="chip" data-lane="Waivers">Waivers</button>
+        <button class="chip" data-lane="Reversals">Reversals</button>
+        <button class="chip" data-lane="Collections">Collections</button>
+        <button class="chip" data-lane="Configuration">Configuration</button>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label>From</label><input id="fltFrom" type="date" /></div>
+      <div class="fg"><label>To</label><input id="fltTo" type="date" /></div>
+      <div class="fg"><label>Search</label><input id="fltSearch" placeholder="Charge, customer, loan, reference…" /></div>
+      <div class="fg"><label>Kind</label><select id="fltKind"><option value="">All kinds</option><option>Fee</option><option>Penalty</option></select></div>
+      <div class="fg"><label>Fee type</label><select id="fltType"></select></div>
+      <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+      <div class="fg"><label>State</label><select id="fltStatus"></select></div>
+      <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+      <div class="fg"><label>Branch</label><select id="fltRegion"></select></div>
+      <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-gold" id="fltApply">Apply the filters</button>
+      <button class="btn btn-ghost" id="fltReset">Clear everything</button>
+    </div>
+    <div class="chips" id="fltChips" style="margin-top:8px"></div>
+    <div class="strip" id="fltCounts" style="margin-top:8px"></div>
+    <div class="qhint" id="fltResult" style="margin-top:6px"></div>
+  </div>
+
+  <!-- ============ 1 · FEES AND PENALTIES OVERVIEW ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Fees and Penalties Overview</h2>
+        <p>Everything assessed, everything collected and everything still owed — fees, penalties, pending assessments, waiver requests and reversals, with the recent activity underneath</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="ovPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="fpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Charge Position</div>
+        <div class="panel-sub">Assessed against collected against outstanding, for fees and penalties together</div></div>
+        <span class="badge b-gray" id="ovBoardPill">—</span></div>
+      <div class="strip" id="fpBoard"></div>
+      <div id="ovMix" style="margin-top:10px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What Needs a Decision</div>
+          <div class="panel-sub">Waivers, assessments above the line, duplicates and caps hit</div></div>
+          <span class="badge b-warn" id="ovIssuePill">—</span></div>
+        <div id="ovIssues"></div>
+        <div class="form-actions"><button class="btn btn-ghost" data-goto="s11">Open the waiver queue</button>
+          <button class="btn btn-ghost" data-goto="s12">Open the corrections</button></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Charges by Age</div>
+          <div class="panel-sub">Where the outstanding balance sits, by days since the due date</div></div>
+          <span class="badge b-gray" id="ovAgePill">—</span></div>
+        <div id="ovAge"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Recent Fee and Penalty Activity</div>
+        <div class="panel-sub">The last assessments, collections, waivers and corrections, newest first</div></div>
+        <span class="badge b-gray" id="ovActPill">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="ovActivityHead"></thead><tbody id="ovActivityBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="ovGrid"></div>
+  </section>
+
+  <!-- ============ 2 · FEE MANAGEMENT ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Fee Management</h2>
+        <p>Every fee the tariff allows — the name, the description, whether it is fixed or a percentage, the floor and the ceiling, the products it attaches to, the eligible customers, the effective dates, and the history of every change</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="ftPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ftKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">All Fee Types</div>
+        <div class="panel-sub">Select a row to read or change its configuration</div></div>
+        <span class="badge b-gray" id="ftCount">—</span></div>
+      <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="ftHead"></thead><tbody id="ftBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Selected Fee</div>
+          <div class="panel-sub">Name, basis, floor, ceiling and the products it applies to</div></div>
+          <span class="badge b-gray" id="ftSelPill">—</span></div>
+        <div class="fg"><label>Fee type</label><select id="ftSel"></select></div>
+        <div id="ftDetail" style="margin-top:8px"></div>
+        <div class="form-grid" style="margin-top:8px">
+          <div class="fg"><label>Name</label><input id="ftName" /></div>
+          <div class="fg"><label>Description</label><input id="ftDesc" /></div>
+          <div class="fg"><label>Basis</label><select id="ftBasis"><option>Fixed</option><option>Percentage</option><option>Daily</option></select></div>
+          <div class="fg"><label>Percentage (%)</label><input id="ftPct" type="number" step="0.05" /></div>
+          <div class="fg"><label>Fixed amount (MWK)</label><input id="ftFixed" type="number" step="500" /></div>
+          <div class="fg"><label>Minimum (MWK)</label><input id="ftMin" type="number" step="500" /></div>
+          <div class="fg"><label>Maximum (MWK)</label><input id="ftMax" type="number" step="500" /></div>
+          <div class="fg"><label>Effective from</label><input id="ftEffective" type="date" /></div>
+        </div>
+        <div class="minihead" style="margin-top:8px">Assign to loan products</div>
+        <div class="chips" id="ftProducts"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="ftSaveBtn">Save the configuration</button>
+          <button class="btn btn-ghost" id="ftToggleBtn">Enable or disable</button>
+        </div>
+        <div class="qhint" id="ftMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fee Configuration History</div>
+          <div class="panel-sub">What changed, from what, to what, by whom and why</div></div>
+          <span class="badge b-gray" id="ftHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ftHistHead"></thead><tbody id="ftHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ftGrid"></div>
+  </section>
+
+  <!-- ============ 3 · LOAN APPLICATION FEES ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Loan Application Fees</h2>
+        <p>The processing, administration and verification fees raised when an application is submitted — what was assessed, what has been paid, the exemptions, the refund requests, the receipts and the history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="afPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="afKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Application Fee Assessments</div>
+        <div class="panel-sub">Every application fee raised, with the application it belongs to</div></div>
+        <span class="badge b-gray" id="afCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="afHead"></thead><tbody id="afBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">By Fee Type</div>
+          <div class="panel-sub">Processing, administration and verification side by side</div></div>
+          <span class="badge b-gray" id="afTypePill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="afTypeHead"></thead><tbody id="afTypeBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment Status</div>
+          <div class="panel-sub">What is settled, part paid and still open</div></div>
+          <span class="badge b-gray" id="afStatusPill">—</span></div>
+        <div id="afStatusBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="afRefundBtn">Raise a refund request</button></div>
+        <div class="qhint" id="afRefundMsg" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fee Exemptions</div>
+          <div class="panel-sub">Customers or applications that do not pay the application fee</div></div>
+          <span class="badge b-ok" id="afExemptPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="afExemptHead"></thead><tbody id="afExemptBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Application Fee Receipts</div>
+          <div class="panel-sub">A receipt for every application fee collected</div></div>
+          <span class="badge b-gray" id="afReceiptPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="afReceiptHead"></thead><tbody id="afReceiptBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Application Fee History</div>
+        <div class="panel-sub">Assessments, payments, exemptions, refunds and corrections</div></div>
+        <span class="badge b-gray" id="afHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="afHistHead"></thead><tbody id="afHistBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="afGrid"></div>
+  </section>
+
+  <!-- ============ 4 · LOAN ORIGINATION FEES ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Loan Origination Fees</h2>
+        <p>The processing, administration, arrangement and disbursement fees on an approved loan — how each is calculated, whether it is deducted at disbursement or paid separately, what the customer is told before they accept, and the receipts</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="ofPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ofKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Origination Fee Assessments</div>
+        <div class="panel-sub">Every fee raised on a disbursed loan, with the calculation kept</div></div>
+        <span class="badge b-gray" id="ofCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="ofHead"></thead><tbody id="ofBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">How the Fee Is Calculated</div>
+          <div class="panel-sub">Pick a loan and see every fee it carries</div></div>
+          <span class="badge b-gray" id="ofCalcPill">—</span></div>
+        <div class="fg"><label>Loan</label><select id="ofLoan"></select></div>
+        <div id="ofCalcBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deduct at Disbursement or Pay Separately</div>
+          <div class="panel-sub">The rule in force, and what it does to the payout</div></div>
+          <span class="badge b-gray" id="ofRulePill">—</span></div>
+        <div id="ofRuleBox"></div>
+        <div class="minihead" style="margin-top:10px">Disclosure before acceptance</div>
+        <div id="ofDiscloseBox"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Origination Fee Receipts</div>
+          <div class="panel-sub">Receipts for the fees paid separately from the payout</div></div>
+          <span class="badge b-gray" id="ofReceiptPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="ofReceiptHead"></thead><tbody id="ofReceiptBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Origination Fee History</div>
+          <div class="panel-sub">Every assessment, deduction and correction on a loan fee</div></div>
+          <span class="badge b-gray" id="ofHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="ofHistHead"></thead><tbody id="ofHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ofGrid"></div>
+  </section>
