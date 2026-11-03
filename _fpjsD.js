@@ -402,6 +402,7 @@ function renderProducts(){
 
   fpFillSel('ppPreviewProduct', fpProdOptions(), FP_SEL.product || 'SL');
   if(el('ppPreviewPill')) el('ppPreviewPill').textContent = 'live';
+  if(el('ppPreviewBox') && !el('ppPreviewBox').innerHTML.trim() && el('ppPreviewAmount')) fpPreviewRun(true);
 
   if(el('ppHistPill')) el('ppHistPill').textContent = num(FEE_CONFIG_HISTORY.length) + ' changes';
   renderTable('ppHistBody', [
@@ -422,7 +423,7 @@ function renderProducts(){
       cats: prodNames, value: num(FEE_TYPES.length) + ' types',
       series: [{name: 'Fee types', data: PRODUCTS.map(p => fpProductFees(p.id).length), colour: '#1E9E6A'}]}));
 }
-function fpPreviewRun(){
+function fpPreviewRun(quiet){
   const prod = fpPicked('ppPreviewProduct', 'SL');
   const amount = fpNum('ppPreviewAmount', 1200000);
   const term = fpNum('ppPreviewTerm', 12);
@@ -437,7 +438,7 @@ function fpPreviewRun(){
   const lines = fpPreviewCharges(prod, amount, term);
   const upfront = sum(lines, l => l.amount);
   const perMonth = p.rate * amount * term;
-  logExport('Charge preview · ' + p.name, 'Preview', lines.length);
+  if(!quiet) logExport('Charge preview · ' + p.name, 'Preview', lines.length);
   if(box) box.innerHTML = `<div class="minihead">Before approval</div>` + strip([
     ['Loan amount', fpM(amount)],
     ['Term', num(term) + ' months'],
