@@ -1,0 +1,238 @@
+  <!-- ============ 13 · PAYMENT PROCESSING ============ -->
+  <section class="sec" id="s13">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div><h2>Payment Processing</h2>
+        <p>The salary, expense and supplier payment requests, the bank transfer, the mobile money and the cash routes, the reference numbers, what is waiting for a confirmation, the failures, the receipts and the reconciliation</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="pyPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="pyKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Raise a Payment Request</div>
+        <div class="panel-sub">Salary, expense or supplier — the route decides the reference</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>What is being paid</label><select id="pyKind"><option>Salary</option><option>Expense</option><option>Supplier</option></select></div>
+        <div class="fg"><label>Payee</label><select id="pyPayee"></select></div>
+        <div class="fg"><label>Method</label><select id="pyMethod"><option>Bank transfer</option><option>Mobile money</option><option>Cash</option></select></div>
+        <div class="fg"><label>Amount (MWK)</label><input id="pyAmount" type="number" step="500" value="250000" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="pyRequestBtn">Request the payment</button>
+        <button class="btn btn-ghost" id="pyResetBtn">Clear</button>
+      </div>
+      <div class="qhint" id="pyMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payment Queue</div>
+        <div class="panel-sub">Confirm, retry or cancel — every action writes a reference or a failure</div></div>
+        <span class="badge b-gray" id="pyCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="pyHead"></thead><tbody id="pyBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payment Routes</div>
+          <div class="panel-sub">What each route has carried, and what failed</div></div>
+          <span class="badge b-gray" id="pyRoutePill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="pyRouteHead"></thead><tbody id="pyRouteBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Receipts and Confirmation</div>
+          <div class="panel-sub">The selected payment, its reference and its receipt</div></div>
+          <span class="badge b-gray" id="pySelPill">—</span></div>
+        <div id="pyDetail"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="pyConfirmBtn">Confirm the payment</button>
+          <button class="btn btn-ghost" id="pyReceiptBtn">Show the receipt</button>
+          <button class="btn btn-ghost" id="pyFailBtn">Mark it failed</button>
+        </div>
+        <div id="pyReceiptBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payment Reconciliation</div>
+        <div class="panel-sub">What the bank says against what the ledger holds</div></div>
+        <span class="badge b-crit" id="pyReconPill">—</span></div>
+      <div id="pyReconBox"></div>
+      <div class="form-actions"><button class="btn btn-ghost" id="pyReconBtn">Reconcile the payments</button></div>
+    </div>
+
+    <div class="chartgrid" id="pyGrid"></div>
+  </section>
+
+  <!-- ============ 14 · APPROVALS AND AUTHORIZATION ============ -->
+  <section class="sec" id="s14">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div><h2>Approvals and Authorization</h2>
+        <p>A salary change, the payroll, an allowance, an expense claim, a supplier invoice, a system subscription, a high-value expense and a budget override — with the requester kept apart from the approver, the limits by role, the comments and the audit trail</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="apPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="apKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Waiting for a Decision</div>
+        <div class="panel-sub">Pick one, then approve, reject or return it with a comment</div></div>
+        <span class="badge b-crit" id="apCount">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="apHead"></thead><tbody id="apBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Request</div>
+          <div class="panel-sub">Who asked, who may sign, and how much it is for</div></div>
+          <span class="badge b-gray" id="apSelPill">—</span></div>
+        <div id="apDetail"></div>
+        <div class="fg" style="margin-top:8px"><label>Approval comment</label><input id="apComment" placeholder="Why the decision was taken" /></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="apApproveBtn">Approve</button>
+          <button class="btn btn-ghost" id="apRejectBtn">Reject</button>
+          <button class="btn btn-ghost" id="apReturnBtn">Return for detail</button>
+        </div>
+        <div class="qhint" id="apMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Limits by Role</div>
+          <div class="panel-sub">Nobody may sign above their own line</div></div></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="apLimitHead"></thead><tbody id="apLimitBody"></tbody></table></div>
+        <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Requester and Approver</div>
+          <div class="panel-sub">The control that stops a person signing their own request</div></div></div>
+        <div id="apSepBox"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Queue by Type</div>
+          <div class="panel-sub">Where the waiting requests sit</div></div>
+          <span class="badge b-gray" id="apTypePill">—</span></div>
+        <div id="apTypeBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Audit Trail</div>
+          <div class="panel-sub">Every decision, with the officer and the comment</div></div>
+          <span class="badge b-gray" id="apHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="apHistHead"></thead><tbody id="apHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="apGrid"></div>
+  </section>
+
+  <!-- ============ 15 · ACCOUNTING AND LEDGER CONNECTIONS ============ -->
+  <section class="sec" id="s15">
+    <div class="sec-head">
+      <div class="sec-num">15</div>
+      <div><h2>Accounting and Ledger Connections</h2>
+        <p>The salary expense entries, the allowance and benefit entries, the statutory liabilities, the business expense and system cost entries, the supplier payables, the cashbook, the cost centre allocation, the accruals, the prepayments, the asset against expense split and the reconciliation</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="lgPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="lgKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Ledger Entries</div>
+        <div class="panel-sub">Every debit has a credit, and the pair nets to zero</div></div>
+        <span class="badge b-gray" id="lgCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="lgHead"></thead><tbody id="lgBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">By Entry Type</div>
+          <div class="panel-sub">What each class of entry has posted</div></div>
+          <span class="badge b-gray" id="lgKindPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="lgKindHead"></thead><tbody id="lgKindBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Reconciliation</div>
+          <div class="panel-sub">The check that the book balances</div></div>
+          <span class="badge b-ok" id="lgReconPill">—</span></div>
+        <div id="lgReconBox"></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="lgReconBtn">Run the reconciliation</button></div>
+        <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Asset Against Expense</div>
+          <div class="panel-sub">What was capitalised and what was expensed</div></div></div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="lgClassHead"></thead><tbody id="lgClassBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Accruals and Prepayments</div>
+          <div class="panel-sub">Costs recognised before and after the cash moved</div></div>
+          <span class="badge b-gray" id="lgPrePill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="lgPreHead"></thead><tbody id="lgPreBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Cost Centre Allocation</div>
+          <div class="panel-sub">Where the cost was charged</div></div>
+          <span class="badge b-gray" id="lgCcPill">—</span></div>
+        <div id="lgCcBox"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="lgGrid"></div>
+  </section>
+
+  <!-- ============ 16 · STAFF AND SUPPLIER CONNECTIONS ============ -->
+  <section class="sec" id="s16">
+    <div class="sec-head">
+      <div class="sec-num">16</div>
+      <div><h2>Staff and Supplier Connections</h2>
+        <p>Every salary record tied to a staff profile, the employment status verified, claims tied to staff accounts, the supplier records with their contacts, invoices and payments, the bank details kept behind an access control, the verification and the change history</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="spPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="spKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Profiles and Their Salary</div>
+          <div class="panel-sub">Employment status checked against the payroll</div></div>
+          <span class="badge b-gray" id="spLinkPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="spLinkHead"></thead><tbody id="spLinkBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="spVerifyBtn">Verify the selected staff member</button></div>
+        <div class="qhint" id="spLinkMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Suppliers</div>
+          <div class="panel-sub">Click a supplier to load its record</div></div>
+          <span class="badge b-gray" id="spSupPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="spSupHead"></thead><tbody id="spSupBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Supplier Record</div>
+          <div class="panel-sub">Contact, bank details and verification</div></div>
+          <span class="badge b-gray" id="spSelPill">—</span></div>
+        <div id="spDetail"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="spSupVerifyBtn">Verify the supplier</button>
+          <button class="btn btn-ghost" id="spBankBtn">Show the bank details</button>
+          <button class="btn btn-ghost" id="spStatementBtn">Build a statement</button>
+        </div>
+        <div id="spBankBox" style="margin-top:8px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Supplier Invoices and Payments</div>
+          <div class="panel-sub">What is open, what is overdue and what has been paid</div></div>
+          <span class="badge b-gray" id="spInvPill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="spInvHead"></thead><tbody id="spInvBody"></tbody></table></div>
+        <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="spPayHead"></thead><tbody id="spPayBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Supplier Record Change History</div>
+        <div class="panel-sub">Every change, with what it was before and who approved it</div></div>
+        <span class="badge b-gray" id="spHistPill">—</span></div>
+      <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="spHistHead"></thead><tbody id="spHistBody"></tbody></table></div>
+    </div>
+  </section>

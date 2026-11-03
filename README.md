@@ -499,6 +499,57 @@ audit history.
   and the module audit log with the previous value, the updated value, the officer and the
   timestamp.
 
+## Salaries, Expenses & Operating Charges module
+
+`salaries.html` is the payroll and operating-cost book: **20 sections** — the financial overview,
+staff salary management, payroll processing, allowances and benefits, salary deductions and
+statutory items, staff payslips, staff expense claims, business operating expenses, system
+operating charges, recurring expenses, expense categories and departments, budgets, payments,
+the approval workflow, the accounting ledger, staff and supplier records, notifications and
+reminders, security and access control, the Supabase/database connections, and the reports,
+configuration and audit history.
+
+- **One book for every cost** — 42 staff and 42 salary records, six payroll periods
+  (05/2026 to 10/2026) with 41 live payroll lines, nine allowance types, 168 allowance lines,
+  seven deductions, six statutory remittances, 60 payslips, 46 expense claims, fifteen expense
+  categories, 65 operating expenses over six months, sixteen system providers, sixteen recurring
+  contracts, 23 budgets, 34 payments, 26 approval requests, a balanced ledger, fourteen
+  suppliers and eighteen staff-to-salary links, all built from the staff and customers the rest
+  of the portal runs on.
+- **Live mutations** — create a salary record (the net is derived, never typed); adjust it with
+  a reason and watch gross, PAYE, pension, NHIMA and net follow; create a payroll period,
+  recalculate it, approve it, pay it (a paid period can no longer be recalculated) and retry
+  failed lines; record an allowance; remit every outstanding statutory item; build, print and
+  email a payslip; submit a claim (a claim above the receipt limit without a receipt is
+  refused), approve, reject, return or reimburse it; record an expense, approve it and mark it
+  paid; pay a system charge or renew a subscription; renew or cancel a recurring contract; edit
+  a category limit and open a new one; revise a budget; raise a payment (anything above the
+  high-value limit creates a two-signature approval), confirm it, fail it or reconcile the bank;
+  approve, reject or return a request (self-approval is blocked); reconcile the ledger; verify a
+  supplier and read their masked bank details; toggle notification rules and send a test SMS or
+  email; flip a permission; close the RLS gap; run the database checks; export any report; and
+  save or restore the module settings.
+- **Fourteen reports** — monthly payroll, annual salary, allowances and benefits, statutory
+  deductions, business expenses, system charges, supplier payments, recurring expenses, budget
+  against actual, outstanding obligations, expense trends and forecasts, staff member
+  responsible, record creation and modification history, and the export-authorised list — each
+  with an on-screen preview, CSV, Excel (xlsx) and print/PDF output, plus a combined pack and a
+  generation history.
+- **Filters drive all twenty sections at once** — date range, area (salaries, payroll,
+  allowances, claims, expenses, system, suppliers, budgets), severity, state, officer,
+  department, category and free text, with removable chips and a live result summary.
+- **Money that reconciles** — net = gross − PAYE − pension − NHIMA − loan recovery − advance;
+  the ledger's debits and credits net to zero; and the month's payroll, expenses and system
+  charges land at 91% of the MWK 39,000,000 operating budget.
+- **Rules that cannot be bypassed** — the cut-off must fall before the pay date, a claim above
+  the receipt limit needs a receipt, a deduction may not exceed a third of gross, a requester
+  may never approve their own request, a supplier bank change needs two signatures, and a
+  payroll is locked once it has been paid.
+- **Audit trail that writes itself** — every mutation lands in the configuration change history
+  and the module audit log with the previous value, the updated value, the officer and the
+  timestamp; the financial health score (65%) and the twelve open issues are derived from the
+  registers rather than typed.
+
 ## Deposits & Withdrawals Management & Connections module
 
 `deposits.html` is the money-movement register: **18 sections** — financial overview, deposit
@@ -572,6 +623,7 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Deposits & Withdrawals Management | `deposits.html` | 18 · 21 charts · 12 reports |
 | Transfers Management | `transfers.html` | 20 · 17 charts · 12 reports |
 | Savings Management | `savings.html` | 20 · 22 charts · 12 reports |
+| Salaries, Expenses & Operating Charges | `salaries.html` | 20 · 39 charts · 14 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -615,6 +667,7 @@ _payments.css           page CSS for Methods of Payment Management & Connections
 _deposits.css           page CSS for Deposits & Withdrawals Management & Connections
 _transfers.css          page CSS for Transfers Management & Connections
 _savings.css            page CSS for Savings Management & Connections
+_salaries.css           page CSS for Salaries, Expenses & Operating Charges
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -635,6 +688,7 @@ build-payments.sh       rebuilds payments.html from its partials
 build-deposits.sh       rebuilds deposits.html from its partials
 build-transfers.sh      rebuilds transfers.html from its partials
 build-savings.sh        rebuilds savings.html from its partials
+build-salaries.sh       rebuilds salaries.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -655,6 +709,7 @@ _wmbodyA–E.html _wmjsA–G.js  website & connections partials
 _pmbodyA–E.html _pmjsA–G.js  methods of payment partials
 _dwbodyA–E.html _dwjsA–G.js  deposits & withdrawals partials
 _trbodyA–E.html _trjsA–H.js  transfers partials
+_slbodyA–E.html _sljsA–H.js  salaries & expenses partials
 
 preview-*.png           full-page screenshots at 1280px
 ```

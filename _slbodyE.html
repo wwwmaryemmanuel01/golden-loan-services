@@ -1,0 +1,312 @@
+  <!-- ============ 17 · NOTIFICATIONS AND REMINDERS ============ -->
+  <section class="sec" id="s17">
+    <div class="sec-head">
+      <div class="sec-num">17</div>
+      <div><h2>Notifications and Reminders</h2>
+        <p>The payroll reminders, the salary payment confirmations, the pending approval alerts, the claim decisions, the subscription renewals, the overdue invoices, the budget limits and the failed payments — over the SMS and email connections, with the delivery history</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="ntPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ntKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+        <div class="panel-sub">Every event, the channel, who receives it and whether it is on</div></div>
+        <span class="badge b-gray" id="ntRulePill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ntHead"></thead><tbody id="ntBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">SMS and Email Connections</div>
+          <div class="panel-sub">The two channels every message travels over</div></div></div>
+        <div id="ntConn"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="ntTestSms">Send a test SMS</button>
+          <button class="btn btn-ghost" id="ntTestEmail">Send a test email</button>
+        </div>
+        <div class="qhint" id="ntMsg" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What Is Due to Be Chased</div>
+          <div class="panel-sub">Payroll, renewals, invoices, budgets and failed payments</div></div>
+          <span class="badge b-warn" id="ntDuePill">—</span></div>
+        <div id="ntPayBox"></div>
+        <div id="ntRenewBox" style="margin-top:8px"></div>
+        <div id="ntInvBox" style="margin-top:8px"></div>
+        <div id="ntBudgetBox" style="margin-top:8px"></div>
+        <div id="ntFailBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
+          <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+          <span class="badge b-gray" id="ntDelPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntDelHead"></thead><tbody id="ntDelBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification History</div>
+          <div class="panel-sub">Every message sent about the payroll or an expense</div></div>
+          <span class="badge b-gray" id="ntHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntHistHead"></thead><tbody id="ntHistBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="ntGrid"></div>
+  </section>
+
+  <!-- ============ 18 · SECURITY AND PRIVACY ============ -->
+  <section class="sec" id="s18">
+    <div class="sec-head">
+      <div class="sec-num">18</div>
+      <div><h2>Security and Privacy</h2>
+        <p>Who may see the payroll and who may not, the salary restrictions, the expense and supplier payment permissions, the approval controls and the multi-level authorisation, the document protection, the encryption, the unauthorised access alerts and the staff activity log</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="scPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="scKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Payroll and Expense Permissions</div>
+          <div class="panel-sub">Click a cell to grant or withdraw a capability</div></div>
+          <span class="badge b-gray" id="scPermPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="scPermHead"></thead><tbody id="scPermBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Salary and Document Restrictions</div>
+          <div class="panel-sub">What is masked, and who may lift it</div></div></div>
+        <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="scSensHead"></thead><tbody id="scSensBody"></tbody></table></div>
+        <div id="scDataBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Controls</div>
+          <div class="panel-sub">Two names for anything large, and never the same name twice</div></div>
+          <span class="badge b-gray" id="scCtlPill">—</span></div>
+        <div id="scCtlBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Unauthorised Access Alerts</div>
+          <div class="panel-sub">Attempts that were blocked before anything moved</div></div>
+          <span class="badge b-crit" id="scUnauthPill">—</span></div>
+        <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="scUnauthHead"></thead><tbody id="scUnauthBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staff Activity</div>
+          <div class="panel-sub">What each officer touched, and when</div></div>
+          <span class="badge b-gray" id="scActPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="scActHead"></thead><tbody id="scActBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Audit Log</div>
+          <div class="panel-sub">Every financial action taken here, with the officer</div></div>
+          <span class="badge b-gray" id="scAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="scAuditHead"></thead><tbody id="scAuditBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="scGrid"></div>
+  </section>
+
+  <!-- ============ 19 · SUPABASE AND DATABASE CONNECTIONS ============ -->
+  <section class="sec" id="s19">
+    <div class="sec-head">
+      <div class="sec-num">19</div>
+      <div><h2>Supabase and Database Connections</h2>
+        <p>The staff profile, salary, payroll, expense, supplier, operating charge, payment and ledger tables, the functions behind them, row-level security, transaction integrity, error monitoring and schema compatibility</p></div>
+      <div class="sec-tools"><span class="badge b-crit" id="dbPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+    <div class="chartgrid" id="dbGrid"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Table Connections</div>
+        <div class="panel-sub">Every table a payroll run or an expense touches</div></div>
+        <span class="badge b-gray" id="dbTblPill">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="dbTblHead"></thead><tbody id="dbTblBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Database Function Connections</div>
+          <div class="panel-sub">The routines a payroll or a payment runs through</div></div>
+          <span class="badge b-gray" id="dbFnPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="dbFnHead"></thead><tbody id="dbFnBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Row-Level Security and Integrity</div>
+          <div class="panel-sub">One claims table is readable without a policy</div></div>
+          <span class="badge b-crit" id="dbRlsPill">—</span></div>
+        <div id="dbRls"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="dbRlsFix">Enable RLS on the gap</button></div>
+        <div id="dbAtomic" style="margin-top:8px"></div>
+        <div id="dbDup" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Database Error Monitoring</div>
+          <div class="panel-sub">Grouped by SQLSTATE, with the constraint that raised it</div></div>
+          <span class="badge b-gray" id="dbErrPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Integrity and Schema Checks</div>
+          <div class="panel-sub">Every debit has a credit, every payment an approval</div></div>
+          <span class="badge b-gray" id="dbChkPill">—</span></div>
+        <div id="dbChecksBody"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="dbCheck">Run the integrity checks</button>
+          <button class="btn btn-ghost" id="dbSchemaBtn">Check schema compatibility</button>
+        </div>
+        <div id="dbSchemaBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Schema and Migration Compatibility</div>
+        <div class="panel-sub">What has been applied, and what is still waiting</div></div>
+        <span class="badge b-gray" id="dbMigPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="dbMigHead"></thead><tbody id="dbMigBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 20 · REPORTS AND AUDIT HISTORY ============ -->
+  <section class="sec" id="s20">
+    <div class="sec-head">
+      <div class="sec-num">20</div>
+      <div><h2>Reports and Audit History</h2>
+        <p>The monthly payroll, the annual salary, the allowances and benefits, the statutory deductions, the business expenses, the system charges, the supplier payments, the recurring expenses, the budget against actual, the outstanding obligations, the expense trends, who is responsible, every record created or changed, and the exports you are authorised for</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="rpPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="rpKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Report Library</div>
+        <div class="panel-sub">Fourteen reports · preview on screen, or download a real file</div></div>
+        <span class="badge b-gray" id="rpCount">—</span></div>
+      <div class="repgrid" id="rpCards"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Whole Pack</div>
+        <div class="panel-sub">Every report in one file, built from the current filters</div></div></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="packCsv">Download pack (CSV)</button>
+        <button class="btn btn-ghost" id="packXlsx">Download pack (Excel)</button>
+        <button class="btn btn-ghost" id="packPdf">Print pack (PDF)</button>
+        <button class="btn btn-ghost" id="packPrint">Print preview</button>
+      </div>
+      <div class="qhint" id="packMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Report Generation History</div>
+        <div class="panel-sub">What has been generated from this page, and by whom</div></div>
+        <span class="badge b-gray" id="expCount">0</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense">
+        <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+        <tbody id="expHistoryBody"></tbody></table></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Record Creation and Modification History</div>
+          <div class="panel-sub">Every change, with the previous and the updated value</div></div>
+          <span class="badge b-gray" id="chgPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="chgHead"></thead><tbody id="chgBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Officer, Timestamp and Change Detail</div>
+          <div class="panel-sub">Who changed what, when, and what the record holds</div></div>
+          <span class="badge b-gray" id="chgWhoPill">—</span></div>
+        <div id="chgWho"></div>
+        <div id="chgStamp" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Export Authorised Reports</div>
+        <div class="panel-sub">The reports this officer may export, and the format allowed</div></div>
+        <span class="badge b-gray" id="rpAuthPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rpAuthHead"></thead><tbody id="rpAuthBody"></tbody></table></div>
+      <div class="form-actions"><button class="btn btn-gold" id="rpExportAll">Export every authorised report</button></div>
+      <div class="qhint" id="rpAuthMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Payroll and Expense Configuration</div>
+        <div class="panel-sub">Saving writes a change-history row with the previous and the updated value</div></div></div>
+      <div class="form-grid">
+        <div class="fg"><label>Currency</label><select id="setCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+        <div class="fg"><label>Pay day</label><input id="setPayDay" type="number" min="1" max="31" /></div>
+        <div class="fg"><label>Cut-off day</label><input id="setCutOff" type="number" min="1" max="31" /></div>
+        <div class="fg"><label>Pay frequency</label><select id="setFrequency"><option>Monthly</option><option>Fortnightly</option><option>Weekly</option></select></div>
+        <div class="fg"><label>Default payment route</label><select id="setPayMode"><option>Bank transfer</option><option>Mobile money</option><option>Cash</option></select></div>
+        <div class="fg"><label>Salary approval above (MWK)</label><input id="setSalaryAppr" type="number" step="1000" /></div>
+        <div class="fg"><label>High-value approval above (MWK)</label><input id="setHighValue" type="number" step="1000" /></div>
+        <div class="fg"><label>Budget override above (MWK)</label><input id="setOverride" type="number" step="1000" /></div>
+        <div class="fg"><label>Claim limit (MWK)</label><input id="setClaimLimit" type="number" step="1000" /></div>
+        <div class="fg"><label>Receipt required above (MWK)</label><input id="setReceiptLimit" type="number" step="1000" /></div>
+        <div class="fg"><label>Operating budget (MWK)</label><input id="setOpBudget" type="number" step="100000" /></div>
+        <div class="fg"><label>Payroll budget (MWK)</label><input id="setPayrollBudget" type="number" step="100000" /></div>
+        <div class="fg"><label>System budget (MWK)</label><input id="setSystemBudget" type="number" step="10000" /></div>
+        <div class="fg"><label>Pension employee (%)</label><input id="setPensionEe" type="number" step="0.1" /></div>
+        <div class="fg"><label>Pension employer (%)</label><input id="setPensionEr" type="number" step="0.1" /></div>
+        <div class="fg"><label>NHIMA employee (%)</label><input id="setNhima" type="number" step="0.1" /></div>
+        <div class="fg"><label>Overtime multiplier</label><input id="setOvertime" type="number" step="0.1" /></div>
+        <div class="fg"><label>Reminder days before renewal</label><input id="setReminder" type="number" step="1" /></div>
+        <div class="fg"><label>SMS notifications</label><select id="setNotifySms"><option>On</option><option>Off</option></select></div>
+        <div class="fg"><label>Email notifications</label><select id="setNotifyEmail"><option>On</option><option>Off</option></select></div>
+      </div>
+      <div id="setRuleBox" style="margin-top:8px"></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="setSave">Save the settings</button>
+        <button class="btn btn-ghost" id="setReset">Restore the defaults</button>
+      </div>
+      <div class="qhint" id="setMsg" style="margin-top:6px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Authorised Staff Roles</div>
+          <div class="panel-sub">Who may change the payroll configuration</div></div></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="setRolesHead"></thead><tbody id="setRolesBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Configuration Audit Trail</div>
+          <div class="panel-sub">Every action taken in this module, with the officer and the timestamp</div></div>
+          <span class="badge b-gray" id="setAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="setAuditHead"></thead><tbody id="setAuditBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="rpGrid"></div>
+  </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
