@@ -1,0 +1,291 @@
+    <!-- ============ 17 · TRANSFER CONNECTIONS ============ -->
+    <section class="sec" id="s17">
+      <div class="sec-head">
+        <div class="sec-num">17</div>
+        <div><h2>Payment and Service Connections</h2>
+          <p>The internal ledger, savings and loan connections beside Airtel Money, TNM Mpamba, the bank provider and the card gateway — with the API configuration, the credentials, the webhook check, the health and the failure alerts</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="cnPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="cnKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Connections</div>
+            <div class="panel-sub">Click a row to inspect the connection beside it</div></div>
+            <span class="badge b-gray" id="cnCount">—</span></div>
+          <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="cnHead"></thead><tbody id="cnBody"></tbody></table></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="cnTest">Run a connection test</button>
+            <button class="btn btn-ghost" id="cnRotate">Rotate the credential</button>
+          </div>
+          <div class="qhint" id="cnMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Connection Detail</div>
+            <div class="panel-sub">Endpoint, credentials, webhook and latency</div></div>
+            <span class="badge b-gray" id="cnSelPill">—</span></div>
+          <div id="cnDetail"></div>
+          <div id="cnCred" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider API Configuration</div>
+            <div class="panel-sub">What we send, and what we expect back</div></div>
+            <span class="badge b-gray" id="cnApiPill">—</span></div>
+          <div id="cnApi"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Webhook Verification and Health</div>
+            <div class="panel-sub">Every callback, whether the signature held, and the health beside it</div></div>
+            <span class="badge b-gray" id="cnHookPill">—</span></div>
+          <div class="tblwrap" style="max-height:230px"><table class="tbl2 dense"><thead id="cnHookHead"></thead><tbody id="cnHookBody"></tbody></table></div>
+          <div id="cnHealth" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Connection Failure Alerts</div>
+          <div class="panel-sub">Acknowledge one and it leaves the open list</div></div>
+          <span class="badge b-gray" id="cnAlertPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="cnAlertHead"></thead><tbody id="cnAlertBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Value by Rail</div>
+          <div class="panel-sub">Internal against external, and the latency behind each</div></div></div>
+        <div class="chartgrid" id="cnGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 18 · SUPABASE AND DATABASE CONNECTIONS ============ -->
+    <section class="sec" id="s18">
+      <div class="sec-head">
+        <div class="sec-num">18</div>
+        <div><h2>Supabase and Database Connections</h2>
+          <p>The customer, account, savings, loan, transfer, payment and ledger tables, the functions behind them, row-level security, atomic posting, duplicate submission protection, error monitoring and schema compatibility</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="dbPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="dbGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Table Connections</div>
+          <div class="panel-sub">Every table a transfer touches, with its security and last write</div></div>
+          <span class="badge b-gray" id="dbTblPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="dbTblHead"></thead><tbody id="dbTblBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Function Connections</div>
+            <div class="panel-sub">The routines a transfer runs through</div></div>
+            <span class="badge b-gray" id="dbFnPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dbFnHead"></thead><tbody id="dbFnBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Row-Level Security</div>
+            <div class="panel-sub">One attachment table is readable without a policy</div></div>
+            <span class="badge b-crit" id="dbRlsPill">—</span></div>
+          <div id="dbRls"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="dbRlsFix">Enable RLS on the gap</button></div>
+          <div id="dbAtomic" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Error Monitoring</div>
+            <div class="panel-sub">Grouped by SQLSTATE, with the constraint that raised it</div></div>
+            <span class="badge b-gray" id="dbErrPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate Submission and Integrity Checks</div>
+            <div class="panel-sub">One debit, one credit, one receipt</div></div>
+            <span class="badge b-gray" id="dbChkPill">—</span></div>
+          <div id="dbChecks"></div>
+          <div id="dbDup" style="margin-top:8px"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="dbCheck">Run the integrity checks</button>
+            <button class="btn btn-ghost" id="dbSchemaBtn">Check schema compatibility</button>
+          </div>
+          <div id="dbSchemaBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Schema and Migration Compatibility</div>
+          <div class="panel-sub">What has been applied, and what is still waiting</div></div>
+          <span class="badge b-gray" id="dbMigPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="dbMigHead"></thead><tbody id="dbMigBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 19 · TRANSFER NOTIFICATIONS ============ -->
+    <section class="sec" id="s19">
+      <div class="sec-head">
+        <div class="sec-num">19</div>
+        <div><h2>Transfer Notifications</h2>
+          <p>Received, pending approval, approved, processing, completed, failed, rejected and reversed messages — over the SMS and email connections, with the delivery status and the history</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="ntPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="ntKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+          <div class="panel-sub">Every event, its channel, who receives it and whether it is on</div></div>
+          <span class="badge b-gray" id="ntRulePill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ntHead"></thead><tbody id="ntBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">SMS and Email Connections</div>
+            <div class="panel-sub">The two channels every message travels over</div></div></div>
+          <div id="ntConn"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="ntTestSms">Send a test SMS</button>
+            <button class="btn btn-ghost" id="ntTestEmail">Send a test email</button>
+          </div>
+          <div class="qhint" id="ntMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
+            <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+            <span class="badge b-gray" id="ntDelPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="ntDelHead"></thead><tbody id="ntDelBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification History</div>
+          <div class="panel-sub">Every message sent about a transfer</div></div>
+          <span class="badge b-gray" id="ntHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ntHistHead"></thead><tbody id="ntHistBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Messages by Event</div>
+          <div class="panel-sub">Which events generate the most traffic</div></div></div>
+        <div class="chartgrid" id="ntGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 20 · REPORTS AND AUDIT HISTORY ============ -->
+    <section class="sec" id="s20">
+      <div class="sec-head">
+        <div class="sec-num">20</div>
+        <div><h2>Reports and Audit History</h2>
+          <p>Daily, weekly and monthly reports, by method, by customer, by staff member, high-value, failed and reversed, fees and reconciliation — with the configuration change history, the officer responsible, the timestamp and the export log</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="rpPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="rpKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Report Library</div>
+          <div class="panel-sub">Twelve reports · preview on screen, or download a real file</div></div>
+          <span class="badge b-gray" id="rpCount">—</span></div>
+        <div class="repgrid" id="rpCards"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Whole Pack</div>
+          <div class="panel-sub">Every report in one file, built from the current filters</div></div></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="packCsv">Download pack (CSV)</button>
+          <button class="btn btn-ghost" id="packXlsx">Download pack (Excel)</button>
+          <button class="btn btn-ghost" id="packPdf">Print pack (PDF)</button>
+          <button class="btn btn-ghost" id="packPrint">Print preview</button>
+        </div>
+        <div class="qhint" id="packMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Report Generation History</div>
+          <div class="panel-sub">What has been generated from this page, and by whom</div></div>
+          <span class="badge b-gray" id="expCount">0</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense">
+          <thead><tr><th>When</th><th>Report</th><th>Format</th><th class="num">Rows</th><th>By</th><th>Filters</th></tr></thead>
+          <tbody id="expHistoryBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Configuration Change History</div>
+            <div class="panel-sub">Every change, with the previous and the updated value</div></div>
+            <span class="badge b-gray" id="chgPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="chgHead"></thead><tbody id="chgBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Officer, Timestamp and Transaction Detail</div>
+            <div class="panel-sub">Who changed what, when, and what the record holds</div></div>
+            <span class="badge b-gray" id="chgWhoPill">—</span></div>
+          <div id="chgWho"></div>
+          <div id="chgStamp" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Export Authorised Reports</div>
+          <div class="panel-sub">The reports this officer may export, and the format allowed</div></div>
+          <span class="badge b-gray" id="rpAuthPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="rpAuthHead"></thead><tbody id="rpAuthBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-gold" id="rpExportAll">Export every authorised report</button></div>
+        <div class="qhint" id="rpAuthMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transfer Settings</div>
+          <div class="panel-sub">Currency, numbering, limits and the fee payer — saving writes a change-history row</div></div>
+          <span class="badge b-gray" id="setPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Currency</label><select id="setCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          <div class="fg"><label>Decimals kept</label><select id="setDecimals"><option>0</option><option>2</option></select></div>
+          <div class="fg"><label>Transfer prefix</label><input id="setTrfPrefix" maxlength="4" /></div>
+          <div class="fg"><label>Receipt prefix</label><input id="setRcPrefix" maxlength="4" /></div>
+          <div class="fg"><label>Receipt digits</label><input id="setRcDigits" type="number" min="3" max="8" /></div>
+          <div class="fg"><label>Duplicate window (minutes)</label><input id="setDupWindow" type="number" min="1" max="60" /></div>
+          <div class="fg"><label>Minimum transfer (MWK)</label><input id="setMinTransfer" type="number" step="100" /></div>
+          <div class="fg"><label>Maximum transfer (MWK)</label><input id="setMaxTransfer" type="number" step="1000" /></div>
+          <div class="fg"><label>Minimum internal (MWK)</label><input id="setMinInternal" type="number" step="100" /></div>
+          <div class="fg"><label>Maximum internal (MWK)</label><input id="setMaxInternal" type="number" step="1000" /></div>
+          <div class="fg"><label>Daily transfer limit (MWK)</label><input id="setDailyTransferLimit" type="number" step="1000" /></div>
+          <div class="fg"><label>Per-customer daily (MWK)</label><input id="setPerCustomerDailyLimit" type="number" step="1000" /></div>
+          <div class="fg"><label>Fee payer</label><select id="setFeePayer"><option>Customer</option><option>Company</option></select></div>
+        </div>
+        <div id="setRuleBox" style="margin-top:8px"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="setSave">Save the settings</button>
+          <button class="btn btn-ghost" id="setReset">Restore the defaults</button>
+        </div>
+        <div class="qhint" id="setMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Transfer Trend</div>
+          <div class="panel-sub">Volume and value across the period</div></div></div>
+        <div class="chartgrid" id="rpGrid"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

@@ -1,0 +1,235 @@
+    <!-- ============ 9 · TRANSFER APPROVALS ============ -->
+    <section class="sec" id="s9">
+      <div class="sec-head">
+        <div class="sec-num">9</div>
+        <div><h2>Transfer Approvals</h2>
+          <p>The pending queue, first-level and management approval, the thresholds in force, high-value and dual authorisation, rejection and return for review, the comments and the guard against self-approval</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="taPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="taKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pending Approval Queue</div>
+          <div class="panel-sub">First level, then management — nothing leaves until both have signed</div></div>
+          <span class="badge b-gray" id="taqPill">—</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="taqHead"></thead><tbody id="taqBody"></tbody></table></div>
+        <div class="fg" style="margin-top:8px"><label>Approval comments</label><input id="taNote" placeholder="What you checked before signing it off" /></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="taL1">Give first-level approval</button>
+          <button class="btn btn-ghost" id="taL2">Give management approval</button>
+          <button class="btn btn-ghost" id="taReject">Reject the request</button>
+          <button class="btn btn-ghost" id="taReturn">Return it for review</button>
+        </div>
+        <div class="qhint" id="taMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Approval Thresholds</div>
+            <div class="panel-sub">Change a threshold and it applies at once</div></div>
+            <span class="badge b-gray" id="taThrPill">—</span></div>
+          <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="taThrHead"></thead><tbody id="taThrBody"></tbody></table></div>
+          <div class="form-grid" style="margin-top:8px">
+            <div class="fg"><label>First approval above (MWK)</label><input id="taAppr1" type="number" step="50000" /></div>
+            <div class="fg"><label>Second approval above (MWK)</label><input id="taAppr2" type="number" step="50000" /></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-ghost" id="taSave">Save the thresholds</button></div>
+          <div id="taSelfBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">High-Value and Dual Authorisation</div>
+            <div class="panel-sub">Anything above the threshold needs two names</div></div>
+            <span class="badge b-gray" id="taHighPill">—</span></div>
+          <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="taHighHead"></thead><tbody id="taHighBody"></tbody></table></div>
+          <div id="taDualBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval Audit Trail</div>
+          <div class="panel-sub">Every signature, its level, the officer and the comment left with it</div></div>
+          <span class="badge b-gray" id="taAuditPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="taAuditHead"></thead><tbody id="taAuditBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 10 · TRANSFER STATUS AND PROCESSING ============ -->
+    <section class="sec" id="s10">
+      <div class="sec-head">
+        <div class="sec-num">10</div>
+        <div><h2>Transfer Status and Processing</h2>
+          <p>Draft, pending verification, pending approval, approved, processing, completed, failed, rejected, cancelled and reversed transfers — with the provider confirmation, the receipt and every status change on record</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="stPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="stKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">The Whole Register</div>
+          <div class="panel-sub">Filter by state, then move the selected transfer along</div></div>
+          <span class="badge b-gray" id="stCount">—</span></div>
+        <div class="chips" id="stChips" style="margin-bottom:9px"></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="stHead"></thead><tbody id="stBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Selected Transfer</div>
+            <div class="panel-sub">Its state, its provider response and the next step</div></div>
+            <span class="badge b-gray" id="stSelPill">—</span></div>
+          <div id="stDetail"></div>
+          <div id="stProvBox" style="margin-top:8px"></div>
+          <div class="form-grid" style="margin-top:8px">
+            <div class="fg"><label>Move it to</label><select id="stStatusSel"></select></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="stStatusBtn" style="width:100%">Update the status</button></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-gold" id="stReceiptBtn">Generate a receipt</button></div>
+          <div id="stReceiptBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Status Change History</div>
+            <div class="panel-sub">Every move, with the officer and the moment</div></div>
+            <span class="badge b-gray" id="stHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="stHistHead"></thead><tbody id="stHistBody"></tbody></table></div>
+          <div class="minihead" style="margin-top:10px">Duplicate references held</div>
+          <div class="tblwrap" style="max-height:190px"><table class="tbl2 dense"><thead id="stDupHead"></thead><tbody id="stDupBody"></tbody></table></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="stDupBtn">Scan for duplicates</button></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Value by State</div>
+          <div class="panel-sub">Where the money sits, and what each state is worth</div></div></div>
+        <div class="chartgrid" id="stGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 11 · BALANCE AND LEDGER MANAGEMENT ============ -->
+    <section class="sec" id="s11">
+      <div class="sec-head">
+        <div class="sec-num">11</div>
+        <div><h2>Balance and Ledger Management</h2>
+          <p>The source balance, funds reserved for an approved transfer, the debit and the credit, the fee, the available balances and the ledgers — with negative balances blocked, atomic posting, duplicate protection and authorised corrections</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="ldPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="ldKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Balance Composition</div>
+            <div class="panel-sub">Across every customer and savings account</div></div>
+            <span class="badge b-gray" id="ldCompPill">—</span></div>
+          <div id="ldComp"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reserve, Debit, Credit</div>
+            <div class="panel-sub">What a transfer does to each side of the ledger</div></div>
+            <span class="badge b-gray" id="ldFlowPill">—</span></div>
+          <div id="ldFlow"></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="ldRecalc">Recalculate every balance</button>
+            <button class="btn btn-ghost" id="ldRecon">Reconcile the ledger</button>
+          </div>
+          <div class="qhint" id="ldMsg" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Ledger Entries</div>
+          <div class="panel-sub">Every debit and credit, with the balance it left behind</div></div>
+          <span class="badge b-gray" id="ldLedgerPill">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="ldHead"></thead><tbody id="ldBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Source and Destination Reconciliation</div>
+            <div class="panel-sub">Where the two sides disagree</div></div>
+            <span class="badge b-crit" id="ldDiscPill">—</span></div>
+          <div id="ldDisc"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Authorised Corrections</div>
+            <div class="panel-sub">A correction writes a ledger entry, never an edit</div></div>
+            <span class="badge b-gray" id="ldAdjPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Account</label><select id="ldAdjAcct"></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="ldAdjAmount" type="number" step="100" placeholder="Use a minus to debit" /></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Reason</label><input id="ldAdjReason" placeholder="Rounding, duplicated fee, timing…" /></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="ldAdjBtn">Post the correction</button></div>
+          <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="ldAdjHead"></thead><tbody id="ldAdjBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Posting Guards</div>
+          <div class="panel-sub">What keeps a transfer from moving money twice</div></div>
+          <span class="badge b-ok" id="ldGuardPill">—</span></div>
+        <div id="ldGuard"></div>
+      </div>
+    </section>
+
+    <!-- ============ 12 · TRANSFER FEES AND LIMITS ============ -->
+    <section class="sec" id="s12">
+      <div class="sec-head">
+        <div class="sec-num">12</div>
+        <div><h2>Transfer Fees and Limits</h2>
+          <p>The minimum and maximum transfer, daily and per-customer limits, the fee for each rail, who pays it, the currency rules, how a fee is worked out and every change with its date</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="flPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="flKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Limits and Fees by Method</div>
+          <div class="panel-sub">Ceilings are editable — the fee and the payer sit beside them</div></div>
+          <span class="badge b-gray" id="flCount">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="flHead"></thead><tbody id="flBody"></tbody></table></div>
+        <div class="form-actions"><button class="btn btn-ghost" id="flSave">Save the limit and fee changes</button></div>
+        <div class="qhint" id="flMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fee Calculator</div>
+            <div class="panel-sub">Work out what a transfer would cost before it is sent</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Method</label><select id="flCalcMethod"></select></div>
+            <div class="fg"><label>Amount (MWK)</label><input id="flCalcAmount" type="number" step="500" value="250000" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="flCalcBtn" style="width:100%">Calculate the fee</button></div>
+          </div>
+          <div id="flCalcBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Per-Customer Limits and Currency</div>
+            <div class="panel-sub">Who is closest to their ceiling, and what a currency rule blocks</div></div>
+            <span class="badge b-gray" id="flCustPill">—</span></div>
+          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="flCustHead"></thead><tbody id="flCustBody"></tbody></table></div>
+          <div id="flCcyBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Who Pays the Fee</div>
+            <div class="panel-sub">Customer against company, by rail</div></div>
+            <span class="badge b-gray" id="flPayerPill">—</span></div>
+          <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="flPayerHead"></thead><tbody id="flPayerBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fee and Limit Change History</div>
+            <div class="panel-sub">Every change with the date it took effect</div></div>
+            <span class="badge b-gray" id="flHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="flHistHead"></thead><tbody id="flHistBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Fees Collected</div>
+          <div class="panel-sub">By method, and against the daily volume</div></div></div>
+        <div class="chartgrid" id="flGrid"></div>
+      </div>
+    </section>

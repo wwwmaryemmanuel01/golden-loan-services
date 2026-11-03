@@ -1,0 +1,204 @@
+    <!-- ============ 5 · LOAN-RELATED TRANSFERS ============ -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div class="sec-num">5</div>
+        <div><h2>Loan-Related Transfers</h2>
+          <p>Approved disbursements, confirmed payments applied to a loan, funds allocated to a facility — with ownership, loan status, the repayment record, the schedule and the outstanding balance all updated, and a guard against unauthorised balance changes</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="lnPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="lnKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Apply Funds to a Loan</div>
+          <div class="panel-sub">Disbursement out, or repayment in — the loan and the customer must agree</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Movement</label><select id="lnType"><option>Loan repayment</option><option>Loan disbursement</option></select></div>
+          <div class="fg"><label>Loan</label><select id="lnLoan"></select></div>
+          <div class="fg"><label>Source account</label><select id="lnSource"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="lnAmount" type="number" min="0" step="500" value="100000" /></div>
+        </div>
+        <div id="lnOwnBox" style="margin-top:8px"></div>
+        <div id="lnChecks" style="margin-top:8px"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="lnPost">Post the loan transfer</button></div>
+        <div class="qhint" id="lnMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Repayment Records and Schedule</div>
+            <div class="panel-sub">What the transfer would change, before it changes it</div></div>
+            <span class="badge b-gray" id="lnSchedPill">—</span></div>
+          <div id="lnBalBox"></div>
+          <div class="tblwrap" style="max-height:260px;margin-top:8px"><table class="tbl2 dense"><thead id="lnPayHead"></thead><tbody id="lnPayBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Balance Change Guard</div>
+            <div class="panel-sub">What stops a loan balance moving without authority</div></div>
+            <span class="badge b-ok" id="lnGuardPill">—</span></div>
+          <div id="lnGuard"></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="lnHistHead"></thead><tbody id="lnHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · EXTERNAL BANK TRANSFERS ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div class="sec-num">6</div>
+        <div><h2>External Bank Transfers</h2>
+          <p>A bank request with its bank, beneficiary, account details and reference, the limits that apply, the provider it travels over, the confirmation it returns, the failures and the receipt</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="bkPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="bkKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Create a Bank Transfer Request</div>
+          <div class="panel-sub">Beneficiary details are checked against the bank record before anything leaves</div></div>
+          <span class="badge b-gray" id="bkProvPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Source account</label><select id="bkSource"></select></div>
+          <div class="fg"><label>Destination bank</label><select id="bkBank"></select></div>
+          <div class="fg"><label>Beneficiary name</label><input id="bkName" placeholder="Account holder at the bank" /></div>
+          <div class="fg"><label>Beneficiary account number</label><input id="bkAcct" placeholder="0123 4567 8901" /></div>
+          <div class="fg"><label>Transfer reference</label><input id="bkRef" placeholder="INV-204, salary November…" /></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="bkAmount" type="number" min="0" step="500" value="350000" /></div>
+          <div class="fg"><label>Supporting document</label><input id="bkDocs" type="file" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="bkVerify" style="width:100%">Verify the beneficiary</button></div>
+        </div>
+        <div class="g2" style="margin-top:8px">
+          <div id="bkLimitBox"></div>
+          <div id="bkConnBox"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="bkSubmit">Submit the bank transfer</button>
+        </div>
+        <div class="qhint" id="bkMsg" style="margin-top:6px"></div>
+        <div id="bkReceiptBox" style="margin-top:8px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider Confirmation</div>
+            <div class="panel-sub">The bank line, its reference and what came back</div></div>
+            <span class="badge b-gray" id="bkTrackPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="bkTrackHead"></thead><tbody id="bkTrackBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Bank Transfers</div>
+            <div class="panel-sub">Refused at the bank, with the reason and the next step</div></div>
+            <span class="badge b-crit" id="bkFailPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="bkFailHead"></thead><tbody id="bkFailBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · MOBILE MONEY TRANSFERS ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div class="sec-num">7</div>
+        <div><h2>Mobile Money Transfers</h2>
+          <p>Airtel Money and TNM Mpamba payouts with the recipient number, the verification, the provider limits, the API behind them, the provider status, the reference, the failures, the receipt and the history</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="mmPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="mmKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Send to a Wallet</div>
+          <div class="panel-sub">Pick the network, then the number — the provider limits follow</div></div>
+          <span class="badge b-gray" id="mmProvPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Network</label><select id="mmProvider"><option>Airtel Money</option><option>TNM Mpamba</option></select></div>
+          <div class="fg"><label>Source account</label><select id="mmSource"></select></div>
+          <div class="fg"><label>Recipient mobile number</label><input id="mmNumber" placeholder="0991 000 111" /></div>
+          <div class="fg"><label>Recipient name</label><input id="mmName" placeholder="As registered on the wallet" /></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="mmAmount" type="number" min="0" step="500" value="60000" /></div>
+          <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="mmVerify" style="width:100%">Verify the recipient</button></div>
+        </div>
+        <div class="g2" style="margin-top:8px">
+          <div id="mmLimitBox"></div>
+          <div id="mmApiBox"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="mmSubmit">Submit the wallet transfer</button>
+        </div>
+        <div class="qhint" id="mmMsg" style="margin-top:6px"></div>
+        <div id="mmReceiptBox" style="margin-top:8px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider Status and References</div>
+            <div class="panel-sub">Every wallet transfer with the reference the provider returned</div></div>
+            <span class="badge b-gray" id="mmStatusPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="mmStatusHead"></thead><tbody id="mmStatusBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed or Pending Wallet Transfers</div>
+            <div class="panel-sub">Timed out, refused or still at the network</div></div>
+            <span class="badge b-crit" id="mmFailPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="mmFailHead"></thead><tbody id="mmFailBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Mobile Money Transfer History</div>
+          <div class="panel-sub">Every wallet payout, newest first</div></div>
+          <span class="badge b-gray" id="mmHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="mmHistHead"></thead><tbody id="mmHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · TRANSFER VERIFICATION ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div class="sec-num">8</div>
+        <div><h2>Transfer Verification</h2>
+          <p>The pending queue, the source and destination accounts, the funds and the amount, the beneficiary, the duplicate check, the supporting documents, the note, and the approval or rejection that follows</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="tvPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="tvKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pending Verification Queue</div>
+          <div class="panel-sub">Open one to check it, then approve or reject it — the ledger follows</div></div>
+          <span class="badge b-gray" id="tvqPill">—</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="tvqHead"></thead><tbody id="tvqBody"></tbody></table></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="tvApproveAll">Approve everything that passed every check</button>
+          <button class="btn btn-ghost" id="tvAutoBtn">Run automatic verification</button>
+        </div>
+        <div class="qhint" id="tvMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Checks</div>
+            <div class="panel-sub">Six checks — a transfer must pass them all</div></div>
+            <span class="badge b-gray" id="tvCheckPill">—</span></div>
+          <div id="tvChecks"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Documents, Duplicates and Notes</div>
+            <div class="panel-sub">The upload, the duplicate already on the register, and the note left behind</div></div>
+            <span class="badge b-gray" id="tvDocPill">—</span></div>
+          <div id="tvDocs"></div>
+          <div id="tvDupBox" style="margin-top:8px"></div>
+          <div class="fg" style="margin-top:8px"><label>Verification notes</label><input id="tvNote" placeholder="What you checked, and what you found" /></div>
+          <div class="form-actions">
+            <button class="btn btn-gold" id="tvApprove">Approve the selected transfer</button>
+            <button class="btn btn-ghost" id="tvReject">Reject it</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification History</div>
+          <div class="panel-sub">Who verified or rejected what, with the note they left</div></div>
+          <span class="badge b-gray" id="tvHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="tvHistHead"></thead><tbody id="tvHistBody"></tbody></table></div>
+      </div>
+    </section>
