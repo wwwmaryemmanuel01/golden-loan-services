@@ -194,7 +194,7 @@ function renderAccounts(){
     {k: 'id', label: 'Account'},
     {k: 'cust', label: 'Customer', html: v => esc(custName(v))},
     {k: 'type', label: 'Type'},
-    {k: 'productName', label: 'Product', html: v => esc(String(v).slice(0, 24))},
+    {k: 'productName', label: 'Product', html: v => `<span class="wraptext">${esc(v)}</span>`},
     {k: 'opened', label: 'Opened', html: v => esc(fmtDate(v))},
     {k: 'available', label: 'Available', num: true, html: v => esc(svM(v))},
     {k: 'interestRate', label: 'Rate', num: true, html: v => esc(v ? v + '%' : '—')},

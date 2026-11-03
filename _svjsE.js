@@ -176,7 +176,7 @@ function renderLedger(){
   put('blAdjHead', '<tr><th>Adjustment</th><th>When</th><th>Account</th><th class="num">Amount</th><th>Reason</th><th>State</th></tr>');
   if(el('blAdjBody')) el('blAdjBody').innerHTML = SV_ADJUST.filter(svPass).map(a => `<tr>
       <td>${esc(a.id)}</td><td>${esc(svWhen(a.when))}</td><td>${esc(a.account)}</td>
-      <td class="num">${esc(svM(a.amount))}</td><td>${esc(String(a.reason).slice(0, 34))}</td>
+      <td class="num">${esc(svM(a.amount))}</td><td><span class="wraptext">${esc(a.reason)}</span></td>
       <td>${okb(a.status)}</td></tr>`).join('')
     || '<tr><td colspan="6" class="empty">No adjustment recorded.</td></tr>';
   if(el('blAdjAcct')) el('blAdjAcct').dataset.effect =

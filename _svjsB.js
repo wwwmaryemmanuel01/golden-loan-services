@@ -140,28 +140,133 @@ function sortOrPage(e){
   if(row && !e.target.closest('button')){
     const host = row.dataset.tblrow;
     const rec = (STORE_ROWS[host] || [])[Number(row.dataset.i)];
-    if(rec && rec._open) rec._open();
-    else if(rec) openRecord(host, rec);
+    if(rec && rec._open){
+      rec._open();
+      if(!el('modal') || !el('modal').classList.contains('on')) openRecord(host, rec);
+    } else if(rec) openRecord(host, rec);
     return true;
   }
   return false;
 }
 
+/* ---- readable record sheets: human labels, formatted values, mobile-first ---- */
+const SV_LABELS = {
+  id:'Record', cust:'Customer', acct:'Account', account:'Account', product:'Product', productName:'Product',
+  idType:'ID type', idNumber:'ID number', minBalance:'Minimum balance', rateType:'Rate type',
+  lastMove:'Last movement', inTotal:'Total in', outTotal:'Total out', interestPaid:'Interest paid',
+  pendingIn:'Pending in', monthlyInterest:'Monthly interest', daysIdle:'Days idle', reactivated:'Reactivated',
+  ledger:'Ledger balance', opening:'Opening balance', available:'Available balance', reserved:'Reserved',
+  interestRate:'Interest rate', dest:'Destination', destName:'Destination name', initiatedBy:'Raised by',
+  verifiedBy:'Verified by', approvedBy:'Approved by', daysHeld:'Days held', targetDate:'Target date',
+  lastUsed:'Last used', difference:'Difference', system:'System balance', level1:'First approval',
+  verified:'Identity check', restriction:'Restriction', identity:'Identity',
+  level2:'Second approval', selfApproval:'Self-approval', accountStatus:'Account state',
+  perCustomer:'Per customer', effective:'Effective from', waived:'Waived', payer:'Paid by',
+  prefix:'Prefix', rail:'Rail', daily:'Daily limit', pct:'Rate %', code:'Code', count:'Times',
+  rows:'Rows', size:'Size', rls:'Row policy', function:'Written by', lastWrite:'Last write',
+  invoker:'Invoker', calls:'Calls', table:'Table', message:'Message', what:'Setting', area:'Area',
+  from:'Previous', to:'Updated', by:'Officer', event:'Event', channel:'Channel', template:'Template',
+  on:'Switched on', sms:'SMS', email:'Email', receipt:'Receipt', issued:'Issued', txn:'Transaction',
+  ref:'Reference', goal:'Goal', contributions:'Contributions', target:'Target', saved:'Saved',
+  name:'Name', kind:'Kind', method:'Method', notes:'Notes', description:'Description', proof:'Proof',
+  stage:'Stage', officer:'Officer', owner:'Officer', region:'Branch', lane:'Area', severity:'Severity',
+  status:'State', when:'When', amount:'Amount', fee:'Fee', balance:'Balance', side:'Side',
+  entry:'Entry', basis:'Basis', terms:'Terms', withdrawal:'Withdrawal', availability:'Availability',
+  frequency:'Frequency', direction:'Direction', min:'Minimum', max:'Maximum', created:'Created',
+  added:'Added', provider:'Provider', template2:'Template'
+};
+function svLabel(key){
+  if(SV_LABELS[key]) return SV_LABELS[key];
+  return String(key).replace(/_/g, ' ').replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/^./, c => c.toUpperCase());
+}
+const SV_LONG_KEY = /^(description|notes?|message|terms|reason|detail|restriction|proof|stage)$/i;
+const SV_MONEY_KEY = /(amount|fee|opening|available|reserved|ledger|balance|minimum|maximum|^min$|^max$|daily|perCustomer|target|saved|total|interest|pending|contribution|accrued|posted|principal|system|difference|value|paid|limit|debit|credit)/i;
+const SV_DATE_KEY = /^(when|opened|lastMove|targetDate|created|added|lastUsed|reactivated|effective|lastWrite|issued|postedOn|paidOn|completedOn|due|paid)$/;
+/* 30 Oct 2026, with the time when one is held */
+function svDateText(v){
+  const s = String(v);
+  const day = s.slice(0, 10), time = s.length > 10 ? s.slice(11, 16) : '';
+  const out = /^\d{4}-\d{2}-\d{2}$/.test(day) ? fmtDate(day) : day;
+  return time ? out + ' · ' + time : out;
+}
+const SV_BADGE_KEY = /^(status|accountStatus|verified|rls|severity|level|level1|level2|selfApproval|waived|reactivated|on)$/;
+
+/* foreign keys and officer ids read as names, never as codes */
+function svRaw(key, v){
+  if(v === null || v === undefined || v === '') return v;
+  const t = String(v);
+  if(key === 'cust' && typeof CUST_BY_ID !== 'undefined' && CUST_BY_ID[t]) return custName(t) + ' · ' + t;
+  if(['owner', 'officer', 'verifiedBy', 'approvedBy', 'by'].indexOf(key) >= 0 && /^STF-/.test(t)) return staffName(t) + ' · ' + t;
+  if(key === 'initiatedBy' && t === 'Customer') return 'The customer';
+  return v;
+}
+function svVal(key, raw, label){
+  if(label && /reference|\bcode\b|^id$/i.test(String(label)) && raw != null && raw !== '')
+    return esc(String(raw));                       // a reference column keeps its code, not the name
+  const v = svRaw(key, raw);
+  if(v === null || v === undefined || v === '') return '<span class="muted">—</span>';
+  if(typeof v === 'object') return esc(JSON.stringify(v));
+  const s = String(v);
+  if(SV_BADGE_KEY.test(key)){
+    if(/^(yes|no)$/i.test(s)) return badge(s, /^yes$/i.test(s) ? 'b-ok' : 'b-gray');
+    if(key === 'severity') return badge(s, sevTone(s));
+    return badge(s, statTone(s));
+  }
+  if(/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(s)) return esc(svDateText(s));   // any ISO date reads as a date
+  if(/^(month|period)$/i.test(key) && /^\d{4}-\d{2}$/.test(s)) return esc(monthLabel(s));
+  if(typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(s)){
+    const n = Number(s);
+    if(/rate|pct/i.test(key)) return esc(n + '%');
+    if(SV_MONEY_KEY.test(key)) return esc(svM(n));
+    if(/^(days|calls|count|rows|accounts|daysIdle|daysHeld|goals|savings)$/i.test(key)) return esc(num(n));
+    return esc(String(n));
+  }
+  return esc(s);
+}
+function svField(key, html, label){
+  return `<div class="pfield${SV_LONG_KEY.test(key) ? ' wide' : ''}"><div class="pk">${esc(label || svLabel(key))}</div>`
+    + `<div class="pv">${html}</div></div>`;
+}
 function openRecord(host, rec){
-  const cfg = TBL_CFG[host] || {cols: []};
-  const label = (cfg.cols[0] && rec[cfg.cols[0].k]) || 'Record';
-  const body = cfg.cols.map(c => {
-    const v = rec[c.k];
-    if(v == null || typeof v === 'object') return '';
-    return field(c.label, esc(String(v)));
-  }).join('');
-  const extra = Object.keys(rec).filter(k => k.charAt(0) !== '_' && !cfg.cols.some(c => c.k === k)
-    && (typeof rec[k] === 'string' || typeof rec[k] === 'number'));
-  openModal(String(label), `${num(cfg.rows ? cfg.rows.length : 0)} rows in this register · click any column header to sort`,
-    `<div class="pfields" style="grid-template-columns:1fr 1fr">${body}</div>`
-    + (extra.length ? `<div class="minihead" style="margin-top:10px">Other fields</div>
-       <div class="pfields" style="grid-template-columns:1fr 1fr">${extra.map(k => field(k, esc(String(rec[k])))).join('')}</div>` : ''),
-    [{label:'Close', act:'close'}]);
+  const cfg = TBL_CFG[host] || {cols: [], rows: []};
+  const cols = cfg.cols || [];
+  const head = cols.length && rec[cols[0].k] != null ? rec[cols[0].k] : 'Record sheet';
+  const usedKeys = cols.map(c => c.k);
+  const usedLabels = {};
+  const usedValues = {};
+  const blank = '<span class="muted">—</span>';
+  const main = cols.map(c => {
+    let html = svVal(c.k, rec[c.k], c.label);
+    if(html !== blank && usedValues[html] && typeof rec[c.k] !== 'object'){
+      const plain = esc(String(rec[c.k]));            // show the code when the name is already on the sheet
+      if(plain !== html) html = plain;
+    }
+    usedLabels[c.label] = 1;
+    if(html !== blank) usedValues[html] = 1;
+    return {k: c.k, label: c.label, html};
+  });
+  const internal = ['lane', 'severity', 'owner', 'region', 'region2', 'currency'];
+  const extras = [];
+  Object.keys(rec).forEach(k => {
+    if(usedKeys.indexOf(k) >= 0 || internal.indexOf(k) >= 0 || k.charAt(0) === '_') return;
+    const label = svLabel(k);
+    const html = svVal(k, rec[k]);
+    if(html === blank) return;
+    if(usedLabels[label] || usedValues[html]) return;   // never print the same thing twice
+    usedLabels[label] = 1; usedValues[html] = 1;
+    extras.push({k, label, html});
+  });
+  const meta = ['owner', 'region', 'lane', 'severity'].filter(k => rec[k] !== undefined && rec[k] !== '');
+  openModal(String(head),
+    (cols.length ? num((cfg.rows || []).length) + ' records in this register' : 'The whole record') + ' · ' + filterLine(),
+    `<div class="recsheet">
+      <div class="recgrid">${main.map(f => svField(f.k, f.html, f.label)).join('')}</div>
+      ${extras.length ? `<div class="recsub">Everything else on this record</div>
+        <div class="recgrid">${extras.map(f => svField(f.k, f.html, f.label)).join('')}</div>` : ''}
+      ${meta.length ? `<div class="recmeta">${meta.map(k => `<span><b>${esc(svLabel(k))}</b>${svVal(k, rec[k])}</span>`).join('')}</div>` : ''}
+    </div>`,
+    [{label: 'Close', act: 'close'}]);
 }
 
 /* ---------------- record panels ---------------- */

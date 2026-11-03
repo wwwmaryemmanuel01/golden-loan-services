@@ -167,7 +167,7 @@ function renderPayments(){
     {k: 'ref', label: 'Reference'},
     {k: 'method', label: 'Method'},
     {k: 'amount', label: 'Amount', num: true, html: v => esc(svM(v))},
-    {k: 'reason', label: 'Reason', html: v => esc(String(v).slice(0, 30))},
+    {k: 'reason', label: 'Reason', html: v => `<span class="wraptext">${esc(v)}</span>`},
     {k: 'retryable', label: 'Retry', html: v => badge(v, v === 'Yes' ? 'b-warn' : 'b-crit')}
   ], SV_FAILED, {sort: 'amount', pageSize: 5});
 
