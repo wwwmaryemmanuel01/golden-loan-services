@@ -230,7 +230,7 @@ function renderMonitoring(){
   ], list, {sort: 'when', pageSize: 10});
 
   const t = svTxItem();
-  if(el('txSelPill')) el('txSelPill').textContent = t ? t.id : '—';
+  if(el('txSelPill')) el('txSelPill').textContent = t ? t.id : ((list[0] || {}).id || 'No transactions');
   put('txDetail', t ? kvRow('Transaction', t.id) + kvRow('Reference', t.ref)
     + kvRow('Customer', custName(t.cust)) + kvRow('Account', t.account)
     + kvRow('Kind', t.kind) + kvRow('Method', t.method + ' · ' + t.provider)
@@ -314,6 +314,7 @@ function renderStatements(){
   if(el('stFrom') && !el('stFrom').value) el('stFrom').value = addDays(TODAY, -30);
   if(el('stTo') && !el('stTo').value) el('stTo').value = TODAY;
 
+  if(el('stPill') && el('stPill').textContent.trim() === '—') el('stPill').textContent = 'Not built yet';
   if(el('rcpPill')) el('rcpPill').textContent = num(SV_RECEIPTS.length) + ' receipts';
   renderTable('rcpBody', [
     {k: 'receipt', label: 'Receipt'},

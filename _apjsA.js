@@ -665,7 +665,6 @@ function clearNewApp(){
   el('naCustomer').value=''; el('naResults').innerHTML='';
   el('naFirst').value=''; el('naLast').value=''; el('naNrc').value=''; el('naPhone').value='';
   el('naGuarantor').value=''; el('naGuarPhone').value=''; el('naGuarIncome').value='0';
-  el('naNotes');
   const notes = document.getElementById('naNotes'); if(notes) notes.value='';
   renderNaDocs(); renderNaPreview();
 }

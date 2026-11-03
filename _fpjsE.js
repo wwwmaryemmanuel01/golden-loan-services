@@ -478,6 +478,7 @@ function renderReversals(){
   FP_SEL.reversal2 = r ? r.id : '';
   const charge = r ? CHARGES.find(c => c.id === r.charge) : null;
   if(el('rvDetailPill')) el('rvDetailPill').textContent = r ? r.status : '—';
+  if(el('rvFormPill')) el('rvFormPill').textContent = charge ? 'Against ' + charge.id : 'Pick a charge';
   put('rvDetail', r ? strip([
     ['Request', esc(r.id)],
     ['Charge', esc(r.charge)],

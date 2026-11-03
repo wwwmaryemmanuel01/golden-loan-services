@@ -395,6 +395,8 @@ function renderOriginationFees(){
   if(loan){
     const mine = CHARGES.filter(c => c.loan === loan.ref && c.group === 'Origination');
     const total = sum(mine, c => c.amount);
+    if(el('ofCalcPill')) el('ofCalcPill').textContent = num(mine.length) + ' fees · ' + fpM(total);
+    if(el('ofRulePill')) el('ofRulePill').textContent = FEE_RULES.deductAtDisbursement ? 'Deducted at payout' : 'Paid separately';
     put('ofCalcBox', strip([
       ['Loan', esc(loan.ref)],
       ['Amount', fpM(loan.amount)],

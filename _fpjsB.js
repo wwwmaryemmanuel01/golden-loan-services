@@ -201,7 +201,8 @@ function fpValue(key, v){
 
 function openRecord(host, rec){
   const cfg = TBL_CFG[host] || {cols: []};
-  const head = (cfg.cols[0] && rec[cfg.cols[0].k]) || rec.id || 'Record';
+  const idCol = (cfg.cols || []).find(c => /^[A-Z]{2,5}-/.test(String(rec[c.k] || '')) && !/^\d{4}-/.test(String(rec[c.k])));
+  const head = (idCol && rec[idCol.k]) || (cfg.cols[0] && rec[cfg.cols[0].k]) || rec.id || 'Record';
   const used = {}, usedVals = {};
   const main = [];
   (cfg.cols || []).forEach(c => {

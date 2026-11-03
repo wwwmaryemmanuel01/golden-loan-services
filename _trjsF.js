@@ -147,8 +147,9 @@ function renderProcessing(){
     ['Method', sel.method],
     ['Status', sel.status]
   ]) + `<div class="minihead" style="margin-top:8px">The parties</div>`
-    + kvRow('Customer', custName(sel.cust) + ' · ' + sel.cust)
-    + kvRow('Source', sel.source) + kvRow('Destination', sel.destName + ' · ' + sel.dest)
+    + kvRow('Customer', (custName(sel.cust) || '—') + (sel.cust ? ' · ' + sel.cust : ''))
+    + kvRow('Source', sel.source || '—')
+    + kvRow('Destination', (sel.destName || '—') + (sel.dest ? ' · ' + sel.dest : ''))
     + kvRow('Provider reference', sel.ref)
     + kvRow('Officer', staffName(sel.officer))
     + kvRow('Verified by', sel.verifiedBy ? staffName(sel.verifiedBy) : 'Not verified')
@@ -255,6 +256,7 @@ function renderLedger(){
   if(el('ldAdjPill')) el('ldAdjPill').textContent = num(TR_ADJUST.length) + ' adjustments';
   if(el('ldMsg') && !String(el('ldMsg').textContent || '').trim())
     el('ldMsg').textContent = 'An adjustment needs an account, an amount and a reason — it is posted with your name on it.';
+  if(el('ldGuardPill')) el('ldGuardPill').textContent = 'Guards on';
   if(el('ldGuard')) el('ldGuard').innerHTML = `<div class="minihead">Effect of the pending adjustment</div>`
     + kvRow('Account', adjAcct.id) + kvRow('Balance now', trM(adjAcct.available))
     + kvRow('Adjustment', (adjAmt >= 0 ? '+' : '−') + trM(Math.abs(adjAmt)))

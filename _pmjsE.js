@@ -107,7 +107,8 @@ function testProvider(id){
   if(!p) return;
   const now = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   const ok = p.credentials !== 'Expired';
-  p.latency = ok ? 180 + (p.id.charCodeAt(6)() * 13 % 160) : 0;
+  const seed = parseInt(String(p.id).replace(/\D/g, ''), 10) || (String(p.id).length * 7);
+  p.latency = ok ? 180 + (seed * 13 % 160) : 0;
   p.status = ok ? 'Connected' : 'Failing';
   p.lastCheck = now;
   p.health = ok ? Math.min(99.99, p.health + 0.02) : p.health;

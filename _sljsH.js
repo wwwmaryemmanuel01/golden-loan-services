@@ -743,6 +743,21 @@ function renderAll(){
   renderDatabase();
   renderReports();
   renderStats();
+  fillPills();
+}
+
+/* placeholders the panels used to leave as an em dash */
+function fillPills(){
+  const count = (p, t, noun) => { const a = el(p), b = el(t); if(a && b) a.textContent = num(b.children.length) + ' ' + noun; };
+  count('syCyclePill', 'syInvBody', 'cycles');
+  count('syVarPill', 'syVarBody', 'lines');
+  count('rcDuePill', 'rcApprBody', 'due');
+  count('bgTopPill', 'bgBody', 'lines');
+  count('bgVarPill', 'bgRevBody', 'variances');
+  count('apTypePill', 'apHistBody', 'recorded');
+  const alerts = el('bgRevBody');
+  if(el('bgAlertPill')) el('bgAlertPill').textContent = alerts
+    ? num(alerts.querySelectorAll('.b-crit,.b-warn').length) + ' alerts' : 'No alerts';
 }
 
 /* ===================== wiring ===================== */

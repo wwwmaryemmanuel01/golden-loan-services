@@ -253,6 +253,7 @@ function renderSalaries(){
     el('saStmtBox').innerHTML = '<div class="qhint">Press “Salary statement” to open the record, the allowances and every deduction for this staff member.</div>';
   if(el('saAuditHead')) el('saAuditHead').innerHTML = '<tr><th>When</th><th>Action</th><th>Reason</th><th>Officer</th></tr>';
 
+  if(el('saAdjPill')) el('saAdjPill').textContent = num(SE_ADJUSTMENTS.filter(a => a.salary === (sel || {}).id).length) + ' changes';
   const jobs = SE_ADJUSTMENTS.filter(a => a.salary === (sel || {}).id)
     .concat(SE_SAL_HISTORY.filter(h => h.salary === (sel || {}).id));
   renderTable('saAdjBody', [

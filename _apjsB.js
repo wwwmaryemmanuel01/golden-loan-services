@@ -376,6 +376,7 @@ function renderReview(){
     c.onclick = ()=>{ REV.sel = c.dataset.rsel; renderReview(); };
   });
 
+  if(!REV.sel && el('revQueue')){ const first = el('revQueue').querySelector('[data-rsel]'); if(first) REV.sel = first.dataset.rsel; }
   const a = REV.sel ? appBy(REV.sel) : null;
   el('revSub').textContent = a ? `${a.no} · ${a.cust} · ${a.product}` : 'Nothing selected';
   el('revDtiPill').textContent = a && a.assess ? 'DTI ' + a.assess.dti + '%' : '—';

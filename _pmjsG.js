@@ -1126,6 +1126,7 @@ function renderAll(){
   renderSettings();
   renderChanges();
   renderStats();
+  if(el('protPill') && el('unauthBody')) el('protPill').textContent = num(el('unauthBody').children.length) + ' checks';
 }
 
 /* ===================== wiring ===================== */
