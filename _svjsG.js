@@ -171,7 +171,7 @@ function renderTransfers(){
 
   if(el('smFailHead')) el('smFailHead').innerHTML = '<tr><th>Transaction</th><th class="num">Amount</th><th>Reason</th></tr>';
   if(el('smFailBody')) el('smFailBody').innerHTML = SV_FAILED.filter(f => f.kind === 'Transfer' || f.kind === 'Deposit').slice(0, 5)
-    .map(f => `<tr><td>${esc(f.ref)}</td><td class="num">${esc(svM(f.amount))}</td><td>${esc(String(f.reason).slice(0, 34))}</td></tr>`).join('')
+    .map(f => `<tr><td>${esc(f.ref)}</td><td class="num">${esc(svM(f.amount))}</td><td><span class="wraptext">${esc(f.reason)}</span></td></tr>`).join('')
     || '<tr><td colspan="3" class="empty">No transfer has failed.</td></tr>';
 
   if(el('smHistPill')) el('smHistPill').textContent = num(rows.length) + ' transfers';
@@ -337,7 +337,7 @@ function renderDormant(){
   if(el('drRestrictHead')) el('drRestrictHead').innerHTML = '<tr><th>Account</th><th>Customer</th><th>Restriction</th><th>Since</th><th>State</th></tr>';
   if(el('drRestrictBody')) el('drRestrictBody').innerHTML = restricted.slice(0, 12).map(a => `<tr>
       <td><b>${esc(a.id)}</b></td><td>${esc(custName(a.cust))}</td>
-      <td>${esc(String(a.restriction).slice(0, 34))}</td><td>${esc(fmtDate(addDays(TODAY, -21)))}</td>
+      <td><span class="wraptext">${esc(a.restriction)}</span></td><td>${esc(fmtDate(addDays(TODAY, -21)))}</td>
       <td>${okb(a.status)}</td></tr>`).join('')
     || '<tr><td colspan="5" class="empty">No account is restricted.</td></tr>';
 

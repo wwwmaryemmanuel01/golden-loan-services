@@ -498,6 +498,13 @@ audit history.
 - **Audit trail that writes itself** — every mutation lands in the configuration change history
   and the module audit log with the previous value, the updated value, the officer and the
   timestamp.
+- **Every row opens a readable record sheet** — clicking any table row opens a labelled sheet
+  (Account, Customer, Opened, Available, Rate, Status …) instead of raw column keys: dates read
+  `30 Oct 2026 · 18:48`, counts and money are formatted, customer and staff codes resolve to
+  names, internal keys are hidden, and the same value never prints twice.
+- **Works on a phone** — below 760px the record sheet goes full width, filter and form grids
+  collapse to one column, charts stack, and every register scrolls inside its own pane with the
+  first column pinned, so no table pushes the page sideways.
 
 ## Salaries, Expenses & Operating Charges module
 
