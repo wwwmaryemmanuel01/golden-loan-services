@@ -248,12 +248,14 @@ function renderContent(){
   el('contentPill').className = 'badge ' + (rows.length ? 'b-gray' : 'b-warn');
   el('contentPill').textContent = rows.length + ' items';
   el('contentCount').textContent = rows.length + ' of ' + CONTENT.length;
+  const publishedAt = CONTENT.filter(c => c.status === 'Published').map(c => +new Date(c.updated)).filter(n => n > 0);
+  const lastPublish = publishedAt.length ? isoOf(new Date(Math.max(...publishedAt))) : '';
   el('contentKpis').innerHTML = [
     ['Content items', num(CONTENT.length), published + ' published · ' + CONTENT.filter(c => c.status === 'Draft').length + ' draft', ''],
     ['In review', num(CONTENT.filter(c => c.status === 'Review').length), 'Waiting on approval', CONTENT.some(c => c.status === 'Review') ? 'red' : ''],
     ['Words published', num(sum(CONTENT.filter(c => c.status === 'Published'), c => c.words)), 'Across every live page', ''],
     ['Legal pages', num(CONTENT.filter(c => c.type === 'Legal').length), 'Terms and privacy', ''],
-    ['Last publish', fmtDate(Math.max(...CONTENT.filter(c => c.status === 'Published').map(c => +new Date(c.updated)))), CONTENT_HISTORY[0].by ? staffName(CONTENT_HISTORY[0].by) : '', ''],
+    ['Last publish', lastPublish ? fmtDate(lastPublish) : '—', CONTENT_HISTORY[0] && CONTENT_HISTORY[0].by ? staffName(CONTENT_HISTORY[0].by) : 'No publish yet', ''],
     ['Feeds', num(CONTENT.filter(c => c.type === 'Feed').length), 'Announcements and blog', '']
   ].map(([l, v, sub, k]) => kpiCard(l, v, sub, k)).join('');
 

@@ -258,12 +258,26 @@ function openRecord(host, rec){
     extras.push({k, label, html});
   });
   const meta = ['owner', 'region', 'lane', 'severity'].filter(k => rec[k] !== undefined && rec[k] !== '');
+  /* the rest of the record reads in blocks: money first, then dates, then the rest */
+  const SV_GROUPS = [
+    {title: 'Balances and amounts', test: k => SV_MONEY_KEY.test(k)},
+    {title: 'Dates and timing', test: k => SV_DATE_KEY.test(k) || /(month|period|frequency|cycle)/i.test(k)},
+    {title: 'Other details', test: () => true}
+  ];
+  const buckets = SV_GROUPS.map(g => ({title: g.title, rows: []}));
+  extras.forEach(f => {
+    const i = SV_GROUPS.findIndex(g => g.test(f.k));
+    buckets[i < 0 ? buckets.length - 1 : i].rows.push(f);
+  });
+  const sections = buckets.filter(b => b.rows.length)
+    .map(b => `<div class="recsub">${esc(b.title)}</div>
+        <div class="recgrid">${b.rows.map(f => svField(f.k, f.html, f.label)).join('')}</div>`).join('');
   openModal(String(head),
     (cols.length ? num((cfg.rows || []).length) + ' records in this register' : 'The whole record') + ' · ' + filterLine(),
     `<div class="recsheet">
+      <div class="recsub" style="margin-top:0;padding-top:0;border-top:0">At a glance</div>
       <div class="recgrid">${main.map(f => svField(f.k, f.html, f.label)).join('')}</div>
-      ${extras.length ? `<div class="recsub">Everything else on this record</div>
-        <div class="recgrid">${extras.map(f => svField(f.k, f.html, f.label)).join('')}</div>` : ''}
+      ${sections}
       ${meta.length ? `<div class="recmeta">${meta.map(k => `<span><b>${esc(svLabel(k))}</b>${svVal(k, rec[k])}</span>`).join('')}</div>` : ''}
     </div>`,
     [{label: 'Close', act: 'close'}]);

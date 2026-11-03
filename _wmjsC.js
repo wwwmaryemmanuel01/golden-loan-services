@@ -405,7 +405,7 @@ const FE_CONFIG = [
 const VALIDATION_CHECKS = [
   {check: 'Request payload schema', scope: 'All write routes', status: 'Pass', detail: 'Zod schema on 38 routes, unknown keys dropped', lane: 'Backend', severity: 'High', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Response shape matches the client contract', scope: '12 client calls', status: 'Pass', detail: 'Checked nightly against the OpenAPI document', lane: 'Backend', severity: 'Medium', owner: 'STF-001', region: 'Frankfurt'},
-  {check: 'Nullability handling', scope: 'Customer and loan objects', status: 'Review', detail: 'Three optional fields rendered as “undefined”', lane: 'Website', severity: 'Medium', owner: 'STF-009', region: 'Lilongwe'},
+  {check: 'Nullability handling', scope: 'Customer and loan objects', status: 'Review', detail: 'Three optional fields rendered blank on the apply form', lane: 'Website', severity: 'Medium', owner: 'STF-009', region: 'Lilongwe'},
   {check: 'Numeric precision (MWK)', scope: 'Money fields', status: 'Pass', detail: 'Integer tambala, no float arithmetic in the client', lane: 'Backend', severity: 'High', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Pagination contract', scope: 'List endpoints', status: 'Pass', detail: 'cursor + limit honoured on all six list routes', lane: 'Backend', severity: 'Low', owner: 'STF-001', region: 'Frankfurt'},
   {check: 'Error envelope consistency', scope: 'All routes', status: 'Review', detail: 'Two legacy routes return a bare string', lane: 'Backend', severity: 'Medium', owner: 'STF-001', region: 'Frankfurt'}

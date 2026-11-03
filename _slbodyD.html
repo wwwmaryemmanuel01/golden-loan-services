@@ -98,7 +98,8 @@
       </div>
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Approval Limits by Role</div>
-          <div class="panel-sub">Nobody may sign above their own line</div></div></div>
+          <div class="panel-sub">Nobody may sign above their own line</div></div>
+          <span class="badge b-gray" id="apLimitPill">—</span></div>
         <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="apLimitHead"></thead><tbody id="apLimitBody"></tbody></table></div>
         <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Requester and Approver</div>
           <div class="panel-sub">The control that stops a person signing their own request</div></div></div>
@@ -156,7 +157,8 @@
         <div id="lgReconBox"></div>
         <div class="form-actions"><button class="btn btn-ghost" id="lgReconBtn">Run the reconciliation</button></div>
         <div class="panel-head" style="margin-top:10px"><div><div class="panel-title">Asset Against Expense</div>
-          <div class="panel-sub">What was capitalised and what was expensed</div></div></div>
+          <div class="panel-sub">What was capitalised and what was expensed</div></div>
+          <span class="badge b-gray" id="lgClassPill">—</span></div>
         <div class="tblwrap" style="max-height:180px"><table class="tbl2 dense"><thead id="lgClassHead"></thead><tbody id="lgClassBody"></tbody></table></div>
       </div>
     </div>
@@ -223,6 +225,7 @@
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Supplier Invoices and Payments</div>
           <div class="panel-sub">What is open, what is overdue and what has been paid</div></div>
+          <span class="badge b-warn" id="spPayPill">—</span>
           <span class="badge b-gray" id="spInvPill">—</span></div>
         <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="spInvHead"></thead><tbody id="spInvBody"></tbody></table></div>
         <div class="tblwrap" style="max-height:180px;margin-top:8px"><table class="tbl2 dense"><thead id="spPayHead"></thead><tbody id="spPayBody"></tbody></table></div>

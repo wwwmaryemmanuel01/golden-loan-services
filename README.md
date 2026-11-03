@@ -607,6 +607,29 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 - Keyboard: the browser's own back shortcut keeps working; this is additive.
 - In print: the control is excluded with the rest of the topbar.
 
+## Record sheets and small screens
+
+Every module now behaves the same way when you open a record or pick up a phone.
+
+- **Any row opens a readable sheet.** A row in any register, in any module, opens a labelled
+  sheet: friendly labels (`interestRate` reads *Interest Rate*), values formatted (`MK 990,500`,
+  `30 Oct 2026 · 18:48`), `STF-` and `GF-` codes resolved to names, blank fields and repeated
+  label/value pairs dropped, dates embedded in a sentence still read as dates, and JSON objects
+  flattened into `Key: value` lines instead of a raw blob.
+- **Grouped, not dumped.** A savings record reads *At a glance* first, then *Balances and
+  amounts*, *Dates and timing* and *Other details*, with officer, branch, area and severity
+  chips at the foot.
+- **One shared implementation.** `_recordsheet.css` and `_recordsheet.js` are injected into
+  every page by `inject_backnav.py`, so a page that has its own hand-built modal is upgraded in
+  place and a table that never opened anything now opens a sheet built from its own column
+  headers. Forms are never touched.
+- **Detail panels wrap.** Long names, references and notes wrap inside the card instead of
+  running off it; on a phone the label sits above the value, one field per line.
+- **Phone layout.** ≤1100px four-column blocks fold to two; ≤760px the sidebar becomes an
+  off-canvas panel, grids and filter bars go single column, charts stack, the modal becomes a
+  full-width sheet and every register scrolls sideways inside its own pane with the first column
+  pinned; ≤460px the sheet fills the screen and the KPI row goes one column.
+
 ## Modules
 
 | Module | File | Sections |
@@ -697,7 +720,9 @@ build-transfers.sh      rebuilds transfers.html from its partials
 build-savings.sh        rebuilds savings.html from its partials
 build-salaries.sh       rebuilds salaries.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
-inject_backnav.py       appends the back-navigation script before </body>
+_recordsheet.css        record-sheet styles and the small-screen layout rules
+_recordsheet.js         labelled record sheets for any modal or register row
+inject_backnav.py       post-processes every built page: back navigation, record-sheet CSS and JS
 
 _bodyA/B/C.html  _jsA/B/C*.js          disbursements partials
 _nbodyA/B/C.html _njsA/B/C*.js         notifications partials

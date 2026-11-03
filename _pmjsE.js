@@ -107,7 +107,7 @@ function testProvider(id){
   if(!p) return;
   const now = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
   const ok = p.credentials !== 'Expired';
-  p.latency = ok ? 180 + (p.id.charCodeAt(6) * 13 % 160) : 0;
+  p.latency = ok ? 180 + (p.id.charCodeAt(6)() * 13 % 160) : 0;
   p.status = ok ? 'Connected' : 'Failing';
   p.lastCheck = now;
   p.health = ok ? Math.min(99.99, p.health + 0.02) : p.health;
@@ -251,7 +251,7 @@ function renderCustomer(){
   if(el('refAmount') && !el('refAmount').value) el('refAmount').value = 145000;
 
   const last = PM_TXNS.find(t => t.status === 'Success') || PM_TXNS[0];
-  el('confPill').textContent = 'Customer view';
+  if(el('confPill')) el('confPill').textContent = 'Customer view';
   put('confirmBox',
     `<div class="note gold"><div>“Your payment of ${pmMoney(last.amount)} has been received. Receipt ${esc(last.receipt)}. Thank you.”</div></div>
      ${kvRow('Customer', esc(custName(last.cust)))}

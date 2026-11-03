@@ -234,7 +234,6 @@ function renderApprovals(){
     el('apMsg').textContent = 'A decision is written to the approval history with the officer, the time and the comment.';
   if(el('apComment')) el('apComment').placeholder = sel && sel.comment ? sel.comment : 'Why the decision was taken';
 
-  if(el('seSepPill')) el('seSepPill').textContent = num(two.length) + ' with two';
   put('apSepBox', kvRow('One signature up to', seM(SE_SET.highValueApproval))
     + kvRow('Two signatures above', seM(SE_SET.highValueApproval))
     + kvRow('Requests with two', num(two.length))

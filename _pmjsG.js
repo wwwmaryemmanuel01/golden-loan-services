@@ -571,7 +571,7 @@ function renderApi(){
     {k: 'status', label: 'State', html: v => okBadge(v === 'OK' ? 'Success' : v)}
   ], PM_REQ_LOG, {sort: 'when', pageSize: 6, onRow: false});
 
-  el('confPill').textContent = PM_CONF_LOG.length + ' callbacks';
+  if(el('confLogPill')) el('confLogPill').textContent = PM_CONF_LOG.length + ' callbacks';
   renderTable('confBody', [
     {k: 'when', label: 'When', html: v => esc(String(v).slice(0, 16))},
     {k: 'provider', label: 'Provider'},
