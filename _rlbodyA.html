@@ -1,0 +1,168 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Staff Roles &amp; Permissions</div>
+      <div class="page-sub">Fifteen roles, what each one may do, what it may not, and how the rule is enforced · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a role, a capability, an officer…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="exportBtn">Export CSV</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-ghost" id="bellBtn" aria-label="Alerts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Roles</a>
+    <a class="snav" href="#s3">3 · Matrix</a>
+    <a class="snav" href="#s4">4 · Limits</a>
+    <a class="snav" href="#s5">5 · Duties</a>
+    <a class="snav" href="#s6">6 · Enforcement</a>
+    <a class="snav" href="#s7">7 · Sensitive data</a>
+    <a class="snav" href="#s8">8 · Access reviews</a>
+    <a class="snav" href="#s9">9 · Emergency access</a>
+    <a class="snav" href="#s10">10 · Ten rules</a>
+    <a class="snav" href="#s11">11 · Audit trail</a>
+  </nav>
+
+  <div class="modband">
+    <div>
+      <h1>Who may do what — and who may not</h1>
+      <p>The proposed role plan, made operational: every role's purpose, permissions and restrictions, the approval limits that
+        bound it, the separation-of-duties conflicts it must not cross, and the database rule that enforces it.</p>
+    </div>
+    <div class="band-stats" id="bandStats"></div>
+    <div class="mb-actions">
+      <button class="btn btn-gold" id="checkBtn">Check an action</button>
+    </div>
+  </div>
+
+  <!-- ============ 1 · OVERVIEW ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Roles and Permissions Overview</h2>
+        <p>How many roles exist, who holds them, which accounts are privileged, where the duties are separated and how much of the plan is actually enforced in the database rather than only in the interface</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ovKpis" style="margin-bottom:11px"></div>
+
+    <div class="chartgrid" id="ovGrid"></div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">The Plan at a Glance</div>
+        <div class="panel-sub">What this page holds, and the number behind each part</div></div>
+        <span class="badge b-gray" id="ovGlancePill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="ovGlanceHead"></thead><tbody id="ovGlanceBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Role Distribution</div>
+          <div class="panel-sub">Accounts holding each role today</div></div>
+          <span class="badge b-gray" id="ovRolePill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ovRoleHead"></thead><tbody id="ovRoleBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recent Permission Activity</div>
+          <div class="panel-sub">Granted, revoked, reviewed and refused — newest first</div></div>
+          <span class="badge b-gray" id="ovActPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ovActHead"></thead><tbody id="ovActBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · ROLE CATALOGUE ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>The Fifteen Roles</h2>
+        <p>Each role with its purpose, the permissions it is granted and the restrictions it carries. Pick a card to read the full
+          statement and the officers who hold it</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="catPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Role Catalogue</div>
+        <div class="panel-sub">Super admin, system administrator, branch manager, loan officer, credit officer, cashier, accountant,
+          collections, auditor, support, HR &amp; payroll, treasury, website, analyst, customer</div></div>
+        <select id="catFilter" style="font-size:11px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff">
+          <option value="">Every role</option>
+          <option value="Privileged">Privileged only</option>
+          <option value="Operational">Operational only</option>
+          <option value="Financial">Financial only</option>
+          <option value="Oversight">Oversight only</option>
+          <option value="External">External only</option>
+        </select>
+      </div>
+      <div class="rolegrid" id="roleCards" style="margin-top:9px"></div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Role Detail</div>
+        <div class="panel-sub">Purpose, permissions, restrictions and the officers who hold it</div></div>
+        <span class="badge b-gray" id="roleDetPill">—</span></div>
+      <div class="roledet" id="roleDetail"></div>
+      <div class="tblwrap" style="max-height:240px;margin-top:9px"><table class="tbl2 dense"><thead id="roleHoldHead"></thead><tbody id="roleHoldBody"></tbody></table></div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Every Role Side by Side</div>
+        <div class="panel-sub">Purpose and restrictions in one register — click a row for the full sheet</div></div>
+        <span class="badge b-gray" id="catTblPill">—</span></div>
+      <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="catHead"></thead><tbody id="catBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · CAPABILITY MATRIX ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Capability Matrix</h2>
+        <p>Twenty capabilities against the fifteen roles: full control, approval only, own records only, limited, or nothing at all</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="mtxPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="mtxKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Capabilities by Role</div>
+        <div class="panel-sub">Click any column heading to highlight a role; click any cell for the rule behind it</div></div>
+        <span class="badge b-gray" id="mtxCount">—</span></div>
+      <div class="mtxwrap" style="margin-top:9px">
+        <table class="mtx" id="mtxTable"><thead id="mtxHead"></thead><tbody id="mtxBody"></tbody></table>
+      </div>
+      <div class="mtxkey">
+        <span><b class="lv full">F</b> Full control</span>
+        <span><b class="lv appr">A</b> Approve only, never execute</span>
+        <span><b class="lv own">O</b> Own records only</span>
+        <span><b class="lv ltd">L</b> Limited, masked or assigned records</span>
+        <span><b class="lv none">—</b> No access</span>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Capabilities an Officer Cannot Hold Alone</div>
+          <div class="panel-sub">The four that always need a second name</div></div>
+          <span class="badge b-warn" id="mtxSoloPill">4</span></div>
+        <div id="mtxSolo"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Where the Matrix Is Thinnest</div>
+          <div class="panel-sub">Roles whose access was cut in the last review</div></div>
+          <span class="badge b-gray" id="mtxThinPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="mtxThinHead"></thead><tbody id="mtxThinBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,162 @@
+/* ===================== STAFF ROLES & PERMISSIONS ===================== */
+
+  .subnav.wrap{flex-wrap:wrap;overflow-x:visible;row-gap:6px}
+
+  /* ---- badges ---- */
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;
+    letter-spacing:.3px;padding:2px 7px;border-radius:20px;background:#F1F2F6;color:#5A6172}
+  .badge.b-gray{background:#F1F2F6;color:#5A6172}
+  .badge.b-ok{background:var(--green-soft);color:#157A50}
+  .badge.b-warn{background:var(--amber-soft);color:#9A6A0D}
+  .badge.b-crit{background:var(--red-soft);color:#B32C2C}
+  .badge.b-info{background:var(--blue-soft);color:#1F51B8}
+  .badge.b-gold{background:var(--gold-soft);color:var(--gold-dark)}
+
+  /* ---- kpi tones ---- */
+  .kpi .kl{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2)}
+  .kpi .kv{font-size:19px;font-weight:800;letter-spacing:-.4px;margin-top:2px;font-variant-numeric:tabular-nums}
+  .kpi .ks{font-size:9.5px;color:var(--muted);margin-top:1px}
+  .kpi.gold .kv{color:var(--gold-dark)}
+  .kpi.red .kv{color:#B32C2C}
+  .kpi.green .kv{color:#157A50}
+  .kpi.amber .kv{color:#9A6A0D}
+  .kpi.blue .kv{color:#1F51B8}
+
+  /* ---- chart card ---- */
+  .chartcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
+  .chartcard .ch{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px}
+  .chartcard .ct{font-size:12px;font-weight:800}
+  .chartcard .cs{font-size:10px;color:var(--muted);margin-top:2px}
+  .chartcard .cv{font-size:17px;font-weight:800;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
+  .chartsvg{width:100%;overflow:hidden;margin-top:6px}
+  .chartsvg svg{width:100%;height:auto;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:9.5px;color:var(--muted);margin-top:8px}
+  .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
+  .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
+
+  /* ---- stat strip ---- */
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0;
+    border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+  .strip div{padding:8px 11px;border-right:1px solid var(--line-2)}
+  .strip div:last-child{border-right:0}
+  .strip .sl{font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted-2)}
+  .strip .sv{font-size:13px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
+
+  /* ---- role cards ---- */
+  .rolegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:9px}
+  .rolecard{border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:#fff;
+    cursor:pointer;transition:.14s;position:relative;overflow:hidden}
+  .rolecard:hover{border-color:#E0D4A8;box-shadow:0 4px 14px rgba(16,18,24,.05)}
+  .rolecard.on{border-color:var(--gold);background:#FFFCF0;box-shadow:0 0 0 3px rgba(201,162,39,.10)}
+  .rolecard .rc-top{display:flex;align-items:center;gap:7px}
+  .rolecard .rc-code{font-size:9px;font-weight:800;letter-spacing:.5px;padding:2px 6px;border-radius:6px;
+    background:var(--ink);color:var(--gold-bright)}
+  .rolecard .rc-name{font-size:11.5px;font-weight:800;line-height:1.25}
+  .rolecard .rc-purpose{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .rolecard .rc-foot{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap}
+  .rolecard .rc-foot .badge{font-size:8.5px}
+
+  /* ---- capability matrix ---- */
+  .mtx{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}
+  .mtx th,.mtx td{padding:6px 5px;border-bottom:1px solid var(--line-2);text-align:center}
+  .mtx thead th{position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid var(--line)}
+  .mtx thead th.rc{font-size:8.5px;letter-spacing:.4px;color:var(--muted-2);font-weight:800;
+    writing-mode:vertical-rl;text-orientation:mixed;height:96px;vertical-align:bottom;white-space:nowrap}
+  .mtx td.cap{text-align:left;font-weight:600;font-size:11px;white-space:nowrap}
+  .mtx td.cap small{display:block;font-weight:500;color:var(--muted);font-size:9px}
+  .mtx tbody tr:hover td{background:#FCFAF2}
+  .mtx .lv{display:inline-block;width:20px;height:20px;line-height:20px;border-radius:50%;font-size:9px;font-weight:800}
+  .mtx .lv.full{background:var(--green-soft);color:#157A50}
+  .mtx .lv.appr{background:var(--amber-soft);color:#9A6A0D}
+  .mtx .lv.own{background:var(--blue-soft);color:#1F51B8}
+  .mtx .lv.ltd{background:#F1F2F6;color:#5A6172}
+  .mtx .lv.none{background:transparent;color:#C9CDD6}
+  .mtx .col-on{background:#FFFCF0!important}
+
+  /* ---- rule rows (the ten essential rules) ---- */
+  .rulerow{display:flex;gap:9px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .rulerow:last-child{border-bottom:0}
+  .rulerow .rn-no{width:22px;height:22px;flex:0 0 22px;border-radius:50%;display:grid;place-items:center;
+    font-size:9.5px;font-weight:800;background:var(--ink);color:var(--gold-bright)}
+  .rulerow .rn-body{flex:1;min-width:0}
+  .rulerow .rn-title{font-size:11px;font-weight:800}
+  .rulerow .rn-text{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.45}
+  .rulerow .rn-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+  .rulerow .rn-meta .badge{font-size:8.5px}
+
+  /* ---- enforcement chips ---- */
+  .enf{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;font-weight:800;
+    padding:2px 6px;border-radius:6px;background:#F1F2F6;color:#5A6172;white-space:nowrap}
+  .enf.ui{background:var(--blue-soft);color:#1F51B8}
+  .enf.db{background:var(--purple-soft);color:#5B3FD0}
+  .enf.fn{background:var(--green-soft);color:#157A50}
+  .enf.audit{background:var(--gold-soft);color:var(--gold-dark)}
+
+  /* ---- check-an-action result ---- */
+  .verdict{border-radius:11px;padding:11px 12px;border:1px solid var(--line);background:#fff}
+  .verdict .vh{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800}
+  .verdict .vdot{width:22px;height:22px;flex:0 0 22px;border-radius:50%;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#5A6172}
+  .verdict.allow{border-color:#BFE5D3;background:#F6FCF9}
+  .verdict.allow .vdot{background:var(--green-soft);color:#157A50}
+  .verdict.second{border-color:#F2DDB0;background:#FFFDF6}
+  .verdict.second .vdot{background:var(--amber-soft);color:#9A6A0D}
+  .verdict.deny{border-color:#F2C7C7;background:#FEF7F7}
+  .verdict.deny .vdot{background:var(--red-soft);color:#B32C2C}
+  .verdict .vwhy{font-size:10px;color:#4A5160;margin-top:5px;line-height:1.5}
+
+  /* ---- small legend under the matrix ---- */
+  .mtxkey{display:flex;gap:11px;flex-wrap:wrap;font-size:9.5px;color:var(--muted);margin-top:8px}
+  .mtxkey span{display:inline-flex;align-items:center;gap:5px}
+  .mtxkey .lv{width:16px;height:16px;line-height:16px;font-size:8px}
+
+  /* ---- role detail ---- */
+  .roledet .rd-head{display:flex;align-items:flex-start;gap:9px;flex-wrap:wrap}
+  .roledet .rd-code{font-size:10px;font-weight:800;letter-spacing:.6px;padding:3px 7px;border-radius:7px;
+    background:var(--ink);color:var(--gold-bright)}
+  .roledet .rd-name{font-size:13px;font-weight:800}
+  .roledet .rd-purpose{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .ulines{margin-top:6px;display:grid;gap:4px}
+  .ulines div{display:flex;gap:6px;font-size:10.5px;line-height:1.45}
+  .ulines .tick{color:#157A50;font-weight:800;flex:0 0 11px}
+  .ulines .cross{color:#B32C2C;font-weight:800;flex:0 0 11px}
+  .ulines .neutral{color:#8A90A0;font-weight:800;flex:0 0 11px}
+  .minihead{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2);
+    margin:10px 0 5px}
+
+  /* ---- matrix scroll shell ---- */
+  .mtxwrap{overflow:auto;border:1px solid var(--line-2);border-radius:10px;max-height:520px}
+  .mtxwrap::-webkit-scrollbar{height:8px;width:8px}
+  .mtxwrap::-webkit-scrollbar-thumb{background:#DDE0E7;border-radius:8px}
+
+  /* ---- shared bits this page leans on ---- */
+  .qhint{font-size:9.5px;color:var(--muted);margin-top:6px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .risk{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px dashed #EDEFF4}
+  .risk .rn{font-size:10px;font-weight:800;color:#4A5160}
+  .risk .rv{margin-left:auto;text-align:right;font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums}
+  .tick{color:#1E9E6A;font-weight:800}
+  .cross{color:#B32C2C;font-weight:800}
+
+  /* ---- checklist rows ---- */
+  .checkrow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed #EDEFF4;font-size:10.5px}
+  .checkrow:last-child{border-bottom:0}
+  .checkrow .ck{width:18px;height:18px;flex:0 0 18px;border-radius:50%;display:grid;place-items:center;
+    font-size:9px;font-weight:800;background:#F1F2F6;color:#5A6172}
+  .checkrow .ck.pass{background:var(--green-soft);color:#157A50}
+  .checkrow .ck.fail{background:var(--red-soft);color:#B32C2C}
+  .checkrow .cl{flex:1;min-width:0}
+  .checkrow .cn{font-variant-numeric:tabular-nums;color:var(--muted);font-size:9.5px;white-space:nowrap}
+
+  /* ---- section numbers ---- */
+  .sec-num{width:30px;height:30px;flex:0 0 30px;border-radius:9px;display:grid;place-items:center;
+    font-size:12px;font-weight:800;background:var(--ink);color:var(--gold-bright)}
+  .sec-head h2{font-size:15px;font-weight:800;letter-spacing:-.2px}
+  .sec-head p{font-size:11px;color:var(--muted);margin-top:2px;max-width:900px;line-height:1.45}
+  .empty{padding:12px;text-align:center;color:var(--muted);font-size:11px}
+
+  @media(max-width:760px){
+    .mtx thead th.rc{height:76px;font-size:8px}
+    .rolegrid{grid-template-columns:1fr}
+  }

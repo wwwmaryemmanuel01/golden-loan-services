@@ -1,0 +1,118 @@
+  <!-- ============ 4 · APPROVAL LIMITS ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Approval Limits by Role and Amount</h2>
+        <p>What each role may approve on its own, what it may execute, the amount at which a second name is required, and the
+          daily ceiling that stops one officer emptying a branch's authority</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="limPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="limKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Limits for Every Role</div>
+          <div class="panel-sub">Approve alone · execute alone · second signature above · daily ceiling</div></div>
+          <span class="badge b-gray" id="limCount">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="limHead"></thead><tbody id="limBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Check an Action</div>
+          <div class="panel-sub">Pick a role, an action and an amount — the rule decides, not the screen</div></div>
+          <span class="badge b-gray" id="chkPill">—</span></div>
+        <div class="form-grid">
+          <div class="fg"><label>Role</label><select id="chkRole"></select></div>
+          <div class="fg"><label>Action</label><select id="chkAction"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="chkAmount" type="number" step="1000" value="250000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="chkBtn">Check it</button></div>
+        <div id="chkVerdict" style="margin-top:9px"></div>
+        <div class="qhint" style="margin-top:7px">The same rule is applied server-side: the browser only mirrors the answer.</div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Thresholds and the Second Name</div>
+        <div class="panel-sub">Above these amounts the action waits for an approver who is not the actor</div></div>
+        <span class="badge b-gray" id="thrPill">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="thrHead"></thead><tbody id="thrBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · SEPARATION OF DUTIES ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Separation of Duties</h2>
+        <p>The pairs of duties that must never sit with one person — approving and paying, recording and reconciling, preparing
+          payroll and releasing it — and how the platform keeps them apart</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="sodPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="sodKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Conflicts and How They Are Held Apart</div>
+        <div class="panel-sub">Every conflict pair, the two sides, and the control that keeps them separate</div></div>
+        <span class="badge b-gray" id="sodCount">—</span></div>
+      <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="sodHead"></thead><tbody id="sodBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Actions Blocked by the Platform</div>
+          <div class="panel-sub">Refused in the last 90 days because the actor held both sides</div></div>
+          <span class="badge b-warn" id="sodBlockPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="sodBlockHead"></thead><tbody id="sodBlockBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Who Holds Both Sides</div>
+          <div class="panel-sub">Roles carrying a pair, and the compensating control that covers it</div></div>
+          <span class="badge b-gray" id="sodHoldPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="sodHoldHead"></thead><tbody id="sodHoldBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · ENFORCEMENT ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Enforcement in the Backend and RLS</h2>
+        <p>A permission that lives only in the interface is a suggestion. Here is where each rule is actually enforced —
+          row-level security on the table, a database function, the edge function, or the audit trigger — with the test that proves it</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="enfPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="enfKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Policies and Functions</div>
+        <div class="panel-sub">Table, policy, operation, the rule itself, where it runs, when it was tested</div></div>
+        <span class="badge b-gray" id="enfCount">—</span></div>
+      <div class="tblwrap" style="max-height:400px"><table class="tbl2 dense"><thead id="enfHead"></thead><tbody id="enfBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Row-Level Security Tests</div>
+          <div class="panel-sub">Run as the least-privileged role each time, never as the owner</div></div>
+          <span class="badge b-gray" id="enfTestPill">—</span></div>
+        <div id="enfTests" style="margin-top:6px"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Secrets and the Browser</div>
+          <div class="panel-sub">What must never reach a page a customer can open</div></div>
+          <span class="badge b-ok" id="enfSecretPill">—</span></div>
+        <div id="enfSecrets" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Interface-Only Gaps</div>
+        <div class="panel-sub">Rules that used to be hidden buttons and are now refused by the database</div></div>
+        <span class="badge b-gray" id="enfGapPill">—</span></div>
+      <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="enfGapHead"></thead><tbody id="enfGapBody"></tbody></table></div>
+    </div>
+  </section>

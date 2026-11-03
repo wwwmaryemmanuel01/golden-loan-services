@@ -1,0 +1,183 @@
+  <!-- ============ 7 · SENSITIVE DATA ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Restricted Data</h2>
+        <p>Payroll, identity documents, credentials and private customer information are not "just another table" — each has a
+          classification, a short list of roles that may read it, a masking rule and an access log</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="datPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="datKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Classification and Who May Read</div>
+        <div class="panel-sub">Category, classification, the roles allowed, masking, and where the rule is enforced</div></div>
+        <span class="badge b-gray" id="datCount">—</span></div>
+      <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="datHead"></thead><tbody id="datBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Access to Restricted Records</div>
+          <div class="panel-sub">Who opened what, under which role and with what reason</div></div>
+          <span class="badge b-gray" id="datLogPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="datLogHead"></thead><tbody id="datLogBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Masking in Practice</div>
+          <div class="panel-sub">What a support officer sees beside what an auditor sees</div></div>
+          <span class="badge b-gray" id="datMaskPill">—</span></div>
+        <div id="datMask" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 · ACCESS REVIEWS ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Access Reviews, Joiners and Leavers</h2>
+        <p>Every role confirmed by a named reviewer on a date; every departure with the moment access was cut; every role change
+          with the sessions it revoked</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="revPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="revKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Access Review Rounds</div>
+        <div class="panel-sub">Each round, its reviewer, what it covered and what it changed</div></div>
+        <span class="badge b-gray" id="revCount">—</span></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="revHead"></thead><tbody id="revBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Leavers and Access Removal</div>
+          <div class="panel-sub">Left on, access cut on, how long that took, and what was revoked</div></div>
+          <span class="badge b-gray" id="leaverPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="leaverHead"></thead><tbody id="leaverBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Role Changes</div>
+          <div class="panel-sub">From one role to another, with the sessions that ended with it</div></div>
+          <span class="badge b-gray" id="chgPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="chgHead"></thead><tbody id="chgBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">One Account Per Person</div>
+        <div class="panel-sub">Shared logins are the fastest way to lose an audit trail</div></div>
+        <span class="badge b-ok" id="acctPill">—</span></div>
+      <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="acctHead"></thead><tbody id="acctBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 9 · EMERGENCY ACCESS ============ -->
+  <section class="sec" id="s9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Emergency Administrator Access</h2>
+        <p>Break-glass access exists because systems fail at bad times. It is time-boxed, named, approved, logged on use and
+          reviewed afterwards — never a standing super-admin password</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="emgPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="emgKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Break-Glass Requests</div>
+        <div class="panel-sub">Who asked, why, for how long, who granted it and what it was used for</div></div>
+        <span class="badge b-gray" id="emgCount">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="emgHead"></thead><tbody id="emgBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Standing Super-Admin Accounts</div>
+          <div class="panel-sub">Should be none — this is what the register says</div></div>
+          <span class="badge b-ok" id="emgStandPill">—</span></div>
+        <div class="tblwrap" style="max-height:220px"><table class="tbl2 dense"><thead id="emgStandHead"></thead><tbody id="emgStandBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Controls on the Break-Glass Key</div>
+          <div class="panel-sub">What turns a powerful login into an accountable one</div></div>
+          <span class="badge b-gray" id="emgCtrlPill">—</span></div>
+        <div id="emgControls" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · THE TEN RULES ============ -->
+  <section class="sec" id="s10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>The Ten Essential Security Rules</h2>
+        <p>Least privilege · separation of duties · enforcement in the backend · audit of sensitive actions · limits by role and
+          amount · restricted payroll and identity data · prompt removal on exit · individual accounts · no service-role key in the
+          browser · controlled emergency access</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="rulePill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ruleKpis" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">The Rules and Their Evidence</div>
+        <div class="panel-sub">Rule, how it is enforced, the evidence behind the claim, and its state</div></div>
+        <span class="badge b-gray" id="ruleCount">—</span></div>
+      <div id="ruleList" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Rule Register</div>
+        <div class="panel-sub">The same ten, in a table with the owner and the last verification</div></div>
+        <span class="badge b-gray" id="ruleTblPill">—</span></div>
+      <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="ruleHead"></thead><tbody id="ruleBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ============ 11 · AUDIT TRAIL ============ -->
+  <section class="sec" id="s11">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>Permission and Access Audit Trail</h2>
+        <p>Every grant, revocation, limit change, review and refusal, with the actor, the moment, the value before and the value
+          after — the record an auditor reads first</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="audPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Audit Trail</div>
+        <div class="panel-sub">Filter by role or outcome, then open any row for the full entry</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="audRole" style="font-size:11px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff"></select>
+          <select id="audResult" style="font-size:11px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff">
+            <option value="">Every outcome</option>
+            <option value="Allowed">Allowed</option>
+            <option value="Refused">Refused</option>
+            <option value="Pending">Pending</option>
+          </select>
+          <span class="badge b-gray" id="audCount">—</span>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="audHead"></thead><tbody id="audBody"></tbody></table></div>
+    </div>
+
+    <div class="chartgrid" id="audGrid" style="margin-top:11px"></div>
+  </section>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
