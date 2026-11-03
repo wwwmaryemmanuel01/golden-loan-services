@@ -1,0 +1,242 @@
+    <!-- ============ 13 · RECEIPTS AND STATEMENTS ============ -->
+    <section class="sec" id="s13">
+      <div class="sec-head">
+        <div class="sec-num">13</div>
+        <div><h2>Receipts and Statements</h2>
+          <p>Deposit and withdrawal receipts with their reference numbers, download and print, customer statements over any date range, account activity reports, receipt verification and the reissue history</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="rsPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="rsKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposit Receipts</div>
+            <div class="panel-sub">Open one to print, download or verify it</div></div>
+            <span class="badge b-gray" id="rsDepPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rsDepHead"></thead><tbody id="rsDepBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Withdrawal Receipts</div>
+            <div class="panel-sub">Every payout that produced a receipt</div></div>
+            <span class="badge b-gray" id="rsWdrPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="rsWdrHead"></thead><tbody id="rsWdrBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Receipt Verification and Reissue</div>
+            <div class="panel-sub">Check any receipt number against the ledger</div></div>
+            <span class="badge b-gray" id="rsVerPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Receipt number</label><input id="rsVerifyInput" placeholder="RCT-02104" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="rsVerifyBtn" style="width:100%">Verify the receipt</button></div>
+          </div>
+          <div id="rsVerifyBox" style="margin-top:8px"></div>
+          <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="rsReissueHead"></thead><tbody id="rsReissueBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Transaction Statement</div>
+            <div class="panel-sub">Pick a customer and a date range, then print or download it</div></div>
+            <span class="badge b-gray" id="rsStmtPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Customer</label><select id="rsStmtCust"></select></div>
+            <div class="fg"><label>From</label><input id="rsFrom" type="date" /></div>
+            <div class="fg"><label>To</label><input id="rsTo" type="date" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-gold" id="rsStmtBtn" style="width:100%">Build the statement</button></div>
+          </div>
+          <div id="rsStmtBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Account Activity Report</div>
+          <div class="panel-sub">Every movement for the selected customer, with the running balance</div></div>
+          <span class="badge b-gray" id="rsActPill">—</span></div>
+        <div id="rsActBox"></div>
+      </div>
+    </section>
+
+    <!-- ============ 14 · CUSTOMER NOTIFICATIONS ============ -->
+    <section class="sec" id="s14">
+      <div class="sec-head">
+        <div class="sec-num">14</div>
+        <div><h2>Customer Notifications</h2>
+          <p>Deposit received, confirmed and rejected messages; withdrawal requested, approved, completed and failed; reversal notices — over the SMS and email connections, with delivery status and history</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="nfPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="nfKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification Rules</div>
+          <div class="panel-sub">Every event, its channel, who receives it and whether it is on</div></div>
+          <span class="badge b-gray" id="nfRulePill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="nfHead"></thead><tbody id="nfBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">SMS and Email Connections</div>
+            <div class="panel-sub">The two channels every message travels over</div></div></div>
+          <div id="nfConnBox"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="nfTestSms">Send a test SMS</button>
+            <button class="btn btn-ghost" id="nfTestEmail">Send a test email</button>
+          </div>
+          <div class="qhint" id="nfMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
+            <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+            <span class="badge b-gray" id="nfDelPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="nfDelHead"></thead><tbody id="nfDelBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Notification History</div>
+          <div class="panel-sub">Every message sent about a deposit or a payout</div></div>
+          <span class="badge b-gray" id="nfHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="nfHistHead"></thead><tbody id="nfHistBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Messages by Event</div>
+          <div class="panel-sub">Which events generate the most traffic</div></div></div>
+        <div class="chartgrid" id="nfGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 15 · FRAUD PREVENTION AND SECURITY ============ -->
+    <section class="sec" id="s15">
+      <div class="sec-head">
+        <div class="sec-num">15</div>
+        <div><h2>Fraud Prevention and Security</h2>
+          <p>Identity verification, suspicious deposit and withdrawal monitoring, duplicate references, unusual amounts, velocity limits, unauthorised account changes, staff permissions, sensitive approvals and the audit logs</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="frPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="frKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer Identity Verification</div>
+            <div class="panel-sub">Checked before a payout leaves, every time</div></div>
+            <span class="badge b-gray" id="frIdPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="frIdHead"></thead><tbody id="frIdBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspicious Activity</div>
+            <div class="panel-sub">Deposits and withdrawals that do not look right</div></div>
+            <span class="badge b-crit" id="frSuspPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="frSuspHead"></thead><tbody id="frSuspBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Duplicate References and Unusual Amounts</div>
+            <div class="panel-sub">The same reference twice, and amounts far from the customer's norm</div></div>
+            <span class="badge b-gray" id="frDupPill">—</span></div>
+          <div class="tblwrap" style="max-height:210px"><table class="tbl2 dense"><thead id="frDupHead"></thead><tbody id="frDupBody"></tbody></table></div>
+          <div class="tblwrap" style="max-height:210px;margin-top:8px"><table class="tbl2 dense"><thead id="frAmtHead"></thead><tbody id="frAmtBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Velocity Limits and Account Changes</div>
+            <div class="panel-sub">How many payouts a customer has taken today, and what changed on the account</div></div>
+            <span class="badge b-gray" id="frVelPill">—</span></div>
+          <div id="frVelBox"></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="frChgHead"></thead><tbody id="frChgBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Staff Permissions and Sensitive Approvals</div>
+            <div class="panel-sub">Click a cell to grant or withdraw a capability</div></div>
+            <span class="badge b-gray" id="frPermPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="frPermHead"></thead><tbody id="frPermBody"></tbody></table></div>
+          <div class="minihead" style="margin-top:10px">Sensitive transactions awaiting a signature</div>
+          <div class="tblwrap" style="max-height:200px"><table class="tbl2 dense"><thead id="frApprHead"></thead><tbody id="frApprBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Transaction Audit Logs</div>
+            <div class="panel-sub">Every movement, with the officer and the moment</div></div>
+            <span class="badge b-gray" id="frAuditPill">—</span></div>
+          <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="frAuditHead"></thead><tbody id="frAuditBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Security Events by Kind</div>
+          <div class="panel-sub">Where the risk is concentrated</div></div></div>
+        <div class="chartgrid" id="frGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ 16 · SUPABASE AND DATABASE CONNECTIONS ============ -->
+    <section class="sec" id="s16">
+      <div class="sec-head">
+        <div class="sec-num">16</div>
+        <div><h2>Supabase and Database Connections</h2>
+          <p>The customer, account, deposit, withdrawal, payment and ledger tables, the functions behind them, row-level security, transaction integrity, duplicate submission protection, error monitoring and schema compatibility</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="dbPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dbKpis" style="margin-bottom:11px"></div>
+      <div class="chartgrid" id="dbGrid"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Table Connections</div>
+          <div class="panel-sub">Every table a deposit or a payout touches</div></div>
+          <span class="badge b-gray" id="dbTblPill">—</span></div>
+        <div class="tblwrap" style="max-height:340px"><table class="tbl2 dense"><thead id="dbTblHead"></thead><tbody id="dbTblBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Function Connections</div>
+            <div class="panel-sub">The functions a movement runs through</div></div>
+            <span class="badge b-gray" id="dbfnPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dbfnHead"></thead><tbody id="dbfnBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Row-Level Security Verification</div>
+            <div class="panel-sub">One proof table is readable without a policy</div></div>
+            <span class="badge b-crit" id="rlsPill">—</span></div>
+          <div id="rlsBox"></div>
+          <div class="form-actions"><button class="btn btn-gold" id="rlsFix">Enable RLS on the gap</button></div>
+          <div id="dbIntBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Database Error Monitoring</div>
+            <div class="panel-sub">Grouped by SQLSTATE, with the constraint that raised it</div></div>
+            <span class="badge b-gray" id="dbErrPill">—</span></div>
+          <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="dbErrHead"></thead><tbody id="dbErrBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Integrity, Duplicate Submissions and Schema</div>
+            <div class="panel-sub">Receipts against ledger against balances</div></div>
+            <span class="badge b-gray" id="dbChkPill">—</span></div>
+          <div id="dbChkBox"></div>
+          <div id="dbDupBox" style="margin-top:8px"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="dbCheckBtn">Run the integrity checks</button>
+            <button class="btn btn-ghost" id="dbSchemaBtn">Check schema compatibility</button>
+          </div>
+          <div id="dbSchemaBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Schema and Migration Compatibility</div>
+          <div class="panel-sub">What has been applied, and what is still waiting</div></div>
+          <span class="badge b-gray" id="migPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="migHead"></thead><tbody id="migBody"></tbody></table></div>
+      </div>
+    </section>

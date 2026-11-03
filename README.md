@@ -378,34 +378,6 @@ reports, system configuration, and change history.
 - **Audit trail that writes itself** — every mutation lands in Change History with the area,
   previous value, new value and responsible officer.
 
-## Website Management & Connections module
-
-`website.html` is the public-site control room: **20 sections** — website overview, public
-website management, content management, pages, domain & hosting, backend server connection,
-Supabase database connection, API & service integrations, authentication connections,
-frontend–backend integration, forms & data connections, files & media, performance,
-connection diagnostics, deployment & versions, connection alerts, access & permissions,
-reports, system configuration, and change history.
-
-- **Connection score** — a weighted index (uptime, endpoint health, integration failures, RLS
-  coverage, open alerts, broken links) that moves as you act on the page.
-- **Live mutations** — publish and unpublish, switch theme and accent, toggle homepage
-  sections, reorder/hide/add menu items, save contact and social details, edit and publish
-  content, change page visibility and access, create pages, repair broken links, acknowledge
-  page errors, re-check DNS, renew the certificate, restart the backend, run health checks,
-  fix RLS gaps, rotate API credentials, verify integrations, run the auth, frontend and form
-  tests, restore or purge missing files, optimise images, run single or full diagnostics,
-  deploy to staging or production, roll back, acknowledge alerts, toggle alert rules, grant
-  capabilities, approve changes, and save, validate or reset the configuration.
-- **Eight reports** — availability, connection health, API performance, database connectivity,
-  authentication service, deployment, website errors and integration reliability, each with
-  preview, CSV, Excel (xlsx) and print/PDF output, plus a combined pack and two performance
-  reports.
-- **Filters drive all twenty sections** — date range, area, severity, state, owner,
-  environment and free text, with removable chips and a live result summary.
-- **Self-writing audit trail** — every mutation lands in Change History with its area, the
-  previous value, the updated value and the officer responsible.
-
 ## Methods of Payment Management & Connections module
 
 `payments.html` is the money-in control room: **20 sections** — payment overview, payment
@@ -440,6 +412,43 @@ monitoring, reports, and settings with its audit history.
 - **Audit trail that writes itself** — every mutation lands in Configuration Change History
   with the area, the previous value, the updated value and the responsible officer.
 
+## Deposits & Withdrawals Management & Connections module
+
+`deposits.html` is the money-movement register: **18 sections** — financial overview, deposit
+management, withdrawal management, deposit verification, withdrawal approvals, the customer
+account connections, the loan account connections, the payment method connections, transaction
+processing, balance and ledger management, limits and fees, refunds and reversals, receipts and
+statements, customer notifications, fraud prevention and security, the Supabase/database
+connections, reports, and settings with its audit history.
+
+- **One book for both directions** — every deposit and every payout is read from the same
+  customer accounts, loans and ledger the rest of the portal runs on, so an available balance
+  here is the available balance everywhere: 60 customer accounts, 390 movements, a 90-entry
+  ledger, 12 approvals and a live verification queue.
+- **Live mutations** — record a deposit (it posts the ledger credit, the receipt and the
+  account balance, or queues itself for verification); submit a withdrawal against nine live
+  checks; verify an identity; approve, reject or auto-verify a deposit; give first-level and
+  management approval to a payout (the debit posts and the reservation releases); cancel an
+  eligible request; reconcile an account; update a loan balance from the deposits linked to it;
+  validate a provider reference; move a transaction between states; generate a receipt; scan for
+  duplicates; recalculate every balance; reconcile the ledger; post an adjustment; edit and save
+  method ceilings; calculate a fee; approve, post or reject a reversal; verify a receipt; print
+  or download a customer statement; send a test SMS or email; toggle a notification rule; grant
+  or withdraw a role capability; fix the RLS gap; run the integrity and schema checks; and save,
+  validate or reset the settings.
+- **Twelve reports** — daily deposits, daily withdrawals, the weekly and monthly summary,
+  deposits and withdrawals by method, deposits and withdrawals by customer, pending, failed,
+  reconciliation, fees and authorised transactions — each with an on-screen preview, CSV, Excel
+  (xlsx) and print/PDF output, plus a combined pack.
+- **Filters drive all eighteen sections at once** — date range, area (deposits, withdrawals,
+  ledger, cash, mobile money, bank, reversals, security, database), severity, transaction state,
+  officer, branch, product and free text, with removable chips and a live result summary.
+- **Balance work that adds up** — opening, available, reserved and ledger balances are derived
+  from the movements themselves, discrepancies are shown against the ledger, and every
+  correction writes an opposite ledger entry instead of editing a figure.
+- **Audit trail that writes itself** — every mutation lands in Configuration Change History and
+  the module audit log with the area, the previous value, the updated value and the officer.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -471,9 +480,9 @@ the dashboard, the home page. Opening a module directly from a bookmark falls ba
 | Charts & Analytics | `charts.html` | 15 · 78 charts |
 | Compliance & Intelligence | `compliance.html` | 15 · 26 charts · 9 reports |
 | Security & Protection | `security.html` | 18 · 30 charts · 10 reports |
-| Website Management & Connections | `website.html` | 20 · 32 charts · 8 reports |
 | Website Management & Connections | `website.html` | 20 · 39 charts · 8 reports |
 | Methods of Payment Management | `payments.html` | 20 · 31 charts · 12 reports |
+| Deposits & Withdrawals Management | `deposits.html` | 18 · 21 charts · 12 reports |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -496,8 +505,8 @@ charts.html             Module 12 (built · 15 analytics sections)
 compliance.html         Module 13 (built · 15 compliance sections)
 security.html           Module 14 (built · 18 security sections)
 website.html            Module 15 (built · 20 website & connection sections)
-website.html            Module 15 (built · 20 website & connection sections)
 payments.html           Module 16 (built · 20 payment & connection sections)
+deposits.html           Module 17 (built · 18 deposit & withdrawal sections)
 
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
@@ -512,8 +521,8 @@ _analytics.css          page CSS for Graphing & Tabulation
 _charts.css             page CSS for Charts & Analytics
 _compliance.css         page CSS for Compliance & Intelligence
 _website.css            page CSS for Website Management & Connections
-_website.css            page CSS for Website Management & Connections
 _payments.css           page CSS for Methods of Payment Management & Connections
+_deposits.css           page CSS for Deposits & Withdrawals Management & Connections
 
 _compose.py             extracts the shell from index.html and writes a head fragment
 build.sh                rebuilds disbursements.html from its partials
@@ -530,8 +539,8 @@ build-charts.sh         rebuilds charts.html from its partials
 build-compliance.sh     rebuilds compliance.html from its partials
 build-security.sh       rebuilds security.html from its partials
 build-website.sh        rebuilds website.html from its partials
-build-website.sh        rebuilds website.html from its partials
 build-payments.sh       rebuilds payments.html from its partials
+build-deposits.sh       rebuilds deposits.html from its partials
 _backnav.html           shared back-navigation script (injected into every page)
 inject_backnav.py       appends the back-navigation script before </body>
 
@@ -549,8 +558,8 @@ _chbodyA–E.html _chjsA–G.js  charts & analytics partials
 _cobodyA–D.html _cojsA–G.js  compliance & intelligence partials
 _sebodyA–E.html _sejsA–G.js  security & protection partials
 _wmbodyA–E.html _wmjsA–G.js  website & connections partials
-_wmbodyA–E.html _wmjsA–G.js  website & connections partials
 _pmbodyA–E.html _pmjsA–G.js  methods of payment partials
+_dwbodyA–E.html _dwjsA–G.js  deposits & withdrawals partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -572,8 +581,8 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-compliance.sh     # compliance.html
 ./build-security.sh       # security.html
 ./build-website.sh        # website.html
-./build-website.sh        # website.html
 ./build-payments.sh       # payments.html
+./build-deposits.sh       # deposits.html
 ./build-reports.sh        # reports.html
 ./build.sh                # disbursements.html
 ```

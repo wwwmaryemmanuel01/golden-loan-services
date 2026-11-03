@@ -1,0 +1,350 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Deposits &amp; Withdrawals Management</div>
+      <div class="page-sub">Money in, money out, and every account it touches · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a reference, customer, account or amount…" id="globalSearch" autocomplete="off" />
+    </div>
+    <button class="icon-btn" title="Open transaction alerts" id="bellBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A3F4A" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <button class="btn btn-ghost" id="quickCsv">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      Export pack
+    </button>
+    <button class="btn btn-gold" id="printBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2"/><rect x="8" y="14" width="8" height="7"/></svg>
+      Print report
+    </button>
+  </header>
+
+  <div class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Deposits</a>
+    <a class="snav" href="#s3">3 · Withdrawals</a>
+    <a class="snav" href="#s4">4 · Deposit verification</a>
+    <a class="snav" href="#s5">5 · Withdrawal approvals</a>
+    <a class="snav" href="#s6">6 · Customer accounts</a>
+    <a class="snav" href="#s7">7 · Loan accounts</a>
+    <a class="snav" href="#s8">8 · Payment methods</a>
+    <a class="snav" href="#s9">9 · Processing</a>
+    <a class="snav" href="#s10">10 · Balance &amp; ledger</a>
+    <a class="snav" href="#s11">11 · Limits &amp; fees</a>
+    <a class="snav" href="#s12">12 · Refunds &amp; reversals</a>
+    <a class="snav" href="#s13">13 · Receipts</a>
+    <a class="snav" href="#s14">14 · Notifications</a>
+    <a class="snav" href="#s15">15 · Fraud &amp; security</a>
+    <a class="snav" href="#s16">16 · Database</a>
+    <a class="snav" href="#s17">17 · Reports</a>
+    <a class="snav" href="#s18">18 · Settings</a>
+  </div>
+
+  <main class="content">
+
+    <div class="modband">
+      <div>
+        <h1>Deposits and withdrawals</h1>
+        <p>Every deposit a customer makes and every payout we send, read from the same customer accounts, loans and ledger the rest of the portal runs on — so a balance here is the balance everywhere</p>
+      </div>
+      <div class="band-stats">
+        <div class="band-stat"><b id="bandScore">0</b><span>Movement health</span></div>
+        <div class="band-stat"><b id="bandDeposits">0</b><span>Deposits</span></div>
+        <div class="band-stat"><b id="bandWithdrawals">0</b><span>Withdrawals</span></div>
+        <div class="band-stat"><b id="bandAlerts">0</b><span>Open issues</span></div>
+      </div>
+    </div>
+
+    <!-- ============ filter bar ============ -->
+    <div class="card panel" id="filterBar">
+      <div class="panel-head"><div><div class="panel-title">Filter the transaction register</div>
+        <div class="panel-sub">Every section follows these controls — area, severity, state, officer, branch and free text</div></div>
+        <span class="badge b-gray" id="fltSummary">Date range only</span></div>
+      <div class="g3">
+        <div class="fgroup">
+          <div class="fh">Date range</div>
+          <div class="form-grid">
+            <div class="fg"><label>From</label><input type="date" id="fltFrom" /></div>
+            <div class="fg"><label>To</label><input type="date" id="fltTo" /></div>
+          </div>
+          <div class="fh" style="margin-top:9px">Search</div>
+          <div class="fld" style="width:100%">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="fltSearch" placeholder="Reference, customer, account…" autocomplete="off" style="width:100%" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Area</div>
+          <div class="chips" id="fltLaneChips">
+            <span class="fchip on" data-lane="">All areas</span>
+            <span class="fchip" data-lane="Deposits">Deposits</span>
+            <span class="fchip" data-lane="Withdrawals">Withdrawals</span>
+            <span class="fchip" data-lane="Ledger">Ledger</span>
+            <span class="fchip" data-lane="Cash">Cash</span>
+            <span class="fchip" data-lane="Mobile money">Mobile money</span>
+            <span class="fchip" data-lane="Bank">Bank</span>
+            <span class="fchip" data-lane="Reversals">Reversals</span>
+            <span class="fchip" data-lane="Security">Security</span>
+            <span class="fchip" data-lane="Database">Database</span>
+          </div>
+          <div class="fh" style="margin-top:9px">Refresh</div>
+          <div class="form-actions" style="margin-top:0">
+            <button class="btn btn-ghost" id="refreshBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              Refresh transaction data
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <div class="fh">Dimensions</div>
+          <div class="form-grid">
+            <div class="fg"><label>Severity</label><select id="fltSeverity"></select></div>
+            <div class="fg"><label>Transaction state</label><select id="fltStatus"></select></div>
+            <div class="fg"><label>Officer</label><select id="fltOwner"></select></div>
+            <div class="fg"><label>Branch</label><select id="fltRegion"></select></div>
+            <div class="fg"><label>Product</label><select id="fltProduct"></select></div>
+          </div>
+          <div class="form-actions" style="margin-top:8px">
+            <button class="btn btn-gold" id="fltApply">Apply filters</button>
+            <button class="btn btn-ghost" id="fltReset">Clear all</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="fltChips" style="margin-top:10px"></div>
+      <div class="strip" id="fltCounts" style="margin-top:10px"></div>
+      <div class="qhint" id="fltResult" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ============ 1 · FINANCIAL OVERVIEW ============ -->
+    <section class="sec" id="s1">
+      <div class="sec-head">
+        <div class="sec-num">1</div>
+        <div><h2>Financial Overview</h2>
+          <p>Total deposits and withdrawals, what came in and went out today, the confirmations and approvals still waiting, approved and rejected transactions, failures and the net movement of money</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="dwPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dwKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Movement Health</div>
+            <div class="panel-sub">Each meter is live — verify a deposit or approve a payout and the bars move</div></div>
+            <span class="qhint" id="dwStamp"></span></div>
+          <div id="dwMeters"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Rail and Account Status</div>
+            <div class="panel-sub">Every payment method, the accounts and the ledger</div></div>
+            <span class="badge b-ok" id="dwConnPill">—</span></div>
+          <div class="statusgrid" id="dwBoard"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Money In, Money Out</div>
+          <div class="panel-sub">Value by method, and how each transaction ended</div></div></div>
+        <div class="chartgrid" id="dwGrid"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Open Transaction Issues</div>
+            <div class="panel-sub">Failed payouts, pending confirmations, duplicates and short balances</div></div>
+            <span class="badge b-gray" id="dwAlertPill">0</span></div>
+          <div id="dwAlerts"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Recent Movement</div>
+            <div class="panel-sub">The newest deposits and withdrawals, whatever the rail</div></div></div>
+          <div id="dwFeed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · DEPOSIT MANAGEMENT ============ -->
+    <section class="sec" id="s2">
+      <div class="sec-head">
+        <div class="sec-num">2</div>
+        <div><h2>Deposit Management</h2>
+          <p>Every deposit with its reference, date, amount, customer account, linked loan, method, proof of payment, confirmation, status, corrections and history</p></div>
+        <div class="sec-tools"><span class="badge b-ok" id="dPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Record a New Deposit</div>
+          <div class="panel-sub">Customer-initiated or recorded at the counter — the reference is issued as you save</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Who is recording it</label><select id="dNewSource"><option>Customer-initiated</option><option>Staff-recorded</option></select></div>
+          <div class="fg"><label>Deposit reference</label><input id="dNewRef" readonly /></div>
+          <div class="fg"><label>Date and time</label><input id="dNewWhen" type="datetime-local" /></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="dNewAmount" type="number" min="0" step="500" value="150000" /></div>
+          <div class="fg"><label>Currency</label><select id="dNewCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          <div class="fg"><label>Customer account</label><select id="dNewAcct"></select></div>
+          <div class="fg"><label>Link to a loan or account</label><select id="dNewLoan"></select></div>
+          <div class="fg"><label>Payment method</label><select id="dNewMethod"></select></div>
+          <div class="fg"><label>Upload proof of payment</label><input id="dNewProof" type="file" accept="image/*,.pdf" /></div>
+          <div class="fg"><label>Notes for the verifier</label><input id="dNewNotes" placeholder="Slip number, bank branch…" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="dRecordBtn">Record the deposit</button>
+          <button class="btn btn-ghost" id="dClearBtn">Clear the form</button>
+        </div>
+        <div class="qhint" id="dMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">All Deposits</div>
+          <div class="panel-sub">Click a row for the full deposit, its proof and its confirmation</div></div>
+          <span class="badge b-gray" id="dCount">—</span></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="dHead"></thead><tbody id="dBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposit Status Tracking</div>
+            <div class="panel-sub">Where each deposit sits in the journey</div></div></div>
+          <div id="dTrackBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposit Confirmation and Proof</div>
+            <div class="panel-sub">The provider line, the upload and the receipt</div></div>
+            <span class="badge b-gray" id="dConfirmPill">—</span></div>
+          <div id="dConfirmBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposit Correction Requests</div>
+            <div class="panel-sub">Raise a correction against a posted deposit</div></div>
+            <span class="badge b-gray" id="dCorrPill">—</span></div>
+          <div class="form-grid">
+            <div class="fg"><label>Deposit reference</label><select id="dCorrRef"></select></div>
+            <div class="fg"><label>Field to correct</label><select id="dCorrField"><option>Amount</option><option>Linked loan</option><option>Payment method</option><option>Customer account</option></select></div>
+          </div>
+          <div class="fg" style="margin-top:8px"><label>Reason</label><input id="dCorrReason" placeholder="What was wrong, and what it should read" /></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="dCorrBtn">Request the correction</button></div>
+          <div class="tblwrap" style="max-height:220px;margin-top:8px"><table class="tbl2 dense"><thead id="dCorrHead"></thead><tbody id="dCorrBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposit History</div>
+            <div class="panel-sub">Every deposit recorded, newest first</div></div>
+            <span class="badge b-gray" id="dHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="dHistHead"></thead><tbody id="dHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · WITHDRAWAL MANAGEMENT ============ -->
+    <section class="sec" id="s3">
+      <div class="sec-head">
+        <div class="sec-num">3</div>
+        <div><h2>Withdrawal Management</h2>
+          <p>Every withdrawal with its reference, date, amount, account, payout method and destination, the identity check, the available balance and limits, its status and its history</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="wPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="wKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Create a Withdrawal Request</div>
+          <div class="panel-sub">The checks run as you type — identity, available balance and limits</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Who is requesting it</label><select id="wReqSource"><option>Customer</option><option>Staff-initiated</option></select></div>
+          <div class="fg"><label>Customer account</label><select id="wReqAcct"></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="wReqAmount" type="number" min="0" step="500" value="80000" /></div>
+          <div class="fg"><label>Currency</label><select id="wReqCcy"><option>MWK</option><option>USD</option><option>ZAR</option></select></div>
+          <div class="fg"><label>Payout method</label><select id="wReqMethod"></select></div>
+          <div class="fg"><label>Payout destination</label><input id="wReqDest" placeholder="Mobile number, bank account or till" /></div>
+          <div class="fg"><label>Identity document</label><select id="wReqIdType"><option>National ID</option><option>Passport</option><option>Driver licence</option></select></div>
+          <div class="fg"><label>Identity number</label><input id="wReqIdNum" placeholder="MW123456" /></div>
+        </div>
+        <div id="wCheckBox" style="margin-top:8px"></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="wReqBtn">Submit the request</button>
+          <button class="btn btn-ghost" id="wVerifyIdBtn">Verify the identity</button>
+        </div>
+        <div class="qhint" id="wMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">All Withdrawals</div>
+          <div class="panel-sub">Click a row for the destination, the approvals and the provider response</div></div>
+          <span class="badge b-gray" id="wCount">—</span></div>
+        <div class="tblwrap" style="max-height:420px"><table class="tbl2 dense"><thead id="wHead"></thead><tbody id="wBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Withdrawal Status Tracking</div>
+            <div class="panel-sub">Requests, processing, payouts and failures</div></div>
+            <span class="badge b-gray" id="wTrackPill">—</span></div>
+          <div id="wTrackBox"></div>
+          <div id="wDestBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Withdrawal History</div>
+            <div class="panel-sub">Every payout, newest first</div></div>
+            <span class="badge b-gray" id="wHistPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="wHistHead"></thead><tbody id="wHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · DEPOSIT VERIFICATION ============ -->
+    <section class="sec" id="s4">
+      <div class="sec-head">
+        <div class="sec-num">4</div>
+        <div><h2>Deposit Verification</h2>
+          <p>The pending queue, the reference and amount checks, the method, the uploaded proof, the provider confirmation, duplicate detection, approval and rejection with notes</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="dvPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="dvKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pending Deposit Queue</div>
+          <div class="panel-sub">Open one to check it, then approve or reject it — the ledger follows</div></div>
+          <span class="badge b-gray" id="dvqPill">—</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="dvqHead"></thead><tbody id="dvqBody"></tbody></table></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="dvApproveAll">Approve everything that passed every check</button>
+          <button class="btn btn-ghost" id="dvAutoBtn">Run automatic verification</button>
+        </div>
+        <div class="qhint" id="dvMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Verification Checks</div>
+            <div class="panel-sub">What every deposit must pass before it is posted</div></div>
+            <span class="badge b-gray" id="dvCheckPill">—</span></div>
+          <div id="dvChecksBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Proof and Provider Confirmation</div>
+            <div class="panel-sub">The upload, the provider line and any duplicate already on the register</div></div>
+            <span class="badge b-gray" id="dvProofPill">—</span></div>
+          <div id="dvProofBox"></div>
+          <div id="dvProvBox" style="margin-top:8px"></div>
+          <div id="dvDupBox" style="margin-top:8px"></div>
+          <div class="fg" style="margin-top:8px"><label>Verification notes</label><input id="dvNote" placeholder="What you checked, and what you found" /></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Verification History</div>
+          <div class="panel-sub">Who verified or rejected what, with the note left behind</div></div>
+          <span class="badge b-gray" id="dvHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="dvHistHead"></thead><tbody id="dvHistBody"></tbody></table></div>
+      </div>
+    </section>

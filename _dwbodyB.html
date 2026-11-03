@@ -1,0 +1,217 @@
+    <!-- ============ 5 · WITHDRAWAL APPROVALS ============ -->
+    <section class="sec" id="s5">
+      <div class="sec-head">
+        <div class="sec-num">5</div>
+        <div><h2>Withdrawal Approvals</h2>
+          <p>The pending queue, the customer and balance reviewed beside it, the limits, the fraud and risk checks, first-level and management approval, rejection, cancellation and the approval history</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="waPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="waKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pending Withdrawal Queue</div>
+          <div class="panel-sub">First level, then management — the money leaves only after both</div></div>
+          <span class="badge b-gray" id="waqPill">—</span></div>
+        <div class="tblwrap" style="max-height:380px"><table class="tbl2 dense"><thead id="waqHead"></thead><tbody id="waqBody"></tbody></table></div>
+        <div class="fg" style="margin-top:8px"><label>Approval notes</label><input id="waNote" placeholder="What you checked before signing it off" /></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="waL1Btn">Give first-level approval</button>
+          <button class="btn btn-ghost" id="waL2Btn">Give management approval</button>
+          <button class="btn btn-ghost" id="waCancelBtn">Cancel an eligible request</button>
+        </div>
+        <div class="qhint" id="waMsg" style="margin-top:6px"></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Customer, Balance and Limits</div>
+            <div class="panel-sub">Everything the approver needs beside the queue</div></div>
+            <span class="badge b-gray" id="waSelPill">—</span></div>
+          <div id="waCustBox"></div>
+          <div id="waBalBox" style="margin-top:8px"></div>
+          <div id="waLimitBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Fraud and Risk Checks</div>
+            <div class="panel-sub">Six checks, and the approval flow they feed</div></div>
+            <span class="badge b-gray" id="waRiskPill">—</span></div>
+          <div id="waRiskBox"></div>
+          <div id="waFlowBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Approval History</div>
+          <div class="panel-sub">Every signature, its level and the note left with it</div></div>
+          <span class="badge b-gray" id="waHistPill">—</span></div>
+        <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="waHistHead"></thead><tbody id="waHistBody"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · CUSTOMER ACCOUNT CONNECTIONS ============ -->
+    <section class="sec" id="s6">
+      <div class="sec-head">
+        <div class="sec-num">6</div>
+        <div><h2>Customer Account Connections</h2>
+          <p>Every customer account and its status, the balance and the funds reserved against pending withdrawals, the ledger, the statement, reconciliation, suspended accounts and the audit trail</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="caPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="caKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Customer Accounts</div>
+          <div class="panel-sub">Click a row to work on that account — balance, ledger and statement follow</div></div>
+          <span class="badge b-gray" id="caCount">—</span></div>
+        <div class="tblwrap" style="max-height:360px"><table class="tbl2 dense"><thead id="caHead"></thead><tbody id="caBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Status and Available Balance</div>
+            <div class="panel-sub">Opening, available, reserved and ledger balance for the selected account</div></div>
+            <span class="badge b-gray" id="caSelPill">—</span></div>
+          <div id="caAcctBox"></div>
+          <div id="caBalBox" style="margin-top:8px"></div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="caReconBtn">Reconcile the balance</button>
+            <button class="btn btn-ghost" id="caStmtBtn">Generate the statement</button>
+          </div>
+          <div id="caStmtBox" style="margin-top:8px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reserved Funds and Ledger</div>
+            <div class="panel-sub">What is promised to a payout, and what the ledger says</div></div>
+            <span class="badge b-gray" id="caResPill">—</span></div>
+          <div id="caReservedBox"></div>
+          <div class="tblwrap" style="max-height:240px;margin-top:8px"><table class="tbl2 dense"><thead id="caLedgerHead"></thead><tbody id="caLedgerBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Suspended and Restricted Accounts</div>
+            <div class="panel-sub">Nothing moves until these are reviewed</div></div>
+            <span class="badge b-warn" id="caSuspPill">—</span></div>
+          <div id="caSuspBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Account Transaction Audit Trail</div>
+            <div class="panel-sub">Every movement on the selected account</div></div>
+            <span class="badge b-gray" id="caAuditPill">—</span></div>
+          <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="caAuditHead"></thead><tbody id="caAuditBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · LOAN ACCOUNT CONNECTIONS ============ -->
+    <section class="sec" id="s7">
+      <div class="sec-head">
+        <div class="sec-num">7</div>
+        <div><h2>Loan Account Connections</h2>
+          <p>Deposits linked to a loan or a disbursement, payments linked to repayments, the line between a deposit and a repayment, loan balances and schedules, and the guard against a wrong balance change</p></div>
+        <div class="sec-tools"><span class="badge b-gray" id="laPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="laKpis" style="margin-bottom:11px"></div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Deposits Linked to a Loan</div>
+            <div class="panel-sub">What the deposit paid, and whether it touched the principal</div></div>
+            <span class="badge b-gray" id="laLinkPill">—</span></div>
+          <div class="tblwrap" style="max-height:320px"><table class="tbl2 dense"><thead id="laBody"></thead><tbody id="laBodyR"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Disbursements and Repayments</div>
+            <div class="panel-sub">Which register a movement belongs to, and why</div></div>
+            <span class="badge b-gray" id="laDistPill">—</span></div>
+          <div id="laDistBox"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Loan Balance and Schedule</div>
+            <div class="panel-sub">Pick a loan to see what a deposit would do to it</div></div></div>
+          <div class="fg"><label>Loan</label><select id="laLoanSel"></select></div>
+          <div id="laBalBox" style="margin-top:8px"></div>
+          <div class="form-actions"><button class="btn btn-ghost" id="laUpdateBtn">Update the balance and schedule</button></div>
+          <div class="qhint" id="laMsg" style="margin-top:6px"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Guard Against Wrong Balance Changes</div>
+            <div class="panel-sub">What stops a deposit being posted twice or to the wrong loan</div></div>
+            <span class="badge b-ok" id="laGuardPill">—</span></div>
+          <div id="laGuardBox"></div>
+          <div class="tblwrap" style="max-height:200px;margin-top:8px"><table class="tbl2 dense"><thead id="laHistHead"></thead><tbody id="laHistBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · PAYMENT METHOD CONNECTIONS ============ -->
+    <section class="sec" id="s8">
+      <div class="sec-head">
+        <div class="sec-num">8</div>
+        <div><h2>Payment Method Connections</h2>
+          <p>Airtel Money, TNM Mpamba, bank transfer, cash and card deposits; mobile money, bank and cash withdrawals; the provider status, reference validation, confirmation monitoring, failures and availability</p></div>
+        <div class="sec-tools"><span class="badge b-warn" id="mtPill">—</span></div>
+      </div>
+
+      <div class="kgrid" id="mtKpis" style="margin-bottom:11px"></div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Deposits by Payment Method</div>
+          <div class="panel-sub">What each rail brought in, and how much of it settled</div></div>
+          <span class="badge b-gray" id="mtDepPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="mtDepHead"></thead><tbody id="mtDepBody"></tbody></table></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Withdrawals by Payment Method</div>
+          <div class="panel-sub">What each rail paid out, and what failed</div></div>
+          <span class="badge b-gray" id="mtWdrPill">—</span></div>
+        <div class="tblwrap" style="max-height:300px"><table class="tbl2 dense"><thead id="mtWdrHead"></thead><tbody id="mtWdrBody"></tbody></table></div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Provider Connection Status</div>
+            <div class="panel-sub">Every rail, its latency and its last confirmation</div></div>
+            <span class="badge b-gray" id="mtConnPill">—</span></div>
+          <div id="mtConnBox"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Reference Validation and Availability</div>
+            <div class="panel-sub">Check any reference against the register</div></div></div>
+          <div class="form-grid">
+            <div class="fg"><label>Reference</label><input id="mtRefInput" placeholder="MM-440118, BNK-770912…" /></div>
+            <div class="fg"><label>&nbsp;</label><button class="btn btn-ghost" id="mtRefBtn" style="width:100%">Validate the reference</button></div>
+          </div>
+          <div id="mtRefBox" style="margin-top:8px"></div>
+          <div id="mtAvailBox" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Payment Confirmation Monitoring</div>
+            <div class="panel-sub">Every callback, whether the signature held and what we did</div></div>
+            <span class="badge b-gray" id="mtConfPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="mtConfHead"></thead><tbody id="mtConfBody"></tbody></table></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><div><div class="panel-title">Failed Provider Transactions</div>
+            <div class="panel-sub">Refused, timed out or reversed at the rail</div></div>
+            <span class="badge b-crit" id="mtFailPill">—</span></div>
+          <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="mtFailHead"></thead><tbody id="mtFailBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Value by Rail</div>
+          <div class="panel-sub">Deposits against withdrawals for each payment method</div></div></div>
+        <div class="chartgrid" id="mtGrid"></div>
+      </div>
+    </section>
