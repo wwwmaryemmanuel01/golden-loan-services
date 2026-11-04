@@ -287,6 +287,8 @@
 .sub .strip{margin-bottom:8px}
 .sub .form-actions{margin-top:8px;flex-wrap:wrap;gap:6px}
 .sub .note{margin:0 0 8px}
+.sub + .sub{margin-top:10px}
+.sub + .sub.wide{margin-top:10px}
 @media(max-width:1100px){ .subgrid{grid-template-columns:1fr} }
 
 /* ---------- small pieces used by the generated panels ---------- */
