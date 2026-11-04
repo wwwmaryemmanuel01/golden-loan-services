@@ -3,3 +3,4 @@ node_modules/
 *.log
 .arena/
 .playwright-cli/
+__pycache__/
