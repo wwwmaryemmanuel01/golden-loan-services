@@ -1216,14 +1216,10 @@ html{scroll-padding-top:calc(var(--gls-topbar-h,96px) + 16px)}
 }
 @media (max-width:520px){ .gls-topbar-logo{height:24px} }
 
-/* ---- header: a wide dark bar carrying the name in large print ------------
-   Each main module carries its own deep accent colour (set per page by
-   inject_brand.py as --gls-accent). The dashboard keeps the house black.
-   Every accent is dark enough that the white name and the gold sub-line
-   stay fully legible. */
+/* ---- header: a wide dark bar carrying the name in large print ------------ */
 .topbar{
-  background:var(--gls-accent,rgba(15,17,21,.98));
-  border-bottom:1px solid rgba(9,11,15,.55);
+  background:rgba(15,17,21,.98);
+  border-bottom:1px solid #23262E;
   box-shadow:0 8px 22px rgba(9,11,15,.16);
   backdrop-filter:none;
   height:auto;
@@ -2021,13 +2017,13 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
 }
 
 /* ==== per-module accent colours ============================================
-   Every main module carries its own deep colour: the header band, the module
-   band under it, the section-number badges and the active sub-navigation chip
-   take the module colour. All accents are deep tones, so the white and gold
-   text on them keeps its contrast and nothing hides the writing. The page
-   background, the green borders, the footers, the logo and the black header
-   bands on printed documents and receipts are untouched. The dashboard keeps
-   the house black as the anchor. */
+   Every main module carries its own deep colour: the module band under the
+   header, the section-number badges and the active sub-navigation chip take
+   the module colour. The system header itself does NOT change — it stays the
+   house black on every page. All accents are deep tones, so the white and
+   gold text on them keeps its contrast and nothing hides the writing. The
+   page background, the green borders, the footers, the logo and the black
+   header bands on printed documents and receipts are untouched. */
 body[data-gls-module="index"]                {--gls-accent:#0F1115}
 body[data-gls-module="applications"]         {--gls-accent:#1E3A8A}
 body[data-gls-module="clients"]              {--gls-accent:#115E59}
