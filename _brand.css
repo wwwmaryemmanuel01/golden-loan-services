@@ -42,6 +42,8 @@
 }
 .gls-footer a:hover{color:var(--gold-dark);border-bottom-color:var(--gold)}
 .gls-footer .gls-foot-sep{width:1px;height:14px;background:var(--line)}
+.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#9AA0AC;letter-spacing:.2px}
+.gls-footer .gls-build:empty{display:none}
 
 /* ---- sidebar sign-out ----------------------------------------------------- */
 .sidebar-foot{gap:10px}

@@ -70,6 +70,18 @@
 
   window.glsLoading = function (on) { if (on) { showSplash(); } else { hideSplash(); } };
 
+  /* ------------------------------------------------------------ build stamp */
+  /* the date the browser received this copy, so "is this the latest build?"
+     can be answered by looking at the page instead of guessing at a cache */
+  function buildStamp() {
+    try {
+      var t = new Date(document.lastModified);
+      if (isNaN(t.getTime())) return '';
+      return t.toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'});
+    } catch (e) { return ''; }
+  }
+
   /* ---------------------------------------------------------------- footer */
   function footer() {
     /* inside .content when it exists, so the footer shares the page padding */
@@ -88,6 +100,8 @@
         '<a href="security.html">Security &amp; privacy</a>' +
         '<a href="settings.html">Settings</a>' +
         '<span class="gls-foot-sep"></span>' +
+        '<span class="gls-build" title="The time the browser received this copy of the page — if it looks old, the page was cached.">' +
+          (buildStamp() ? 'Build ' + buildStamp() : '') + '</span>' +
         '<span>&copy; ' + y + ' Golden Financial Services</span>' +
       '</div>';
     host.appendChild(f);
