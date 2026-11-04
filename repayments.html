@@ -708,9 +708,11 @@
   .receipt::after{content:"PAID";position:absolute;right:14px;top:14px;font-size:9px;font-weight:800;
     letter-spacing:2px;color:#1E9E6A;border:1.5px solid #BFE7D5;border-radius:6px;padding:3px 7px;
     transform:rotate(-6deg)}
-  .receipt .rh{display:flex;align-items:center;gap:9px;padding-bottom:9px;border-bottom:1.5px solid var(--gold-soft)}
-  .receipt .rh b{font-size:12px;letter-spacing:.3px}
-  .receipt .rh span{display:block;font-size:9px;color:var(--muted);margin-top:1px}
+  .receipt .rh{display:flex;align-items:center;gap:10px;background:#0F1115;border:1px solid #23262E;
+    border-radius:9px;padding:10px 12px;margin-bottom:10px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .receipt .rh b{font-size:12.5px;letter-spacing:.5px;color:#fff}
+  .receipt .rh span{display:block;font-size:9px;color:#C7CEDA;margin-top:2px}
   .receipt .rrow{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed #EDEFF4}
   .receipt .rrow:last-child{border-bottom:0}
   .receipt .rk{color:var(--muted);font-weight:600}
@@ -1472,19 +1474,44 @@ table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
 .gls-print-head{display:none}
 @media print{
   .gls-footer .gls-foot-links,.gls-signout{display:none!important}
+  /* the printed page carries the portal header: the same black bar with the
+     emblem and the name in large white print — footers stay white */
   .gls-print-head{
     display:flex;align-items:center;gap:12px;
-    border-bottom:2px solid #C9A227;padding-bottom:8px;margin-bottom:16px;
+    background:#0F1115;border:1px solid #23262E;border-radius:10px;
+    padding:12px 14px;margin-bottom:16px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
-  .gls-print-head img{height:44px;width:auto;display:block}
-  .gls-print-head .gls-ph-txt{
-    margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5;
-  }
+  .gls-print-head img{height:36px;width:auto;display:block}
+  .gls-ph-brand{min-width:0}
   .gls-print-head .gls-ph-name{
-    font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px;
+    font-size:15px;font-weight:800;color:#FFFFFF;letter-spacing:1.1px;line-height:1.15;
+    white-space:nowrap;
+  }
+  .gls-print-head .gls-ph-sub{
+    font-size:8px;font-weight:800;color:#E4C264;letter-spacing:2.6px;
+    text-transform:uppercase;margin-top:3px;
+  }
+  .gls-print-head .gls-ph-txt{
+    margin-left:auto;text-align:right;font-size:8.5px;color:#C7CEDA;line-height:1.5;
   }
   .gls-footer{border-top:1px solid #D9DDE6;font-size:9.5px;padding-top:10px;color:#3B4250}
 }
+
+/* the black header band on receipts, proofs of payment and documents shown on
+   screen — the same dark bar with the emblem and the name as the portal header.
+   The rest of the document, and its footer, stay white. */
+.gls-doc-head{
+  display:flex;align-items:center;gap:10px;
+  background:#0F1115;border:1px solid #23262E;border-radius:9px;
+  padding:10px 12px;margin:0 0 10px;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.gls-doc-head .gls-docmark{height:32px;margin:0;flex:0 0 auto}
+.gls-doc-head .gls-doc-title,.gls-doc-head .sliphead{flex:1 1 auto;min-width:0;text-align:left;
+  border-bottom:0;padding-bottom:0;margin-bottom:0}
+.gls-doc-head .gls-doc-title b,.gls-doc-head .sliphead b{color:#FFFFFF;font-size:12.5px;letter-spacing:.5px}
+.gls-doc-head .qhint{color:#C7CEDA;margin-top:2px}
 
 @media (prefers-reduced-motion: reduce){
   .brand-mark img,.gls-signout{transition:none}
@@ -4540,7 +4567,7 @@ function receiptModal(p){
   el('modalBody');
   openModal('Receipt ' + p.receipt, p.status + ' · ' + mk(p.amount), `
     <div class="receipt ${meta.void?'void':''}" id="receiptCard">
-      <div class="rh"><div class="logo-tile" style="width:32px;height:32px;border-radius:9px;font-size:10px;box-shadow:none">GF</div>
+      <div class="rh"><img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
         <div><b>GOLDEN FINANCIAL SERVICES</b><span>Licensed microfinance · Blantyre, Malawi</span></div></div>
       <div class="rrow" style="margin-top:8px"><span class="rk">Receipt number</span><span class="rv">${p.receipt}</span></div>
       <div class="rrow"><span class="rk">Date</span><span class="rv">${fmtDate(p.date)} · ${p.time}</span></div>
@@ -4690,10 +4717,10 @@ function settlementLetter(loanNo){
   const h = SETTLE_HIST.find(x=>x[2]===loanNo) || SETTLE_HIST[0];
   openModal('Settlement letter', h[1] + ' · ' + h[2], `
     <div class="letterhead" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px">
-      <div style="display:flex;align-items:center;gap:9px;padding-bottom:8px;border-bottom:1.5px solid var(--gold-soft)">
-        <div class="logo-tile" style="width:30px;height:30px;border-radius:8px;font-size:9px;box-shadow:none">GF</div>
-        <div><b style="font-size:11.5px">GOLDEN FINANCIAL SERVICES</b>
-          <span style="display:block;font-size:9px;color:var(--muted)">P.O. Box 481, Blantyre · +265 1 770 200</span></div>
+      <div class="gls-doc-head">
+        <img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
+        <div class="gls-doc-title"><b style="font-size:12.5px;letter-spacing:.5px">GOLDEN FINANCIAL SERVICES</b>
+          <span style="display:block;font-size:9px;margin-top:2px">P.O. Box 481, Blantyre · +265 1 770 200</span></div>
       </div>
       <div style="font-size:10.5px;color:#4A5160;line-height:1.65;margin-top:9px">
         <b style="font-size:10.5px">NOTICE OF LOAN SETTLEMENT</b><br /><br />
@@ -7390,10 +7417,12 @@ boot();
     if (!main || document.querySelector('.gls-print-head')) return;
     var h = el('div', 'gls-print-head');
     h.innerHTML =
-      '<img src="' + ASSETS + 'logo.png" alt="GOLDEN FINANCIAL SERVICES">' +
-      '<div class="gls-ph-txt">' +
+      '<img src="' + ASSETS + 'logo-mark.png" alt="GOLDEN FINANCIAL SERVICES">' +
+      '<div class="gls-ph-brand">' +
         '<div class="gls-ph-name">GOLDEN FINANCIAL SERVICES</div>' +
-        'Lilongwe, Malawi · Licensed moneylender<br>' +
+        '<div class="gls-ph-sub">Licensed moneylender · Malawi</div>' +
+      '</div>' +
+      '<div class="gls-ph-txt">' +
         'Printed ' + new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}) +
         ' · Confidential' +
       '</div>';
@@ -7401,17 +7430,23 @@ boot();
   }
 
   /* ------------------------------------------------------- printed documents */
+  /* the document band is the portal header carried onto paper: the same black
+     bar, the same emblem, the name in large white print and the gold sub-line.
+     The footers stay white; only the header is dark. */
   function docBand(title) {
     var when;
     try { when = new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}); }
     catch (e) { when = ''; }
-    return '<div style="display:flex;align-items:center;gap:10px;padding-bottom:8px;' +
-      'border-bottom:2px solid #C9A227;margin-bottom:12px">' +
+    return '<div style="display:flex;align-items:center;gap:12px;background:#0F1115;' +
+      'border:1px solid #23262E;border-radius:10px;padding:12px 14px;margin-bottom:12px;' +
+      '-webkit-print-color-adjust:exact;print-color-adjust:exact">' +
       '<img src="' + GLS_DOC_MARK + '" alt="Golden Financial Services" style="height:38px;width:auto;display:block">' +
-      '<div style="margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5">' +
-        '<div style="font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px">GOLDEN FINANCIAL SERVICES</div>' +
-        'Lilongwe, Malawi · Licensed moneylender<br>' +
-        (title ? String(title).replace(/[<>&]/g, '') + ' · ' : '') + when +
+      '<div style="min-width:0">' +
+        '<div style="font-size:15px;font-weight:800;color:#FFFFFF;letter-spacing:1.1px;line-height:1.15;white-space:nowrap">GOLDEN FINANCIAL SERVICES</div>' +
+        '<div style="font-size:8px;font-weight:800;color:#E4C264;letter-spacing:2.6px;text-transform:uppercase;margin-top:3px">Licensed moneylender · Malawi</div>' +
+      '</div>' +
+      '<div style="margin-left:auto;text-align:right;font-size:8.5px;color:#C7CEDA;line-height:1.5">' +
+        (title ? String(title).replace(/[<>&]/g, '') + '<br>' : '') + when +
       '</div></div>';
   }
   window.glsDocBand = docBand;

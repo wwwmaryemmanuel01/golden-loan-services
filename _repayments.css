@@ -37,9 +37,11 @@
   .receipt::after{content:"PAID";position:absolute;right:14px;top:14px;font-size:9px;font-weight:800;
     letter-spacing:2px;color:#1E9E6A;border:1.5px solid #BFE7D5;border-radius:6px;padding:3px 7px;
     transform:rotate(-6deg)}
-  .receipt .rh{display:flex;align-items:center;gap:9px;padding-bottom:9px;border-bottom:1.5px solid var(--gold-soft)}
-  .receipt .rh b{font-size:12px;letter-spacing:.3px}
-  .receipt .rh span{display:block;font-size:9px;color:var(--muted);margin-top:1px}
+  .receipt .rh{display:flex;align-items:center;gap:10px;background:#0F1115;border:1px solid #23262E;
+    border-radius:9px;padding:10px 12px;margin-bottom:10px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .receipt .rh b{font-size:12.5px;letter-spacing:.5px;color:#fff}
+  .receipt .rh span{display:block;font-size:9px;color:#C7CEDA;margin-top:2px}
   .receipt .rrow{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed #EDEFF4}
   .receipt .rrow:last-child{border-bottom:0}
   .receipt .rk{color:var(--muted);font-weight:600}

@@ -146,10 +146,12 @@
     if (!main || document.querySelector('.gls-print-head')) return;
     var h = el('div', 'gls-print-head');
     h.innerHTML =
-      '<img src="' + ASSETS + 'logo.png" alt="GOLDEN FINANCIAL SERVICES">' +
-      '<div class="gls-ph-txt">' +
+      '<img src="' + ASSETS + 'logo-mark.png" alt="GOLDEN FINANCIAL SERVICES">' +
+      '<div class="gls-ph-brand">' +
         '<div class="gls-ph-name">GOLDEN FINANCIAL SERVICES</div>' +
-        'Lilongwe, Malawi · Licensed moneylender<br>' +
+        '<div class="gls-ph-sub">Licensed moneylender · Malawi</div>' +
+      '</div>' +
+      '<div class="gls-ph-txt">' +
         'Printed ' + new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}) +
         ' · Confidential' +
       '</div>';
@@ -157,17 +159,23 @@
   }
 
   /* ------------------------------------------------------- printed documents */
+  /* the document band is the portal header carried onto paper: the same black
+     bar, the same emblem, the name in large white print and the gold sub-line.
+     The footers stay white; only the header is dark. */
   function docBand(title) {
     var when;
     try { when = new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}); }
     catch (e) { when = ''; }
-    return '<div style="display:flex;align-items:center;gap:10px;padding-bottom:8px;' +
-      'border-bottom:2px solid #C9A227;margin-bottom:12px">' +
+    return '<div style="display:flex;align-items:center;gap:12px;background:#0F1115;' +
+      'border:1px solid #23262E;border-radius:10px;padding:12px 14px;margin-bottom:12px;' +
+      '-webkit-print-color-adjust:exact;print-color-adjust:exact">' +
       '<img src="' + GLS_DOC_MARK + '" alt="Golden Financial Services" style="height:38px;width:auto;display:block">' +
-      '<div style="margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5">' +
-        '<div style="font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px">GOLDEN FINANCIAL SERVICES</div>' +
-        'Lilongwe, Malawi · Licensed moneylender<br>' +
-        (title ? String(title).replace(/[<>&]/g, '') + ' · ' : '') + when +
+      '<div style="min-width:0">' +
+        '<div style="font-size:15px;font-weight:800;color:#FFFFFF;letter-spacing:1.1px;line-height:1.15;white-space:nowrap">GOLDEN FINANCIAL SERVICES</div>' +
+        '<div style="font-size:8px;font-weight:800;color:#E4C264;letter-spacing:2.6px;text-transform:uppercase;margin-top:3px">Licensed moneylender · Malawi</div>' +
+      '</div>' +
+      '<div style="margin-left:auto;text-align:right;font-size:8.5px;color:#C7CEDA;line-height:1.5">' +
+        (title ? String(title).replace(/[<>&]/g, '') + '<br>' : '') + when +
       '</div></div>';
   }
   window.glsDocBand = docBand;

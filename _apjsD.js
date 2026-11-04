@@ -161,10 +161,10 @@ function prepareInstruction(a){
   const fee = a.approval?.fee || Math.round(amount*productBy(a.product).fee/100);
   openModal('Disbursement instruction', `${a.no} · ${a.cust}`, `
     <div class="letterhead">
-      <div style="display:flex;align-items:center;gap:9px;padding-bottom:8px;border-bottom:1.5px solid #EFE2B4">
-        <div class="logo-tile" style="width:30px;height:30px;border-radius:8px;font-size:9px;box-shadow:none">GF</div>
-        <div><b style="font-size:11.5px">GOLDEN FINANCIAL SERVICES</b>
-          <span style="display:block;font-size:9px;color:var(--muted)">Disbursement instruction · internal</span></div>
+      <div class="gls-doc-head">
+        <img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
+        <div class="gls-doc-title"><b style="font-size:12.5px;letter-spacing:.5px">GOLDEN FINANCIAL SERVICES</b>
+          <span style="display:block;font-size:9px;margin-top:2px">Disbursement instruction · internal</span></div>
       </div>
       <div class="kv" style="margin-top:8px"><span class="k">Application</span><span class="v">${a.no}</span></div>
       <div class="kv"><span class="k">Customer</span><span class="v">${a.cust} · ${a.custId}</span></div>

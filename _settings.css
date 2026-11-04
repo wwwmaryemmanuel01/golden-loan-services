@@ -100,10 +100,11 @@
 
   .letterhead::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
     background:linear-gradient(180deg,var(--gold),var(--gold-dark))}
-  .letterhead .lhh{display:flex;align-items:center;gap:9px;padding-bottom:8px;
-    border-bottom:1.5px solid var(--gold-soft)}
-  .letterhead .lhh b{font-size:11.5px;letter-spacing:.3px}
-  .letterhead .lhh span{font-size:9px;color:var(--muted);display:block;margin-top:1px}
+  .letterhead .lhh{display:flex;align-items:center;gap:10px;background:#0F1115;border:1px solid #23262E;
+    border-radius:9px;padding:10px 12px;margin-bottom:4px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .letterhead .lhh b{font-size:12.5px;letter-spacing:.5px;color:#fff}
+  .letterhead .lhh span{font-size:9px;color:#C7CEDA;display:block;margin-top:2px}
   .letterhead .lhb{font-size:10.5px;color:#4A5160;line-height:1.6;margin-top:8px}
   .letterhead .lhf{font-size:9px;color:var(--muted-2);border-top:1px dashed var(--line);
     margin-top:9px;padding-top:6px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}

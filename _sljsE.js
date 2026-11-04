@@ -181,8 +181,11 @@ function sePayslipHtml(p){
   const sal = seSalOf(p.staff) || {};
   const st = SE_STAFF_BY_ID[p.staff] || {};
   return `<div class="slip">
-    <div class="sliphead"><div><b>GOLDEN FINANCIAL SERVICES</b><div class="qhint">Lilongwe · Malawi</div></div>
-      <div style="text-align:right"><b>PAYSLIP</b><div class="qhint">${esc(monthLabel(p.period))}</div></div></div>
+    <div class="gls-doc-head">
+      <img class="gls-docmark" src="assets/logo-mark-96.png" alt="GOLDEN FINANCIAL SERVICES">
+      <div class="sliphead"><div><b>GOLDEN FINANCIAL SERVICES</b><div class="qhint">Lilongwe · Malawi</div></div>
+        <div style="text-align:right"><b>PAYSLIP</b><div class="qhint">${esc(monthLabel(p.period))}</div></div></div>
+    </div>
     <div class="pfields">
       ${field('Staff member', esc(seStaffName(p.staff)))}
       ${field('Employee number', esc(p.staff))}

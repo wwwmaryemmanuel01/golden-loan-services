@@ -125,7 +125,7 @@ function receiptModal(p){
   el('modalBody');
   openModal('Receipt ' + p.receipt, p.status + ' · ' + mk(p.amount), `
     <div class="receipt ${meta.void?'void':''}" id="receiptCard">
-      <div class="rh"><div class="logo-tile" style="width:32px;height:32px;border-radius:9px;font-size:10px;box-shadow:none">GF</div>
+      <div class="rh"><img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
         <div><b>GOLDEN FINANCIAL SERVICES</b><span>Licensed microfinance · Blantyre, Malawi</span></div></div>
       <div class="rrow" style="margin-top:8px"><span class="rk">Receipt number</span><span class="rv">${p.receipt}</span></div>
       <div class="rrow"><span class="rk">Date</span><span class="rv">${fmtDate(p.date)} · ${p.time}</span></div>
@@ -275,10 +275,10 @@ function settlementLetter(loanNo){
   const h = SETTLE_HIST.find(x=>x[2]===loanNo) || SETTLE_HIST[0];
   openModal('Settlement letter', h[1] + ' · ' + h[2], `
     <div class="letterhead" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px">
-      <div style="display:flex;align-items:center;gap:9px;padding-bottom:8px;border-bottom:1.5px solid var(--gold-soft)">
-        <div class="logo-tile" style="width:30px;height:30px;border-radius:8px;font-size:9px;box-shadow:none">GF</div>
-        <div><b style="font-size:11.5px">GOLDEN FINANCIAL SERVICES</b>
-          <span style="display:block;font-size:9px;color:var(--muted)">P.O. Box 481, Blantyre · +265 1 770 200</span></div>
+      <div class="gls-doc-head">
+        <img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
+        <div class="gls-doc-title"><b style="font-size:12.5px;letter-spacing:.5px">GOLDEN FINANCIAL SERVICES</b>
+          <span style="display:block;font-size:9px;margin-top:2px">P.O. Box 481, Blantyre · +265 1 770 200</span></div>
       </div>
       <div style="font-size:10.5px;color:#4A5160;line-height:1.65;margin-top:9px">
         <b style="font-size:10.5px">NOTICE OF LOAN SETTLEMENT</b><br /><br />
