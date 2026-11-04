@@ -280,7 +280,9 @@ function renderSec17(){
       style="padding:2px 7px;font-size:10px">Remove</button></td></tr>`).join('');
   el('holidayBody').querySelectorAll('[data-hol]').forEach(b=>{
     b.onclick = ()=>{
-      const h = HOLIDAYS.splice(Number(b.dataset.hol),1)[0];
+      const i = Number(b.dataset.hol);
+      if (!(i >= 0 && i < HOLIDAYS.length)) return;  /* stale button from an earlier render */
+      const h = HOLIDAYS.splice(i,1)[0];
       renderSec17(); toast(`${h[1]} removed from the calendar.`,'info');
       logAudit('Config','Public holiday removed: '+h[1],'holiday');
     };

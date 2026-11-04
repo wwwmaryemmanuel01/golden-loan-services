@@ -42,7 +42,7 @@ def strip(items):
 
 def table(headers, rows, csv_name=None, sort_col=0, num_cols=()):
     head = "".join(
-        f'<th class="{"num" if i in num_cols else ""}" data-sort="i">{esc(h)}</th>'.replace('i', str(i))
+        f'<th class="{"num" if i in num_cols else ""}" data-sort="i">{esc(h)}</th>'
         for i, h in enumerate(headers))
     body = []
     for r in rows:

@@ -657,7 +657,9 @@ function renderNaDocs(){
       <button class="btn btn-ghost btn-sm" data-rmdoc="${i}">Remove</button></div>`).join('')
     : '<div class="inline-note">No documents attached yet.</div>';
   el('naDocList').querySelectorAll('[data-rmdoc]').forEach(b=>{
-    b.onclick = ()=>{ NA.docs.splice(Number(b.dataset.rmdoc),1); renderNaDocs(); renderNaPreview(); };
+    b.onclick = ()=>{ const i = Number(b.dataset.rmdoc);
+      if (!(i >= 0 && i < NA.docs.length)) return;   /* stale button from an earlier render */
+      NA.docs.splice(i,1); renderNaDocs(); renderNaPreview(); };
   });
 }
 function clearNewApp(){

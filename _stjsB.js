@@ -128,7 +128,9 @@ function renderSec4(){
       style="padding:2px 7px;font-size:10px">Revoke</button></td></tr>`).join('');
   el('trustedBody').querySelectorAll('[data-dev]').forEach(b=>{
     b.onclick = ()=>{
-      const d = DEVICES.splice(Number(b.dataset.dev),1)[0];
+      const i = Number(b.dataset.dev);
+      if (!(i >= 0 && i < DEVICES.length)) return;   /* stale button from an earlier render */
+      const d = DEVICES.splice(i,1)[0];
       renderSec4(); toast(`Trusted device revoked · ${d.d}`,'info');
       logAudit('Permission','Trusted device revoked: '+d.d,'user.device');
     };

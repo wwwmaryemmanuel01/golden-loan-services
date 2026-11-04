@@ -1,0 +1,54 @@
+/* ============================================================================
+   LAYOUT GUARD — shared by every page
+   Two faults this fixes, both seen in real modules:
+
+   1. A card sitting in a half- or third-width grid column that holds a table
+      with 5-8 columns. The columns squeeze to a few dozen pixels and every
+      header and cell wraps to one or two letters per line, so the text reads
+      as vertical strips instead of horizontal rows.
+   2. Those same over-wide tables push the page wider than the viewport. The
+      shell is a flex row, so the whole content column slides sideways and the
+      first letters of the left-hand card end up clipped at the edge.
+
+   The script (_layout-guard.js) widens the offending card to the full grid
+   width and wraps bare tables in a scrolling container. These rules make sure
+   a table can never be squeezed into vertical text in the first place.
+   ========================================================================= */
+
+/* nothing may push its way out of the page shell */
+html, body { max-width: 100%; }
+body > .main, .main { min-width: 0; }
+.content { min-width: 0; }
+
+/* grid and flex children may shrink — the default min-width:auto is what
+   lets a wide table stretch its column past the container */
+.grid > *, .g2 > *, .g3 > *, .g4 > *, .kgrid > *, .chartgrid > *,
+.gallery > *, .repgrid > *, .split > *, .pfields > *, .form-grid > *,
+.subgrid > * { min-width: 0; }
+
+.card, .panel, .card.panel { min-width: 0; max-width: 100%; }
+
+/* a card the guard has widened spans its grid */
+.card.gls-wide, .panel.gls-wide { grid-column: 1 / -1; }
+
+/* tables scroll inside their card instead of overflowing the page */
+.tblwrap { max-width: 100%; overflow-x: auto; }
+.tbl2 { max-width: 100%; }
+.tbl2 th, .tbl2 td { word-break: normal; overflow-wrap: normal; hyphens: none; }
+
+/* a header keeps a readable width, so a column can never collapse to one
+   letter per line; the wrapper scrolls if the table then gets wider */
+.tbl2 thead th { min-width: 58px; }
+.tbl2 thead th:first-child { min-width: 90px; }
+
+/* the wide screens still get the full grid; narrow ones keep one column */
+@media (max-width: 1100px) {
+  .band-stats { flex-wrap: wrap; row-gap: 6px; }
+  .band-stat { padding-left: 12px; }
+}
+
+@media (max-width: 760px) {
+  /* on a phone the whole table scrolls rather than folding into letters */
+  .tbl2 thead th { min-width: 72px; }
+  .card, .panel { padding-left: 12px; padding-right: 12px; }
+}
