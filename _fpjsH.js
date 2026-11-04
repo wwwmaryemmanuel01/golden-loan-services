@@ -743,9 +743,11 @@ function wireAll(){
       if(!c || !c.receipt){ toast('Nothing has been collected on that charge yet', 'err'); return; }
       openModal('Receipt ' + c.receipt, c.id + ' · ' + custName(c.cust),
         `<div class="receiptdoc">
-          <img class="gls-docmark" src="assets/logo-mark-96.png" alt="GOLDEN FINANCIAL SERVICES">
-          <div class="sliphead">GOLDEN FINANCIAL SERVICES</div>
-          <div class="qhint">Lilongwe · Malawi · receipt ${esc(c.receipt)}</div>
+          <div class="gls-doc-head">
+            <img class="gls-docmark" src="assets/logo-mark-96.png" alt="GOLDEN FINANCIAL SERVICES">
+            <div class="gls-doc-title"><b>GOLDEN FINANCIAL SERVICES</b>
+              <div class="qhint">Lilongwe · Malawi · receipt ${esc(c.receipt)}</div></div>
+          </div>
           ${kvRow('Charge', esc(c.id))}${kvRow('Type', esc(c.typeName))}
           ${kvRow('Amount', fpM(c.amount))}${kvRow('Paid', fpM(c.paid))}
           ${kvRow('Balance', fpM(c.balance))}${kvRow('Method', esc(c.method || '—'))}
