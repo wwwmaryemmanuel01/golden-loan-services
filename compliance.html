@@ -1373,67 +1373,190 @@ table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
 }
 
 /* ============================================================================
-   COLOURED FRAMES — module sections, cards and panels
+   PROFESSIONAL SKIN — one surface language for every module
 
-   Every module section reads as one framed block with a gold rail along its
-   top edge, and every card inside it carries a gold rail on its left, so the
-   structure of a module is visible at a glance instead of a field of grey
-   hairlines. The frames are decoratation only: no padding or margin is
-   subtracted anywhere, so nothing can be pulled outside the page gutter.
+   Restrained, boardroom-clean: white section cards on the light canvas, a thin
+   gold accent where it carries meaning (section number, card title rule, KPI
+   tone), slate hairlines everywhere else, tabular figures in every table and
+   one consistent type scale. Gold is an accent, never wallpaper.
    ========================================================================= */
 :root{
-  --gls-frame:#E8D9A6;        /* hairline around a card or section */
-  --gls-frame-deep:#D9C479;   /* hairline on hover */
+  --gls-line:#E3E8F0;          /* hairline on white */
+  --gls-line-2:#EDF1F7;        /* hairline inside a table */
+  --gls-slate:#667085;         /* secondary text */
+  --gls-ink:#12151B;
+  --gls-text:#1D2430;
+  --gls-shadow:0 1px 2px rgba(16,24,40,.05);
+  --gls-shadow-2:0 6px 20px -8px rgba(16,24,40,.16);
+  --gls-radius:14px;
 }
 
-/* ---- a module section: white block, gold rail across the top ------------- */
+/* cool the shell hairlines down from the old blue-greys */
+:root{--line:#E3E8F0;--line-2:#EFF3F9;--muted:#667085;--muted-2:#8A93A6}
+
+/* ---- a module section: one quiet card, gold accent only at the top -------- */
 section.sec{
-  background:#FCFBF5;
-  border:1px solid var(--gls-frame);
-  border-top:4px solid var(--gold);
-  border-radius:16px;
-  padding:16px 14px 8px;
-  box-shadow:0 1px 2px rgba(16,18,24,.05),0 10px 24px rgba(16,18,24,.045);
+  position:relative;
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-radius:var(--gls-radius);
+  padding:22px 20px 14px;
+  box-shadow:var(--gls-shadow);
+  overflow:visible;
 }
+section.sec::before{
+  content:"";position:absolute;top:0;left:20px;right:20px;height:3px;
+  border-radius:0 0 4px 4px;
+  background:linear-gradient(90deg,#C9A227 0%,#E4C264 45%,rgba(228,194,100,0) 100%);
+  pointer-events:none;
+}
+section.sec + section.sec{margin-top:26px}
 @media (max-width:860px){
-  section.sec{padding:13px 12px 6px;border-radius:14px;border-top-width:3px}
+  section.sec{padding:16px 14px 10px;border-radius:12px}
+  section.sec::before{left:14px;right:14px;height:3px}
 }
 
-/* ---- cards and panels: gold rail on the left ----------------------------- */
+/* ---- section heading: number, title, note, divider ------------------------ */
+section.sec > .sec-head{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:0 0 12px;margin:0 0 14px;
+  border-bottom:1px solid var(--gls-line-2);
+}
+.sec-head h2{
+  font-size:15.5px;font-weight:800;letter-spacing:-.25px;line-height:1.28;color:var(--gls-ink);
+}
+.sec-head p{font-size:11.5px;line-height:1.5;color:var(--gls-slate);margin-top:3px;max-width:82ch}
+.sec-num{
+  width:28px;height:28px;flex:0 0 28px;border-radius:9px;
+  background:linear-gradient(180deg,#171A21,#0F1115);
+  color:#E9C766;font-weight:800;
+  box-shadow:inset 0 0 0 1px rgba(201,162,39,.45),0 1px 2px rgba(16,24,40,.15);
+}
+.sec-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+/* ---- cards inside a section ---------------------------------------------- */
 .card,.panel,.chartcard,.repcard{
-  border:1px solid var(--gls-frame);
-  border-left:4px solid var(--gold);
-  box-shadow:0 1px 2px rgba(16,18,24,.05),0 8px 20px rgba(16,18,24,.045);
-  transition:border-color .16s ease,box-shadow .16s ease;
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-left:1px solid var(--gls-line);
+  border-radius:12px;
+  box-shadow:var(--gls-shadow);
+  transition:box-shadow .18s ease,border-color .18s ease;
 }
 .card:hover,.panel:hover,.chartcard:hover,.repcard:hover{
-  border-color:var(--gls-frame-deep);
-  border-left-color:var(--gold-dark);
-  box-shadow:0 2px 4px rgba(16,18,24,.06),0 12px 26px rgba(201,162,39,.15);
+  border-color:#CFD8E6;border-left-color:#CFD8E6;
+  box-shadow:var(--gls-shadow-2);
 }
-/* a card inside a card keeps only the outer rail */
+/* a card inside a card keeps a hairline only — no stacked frames */
 .card .card,.card .panel,.panel .card,.panel .panel{
-  border-left-width:1px;border-left-color:var(--gls-frame);
+  border-color:var(--gls-line-2);box-shadow:none;
+}
+/* the small gold rule that marks a card's title */
+.panel-title{position:relative;padding-left:11px}
+.panel-title::before{
+  content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,#C9A227,#E4C264);
+}
+.panel-sub{font-size:11px;line-height:1.5;color:var(--gls-slate);margin-top:3px}
+.panel-title{font-size:13.5px;font-weight:700;letter-spacing:-.1px;color:var(--gls-text)}
+
+/* ---- KPI tiles: tone on the top edge, big tabular figure ------------------ */
+.kpi{
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-top:3px solid var(--gold);
+  border-radius:12px;
+  box-shadow:var(--gls-shadow);
+  padding:12px 13px;
+}
+.kpi .kl{
+  font-size:9px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  color:var(--gls-slate);
+}
+.kpi .kv{
+  font-size:clamp(16px,2.1vw,20px);font-weight:800;letter-spacing:-.4px;
+  font-variant-numeric:tabular-nums;color:var(--gls-ink);line-height:1.25;
+}
+.kpi .ks{font-size:10px;line-height:1.45;color:var(--gls-slate)}
+.kpi.gold{border-top-color:#C9A227;border-left-color:var(--gls-line);background:#fff}
+.kpi.amber{border-top-color:#E08C1E;border-left-color:var(--gls-line);background:#fff}
+.kpi.green{border-top-color:#1E9E6A;border-left-color:var(--gls-line);background:#fff}
+.kpi.blue{border-top-color:#2F6FED;border-left-color:var(--gls-line);background:#fff}
+.kpi.red{border-top-color:#D93F3F;border-left-color:var(--gls-line);background:#fff}
+
+/* ---- tables: quiet header band, zebra-free rows, tabular figures ---------- */
+table{font-variant-numeric:tabular-nums}
+table td,table th{padding:9px 10px}
+table thead th{
+  background:#F7F9FC;
+  color:#5B6472;
+  font-size:9.5px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;
+  border-bottom:1px solid var(--gls-line);
+}
+table tbody tr + tr td{border-top:1px solid var(--gls-line-2)}
+table tbody tr:hover td{background:#FBFCFE}
+.tblwrap table thead th:first-child,.tbl-wrap table thead th:first-child{background:#F7F9FC}
+.tblwrap table td:first-child,.tbl-wrap table td:first-child{background:#fff}
+.tblwrap::-webkit-scrollbar,.tbl-wrap::-webkit-scrollbar{height:8px}
+.tblwrap::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb{background:#D6DCE7;border-radius:8px}
+.tblwrap::-webkit-scrollbar-track,.tbl-wrap::-webkit-scrollbar-track{background:transparent}
+
+/* ---- badges: one pill, soft tone, no shouting ----------------------------- */
+.badge{
+  border-radius:999px!important;
+  font-size:9.5px;font-weight:800;letter-spacing:.25px;
+  padding:3px 9px;
+  border:1px solid transparent;
+}
+.badge.b-ok{background:#E9F7F0;color:#116B49;border-color:#C9EBDC}
+.badge.b-warn{background:#FFF5E3;color:#8A5B08;border-color:#F3DFB6}
+.badge.b-crit{background:#FDECEC;color:#A62424;border-color:#F6D2D2}
+.badge.b-blue{background:#EAF1FE;color:#1F55C0;border-color:#CFDEFB}
+.badge.b-gray{background:#F3F5F9;color:#4E5766;border-color:#E3E8F0}
+
+/* ---- buttons: one height, one radius, gold for the one primary action ----- */
+.btn{
+  border-radius:10px;font-weight:700;letter-spacing:.1px;
+  border:1px solid transparent;box-shadow:none;
+  transition:background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.btn-gold{
+  border-color:#B08D1C;
+  background:linear-gradient(180deg,#D8B247,#C9A227);
+  color:#241C00;
+  box-shadow:0 1px 2px rgba(16,24,40,.12);
+}
+.btn-gold:hover{background:linear-gradient(180deg,#CB9F1F,#B78F1C);filter:none;box-shadow:0 2px 6px rgba(176,141,28,.28)}
+.btn-ghost{background:#fff;border-color:var(--gls-line);color:var(--gls-text)}
+.btn-ghost:hover{background:#F7F9FC;border-color:#CFD8E6;color:var(--gls-ink)}
+
+/* ---- form controls -------------------------------------------------------- */
+.fld,.fg input,.fg select,.fg textarea{
+  border-radius:10px;border-color:#DCE2EC;background:#fff;color:var(--gls-text);
+}
+.fld:focus-within,.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:#C9A227;box-shadow:0 0 0 3px rgba(201,162,39,.16);
 }
 
-/* ---- KPI tiles carry their own tone on the rail -------------------------- */
-.kpi{border-left:4px solid var(--gold)}
-.kpi.gold{border-left-color:var(--gold)}
-.kpi.amber{border-left-color:var(--amber)}
-.kpi.green{border-left-color:var(--green)}
-.kpi.blue{border-left-color:var(--blue)}
-.kpi.red{border-left-color:var(--red)}
+/* ---- sub-navigation chips and tabs --------------------------------------- */
+.snav,.stab{font-weight:700;border-color:var(--gls-line);background:#fff;color:#414B5A}
+.snav.on,.stab.on{background:var(--gls-ink);border-color:var(--gls-ink);color:#fff;box-shadow:0 1px 2px rgba(16,24,40,.16)}
+.snav:hover,.stab:hover{border-color:#C9A227;color:#7A5C08;background:#FDF8E7}
 
-/* ---- print: keep the structure, drop most of the ink ---------------------- */
+/* ---- focus ring, one shape everywhere ------------------------------------ */
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid #C9A227;outline-offset:2px;border-radius:6px;
+}
+
+/* ---- print: drop the accents, keep the structure -------------------------- */
 @media print{
-  section.sec{
-    background:none;border:1px solid #D8DADD;border-top:2px solid #9AA0AA;
-    box-shadow:none;padding:0 0 4px;border-radius:0;break-inside:auto;
-  }
-  .card,.panel,.chartcard,.repcard{
-    border:1px solid #D8DADD;border-left:3px solid #9AA0AA;box-shadow:none;
-  }
-  .kpi{border-left:3px solid #9AA0AA}
+  section.sec{border:1px solid #D8DADD;border-radius:0;box-shadow:none;padding:0 0 6px}
+  section.sec::before{display:none}
+  section.sec > .sec-head{border-bottom:1px solid #D8DADD}
+  .card,.panel,.chartcard,.repcard{box-shadow:none;border-color:#D8DADD}
+  .panel-title::before{background:#999}
+  table thead th{background:none;color:#333}
 }
 
 /* ============================================================================
@@ -1482,6 +1605,44 @@ html,body{max-width:100%;overflow-x:clip}
 .sidebar,.nav{overflow-x:hidden}
 .nav-item{min-width:0}
 .nav-item svg,.nav-item .pill{flex:0 0 auto}
+
+/* ---- shell refinements that finish the professional look ------------------ */
+/* a cooler canvas so the white section cards sit forward */
+:root{--bg:#F3F6FA;--card:#FFFFFF}
+
+/* the sidebar reads as a separate plane, not a stripe of the same page */
+.sidebar{box-shadow:1px 0 0 rgba(15,17,21,.10)}
+.nav-item{
+  transition:background .15s ease,color .15s ease,padding-left .15s ease;
+  border-radius:10px;
+}
+.nav-item.active{border-radius:10px;box-shadow:inset 0 0 0 1px rgba(201,162,39,.22)}
+.nav-label{margin-top:4px}
+
+/* the sticky chip bar gets a real surface, so content never shows through it */
+.subnav{
+  background:rgba(243,246,250,.94);
+  -webkit-backdrop-filter:saturate(1.4) blur(8px);
+  backdrop-filter:saturate(1.4) blur(8px);
+  border-bottom:1px solid var(--gls-line);
+}
+@supports not (backdrop-filter:blur(8px)){.subnav{background:#F3F6FA}}
+
+/* the header already carries the brand; give it a hairline instead of a glow */
+.topbar{box-shadow:0 1px 0 rgba(255,255,255,.06),0 8px 24px -18px rgba(0,0,0,.8)}
+
+/* micro-type used for notes and timestamps */
+.qhint,.minihead{color:var(--gls-slate)}
+.minihead{
+  font-size:9.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  color:#5B6472;
+}
+
+/* numbers line up in every register, small print and KPI */
+.kpi .kv,.band .bv,.tbl2 td.num,.tblwrap table td.num{font-variant-numeric:tabular-nums}
+
+/* one quiet hover for interactive tiles */
+.gcard,.risk,.checkrow,.li{transition:background .15s ease,border-color .15s ease}
 
 </style>
 </head>
