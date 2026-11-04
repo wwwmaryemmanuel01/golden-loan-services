@@ -1,0 +1,3394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'" />
+<title>Loan Application — GOLDEN FINANCIAL SERVICES</title>
+<style>
+  :root{
+    --gold:#C9A227; --gold-bright:#E8C860; --gold-soft:#FBF3D8; --gold-dark:#8A6D0F;
+    --ink:#0F1115; --ink-2:#171A21; --ink-3:#22262F;
+    --line:#E6E8EE; --line-2:#F0F1F5; --muted:#6B7280; --muted-2:#8A90A0;
+    --bg:#F4F5F8; --card:#FFFFFF;
+    --green:#1E9E6A; --green-soft:#E7F6EF;
+    --red:#D93F3F; --red-soft:#FDECEC;
+    --amber:#E08C1E; --amber-soft:#FFF4E0;
+    --blue:#2F6FED; --blue-soft:#EAF0FE;
+    --purple:#7C5CF0; --purple-soft:#F1ECFE;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,18,24,.06), 0 8px 24px rgba(16,18,24,.055);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+    display:flex;min-height:100vh;font-size:14px;
+  }
+  /* ================= SIDEBAR ================= */
+  .sidebar{width:262px;flex:0 0 262px;background:var(--ink);color:#C7CBD4;
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:40}
+  .brand{display:flex;gap:11px;align-items:center;padding:20px 18px 18px;border-bottom:1px solid #23262E}
+  .brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;
+    background:linear-gradient(145deg,#E8C860,#B58C1B);display:grid;place-items:center;
+    color:#2A2100;font-weight:800;font-size:16px;letter-spacing:.4px;
+    box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .brand-name{font-size:12.5px;font-weight:800;line-height:1.28;color:#fff;letter-spacing:.35px}
+  .brand-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-top:3px}
+  .nav{overflow-y:auto;padding:12px 10px;flex:1}
+  .nav::-webkit-scrollbar{width:6px}
+  .nav::-webkit-scrollbar-thumb{background:#2C303A;border-radius:8px}
+  .nav-label{font-size:9.5px;letter-spacing:1.4px;color:#666C7A;font-weight:700;
+    padding:13px 12px 7px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;
+    font-size:13px;font-weight:500;color:#B9BFCB;cursor:pointer;text-decoration:none;
+    transition:.16s;position:relative}
+  .nav-item:hover{background:#1B1F27;color:#fff}
+  .nav-item.active{background:linear-gradient(90deg,rgba(201,162,39,.20),rgba(201,162,39,.05));
+    color:#fff;font-weight:600}
+  .nav-item.active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+    border-radius:0 4px 4px 0;background:var(--gold)}
+  .nav-item svg{width:17px;height:17px;flex:0 0 17px;opacity:.9}
+  .nav-item .pill{margin-left:auto;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:20px;
+    background:#2A2F3A;color:#D6DAE3}
+  .nav-item .pill.gold{background:var(--gold);color:#241C00}
+  .nav-item .pill.red{background:#3A2224;color:#F19999}
+  .sidebar-foot{padding:12px 14px;border-top:1px solid #23262E;display:flex;align-items:center;gap:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--ink-3);color:var(--gold-bright);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 34px;border:1px solid #333846}
+  .sf-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3}
+  .sf-role{font-size:10px;color:#7A808D}
+  /* ================= TOPBAR ================= */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:12px}
+  .topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+  .page-title{font-size:16.5px;font-weight:700;letter-spacing:-.2px}
+  .page-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:440px}
+  .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#F1F2F6;
+    border:1px solid transparent;border-radius:10px;padding:8px 11px;width:260px}
+  .search:focus-within{background:#fff;border-color:var(--gold)}
+  .search input{border:0;background:transparent;outline:none;font-size:12.5px;width:100%;color:var(--ink)}
+  .search input::placeholder{color:#9AA0AC}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;position:relative;transition:.15s}
+  .icon-btn:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);
+    border:2px solid #fff}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:8px 13px;font-size:12px;
+    font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:inherit;
+    white-space:nowrap}
+  .btn-gold{background:linear-gradient(145deg,#E0BC4E,#B58C1B);color:#241C00;
+    box-shadow:0 4px 12px rgba(201,162,39,.3)}
+  .btn-gold:hover{filter:brightness(1.06)}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);background:var(--gold-soft)}
+  .btn-sm{padding:5px 9px;font-size:11px;border-radius:8px}
+  /* ================= SECTION SUBNAV ================= */
+  .subnav{position:sticky;top:64px;z-index:25;background:rgba(244,245,248,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 24px;display:flex;gap:6px;overflow-x:auto}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto;font-size:11.5px;font-weight:600;color:#5A6172;background:#fff;
+    border:1px solid var(--line);border-radius:20px;padding:5px 11px;cursor:pointer;
+    text-decoration:none;transition:.15s;white-space:nowrap}
+  .snav:hover{border-color:var(--gold);color:var(--gold-dark);background:var(--gold-soft)}
+  .snav.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .content{padding:20px 24px 56px;flex:1;max-width:1720px;width:100%}
+  /* ================= SECTIONS ================= */
+  .sec{margin-bottom:26px;scroll-margin-top:118px}
+  .sec-head{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+  .sec-num{width:26px;height:26px;flex:0 0 26px;border-radius:8px;background:var(--ink);
+    color:var(--gold-bright);display:grid;place-items:center;font-size:11.5px;font-weight:800}
+  .sec-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.15px;line-height:1.3}
+  .sec-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .sec-tools{margin-left:auto;display:flex;gap:7px;align-items:center}
+  /* ================= CARDS & GRIDS ================= */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:13px;align-content:start}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1.55fr 1fr;align-items:start}
+  .g-1-1-1{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .pad{padding:15px}
+  /* KPI / stat tile */
+  .stat{padding:14px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;right:-34px;bottom:-46px;width:118px;height:118px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.09),transparent 70%)}
+  .stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .stat-label{font-size:10.5px;font-weight:700;letter-spacing:.65px;text-transform:uppercase;color:var(--muted);
+    line-height:1.35;min-height:28px}
+  .stat-ic{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;flex:0 0 29px;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .stat-ic.g{background:var(--green-soft);color:#157A50}
+  .stat-ic.r{background:var(--red-soft);color:#B32C2C}
+  .stat-ic.b{background:var(--blue-soft);color:#2456C4}
+  .stat-ic.p{background:var(--purple-soft);color:#5A3FCB}
+  .stat-ic.a{background:var(--amber-soft);color:#9A6A0D}
+  .stat-val{font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:8px;
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat-val small{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .stat-foot{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--muted);
+    flex-wrap:wrap}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11px}
+  .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--muted)}
+  .spark{margin-top:10px;height:30px;width:100%;display:block}
+  /* compact status tile */
+  .mini{padding:12px 13px;display:flex;align-items:center;gap:10px}
+  .mini .m-ic{width:32px;height:32px;border-radius:9px;flex:0 0 32px;display:grid;place-items:center;
+    font-size:12px;font-weight:800}
+  .mini .m-v{font-size:17px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.15}
+  .mini .m-l{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3;min-height:14px}
+  .mini .m-r{margin-left:auto;text-align:right;font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap}
+  /* panels */
+  .panel{padding:15px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .panel-title{font-size:13px;font-weight:700;letter-spacing:-.1px}
+  .panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+  .lg i{width:8px;height:8px;border-radius:3px;display:block}
+  .chart-wrap{margin-top:10px}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible}
+  /* statement rows */
+  .stmt{margin-top:8px}
+  .stmt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;
+    border-bottom:1px dashed #EDEFF4;font-size:12.5px}
+  .stmt-row:last-child{border-bottom:0}
+  .stmt-row .k{color:#3A3F4A;font-weight:600;display:flex;align-items:center;gap:7px}
+  .stmt-row .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .stmt-row.total{border-top:1.5px solid var(--line);border-bottom:0;margin-top:4px;padding-top:11px;
+    font-size:13.5px}
+  .stmt-row.total .v{font-size:15px;font-weight:800}
+  .stmt-row.neg .v{color:var(--red)}
+  .stmt-row.pos .v{color:var(--green)}
+  .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  /* horizontal bars */
+  .hbar-row{display:grid;grid-template-columns:96px 1fr 76px;align-items:center;gap:10px;margin-bottom:9px}
+  .hbar-row:last-child{margin-bottom:0}
+  .hbar-l{font-size:11px;font-weight:600;color:#3A3F4A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbar-t{height:16px;background:var(--line-2);border-radius:5px;overflow:hidden;position:relative}
+  .hbar-t i{display:block;height:100%;border-radius:5px;min-width:3px}
+  .hbar-v{font-size:11px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  /* progress */
+  .bar{height:6px;background:var(--line-2);border-radius:20px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#E0BC4E,#B58C1B)}
+  .bar.blue i{background:linear-gradient(90deg,#6C9BF5,#2F6FED)}
+  .bar.green i{background:linear-gradient(90deg,#4CC08D,#1E9E6A)}
+  .bar.red i{background:linear-gradient(90deg,#EA7C7C,#D93F3F)}
+  .prog-row{margin-bottom:12px}
+  .prog-row:last-child{margin-bottom:0}
+  .prog-top{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;margin-bottom:5px}
+  .prog-top b{font-weight:700;color:#2B303B}
+  .prog-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{text-align:left;font-size:9.5px;letter-spacing:.75px;text-transform:uppercase;color:var(--muted-2);
+    font-weight:700;padding:0 10px 8px;white-space:nowrap;border-bottom:1px solid var(--line)}
+  tbody td{padding:8px 9px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FCFAF2}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .who{display:flex;align-items:center;gap:9px}
+  .who .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:var(--gold-soft);color:var(--gold-dark)}
+  .who .nm{font-weight:600;line-height:1.25;font-size:12px;white-space:nowrap}
+  .who .id{font-size:10px;color:var(--muted);margin-top:1px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;
+    border-radius:20px;white-space:nowrap}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .b-pend{background:var(--amber-soft);color:#9A6A0D}
+  .b-appr{background:var(--green-soft);color:#157A50}
+  .b-rev{background:var(--red-soft);color:#B32C2C}
+  .b-act{background:var(--blue-soft);color:#2456C4}
+  .b-cls{background:#F1F2F6;color:#5A6172}
+  .b-gray{background:#F1F2F6;color:#5A6172}
+  .b-purple{background:var(--purple-soft);color:#5A3FCB}
+  /* lists */
+  .list{display:flex;flex-direction:column;margin-top:6px}
+  .li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #EDEFF4}
+  .li:last-child{border-bottom:0}
+  .li .av{width:29px;height:29px;border-radius:9px;flex:0 0 29px;display:grid;place-items:center;
+    font-size:10px;font-weight:800;background:#F1F2F6;color:#4A5160}
+  .li .t1{font-size:12px;font-weight:600;line-height:1.3}
+  .li .t2{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .li .amt{margin-left:auto;text-align:right;flex:0 0 auto}
+  .li .amt b{display:block;font-size:12px;font-variant-numeric:tabular-nums}
+  .li .amt span{font-size:10px;color:var(--muted)}
+  /* agent bars */
+  .ag-row{margin-bottom:11px}
+  .ag-row:last-child{margin-bottom:0}
+  .ag-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;gap:8px}
+  .ag-top b{font-weight:700}
+  .ag-top span{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px;font-weight:600}
+  /* tabs */
+  .tabs{display:flex;gap:3px;background:#F1F2F6;padding:3px;border-radius:9px;flex-wrap:wrap}
+  .tab{border:0;background:transparent;font-family:inherit;font-size:11px;font-weight:700;color:var(--muted);
+    padding:5px 9px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,18,24,.12)}
+  .subtabs{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+  .stab{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;
+    font-size:10.5px;font-weight:700;color:#5A6172;padding:4px 10px;cursor:pointer;transition:.15s}
+  .stab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  /* quick actions */
+  .qa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+  .qa{border:1px solid var(--line);border-radius:12px;padding:13px;cursor:pointer;background:#fff;
+    transition:.16s;display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit}
+  .qa:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+  .qa .qi{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;
+    background:var(--gold-soft);color:var(--gold-dark)}
+  .qa:hover .qi{background:#fff}
+  .qa .qt{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.3}
+  .qa .qs{font-size:10px;color:var(--muted);line-height:1.35}
+  /* alerts */
+  .alert{padding:13px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--line)}
+  .alert.hi{border-left-color:var(--red)}
+  .alert.md{border-left-color:var(--amber)}
+  .alert.lo{border-left-color:var(--blue)}
+  .alert .a-ic{width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center}
+  .alert.hi .a-ic{background:var(--red-soft);color:#B32C2C}
+  .alert.md .a-ic{background:var(--amber-soft);color:#9A6A0D}
+  .alert.lo .a-ic{background:var(--blue-soft);color:#2456C4}
+  .alert .a-v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+  .alert .a-l{font-size:11px;font-weight:700;color:#2B303B;margin-top:2px;line-height:1.3}
+  .alert .a-s{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .alert .a-lnk{font-size:10.5px;font-weight:800;color:var(--gold-dark);margin-top:7px;display:inline-flex;
+    align-items:center;gap:4px;cursor:pointer}
+  .alert:hover{box-shadow:0 6px 20px rgba(16,18,24,.09)}
+  /* system status */
+  .sysrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed #EDEFF4;
+    font-size:12px}
+  .sysrow:last-child{border-bottom:0}
+  .sysrow .k{font-weight:600;color:#3A3F4A}
+  .sysrow .v{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;font-size:11.5px;
+    white-space:nowrap}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(30,158,106,.16)}
+  .dead{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(217,63,63,.16)}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#FFF9E8;border:1px solid #F2E3B0;
+    border-radius:11px;padding:10px 13px;font-size:11.5px;color:#7A5C08;line-height:1.5}
+  .notice b{font-weight:800}
+  .placeholder{padding:60px 24px;text-align:center}
+  .placeholder h3{font-size:16px;margin-bottom:8px}
+  .placeholder p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.6}
+  .hide{display:none!important}
+  .muted{color:var(--muted)}
+  .tiny{font-size:10.5px}
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1450px){ #periodTabs{display:none} }
+  @media(max-width:1120px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g-2-1,.g-1-1-1{grid-template-columns:1fr}
+    .qa-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:1024px){
+    .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g2{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.22s}
+    .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(15,17,21,.45)}
+    .menu-btn{display:grid!important}
+    .search{display:none}
+    .content{padding:16px 14px 40px}
+    .topbar{padding:0 14px}
+    .subnav{padding:8px 14px;top:60px}
+    .topbar{height:60px}
+    .g-1-1-1{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .g4,.g3,.g2,.qa-grid{grid-template-columns:1fr}
+    .g4.two{grid-template-columns:1fr 1fr}
+  }
+  .menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;place-items:center;cursor:pointer}
+  /* ===================== BACK NAVIGATION ===================== */
+  .backbtn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 9px;
+    border-radius:10px;border:1px solid var(--line);background:#fff;color:#3A3F4A;
+    font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;flex:0 0 auto;transition:.15s}
+  .backbtn:hover{border-color:var(--gold);background:var(--gold-soft);color:#6B5310}
+  .backbtn:active{transform:translateY(1px)}
+  .backbtn:disabled{opacity:.42;cursor:not-allowed;background:#F7F8FA;color:#8A90A0}
+  .backbtn:disabled:hover{border-color:var(--line);background:#F7F8FA;color:#8A90A0;transform:none}
+  .backbtn .bk-arrow{width:14px;height:14px;transition:transform .15s}
+  .backbtn:hover:not(:disabled) .bk-arrow{transform:translateX(-2px)}
+  @media(max-width:860px){
+    .backbtn{width:36px;height:36px;padding:0;justify-content:center;border-radius:10px}
+    .backbtn .bk-label{display:none}
+  }
+  @media(max-width:620px){
+    .backbtn{width:38px;height:38px;border-radius:11px}
+    .backbtn .bk-arrow{width:16px;height:16px}
+    .topbar{gap:8px}
+    .topbar .btn-ghost,.topbar .icon-btn{display:none}
+    .page-sub{display:none}
+  }
+
+/* ============================================================================
+   CUSTOMER APPLICATION FORM + LOAN AGREEMENT
+   Shared by apply.html and agreement.html. The system theme does the rest.
+   ========================================================================= */
+
+  body.cust{background:#EDF6F1;display:block}
+  body.cust .main{width:100%}
+
+  /* the customer header is light, not the staff dark band */
+  .custbar{
+    background:#0F1115;border-bottom:1px solid #23262E;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:12px 22px;min-height:0;height:auto;
+  }
+  .custbrand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:0}
+  .custbrand img{height:32px;width:32px;flex:0 0 auto}
+  .custbrand span{display:flex;flex-direction:column;min-width:0}
+  .custbrand b{
+    font-size:16px;font-weight:800;letter-spacing:.7px;color:#fff;line-height:1.15;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .custbrand i{
+    font-style:normal;font-size:9px;font-weight:800;letter-spacing:2.6px;color:#E4C264;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .custnav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .custnav a{
+    font-size:11.5px;font-weight:700;color:#DCE2EC;text-decoration:none;
+    border:1px solid #2F3541;border-radius:9px;padding:6px 11px;background:#1B1F27;
+  }
+  .custnav a:hover{border-color:#C9A227;color:#F3D67A}
+  .custnav a.on{background:#C9A227;border-color:#B08D1C;color:#241C00}
+
+  /* the form column */
+  .sheet{width:100%;max-width:1080px;margin:0 auto;padding:20px 18px 60px}
+  @media (max-width:640px){ .sheet{padding:14px 12px 44px} }
+
+  /* progress rail */
+  .progwrap{
+    position:sticky;top:0;z-index:30;
+    background:rgba(237,246,241,.95);backdrop-filter:blur(8px);
+    border-bottom:1px solid #CFE2D9;padding:9px 0 10px;margin-bottom:16px;
+  }
+  .progwrap .ptop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+  .progwrap .pt{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#3F5B50}
+  .progwrap .pc{font-size:10.5px;font-weight:800;color:#116B49;font-variant-numeric:tabular-nums}
+  .progbar{height:8px;border-radius:20px;background:#DCEAE3;overflow:hidden;margin-top:7px}
+  .progbar i{display:block;height:100%;background:linear-gradient(90deg,#0E9F6E,#2DD4BF);width:0;transition:width .25s ease}
+  .progchips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+  .progchips a{
+    font-size:10px;font-weight:700;color:#41514B;text-decoration:none;
+    background:#fff;border:1px solid #CFE2D9;border-radius:20px;padding:3px 9px;
+  }
+  .progchips a.on{background:#0F1115;border-color:#0F1115;color:#fff}
+  .progchips a.done{border-color:#8FC7AF;background:#EAF7F1;color:#116B49}
+
+  /* form fields, larger and friendlier than the staff tables */
+  .fg label{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#3F4A57}
+  .fg input,.fg select,.fg textarea{
+    font-size:13px;padding:9px 11px;border-radius:10px;
+    border:1.5px solid #7FAF9C;background:#fff;color:#1D2430;width:100%;
+  }
+  .fg textarea{min-height:74px;resize:vertical}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{
+    outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.16);
+  }
+  .fg input.bad,.fg select.bad,.fg textarea.bad{border-color:#D93F3F;box-shadow:0 0 0 3px rgba(217,63,63,.14)}
+  .fg .err{font-size:9.5px;font-weight:700;color:#A62424;min-height:12px}
+  .fg .hint{font-size:9.5px;color:#667085;line-height:1.45}
+  .fg .req{color:#A62424}
+  .fg.full{grid-column:1 / -1}
+
+  .form-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:760px){
+    .form-grid.two,.form-grid.three{grid-template-columns:1fr}
+  }
+
+  /* choice rows */
+  .choicegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}
+  .choicebox{
+    display:flex;gap:9px;align-items:flex-start;padding:10px 11px;border-radius:11px;
+    border:1.5px solid #A9CDBD;background:#fff;cursor:pointer;
+  }
+  .choicebox input{margin-top:2px;flex:0 0 auto;width:16px;height:16px;accent-color:#059669}
+  .choicebox span{font-size:11px;line-height:1.5;color:#2B303B}
+  .choicebox b{display:block;font-size:11.5px;font-weight:800;color:#12151B}
+  .choicebox:has(input:checked){border-color:#059669;background:#F4FCF8}
+
+  /* the signature pad */
+  .sigwrap{border:2px solid #7FB49F;border-radius:12px;background:#fff;padding:10px}
+  .sigpad{display:block;width:100%;height:170px;border-radius:9px;background:repeating-linear-gradient(0deg,#fff,#fff 27px,#EFF6F2 27px,#EFF6F2 28px);touch-action:none;cursor:crosshair}
+  .sigpad.touched{background:#fff}
+  .sigrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+  .sigmeta{font-size:10px;color:#667085;line-height:1.5}
+  .signote{font-size:10px;font-weight:700;color:#8A5B08;background:#FFF5E3;border:1px solid #F3DFB6;border-radius:9px;padding:7px 10px;margin-top:8px}
+
+  /* declaration list */
+  .decl{display:grid;gap:8px}
+  .decl label{display:flex;gap:9px;align-items:flex-start;font-size:11.5px;line-height:1.6;color:#2B303B;cursor:pointer}
+  .decl input{margin-top:2px;width:16px;height:16px;accent-color:#059669;flex:0 0 auto}
+
+  /* submitted banner */
+  .donebox{
+    border:2px solid #1E9E6A;background:#F2FBF6;border-radius:14px;padding:16px 18px;
+  }
+  .donebox h3{font-size:16px;font-weight:800;color:#116B49}
+  .donebox p{font-size:12px;color:#33544A;margin-top:4px;line-height:1.6}
+  .donebox .ref{
+    display:inline-block;margin-top:9px;font-family:ui-monospace,Consolas,monospace;font-size:14px;font-weight:800;
+    background:#0F1115;color:#E9C766;border-radius:9px;padding:6px 12px;letter-spacing:1px;
+  }
+
+  /* agreement reading column */
+  .terms{counter-reset:cl}
+  .terms .clause{border-bottom:1px dashed #CFE2D9;padding:12px 0}
+  .terms .clause:last-child{border-bottom:0}
+  .terms h3{font-size:13px;font-weight:800;color:#12151B;display:flex;gap:9px;align-items:baseline}
+  .terms h3 span{
+    flex:0 0 auto;font-size:10px;font-weight:800;color:#0F1115;background:#E9C766;
+    border-radius:6px;padding:1px 7px;
+  }
+  .terms p{font-size:12px;line-height:1.7;color:#31394A;margin-top:5px}
+  .terms ul{margin:6px 0 0 18px}
+  .terms li{font-size:11.5px;line-height:1.7;color:#31394A}
+  .terms .k{font-weight:800;color:#12151B}
+  .terms .warnbox{
+    border-left:4px solid #D93F3F;background:#FFF7F7;border-radius:0 10px 10px 0;
+    padding:9px 12px;margin-top:8px;font-size:11.5px;color:#7A1F1F;line-height:1.6;
+  }
+  .terms .okbox{
+    border-left:4px solid #1E9E6A;background:#F4FCF8;border-radius:0 10px 10px 0;
+    padding:9px 12px;margin-top:8px;font-size:11.5px;color:#14523C;line-height:1.6;
+  }
+
+  /* sticky action bar at the foot of a form */
+  .formfoot{
+    position:sticky;bottom:0;z-index:20;margin-top:16px;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border:2px solid #7FB49F;border-radius:14px;
+    padding:11px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    box-shadow:0 -6px 20px -14px rgba(6,78,59,.5);
+  }
+  .formfoot .fk{font-size:10.5px;color:#667085;line-height:1.5;min-width:0;flex:1 1 220px}
+  .formfoot .btn{flex:0 0 auto}
+
+  /* hero block on the customer pages */
+  .custhero{margin:0 0 16px}
+  .custhero h1{font-size:22px;font-weight:800;letter-spacing:-.2px;color:#0F1115;line-height:1.2}
+  .custhero p{font-size:12.5px;line-height:1.7;color:#33544A;margin-top:6px;max-width:78ch}
+  .custhero p a{color:#116B49;font-weight:800;text-decoration:underline}
+  .custhint{
+    display:flex;gap:11px;align-items:center;flex-wrap:wrap;justify-content:space-between;
+    margin-top:12px;padding:11px 13px;border-radius:12px;
+    border:2px solid #A9CDBD;background:#fff;font-size:11.5px;color:#31394A;line-height:1.55;
+  }
+  .custhint span{min-width:0;flex:1 1 260px}
+  .custhint.locked{border-color:#D93F3F;background:#FFF7F7;color:#7A1F1F}
+  .custhint.ok{border-color:#1E9E6A;background:#F2FBF6;color:#14523C}
+  .custhint .btn{flex:0 0 auto}
+
+  /* a standalone field error line, outside the .fg column */
+  .err{font-size:10px;font-weight:700;color:#A62424;min-height:0;margin-top:4px}
+  .err:empty{display:none}
+
+  /* neutral empty state inside the customer column */
+  .empty{
+    border:2px dashed #A9CDBD;border-radius:12px;padding:22px 16px;text-align:center;
+    font-size:11.5px;color:#667085;background:#fff;
+  }
+  .sheet .sec{margin-top:16px}
+  .sheet .card.panel{padding:14px 15px}
+  .sheet .panel+.sec{margin-top:18px}
+  @media (max-width:640px){
+    .custhero h1{font-size:18px}
+    .terms p,.terms li{font-size:11.5px}
+    .sigpad{height:150px}
+  }
+
+  @media print{
+    .custbar .custnav,.formfoot,.progwrap,.sigrow{display:none !important}
+    .sheet{max-width:none;padding:0}
+    .custhero h1{font-size:16pt}
+    .terms .clause{break-inside:avoid}
+  }
+
+  /* toasts (customer pages carry no staff module css) */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 36px)}
+  .toast{
+    background:#0F1115;color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;line-height:1.5;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:flex-start;max-width:340px;
+    border-left:3px solid #1E9E6A;
+  }
+  .toast.ok{border-left-color:#1E9E6A}
+  .toast.err{border-left-color:#D93F3F;background:#3A1010}
+  .toast.info{border-left-color:#C9A227}
+  .toast span{flex:0 0 auto;font-weight:800;color:#E9C766}
+  .toast.err span{color:#FF9E9E}
+  @media print{ .toasts{display:none !important} }
+</style>
+<style data-gls="records-css">
+/* =====================================================================
+   SHARED RECORD SHEETS AND SMALL-SCREEN LAYOUT — injected into every page
+   by inject_backnav.py from _recordsheet.css / _recordsheet.js.
+   One rule book for all twenty modules: any table row opens a readable
+   labelled sheet, and every page folds sensibly on a phone.
+   ===================================================================== */
+
+/* ---------- the record sheet ---------- */
+.recsheet{display:block}
+.recgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:8px}
+.recgrid .pfield{min-width:0;background:#FCFDFF;border:1px solid var(--line-2);border-radius:9px;padding:7px 10px}
+.recgrid .pfield .pk{font-size:8.6px;line-height:1.3;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2);font-weight:800}
+.recgrid .pfield .pv{font-size:11.5px;line-height:1.42;overflow-wrap:anywhere;color:var(--ink)}
+.recgrid .pfield.wide{grid-column:1/-1;background:#FAFBFC}
+.recgrid .pfield.wide .pv{font-weight:600;line-height:1.5}
+.recgrid .pfield .pv .badge{font-size:9.5px;white-space:normal}
+.recsub{font-size:9px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;color:var(--muted-2);
+  margin:14px 0 7px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.recmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.recmeta span{display:inline-flex;align-items:center;gap:6px;max-width:100%;font-size:9.5px;
+  color:#3A3F4A;background:#F7F8FA;border:1px solid var(--line-2);border-radius:7px;padding:4px 8px}
+.recmeta span b{font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.4px;font-size:8.4px}
+.recmeta span .muted{color:var(--muted-2)}
+.recsrc{font-size:9px;color:var(--muted-2);margin-top:9px}
+.recsheet .recgrid + .recgrid{margin-top:8px}
+
+/* every register row that carries its own sheet looks openable */
+tr[data-rsc-hit]{cursor:pointer}
+
+/* ---------- long free text stays inside its cell ---------- */
+.pfield{min-width:0}
+.pfield .pv{overflow-wrap:anywhere}
+.strip div{min-width:0}
+.strip .sv{overflow-wrap:anywhere}
+
+/* ---------- tablets ---------- */
+@media(max-width:1100px){
+  .g4,.grid.g4,.grid5,.health,.methodgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .chartgrid{grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))!important}
+  .kgrid{grid-template-columns:repeat(auto-fit,minmax(min(150px,45%),1fr))}
+}
+
+/* ---------- phones ---------- */
+@media(max-width:760px){
+  /* the modal keeps its content on screen instead of running off the edge */
+  .modal{padding:12px 10px 20px}
+  .modal-card{max-width:none!important;width:100%;border-radius:14px}
+  .modal-head{padding:13px 14px}
+  .modal-head h3{font-size:13.5px;overflow-wrap:anywhere}
+  .modal-head p{font-size:10px}
+  .modal-body{padding:13px 14px;max-height:70vh}
+  .modal-foot{padding:11px 14px;gap:6px;flex-wrap:wrap}
+  .modal-foot .btn{flex:1 1 auto;justify-content:center}
+
+  .recgrid{grid-template-columns:1fr}
+  .recgrid .pfield{padding:8px 10px}
+  .pfields{grid-template-columns:1fr!important}
+  .pfields .pfield{padding:8px 10px}
+
+  /* every two, three and four column block folds */
+  .g2,.g3,.g4,.grid.g2,.grid.g3,.grid.g4,.grid,.g-1-1-1,.g-2-1,.split,.split.rev,
+  .split.even,.form-grid,.form-grid.three,.form-grid.four,.repgrid,.statusgrid,
+  .prevblocks,.gallery,.qa-grid,.prow,.rgrid,.totals,.heatgrid,.cmp,.tgrid,.sgrid,
+  .statstrip,.optgrid,.ogrid,.mgrid,.methodgrid,.kycgrid,.igrid,.health,.sims,.prevrow,
+  .agrid,.buckets,.chgrid,.vg,.vcard{
+    grid-template-columns:1fr!important
+  }
+
+  /* one tap target size and one search layout on every module */
+  .search{width:auto;flex:1 1 100%;order:9}
+  .btn{padding:9px 13px}
+  .btn-sm{padding:6px 10px}
+  .snav{padding:7px 12px;font-size:12px}
+  .subnav{position:static;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding:8px 12px}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto}
+  .chip{padding:6px 10px;font-size:11.5px}
+  .modal-body .tblwrap{max-height:none}
+
+  .kgrid{grid-template-columns:1fr 1fr!important;gap:8px}
+  .kpi{padding:9px 10px}
+  .kpi .kv{font-size:15px}
+  .kpi .kl{font-size:9px;letter-spacing:.35px}
+  .kpi .ks{font-size:9.5px}
+
+  .chartgrid{grid-template-columns:1fr!important}
+  .strip{grid-template-columns:1fr 1fr!important}
+  .strip .sv{font-size:12px}
+  /* label over value, one field per line: nothing is clipped on a phone */
+  .risk{flex-direction:column;gap:2px;align-items:flex-start}
+  .risk .rv{margin-left:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left}
+
+  /* wide registers scroll sideways instead of crushing every column */
+  .tblwrap{max-height:62vh;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* text wraps inside the cell, so a five-column register fits the phone
+     instead of running off the right edge */
+  .tblwrap table th,.tblwrap table td{white-space:normal;overflow-wrap:anywhere}
+  .tblwrap table td.num,.tblwrap table th.num{white-space:nowrap}
+  .tbl2{font-size:11px}
+  .tbl2 thead th{font-size:8.5px;letter-spacing:.4px}
+  .tblwrap table th:first-child,.tblwrap table td:first-child{
+    position:sticky;left:0;background:#fff;z-index:1;box-shadow:1px 0 0 var(--line-2)}
+  .tblwrap table thead th:first-child{z-index:3;background:#fff}
+  table tbody tr:hover td:first-child{background:#FCFAF2}
+  .tblwrap table td .badge{white-space:nowrap}
+
+  .sec-head{flex-wrap:wrap;gap:8px}
+  .sec-tools{margin-left:0;flex-wrap:wrap}
+  .panel-head{flex-wrap:wrap;gap:6px}
+  .form-actions{flex-wrap:wrap;gap:6px}
+  .form-actions .btn{flex:1 1 auto;justify-content:center}
+  /* the header keeps one row and sizes itself: a fixed height plus
+     wrapping was clipping the title and the buttons */
+  .topbar{height:auto;min-height:56px;padding:8px 12px;flex-wrap:nowrap;gap:8px}
+  .topbar .page-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sec{padding:0 2px}
+  img,svg{max-width:100%}
+}
+
+/* ---------- small phones ---------- */
+@media(max-width:460px){
+  .kgrid{grid-template-columns:1fr!important}
+  .modal{padding:0}
+  .modal-card{border-radius:0;min-height:100vh;max-height:none}
+  .modal-body{max-height:none}
+  .recmeta span{font-size:9px}
+  .form-grid,.pfields,.form-grid.three,.form-grid.four,.agrid,.buckets,.chgrid,.vg,.vcard{grid-template-columns:1fr!important}
+  .tbl2.dense td,.tbl2.dense th{padding:6px}
+  .btn{padding:10px 14px;font-size:12.5px}
+  .snav{padding:8px 13px}
+  .recgrid .pfield{padding:9px 11px}
+  .recgrid .pfield .pv{font-size:12px}
+}
+
+@media print{
+  .recgrid{grid-template-columns:1fr 1fr!important}
+  .recmeta{display:none}
+}
+
+/* ---------- anchor offsets ----------
+   The section chips are sticky and wrap onto two or three rows on a wide
+   screen, so a jump to #s7 has to clear the topbar plus the whole chip bar.
+   Without this the heading landed underneath the bar. */
+.sec{scroll-margin-top:152px}
+@media(max-width:1100px){ .sec{scroll-margin-top:140px} }
+@media(max-width:860px){ .sec{scroll-margin-top:124px} }
+@media(max-width:760px){ .sec{scroll-margin-top:74px} }
+
+/* ---------- the module band ----------
+   Four figures beside the title must never push the band past the screen. */
+.band-stats{flex-wrap:wrap;row-gap:8px}
+@media(max-width:760px){
+  .band-stats{width:100%;margin-left:0;flex-wrap:wrap;gap:10px 0}
+  .band-stat{padding-left:0;border-left:0;padding-right:14px;white-space:normal}
+  .modband h1{font-size:17px}
+  .modband p{font-size:11px}
+}
+
+</style>
+<style data-gls="layout-css">
+/* ============================================================================
+   LAYOUT GUARD — shared by every page
+   Two faults this fixes, both seen in real modules:
+
+   1. A card sitting in a half- or third-width grid column that holds a table
+      with 5-8 columns. The columns squeeze to a few dozen pixels and every
+      header and cell wraps to one or two letters per line, so the text reads
+      as vertical strips instead of horizontal rows.
+   2. Those same over-wide tables push the page wider than the viewport. The
+      shell is a flex row, so the whole content column slides sideways and the
+      first letters of the left-hand card end up clipped at the edge.
+
+   The script (_layout-guard.js) widens the offending card to the full grid
+   width and wraps bare tables in a scrolling container. These rules make sure
+   a table can never be squeezed into vertical text in the first place.
+   ========================================================================= */
+
+/* nothing may push its way out of the page shell */
+html, body { max-width: 100%; }
+body > .main, .main { min-width: 0; }
+.content { min-width: 0; }
+
+/* grid and flex children may shrink — the default min-width:auto is what
+   lets a wide table stretch its column past the container */
+.grid > *, .g2 > *, .g3 > *, .g4 > *, .kgrid > *, .chartgrid > *,
+.gallery > *, .repgrid > *, .split > *, .pfields > *, .form-grid > *,
+.subgrid > * { min-width: 0; }
+
+.card, .panel, .card.panel { min-width: 0; max-width: 100%; }
+
+/* a card the guard has widened spans its grid */
+.card.gls-wide, .panel.gls-wide { grid-column: 1 / -1; }
+
+/* tables scroll inside their card instead of overflowing the page */
+.tblwrap { max-width: 100%; overflow-x: auto; }
+.tbl2 { max-width: 100%; }
+.tbl2 th, .tbl2 td { word-break: normal; overflow-wrap: normal; hyphens: none; }
+
+/* a header keeps a readable width, so a column can never collapse to one
+   letter per line; the wrapper scrolls if the table then gets wider */
+.tbl2 thead th { min-width: 58px; }
+.tbl2 thead th:first-child { min-width: 90px; }
+
+/* the wide screens still get the full grid; narrow ones keep one column */
+@media (max-width: 1100px) {
+  .band-stats { flex-wrap: wrap; row-gap: 6px; }
+  .band-stat { padding-left: 12px; }
+}
+
+@media (max-width: 760px) {
+  /* on a phone the whole table scrolls rather than folding into letters */
+  .tbl2 thead th { min-width: 72px; }
+  .card, .panel { padding-left: 12px; padding-right: 12px; }
+}
+
+</style>
+<link data-gls="brand-icons" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link data-gls="brand-icons" rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link data-gls="brand-icons" rel="icon" href="assets/favicon.ico" sizes="any">
+<link data-gls="brand-icons" rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link data-gls="brand-icons" rel="mask-icon" href="assets/logo-mark.png" color="#C9A227">
+<meta data-gls="brand-icons" name="theme-color" content="#C9A227">
+<meta data-gls="brand-icons" property="og:image" content="assets/logo.png">
+<meta data-gls="brand-icons" name="application-name" content="GOLDEN FINANCIAL SERVICES">
+<style data-gls="brand-css">
+/* ============================================================================
+   BRAND — the GOLDEN FINANCIAL SERVICES logo across the system
+
+   One stylesheet for every place the mark appears: the sidebar, the header,
+   the dark header, the page footer, printed pages and exported documents.
+   Injected into every page by inject_brand.py, after the module styles, so
+   these rules win without touching 23 generated <head> blocks.
+   ========================================================================= */
+
+/* ---- text size is ours, not the browser's --------------------------------- */
+/* Mobile Chrome enlarges text it thinks is too small ("font boosting"). Inside
+   tightly sized rows that makes a label taller than its box and the top or
+   bottom of the letters is cut off. Pinning the adjustment keeps every label
+   at the size this stylesheet asks for, so nothing is clipped. */
+html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%}
+
+/* the header's real height, measured at run time, feeds the sticky offsets */
+:root{--gls-topbar-h:96px}
+
+/* ---- keep every page's text off the screen edge --------------------------- */
+/* Anchored jumps (a section chip, a #sN link, a deep link) stop below the
+   sticky header instead of ending with the heading half-hidden under it. */
+html{scroll-padding-top:calc(var(--gls-topbar-h,96px) + 16px)}
+
+/* one safe gutter on every page, so no label ever starts at the screen edge */
+.content{
+  padding-left:16px;
+  padding-right:16px;
+  padding-top:18px;
+}
+/* nothing may pull itself outside that gutter */
+.sec,.card,.panel,.tblwrap{max-width:100%}
+.sec-head{margin-left:0;margin-right:0}
+.sec-head > *, .panel-head > *{min-width:0}
+
+/* pages without a .content wrapper get the same gutter, marked at run time */
+.main.gls-pad{
+  padding-left:16px;
+  padding-right:16px;
+  padding-top:18px;
+}
+/* the sticky chip bar keeps its full-width background inside that gutter */
+.main.gls-pad > .subnav{
+  margin-left:-16px;margin-right:-16px;
+  padding-left:16px;padding-right:16px;
+}
+@media (max-width:860px){
+  .content,.main.gls-pad{padding-left:15px;padding-right:15px;padding-top:14px}
+  .main.gls-pad > .subnav{margin-left:-15px;margin-right:-15px;padding-left:15px;padding-right:15px}
+}
+
+/* ---- sidebar lock-up ------------------------------------------------------ */
+.brand-mark{position:relative;overflow:hidden}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-mark.has-logo{
+  background:none;box-shadow:none;border-radius:0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));
+}
+.brand{gap:12px}
+.brand:hover .brand-mark img{transform:scale(1.04)}
+.brand-mark img{transition:transform .25s ease}
+
+/* ---- header --------------------------------------------------------------- */
+.gls-topbar-logo{
+  height:30px;width:auto;flex:0 0 auto;margin-right:2px;
+  filter:drop-shadow(0 1px 2px rgba(16,18,24,.12));
+}
+@media (max-width:520px){ .gls-topbar-logo{height:24px} }
+
+/* ---- header: a wide dark bar carrying the name in large print ------------ */
+.topbar{
+  background:rgba(15,17,21,.98);
+  border-bottom:1px solid #23262E;
+  box-shadow:0 8px 22px rgba(9,11,15,.16);
+  backdrop-filter:none;
+  height:auto;
+  min-height:96px;
+  padding:10px 26px;
+  gap:16px;
+  flex-wrap:nowrap;
+}
+
+/* the name, large; the portal it belongs to, spaced underneath */
+.gls-brandbar{
+  display:flex;flex-direction:column;justify-content:center;gap:4px;
+  flex:0 1 auto;min-width:0;
+}
+.gls-brandbar-name{
+  font-size:21px;font-weight:800;line-height:1.05;
+  letter-spacing:1.1px;color:#fff;
+  white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.35);
+}
+.gls-brandbar-sub{
+  font-size:10.5px;font-weight:800;line-height:1;
+  letter-spacing:3.6px;color:#E4C264;text-transform:uppercase;
+  white-space:nowrap;
+}
+.gls-brandbar-sep{
+  flex:0 0 1px;width:1px;height:44px;background:#2C313B;
+  margin:0 2px;
+}
+
+/* the module name sits after the name, smaller, so both stay readable */
+.topbar > div{min-width:0}
+.topbar .search{flex:0 1 260px}
+.topbar .topbar-actions{flex:0 0 auto}
+.topbar .page-title{
+  font-size:14.5px;font-weight:700;color:#fff;letter-spacing:-.1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar .page-sub{font-size:10.5px;color:#B9C1CF;max-width:520px}
+.topbar > div:first-of-type{min-width:0;flex:0 1 auto}
+
+.topbar .menu-btn{background:#1B1F27;border-color:#2A2F3A;color:#E8EAF0}
+.topbar .menu-btn svg{stroke:#E8EAF0}
+.topbar .menu-btn:hover{background:#20242D;border-color:var(--gold)}
+
+.topbar .search{background:#1B1F27;border:1px solid #2F3541}
+.topbar .search:focus-within{background:#20242D;border-color:var(--gold)}
+.topbar .search input{color:#F1F3F7}
+.topbar .search input::placeholder{color:#9AA3B4}
+.topbar .search svg{stroke:#9AA3B4}
+
+.topbar .icon-btn{background:#1B1F27;border-color:#2F3541;color:#D5DAE3}
+.topbar .icon-btn:hover{background:#20242D;border-color:var(--gold);color:#F3D67A}
+.topbar .icon-btn svg{stroke:currentColor}
+.topbar .dot{border-color:#15171C}
+
+.topbar .btn-ghost{background:#1B1F27;border-color:#2F3541;color:#F1F3F7}
+.topbar .btn-ghost:hover{background:#242A34;border-color:var(--gold);color:#F3D67A}
+
+.topbar .backbtn{background:#1B1F27;border-color:#2F3541;color:#E4E8EF}
+.topbar .backbtn:hover:not(:disabled){background:#242A34;border-color:var(--gold);color:#F3D67A}
+.topbar .backbtn:disabled{background:#171A21;border-color:#2A2F39;color:#79808D}
+.topbar .backbtn:disabled:hover{background:#171A21;border-color:#2A2F39;color:#79808D}
+
+.topbar .tabs{background:#1B1F27}
+.topbar .tab{color:#B4BCCA}
+.topbar .tab:hover{color:#fff}
+.topbar .tab.on{background:#2F3641;color:#fff;box-shadow:none}
+
+/* the section bar has to clear the taller header */
+.subnav{top:var(--gls-topbar-h,96px);border-bottom:1px solid #E0E3EA}
+.sec{scroll-margin-top:calc(var(--gls-topbar-h,96px) + 54px)}
+
+@media (max-width:1380px){
+  .gls-brandbar-name{font-size:18px;letter-spacing:.8px}
+  .gls-brandbar-sub{font-size:9.5px;letter-spacing:2.8px}
+  .topbar .page-sub{display:none}
+  .topbar{min-height:88px;gap:13px;padding:9px 20px}
+  .subnav{top:var(--gls-topbar-h,88px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,88px) + 50px)}
+}
+@media (max-width:1120px){
+  .gls-brandbar-sep{display:none}
+  .gls-brandbar-name{font-size:16px;letter-spacing:.5px}
+  .gls-brandbar-sub{font-size:8.5px;letter-spacing:2.2px}
+  .topbar .page-title{font-size:13px}
+  .topbar{min-height:80px}
+  .subnav{top:var(--gls-topbar-h,80px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,80px) + 48px)}
+}
+@media (max-width:900px){
+  .gls-brandbar-name{font-size:14px;letter-spacing:.3px;white-space:normal}
+  .gls-brandbar-sub{font-size:8px;letter-spacing:1.8px}
+  .topbar{min-height:72px;gap:10px;padding:8px 14px}
+  .subnav{top:var(--gls-topbar-h,72px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,72px) + 44px)}
+}
+@media (max-width:620px){
+  .gls-topbar-logo{height:28px;width:28px}
+  /* the full name on one line, clipped with an ellipsis rather than wrapped
+     onto three lines that make the bar taller than its own offset */
+  .gls-brandbar{flex:1 1 auto;overflow:hidden}
+  .gls-brandbar-name{
+    font-size:13px;letter-spacing:.4px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .gls-brandbar-sub{font-size:7.5px;letter-spacing:1.6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .gls-brandbar-sep{display:none}
+  /* the module name is already said again in the page body: drop it here so
+     the controls keep their room (only that block, never the search or the
+     action buttons) */
+  .topbar .gls-pageid{display:none}
+  .topbar .topbar-actions{margin-left:auto}
+  .topbar .btn{padding:7px 10px;font-size:11px}
+  .topbar{min-height:60px;gap:8px;padding:7px 12px}
+  .gls-open-chip{display:none!important}
+}
+
+/* ---- readability: every label in the shell clears its background --------- */
+.sidebar .nav-label{color:#9CA4B2}
+.sidebar .nav-item{color:#CFD5DF}
+.sidebar .nav-item:hover{color:#fff}
+.sidebar .sf-name{color:#fff}
+.sidebar .sf-role{color:#ADB5C2}
+.gls-signout{color:#ADB5C2}
+
+/* ---- the stat band (fees, salaries, savings) ------------------------------ */
+/* Three modules put their headline figures in <div class="band"> with .bl
+   labels and .bv values, but the stylesheet they build from only styles
+   .modband. The strip therefore rendered as bare text above the content.
+   It now matches the module band on every other page. */
+.band{
+  background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);
+  color:#fff;border-radius:14px;padding:14px 16px;margin:0 0 14px;
+  display:flex;gap:22px;align-items:center;flex-wrap:wrap;
+  box-shadow:0 10px 28px rgba(16,18,24,.18);
+}
+.band .bl{
+  font-size:9px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  color:#A9B0BD;
+}
+.band .bv{
+  font-size:17px;font-weight:800;line-height:1.2;margin-top:3px;
+  font-variant-numeric:tabular-nums;color:#fff;
+}
+.band > div{min-width:0}
+.band .band-refresh{margin-left:auto}
+.band .band-refresh .btn-ghost{background:#1B1F27;border-color:#2F3541;color:#F1F3F7}
+.band .band-refresh .btn-ghost:hover{background:#242A34;border-color:var(--gold);color:#F3D67A}
+
+@media (max-width:760px){
+  .band{gap:14px 20px;padding:12px 14px}
+  .band .bv{font-size:15px}
+  .band .band-refresh{margin-left:0;width:100%}
+}
+
+/* ---- page footer: the same dark band as the header ------------------------ */
+.gls-footer{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  margin-top:26px;padding:14px 18px;
+  background:#0F1115;border:1px solid #23262E;border-radius:12px;
+  box-shadow:0 6px 18px rgba(9,11,15,.14);
+  font-size:11px;color:#C7CBD4;
+}
+.gls-footer .gls-foot-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.gls-footer .gls-foot-brand img{height:26px;width:auto;flex:0 0 auto}
+.gls-footer .gls-foot-name{font-weight:800;font-size:11.5px;color:#fff;letter-spacing:.4px}
+.gls-footer .gls-foot-sub{font-size:9.5px;letter-spacing:.9px;color:#A9B0BD;margin-top:2px}
+.gls-footer .gls-foot-links{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.gls-footer a{
+  color:#E4C264;text-decoration:none;font-weight:800;font-size:11px;
+  border-bottom:1px solid transparent;transition:.15s;
+}
+.gls-footer a:hover{color:#F3D67A;border-bottom-color:#E4C264}
+.gls-footer .gls-foot-sep{width:1px;height:14px;background:#2C313B}
+.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#A9B0BD;letter-spacing:.2px}
+.gls-footer .gls-build:empty{display:none}
+
+/* ---- tables: never one letter per line ----------------------------------- */
+/* A register in a narrow column used to break every word at any character
+   ("R E F E R E N C E" stacked vertically). A header now keeps its word whole
+   and a cell only ever breaks between words; if the register is then wider
+   than its card, the card scrolls sideways instead of crushing the columns. */
+.tblwrap,.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tblwrap table,.tbl-wrap table,table.tbl2{width:100%}
+table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
+.tblwrap table thead th,.tbl-wrap table thead th,
+.tbl2 thead th,table thead th{white-space:nowrap}
+.tblwrap table td,.tbl-wrap table td,.tbl2 td{white-space:normal;overflow-wrap:break-word}
+.tblwrap table td.num,.tbl-wrap table td.num,
+.tbl2 td.num,.tblwrap table th.num,.tbl-wrap table th.num{white-space:nowrap}
+/* long unbroken values (references, codes) may wrap at a sensible point */
+.tblwrap table td .mono,.tblwrap table td code{overflow-wrap:anywhere}
+
+/* tight label rows stay tall enough for their text */
+.meter .mt,.hbar .hl,.hbar-l{line-height:1.45}
+
+/* ---- brand tiles ---------------------------------------------------------- */
+/* .logo-tile is the small gold "GF" tile used on receipts, applications and
+   the settings preview. The emblem replaces the monogram, on a dark tile so
+   the gold always reads. It works for tiles rendered later by JavaScript too. */
+.logo-tile{
+  background:#14161B!important;
+  background-image:url(assets/logo-mark-96.png)!important;
+  background-size:78% auto!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  box-shadow:none!important;
+}
+
+/* the emblem at the top of an on-screen receipt or proof of payment */
+.gls-docmark{height:28px;width:auto;display:block;margin:0 0 8px}
+
+/* ---- printed pages -------------------------------------------------------- */
+.gls-print-head{display:none}
+@media print{
+  .gls-footer .gls-foot-links,.gls-signout{display:none!important}
+  .gls-print-head{
+    display:flex;align-items:center;gap:12px;
+    border-bottom:2px solid #C9A227;padding-bottom:8px;margin-bottom:16px;
+  }
+  .gls-print-head img{height:44px;width:auto;display:block}
+  .gls-print-head .gls-ph-txt{
+    margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5;
+  }
+  .gls-print-head .gls-ph-name{
+    font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px;
+  }
+  .gls-footer{border-top:1px solid #D9DDE6;font-size:9.5px;padding-top:10px;color:#3B4250}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .brand-mark img,.gls-signout{transition:none}
+}
+
+/* ============================================================================
+   PROFESSIONAL SKIN — one surface language for every module
+
+   Restrained, boardroom-clean: white section cards on the light canvas, a thin
+   gold accent where it carries meaning (section number, card title rule, KPI
+   tone), slate hairlines everywhere else, tabular figures in every table and
+   one consistent type scale. Gold is an accent, never wallpaper.
+   ========================================================================= */
+:root{
+  --gls-line:#E3E8F0;          /* hairline on white */
+  --gls-line-2:#EDF1F7;        /* hairline inside a table */
+  --gls-slate:#667085;         /* secondary text */
+  --gls-ink:#12151B;
+  --gls-text:#1D2430;
+  --gls-shadow:0 1px 2px rgba(16,24,40,.05);
+  --gls-shadow-2:0 6px 20px -8px rgba(16,24,40,.16);
+  --gls-radius:14px;
+}
+
+/* cool the shell hairlines down from the old blue-greys */
+:root{--line:#E3E8F0;--line-2:#EFF3F9;--muted:#667085;--muted-2:#8A93A6}
+
+/* ---- a module section: one quiet card, gold accent only at the top -------- */
+section.sec{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-radius:var(--gls-radius);
+  padding:22px 20px 14px;
+  box-shadow:var(--gls-shadow);
+  overflow:visible;
+}
+section.sec::before{
+  content:"";position:absolute;top:0;left:20px;right:20px;height:3px;
+  border-radius:0 0 4px 4px;
+  background:linear-gradient(90deg,#C9A227 0%,#E4C264 45%,rgba(228,194,100,0) 100%);
+  pointer-events:none;
+}
+section.sec + section.sec{margin-top:26px}
+@media (max-width:860px){
+  section.sec{padding:16px 14px 10px;border-radius:12px}
+  section.sec::before{left:14px;right:14px;height:3px}
+}
+
+/* ---- section heading: number, title, note, divider ------------------------ */
+section.sec > .sec-head{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:0 0 12px;margin:0 0 14px;
+  border-bottom:1px solid var(--gls-line-2);
+}
+.sec-head h2{
+  font-size:15.5px;font-weight:800;letter-spacing:-.25px;line-height:1.28;color:var(--gls-ink);
+}
+.sec-head p{font-size:11.5px;line-height:1.5;color:var(--gls-slate);margin-top:3px;max-width:82ch}
+.sec-num{
+  width:28px;height:28px;flex:0 0 28px;border-radius:9px;
+  background:linear-gradient(180deg,#171A21,#0F1115);
+  color:#E9C766;font-weight:800;
+  box-shadow:inset 0 0 0 1px rgba(201,162,39,.45),0 1px 2px rgba(16,24,40,.15);
+}
+.sec-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+/* ---- cards inside a section ---------------------------------------------- */
+.card,.panel,.chartcard,.repcard{
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-left:1px solid var(--gls-line);
+  border-radius:12px;
+  box-shadow:var(--gls-shadow);
+  transition:box-shadow .18s ease,border-color .18s ease;
+}
+.card:hover,.panel:hover,.chartcard:hover,.repcard:hover{
+  border-color:#CFD8E6;border-left-color:#CFD8E6;
+  box-shadow:var(--gls-shadow-2);
+}
+/* a card inside a card keeps a hairline only — no stacked frames */
+.card .card,.card .panel,.panel .card,.panel .panel{
+  border-color:var(--gls-line-2);box-shadow:none;
+}
+/* the small gold rule that marks a card's title */
+.panel-title{position:relative;padding-left:11px}
+.panel-title::before{
+  content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,#C9A227,#E4C264);
+}
+.panel-sub{font-size:11px;line-height:1.5;color:var(--gls-slate);margin-top:3px}
+.panel-title{font-size:13.5px;font-weight:700;letter-spacing:-.1px;color:var(--gls-text)}
+
+/* ---- KPI tiles: tone on the top edge, big tabular figure ------------------ */
+.kpi{
+  background:#fff;
+  border:1px solid var(--gls-line);
+  border-top:3px solid var(--gold);
+  border-radius:12px;
+  box-shadow:var(--gls-shadow);
+  padding:12px 13px;
+}
+.kpi .kl{
+  font-size:9px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  color:var(--gls-slate);
+}
+.kpi .kv{
+  font-size:clamp(16px,2.1vw,20px);font-weight:800;letter-spacing:-.4px;
+  font-variant-numeric:tabular-nums;color:var(--gls-ink);line-height:1.25;
+}
+.kpi .ks{font-size:10px;line-height:1.45;color:var(--gls-slate)}
+.kpi.gold{border-top-color:#C9A227;border-left-color:var(--gls-line);background:#fff}
+.kpi.amber{border-top-color:#E08C1E;border-left-color:var(--gls-line);background:#fff}
+.kpi.green{border-top-color:#1E9E6A;border-left-color:var(--gls-line);background:#fff}
+.kpi.blue{border-top-color:#2F6FED;border-left-color:var(--gls-line);background:#fff}
+.kpi.red{border-top-color:#D93F3F;border-left-color:var(--gls-line);background:#fff}
+
+/* ---- tables: quiet header band, zebra-free rows, tabular figures ---------- */
+table{font-variant-numeric:tabular-nums}
+table td,table th{padding:9px 10px}
+table thead th{
+  background:#F7F9FC;
+  color:#5B6472;
+  font-size:9.5px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;
+  border-bottom:1px solid var(--gls-line);
+}
+table tbody tr + tr td{border-top:1px solid var(--gls-line-2)}
+table tbody tr:hover td{background:#FBFCFE}
+.tblwrap table thead th:first-child,.tbl-wrap table thead th:first-child{background:#F7F9FC}
+.tblwrap table td:first-child,.tbl-wrap table td:first-child{background:#fff}
+.tblwrap::-webkit-scrollbar,.tbl-wrap::-webkit-scrollbar{height:8px}
+.tblwrap::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb{background:#D6DCE7;border-radius:8px}
+.tblwrap::-webkit-scrollbar-track,.tbl-wrap::-webkit-scrollbar-track{background:transparent}
+
+/* ---- badges: one pill, soft tone, no shouting ----------------------------- */
+.badge{
+  border-radius:999px!important;
+  font-size:9.5px;font-weight:800;letter-spacing:.25px;
+  padding:3px 9px;
+  border:1px solid transparent;
+}
+.badge.b-ok{background:#E9F7F0;color:#116B49;border-color:#C9EBDC}
+.badge.b-warn{background:#FFF5E3;color:#8A5B08;border-color:#F3DFB6}
+.badge.b-crit{background:#FDECEC;color:#A62424;border-color:#F6D2D2}
+.badge.b-blue{background:#EAF1FE;color:#1F55C0;border-color:#CFDEFB}
+.badge.b-gray{background:#F3F5F9;color:#4E5766;border-color:#E3E8F0}
+
+/* ---- buttons: one height, one radius, gold for the one primary action ----- */
+.btn{
+  border-radius:10px;font-weight:700;letter-spacing:.1px;
+  border:1px solid transparent;box-shadow:none;
+  transition:background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.btn-gold{
+  border-color:#B08D1C;
+  background:linear-gradient(180deg,#D8B247,#C9A227);
+  color:#241C00;
+  box-shadow:0 1px 2px rgba(16,24,40,.12);
+}
+.btn-gold:hover{background:linear-gradient(180deg,#CB9F1F,#B78F1C);filter:none;box-shadow:0 2px 6px rgba(176,141,28,.28)}
+.btn-ghost{background:#fff;border-color:var(--gls-line);color:var(--gls-text)}
+.btn-ghost:hover{background:#F7F9FC;border-color:#CFD8E6;color:var(--gls-ink)}
+
+/* ---- form controls -------------------------------------------------------- */
+.fld,.fg input,.fg select,.fg textarea{
+  border-radius:10px;border-color:#DCE2EC;background:#fff;color:var(--gls-text);
+}
+.fld:focus-within,.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:#C9A227;box-shadow:0 0 0 3px rgba(201,162,39,.16);
+}
+
+/* ---- sub-navigation chips and tabs --------------------------------------- */
+.snav,.stab{font-weight:700;border-color:var(--gls-line);background:#fff;color:#414B5A}
+.snav.on,.stab.on{background:var(--gls-ink);border-color:var(--gls-ink);color:#fff;box-shadow:0 1px 2px rgba(16,24,40,.16)}
+.snav:hover,.stab:hover{border-color:#C9A227;color:#7A5C08;background:#FDF8E7}
+
+/* ---- focus ring, one shape everywhere ------------------------------------ */
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid #C9A227;outline-offset:2px;border-radius:6px;
+}
+
+/* ---- print: drop the accents, keep the structure -------------------------- */
+@media print{
+  section.sec{border:1px solid #D8DADD;border-radius:0;box-shadow:none;padding:0 0 6px}
+  section.sec::before{display:none}
+  section.sec > .sec-head{border-bottom:1px solid #D8DADD}
+  .card,.panel,.chartcard,.repcard{box-shadow:none;border-color:#D8DADD}
+  .panel-title::before{background:#999}
+  table thead th{background:none;color:#333}
+}
+
+/* ============================================================================
+   PERFORMANCE METERS — a label, a bar and a hint, stacked
+
+   These used the class .meter, which the shell also uses for the thin 6px
+   progress bar (height:6px; overflow:hidden). A module that restyled .meter
+   as a stack only added display:grid, so the leftover 6px height and the
+   hidden overflow clipped every row to a sliver of text. The stack now has
+   its own class, so the two can never collide again.
+   ========================================================================= */
+.perfm{display:grid;gap:4px;height:auto;max-height:none;overflow:visible;background:none;border-radius:0;margin-top:0}
+.perfm .mt{display:flex;justify-content:space-between;gap:10px;font-size:10px;font-weight:700;color:#2B303B;line-height:1.45}
+.perfm .mt > div{min-width:0;overflow-wrap:break-word}
+.perfm .mt > span{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:800;white-space:nowrap;flex:0 0 auto}
+.perfm .mbar{height:7px;border-radius:20px;background:#EEF0F4;overflow:hidden}
+.perfm .mbar i{display:block;height:100%;border-radius:20px;background:var(--gold)}
+.perfm .mbar i.ok{background:var(--green)}
+.perfm .mbar i.warn{background:var(--amber)}
+.perfm .mbar i.bad{background:var(--red)}
+.perfm .qhint{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.45}
+
+/* ============================================================================
+   NOTHING MAY BE CRUSHED OR CUT AT THE EDGE
+
+   A register header keeps its word whole and a cell breaks between words; the
+   table then scrolls sideways inside its wrapper instead of squeezing the
+   columns to one letter per line. These declarations are deliberately
+   !important: a module stylesheet must not be able to reintroduce the crush.
+   ========================================================================= */
+.tblwrap,.tbl-wrap{
+  display:block;width:100%;max-width:100%;
+  overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+}
+.tblwrap > table,.tbl-wrap > table,table.tbl2{table-layout:auto;min-width:100%}
+table thead th{white-space:nowrap!important;word-break:keep-all;overflow-wrap:normal}
+table td{word-break:normal;overflow-wrap:break-word;hyphens:none}
+
+/* the page itself never scrolls sideways — a wide register scrolls inside its
+   own wrapper, and the sidebar can never be pushed off the left edge */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow:clip){html,body{overflow-x:hidden}}
+
+/* the sidebar can never be widened by its own labels, so it can never be
+   pushed off the left edge of the screen */
+.sidebar,.nav{overflow-x:hidden}
+.nav-item{min-width:0}
+.nav-item svg,.nav-item .pill{flex:0 0 auto}
+
+/* ---- shell refinements that finish the professional look ------------------ */
+/* a cooler canvas so the white section cards sit forward */
+:root{--bg:#F3F6FA;--card:#FFFFFF}
+
+/* the sidebar reads as a separate plane, not a stripe of the same page */
+.sidebar{box-shadow:1px 0 0 rgba(15,17,21,.10)}
+.nav-item{
+  transition:background .15s ease,color .15s ease,padding-left .15s ease;
+  border-radius:10px;
+}
+.nav-item.active{border-radius:10px;box-shadow:inset 0 0 0 1px rgba(201,162,39,.22)}
+.nav-label{margin-top:4px}
+
+/* the sticky chip bar gets a real surface, so content never shows through it */
+.subnav{
+  background:rgba(243,246,250,.94);
+  -webkit-backdrop-filter:saturate(1.4) blur(8px);
+  backdrop-filter:saturate(1.4) blur(8px);
+  border-bottom:1px solid var(--gls-line);
+}
+@supports not (backdrop-filter:blur(8px)){.subnav{background:#F3F6FA}}
+
+/* the header already carries the brand; give it a hairline instead of a glow */
+.topbar{box-shadow:0 1px 0 rgba(255,255,255,.06),0 8px 24px -18px rgba(0,0,0,.8)}
+
+/* micro-type used for notes and timestamps */
+.qhint,.minihead{color:var(--gls-slate)}
+.minihead{
+  font-size:9.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  color:#5B6472;
+}
+
+/* numbers line up in every register, small print and KPI */
+.kpi .kv,.band .bv,.tbl2 td.num,.tblwrap table td.num{font-variant-numeric:tabular-nums}
+
+/* one quiet hover for interactive tiles */
+.gcard,.risk,.checkrow,.li{transition:background .15s ease,border-color .15s ease}
+
+/* ============================================================================
+   EMERALD LIQUID-CRYSTAL THEME
+
+   The canvas carries the colour: soft emerald light from the top-left, a
+   cooler aqua from the top-right and a warm brand undertone from the bottom,
+   with two faint diagonal sheens so the surface reads like glass rather than
+   a flat fill. Everything that holds data stays white, so contrast is never
+   traded for decoration.
+
+   Fields, cards, sections, forms and receipts take bolder edges than the
+   previous hairlines — 1.5px on controls and cards, 2px on sections and
+   receipts — so structure is obvious at a glance on a phone in sunlight.
+   ========================================================================= */
+:root{
+  --emerald-deep:#064E3B;
+  --emerald-700:#047857;
+  --emerald-600:#059669;
+  --emerald-500:#0E9F6E;
+  --emerald-100:#D9F2E8;
+  --gls-edge:#7FB49F;        /* card, tile and section edge */
+  --gls-edge-2:#6FA292;      /* control edge */
+  --gls-edge-hover:#1B6E52;
+}
+
+/* ---- the canvas ----------------------------------------------------------- */
+body{
+  background-color:#EDF6F1;
+  background-image:
+    radial-gradient(1100px 720px at 6% -14%,rgba(14,159,110,.22),rgba(14,159,110,0) 62%),
+    radial-gradient(900px 620px at 104% -8%,rgba(45,212,191,.20),rgba(45,212,191,0) 58%),
+    radial-gradient(820px 660px at 82% 112%,rgba(6,148,162,.14),rgba(6,148,162,0) 60%),
+    radial-gradient(720px 520px at 18% 106%,rgba(201,162,39,.12),rgba(201,162,39,0) 62%),
+    repeating-linear-gradient(128deg,rgba(255,255,255,.38) 0 1px,rgba(255,255,255,0) 1px 120px),
+    repeating-linear-gradient(52deg,rgba(255,255,255,.26) 0 1px,rgba(255,255,255,0) 1px 170px),
+    linear-gradient(168deg,#F5FCF8 0%,#E9F5EF 44%,#EFF6FA 100%);
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+@supports not (background-attachment:fixed){body{background-attachment:scroll}}
+
+/* ---- sections: bolder edge, same quiet card -------------------------------- */
+section.sec{
+  border:2px solid var(--gls-edge);
+  box-shadow:0 1px 2px rgba(6,78,59,.08),0 14px 34px -26px rgba(6,78,59,.5);
+}
+section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba(45,212,191,0) 100%)}
+
+/* ---- cards and panels ------------------------------------------------------ */
+.card,.panel,.chartcard,.repcard{
+  border:1.5px solid var(--gls-edge);
+  border-left:1.5px solid var(--gls-edge);
+  box-shadow:0 1px 2px rgba(6,78,59,.05),0 10px 26px -22px rgba(6,78,59,.40);
+}
+.card:hover,.panel:hover,.chartcard:hover,.repcard:hover{
+  border-color:var(--gls-edge-hover);border-left-color:var(--gls-edge-hover);
+  box-shadow:0 2px 4px rgba(6,78,59,.06),0 16px 34px -22px rgba(6,78,59,.45);
+}
+.card .card,.card .panel,.panel .card,.panel .panel{
+  border-width:1px;border-color:#B9D6C9;box-shadow:none;
+}
+/* the gold title rule becomes an emerald-to-gold marker so the theme reads */
+.panel-title::before{background:linear-gradient(180deg,#0E9F6E,#C9A227)}
+
+/* ---- KPI tiles ------------------------------------------------------------- */
+.kpi{border:1.5px solid var(--gls-edge);border-top-width:3px}
+.kpi.gold,.kpi.amber,.kpi.green,.kpi.blue,.kpi.red{border-left-color:var(--gls-edge);border-right-color:var(--gls-edge);border-bottom-color:var(--gls-edge)}
+
+/* ---- fields, selects, textareas ------------------------------------------- */
+.fg input,.fg select,.fg textarea{
+  border:1.5px solid var(--gls-edge-2);
+  background:#fff;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.fg input:hover,.fg select:hover,.fg textarea:hover{border-color:var(--gls-edge-hover)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:var(--emerald-600);
+  box-shadow:0 0 0 3px rgba(5,150,105,.16);
+}
+.fg label{font-weight:800;color:#3F4A57}
+.fg input[readonly]{background:#F3F7F5;border-style:dashed;color:#4A5160}
+
+/* search and filter boxes */
+.fld{border:1.5px solid var(--gls-edge-2);background:#fff;transition:border-color .15s ease,box-shadow .15s ease}
+.fld:hover{border-color:var(--gls-edge-hover)}
+.fld:focus-within{border-color:var(--emerald-600);box-shadow:0 0 0 3px rgba(5,150,105,.16)}
+
+/* form blocks get a defined frame of their own */
+.form-grid{
+  padding:14px 14px 4px;
+  border:1.5px solid #A9CDBD;
+  border-radius:12px;
+  background:#FCFEFD;
+}
+.form-actions{
+  border-top:1.5px dashed #CFE2D9;
+  padding-top:12px;margin-top:12px;
+}
+/* a filter group and a modal already carry their own frame — no nested boxing */
+.fgroup .form-grid,.modal-body .form-grid,.modal .form-grid,.drawer .form-grid{
+  padding:0;border:0;background:none;
+}
+
+/* ---- receipts and record sheets ------------------------------------------- */
+.receipt,.receiptdoc,.slip{
+  border:2px solid var(--gls-edge);
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 1px 2px rgba(6,78,59,.06),inset 0 0 0 1px #fff,0 12px 28px -24px rgba(6,78,59,.5);
+}
+.receipt .rh{border-bottom:1.5px solid var(--emerald-100)}
+.receipt .rrow{border-bottom:1px dashed #C9DED4}
+.recsheet{border-color:var(--gls-edge)}
+.gls-docmark{filter:none}
+
+/* ---- tables tie into the theme without losing legibility ------------------ */
+table thead th{background:#EAF4EF;color:#33544A;border-bottom:1.5px solid #A9CDBD}
+table tbody tr + tr td{border-top:1px solid #DCEAE3}
+table tbody tr:hover td{background:#F7FCF9}
+.tblwrap table thead th:first-child,.tbl-wrap table thead th:first-child{background:#F1F8F4}
+.tblwrap::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb{background:#C4DACE}
+
+/* ---- the sticky chip bar sits on the glass, so give it the same tint ------ */
+.subnav{background:rgba(237,246,241,.92);border-bottom:1px solid #CFE2D9}
+@supports not (backdrop-filter:blur(8px)){.subnav{background:#EDF6F1}}
+
+/* ---- print stays ink-cheap ------------------------------------------------- */
+@media print{
+  body{background:#fff;background-image:none}
+  section.sec,.card,.panel,.receipt,.receiptdoc,.slip,.form-grid,.kpi{
+    border:1px solid #C9CDD2!important;box-shadow:none!important;
+  }
+  table thead th{background:none;color:#333;border-bottom:1px solid #C9CDD2}
+}
+
+/* ============================================================================
+   HEADER LAYOUT — nothing may overlap, nothing may spill
+
+   The bar holds a back button, the emblem, the name in large print, the module
+   name, a search field and up to three action buttons. Every one of those is a
+   flex item, and the text items used to be nowrap without a clip, so a long
+   module name spilled over the name beside it and the action buttons sat on
+   top of the title. Now:
+     * the bar wraps onto a second row instead of overlapping;
+     * every text block clips with an ellipsis instead of bleeding sideways;
+     * buttons keep their own width and never shrink into their label;
+     * the logout control in the sidebar footer keeps its own slot.
+   ========================================================================= */
+.topbar{
+  display:flex;align-items:center;
+  flex-wrap:wrap;row-gap:8px;column-gap:14px;
+  min-height:0;height:auto;
+  padding:10px 22px;
+}
+.topbar > *{min-width:0}
+
+/* the emblem and the small controls never shrink */
+.gls-topbar-logo,.topbar .menu-btn,.topbar .backbtn,.topbar .icon-btn,
+.topbar .btn,.topbar .gls-signout{flex:0 0 auto}
+
+/* the large name, clipped rather than spilled */
+.gls-brandbar{flex:0 1 auto;min-width:0;max-width:100%;overflow:hidden}
+.gls-brandbar-name{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.gls-brandbar-sub{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+
+/* the module name (page id) is the part that gives way first */
+.topbar .gls-pageid{
+  flex:1 1 220px;min-width:0;max-width:100%;overflow:hidden;
+}
+.topbar .page-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.topbar .page-sub{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+
+/* search and actions share the remaining room on the first row */
+.topbar .search{flex:1 1 200px;min-width:150px}
+.topbar .topbar-actions{flex:0 0 auto;display:flex;align-items:center;gap:8px;margin-left:auto}
+
+@media (max-width:1120px){
+  /* the module name is printed again in the page body — drop it before the
+     controls start crowding the brand */
+  .topbar .gls-pageid{display:none}
+  .topbar .search{flex:1 1 160px;min-width:130px}
+}
+@media (max-width:760px){
+  .topbar{column-gap:10px;row-gap:8px;padding:8px 12px}
+  .topbar .search{flex:1 1 100%;order:9;min-width:0}
+  .topbar .topbar-actions{margin-left:auto;order:8}
+}
+@media (max-width:520px){
+  .gls-brandbar-name{font-size:12.5px;letter-spacing:.3px}
+  .gls-brandbar-sub{font-size:7px;letter-spacing:1.2px}
+  .topbar .btn{padding:7px 9px;font-size:10.5px}
+  .topbar .btn svg{display:none}
+}
+
+/* ---- the sidebar footer: name, role, then the logout control -------------- */
+.sidebar-foot{gap:10px;min-width:0;overflow:hidden}
+.sidebar-foot .avatar{flex:0 0 auto}
+.sidebar-foot > div:not(.avatar){flex:1 1 auto;min-width:0;overflow:hidden}
+.sf-name,.sf-role{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gls-signout{
+  flex:0 0 auto;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:9px;
+}
+.gls-signout svg{width:16px;height:16px;flex:0 0 auto}
+
+/* ---- sidebar labels clip instead of spilling ------------------------------ */
+.nav-item{overflow:hidden}
+.nav-item .pill{flex:0 0 auto}
+.nav-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- headings and their tools wrap instead of colliding ------------------- */
+.sec-head,.panel-head,.card-head{flex-wrap:wrap}
+.sec-head > *,.panel-head > *{min-width:0}
+.sec-head h2,.panel-head .panel-title{overflow-wrap:break-word}
+.badge,.pill,.chip{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.sec-tools{flex-wrap:wrap;justify-content:flex-end}
+
+/* ---- a last, deliberately late edge pass: clear lines, never faint -------- */
+section.sec{border:2px solid #7FB49F}
+.card,.panel,.chartcard,.repcard{border:1.5px solid #7FB49F;border-left:1.5px solid #7FB49F}
+.kpi{border:1.5px solid #7FB49F;border-top-width:3px;border-top-color:#C9A227}
+.kpi.gold{border-top-color:#C9A227}
+.kpi.amber{border-top-color:#E08C1E}
+.kpi.green{border-top-color:#1E9E6A}
+.kpi.blue{border-top-color:#2F6FED}
+.kpi.red{border-top-color:#D93F3F}
+.fg input,.fg select,.fg textarea,.fld{border:1.5px solid #6FA292}
+.receipt,.receiptdoc,.slip{border:2px solid #7FB49F}
+.form-grid{border:1.5px solid #A9CDBD}
+table thead th{border-bottom:1.5px solid #A9CDBD}
+@media print{
+  section.sec,.card,.panel,.kpi,.receipt,.receiptdoc,.slip,.form-grid,.fg input,.fg select,.fg textarea,.fld{
+    border:1px solid #C9CDD2!important;
+  }
+}
+
+</style>
+</head>
+<body class="cust">
+<div class="main">
+  <header class="topbar custbar">
+    <a class="custbrand" href="index.html">
+      <img src="assets/logo-mark.png" width="34" height="34" alt="GOLDEN FINANCIAL SERVICES">
+      <span><b>GOLDEN FINANCIAL SERVICES</b><i>ADMINISTRATION PORTAL</i></span>
+    </a>
+    <nav class="custnav">
+      <a href="agreement.html">Loan agreement</a>
+      <a href="apply.html" class="on">Application form</a>
+      <a href="index.html" class="custsignin">Staff sign-in</a>
+    </nav>
+  </header>
+<div class="sheet">
+
+  <div class="progwrap">
+    <div class="ptop">
+      <div class="pt">Loan application · Golden Financial Services</div>
+      <div class="pc" id="progText">0 of 10 sections complete</div>
+    </div>
+    <div class="progbar"><i id="progFill"></i></div>
+    <div class="progchips" id="progChips">
+      <a href="#a1" data-sec="a1">1 · Applicant</a>
+      <a href="#a2" data-sec="a2">2 · Contact</a>
+      <a href="#a3" data-sec="a3">3 · Income</a>
+      <a href="#a4" data-sec="a4">4 · Loan</a>
+      <a href="#a5" data-sec="a5">5 · Business</a>
+      <a href="#a6" data-sec="a6">6 · Guarantor 1</a>
+      <a href="#a7" data-sec="a7">7 · Guarantor 2</a>
+      <a href="#a8" data-sec="a8">8 · Collateral</a>
+      <a href="#a9" data-sec="a9">9 · Documents</a>
+      <a href="#a10" data-sec="a10">10 · Declare &amp; sign</a>
+    </div>
+  </div>
+
+  <div class="custhero">
+    <h1>Loan application form</h1>
+    <p>Ten sections, about fifteen minutes. Everything is saved on this device as you type, so you can stop and come
+      back. Before you begin you must read and accept the <a href="agreement.html">loan agreement and terms and
+        conditions</a> — the form stays locked until you do.</p>
+    <div class="custhint" id="gateBox">
+      <span id="gateText">Checking your agreement acceptance…</span>
+      <a class="btn btn-gold btn-sm" href="agreement.html" id="gateLink">Read and accept the agreement</a>
+    </div>
+  </div>
+
+  <!-- ============ 1 · APPLICANT ============ -->
+  <section class="sec" id="a1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Applicant details</h2>
+        <p>Exactly as they appear on your national ID. These are the details your loan contract will carry.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a1">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>First name <span class="req">*</span></label><input id="f_first" data-req autocomplete="given-name" /><div class="err" data-err="f_first"></div></div>
+        <div class="fg"><label>Surname <span class="req">*</span></label><input id="f_surname" data-req autocomplete="family-name" /><div class="err" data-err="f_surname"></div></div>
+        <div class="fg"><label>Other names</label><input id="f_other" /><div class="err"></div></div>
+        <div class="fg"><label>Date of birth <span class="req">*</span></label><input id="f_dob" type="date" data-req /><div class="err" data-err="f_dob"></div></div>
+        <div class="fg"><label>Sex <span class="req">*</span></label>
+          <select id="f_sex" data-req><option value="">Choose…</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select>
+          <div class="err" data-err="f_sex"></div></div>
+        <div class="fg"><label>Marital status</label>
+          <select id="f_marital"><option value="">Choose…</option><option>Single</option><option>Married</option><option>Separated</option><option>Widowed</option></select><div class="err"></div></div>
+        <div class="fg"><label>National ID number <span class="req">*</span></label><input id="f_nid" data-req placeholder="e.g. LIL-4472-991" /><div class="err" data-err="f_nid"></div></div>
+        <div class="fg"><label>Taxpayer number (TPIN)</label><input id="f_tpin" placeholder="If you have one" /><div class="err"></div></div>
+        <div class="fg"><label>Nationality</label><input id="f_nation" value="Malawian" /><div class="err"></div></div>
+        <div class="fg"><label>Dependants in your household</label><input id="f_dep" type="number" min="0" max="30" value="0" /><div class="err"></div></div>
+        <div class="fg full"><label>Are you an existing customer of Golden Financial Services?</label>
+          <select id="f_existing"><option>No — this is my first application</option><option>Yes — I have an open loan</option><option>Yes — I have repaid a loan before</option></select>
+          <div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · CONTACT ============ -->
+  <section class="sec" id="a2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Contact and address</h2>
+        <p>How we reach you, and where you actually live — this is where a field officer will visit if one is needed.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a2">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Mobile number <span class="req">*</span></label><input id="f_phone" data-req placeholder="+265 991 000 000" autocomplete="tel" /><div class="err" data-err="f_phone"></div></div>
+        <div class="fg"><label>Alternative number</label><input id="f_phone2" placeholder="A number you can always be reached on" /><div class="err"></div></div>
+        <div class="fg"><label>Email address</label><input id="f_email" type="email" placeholder="you@example.com" autocomplete="email" /><div class="err" data-err="f_email"></div></div>
+        <div class="fg"><label>District <span class="req">*</span></label>
+          <select id="f_district" data-req>
+            <option value="">Choose…</option>
+            <option>Lilongwe</option><option>Blantyre</option><option>Mzuzu</option><option>Zomba</option>
+            <option>Kasungu</option><option>Mangochi</option><option>Salima</option><option>Dedza</option>
+            <option>Nkhotakota</option><option>Mulanje</option><option>Mzimba</option><option>Other</option>
+          </select><div class="err" data-err="f_district"></div></div>
+        <div class="fg"><label>Traditional authority / ward</label><input id="f_ta" /><div class="err"></div></div>
+        <div class="fg"><label>Village or street address <span class="req">*</span></label><input id="f_address" data-req placeholder="House number, street, village" /><div class="err" data-err="f_address"></div></div>
+        <div class="fg"><label>Nearest landmark</label><input id="f_landmark" placeholder="A school, church, market or filling station" /><div class="err"></div></div>
+        <div class="fg"><label>How long at this address</label>
+          <select id="f_years"><option value="">Choose…</option><option>Under 1 year</option><option>1–3 years</option><option>3–5 years</option><option>Over 5 years</option></select><div class="err"></div></div>
+        <div class="fg full"><label>Postal address (if any)</label><input id="f_postal" placeholder="Private bag or box number" /><div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · INCOME ============ -->
+  <section class="sec" id="a3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Employment and income</h2>
+        <p>What you earn and what you spend. A repayment above 40% of your net monthly income is not accepted.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a3">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Employment type <span class="req">*</span></label>
+          <select id="f_emp" data-req>
+            <option value="">Choose…</option>
+            <option>Salaried — private sector</option><option>Salaried — government</option>
+            <option>Self-employed / business</option><option>Farming</option><option>Contract / casual</option><option>Pensioner</option>
+          </select><div class="err" data-err="f_emp"></div></div>
+        <div class="fg"><label>Employer or business name <span class="req">*</span></label><input id="f_employer" data-req /><div class="err" data-err="f_employer"></div></div>
+        <div class="fg"><label>Job title or trade</label><input id="f_job" /><div class="err"></div></div>
+        <div class="fg"><label>Length of service / trading</label>
+          <select id="f_service"><option value="">Choose…</option><option>Under 6 months</option><option>6–12 months</option><option>1–3 years</option><option>Over 3 years</option></select><div class="err"></div></div>
+        <div class="fg"><label>Net monthly income (MK) <span class="req">*</span></label><input id="f_income" type="number" min="0" data-req data-num /><div class="err" data-err="f_income"></div></div>
+        <div class="fg"><label>Other monthly income (MK)</label><input id="f_other_income" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Monthly living expenses (MK)</label><input id="f_expenses" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Existing loan repayments per month (MK)</label><input id="f_debts" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg full">
+          <label>Your affordable monthly repayment, as we calculate it</label>
+          <div class="calc" id="affordBox">Enter your income to see what you can afford.</div>
+          <div class="hint">Net income minus expenses and existing repayments, capped at 40% of net income.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · LOAN ============ -->
+  <section class="sec" id="a4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>What you are asking for</h2>
+        <p>The amount, the term and the purpose. The estimate below is indicative — the offer letter is final.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a4">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Loan product <span class="req">*</span></label>
+          <select id="f_product" data-req>
+            <option value="">Choose…</option>
+            <option>Business loan</option><option>Salary loan</option><option>Asset finance</option>
+            <option>Group loan</option><option>Emergency loan</option><option>Agricultural loan</option>
+          </select><div class="err" data-err="f_product"></div></div>
+        <div class="fg"><label>Amount requested (MK) <span class="req">*</span></label><input id="f_amount" type="number" min="50000" step="10000" data-req data-num /><div class="err" data-err="f_amount"></div></div>
+        <div class="fg"><label>Term <span class="req">*</span></label>
+          <select id="f_term" data-req><option value="">Choose…</option><option value="3">3 months</option><option value="6">6 months</option><option value="9">9 months</option><option value="12">12 months</option><option value="18">18 months</option><option value="24">24 months</option></select>
+          <div class="err" data-err="f_term"></div></div>
+        <div class="fg"><label>Repayment frequency</label>
+          <select id="f_freq"><option>Monthly</option><option>Fortnightly</option><option>Weekly</option></select><div class="err"></div></div>
+        <div class="fg full"><label>Purpose of the loan <span class="req">*</span></label>
+          <textarea id="f_purpose" data-req placeholder="What the money is for, and how the loan will be repaid"></textarea>
+          <div class="err" data-err="f_purpose"></div></div>
+        <div class="fg"><label>Branch you will deal with</label>
+          <select id="f_branch"><option>Lilongwe — Area 3</option><option>Blantyre — Limbe</option><option>Mzuzu — Katoto</option><option>Zomba</option></select><div class="err"></div></div>
+        <div class="fg"><label>Preferred disbursement</label>
+          <select id="f_disb"><option>Bank transfer</option><option>Airtel Money</option><option>TNM Mpamba</option><option>Cash at the counter</option></select><div class="err"></div></div>
+        <div class="fg full">
+          <label>Indicative repayment</label>
+          <div class="calc" id="quoteBox">Enter an amount and a term to see the monthly repayment.</div>
+          <div class="hint">Illustration at 6.5% per month on the declining balance with a 3% arrangement fee. Your offer letter may differ.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · BUSINESS ============ -->
+  <section class="sec" id="a5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Business details</h2>
+        <p>Complete this if the loan is for a business, or if you are self-employed. Otherwise leave it and move on.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a5">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Business name</label><input id="f_bname" /><div class="err"></div></div>
+        <div class="fg"><label>Business registration number</label><input id="f_breg" /><div class="err"></div></div>
+        <div class="fg"><label>Sector</label>
+          <select id="f_bsector"><option value="">Choose…</option><option>Retail and wholesale</option><option>Agriculture</option><option>Transport</option><option>Manufacturing</option><option>Services</option><option>Hospitality</option></select><div class="err"></div></div>
+        <div class="fg"><label>Years trading</label><input id="f_byears" type="number" min="0" max="60" /><div class="err"></div></div>
+        <div class="fg"><label>Monthly turnover (MK)</label><input id="f_bturnover" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Monthly business costs (MK)</label><input id="f_bcosts" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Stock or equipment value (MK)</label><input id="f_bstock" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Where the business operates</label><input id="f_bsite" placeholder="Market, shop, plot, route" /><div class="err"></div></div>
+        <div class="fg"><label>Business bank or mobile-money account</label><input id="f_bank" placeholder="Bank and account name" /><div class="err"></div></div>
+        <div class="fg"><label>Do you keep written records?</label>
+          <select id="f_brecords"><option>Yes — books or a ledger</option><option>Yes — mobile-money statements</option><option>No</option></select><div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+  <!-- ============ 6 · GUARANTOR 1 ============ -->
+  <section class="sec" id="a6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>First guarantor</h2>
+        <p>A guarantor promises to repay the loan if you do not. At least one guarantor is required; a guarantor may not be
+          your spouse if you are also pledging joint property.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a6">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Full name <span class="req">*</span></label><input id="g1_name" data-req /><div class="err" data-err="g1_name"></div></div>
+        <div class="fg"><label>National ID number <span class="req">*</span></label><input id="g1_nid" data-req /><div class="err" data-err="g1_nid"></div></div>
+        <div class="fg"><label>Mobile number <span class="req">*</span></label><input id="g1_phone" data-req placeholder="+265 …" /><div class="err" data-err="g1_phone"></div></div>
+        <div class="fg"><label>Relationship to you <span class="req">*</span></label>
+          <select id="g1_rel" data-req><option value="">Choose…</option><option>Spouse</option><option>Parent</option><option>Brother or sister</option><option>Uncle or aunt</option><option>Employer</option><option>Business partner</option><option>Friend</option><option>Other</option></select>
+          <div class="err" data-err="g1_rel"></div></div>
+        <div class="fg"><label>Occupation</label><input id="g1_job" /><div class="err"></div></div>
+        <div class="fg"><label>Employer or business</label><input id="g1_emp" /><div class="err"></div></div>
+        <div class="fg"><label>District</label>
+          <select id="g1_dist"><option value="">Choose…</option><option>Lilongwe</option><option>Blantyre</option><option>Mzuzu</option><option>Zomba</option><option>Kasungu</option><option>Mangochi</option><option>Other</option></select><div class="err"></div></div>
+        <div class="fg"><label>Monthly income (MK)</label><input id="g1_income" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg full"><label>Residential address</label><input id="g1_addr" placeholder="Village or street, traditional authority" /><div class="err"></div></div>
+        <div class="fg full">
+          <label>Guarantor's declaration <span class="req">*</span></label>
+          <div class="decl"><label><input type="checkbox" id="g1_consent" data-req />
+            <span>I, the guarantor named above, agree to guarantee this loan. I understand that if the borrower does not pay,
+              Golden Financial Services may require me to pay the outstanding balance, interest and costs from my own
+              resources, and that my credit record may be searched and reported.</span></label></div>
+          <div class="err" data-err="g1_consent"></div>
+        </div>
+        <div class="fg full">
+          <label>Guarantor's signature <span class="req">*</span></label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_g1" width="900" height="220" data-sig="g1"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="g1">Clear signature</button>
+              <span class="sigmeta" id="sig_g1_meta">Sign here with a finger, a stylus or the mouse.</span>
+            </div>
+          </div>
+          <div class="sigrow" style="margin-top:7px">
+            <div class="fg" style="flex:1 1 260px;margin:0"><label>Or type the guarantor's full name</label><input id="g1_typed" placeholder="Typed name counts as a signature" /></div>
+            <div class="fg" style="flex:0 1 160px;margin:0"><label>Date</label><input id="g1_date" type="date" /></div>
+          </div>
+          <div class="err" data-err="sig_g1"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · GUARANTOR 2 ============ -->
+  <section class="sec" id="a7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Second guarantor</h2>
+        <p>Optional, but it strengthens the application — and a second guarantor is required above MK 5,000,000 or where the
+          first guarantor's income does not carry the loan alone.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a7">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Full name</label><input id="g2_name" /><div class="err"></div></div>
+        <div class="fg"><label>National ID number</label><input id="g2_nid" /><div class="err"></div></div>
+        <div class="fg"><label>Mobile number</label><input id="g2_phone" placeholder="+265 …" /><div class="err"></div></div>
+        <div class="fg"><label>Relationship to you</label>
+          <select id="g2_rel"><option value="">Choose…</option><option>Spouse</option><option>Parent</option><option>Brother or sister</option><option>Uncle or aunt</option><option>Employer</option><option>Business partner</option><option>Friend</option><option>Other</option></select><div class="err"></div></div>
+        <div class="fg"><label>Occupation</label><input id="g2_job" /><div class="err"></div></div>
+        <div class="fg"><label>Monthly income (MK)</label><input id="g2_income" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg full">
+          <div class="decl"><label><input type="checkbox" id="g2_consent" />
+            <span>The second guarantor agrees to guarantee this loan on the same terms as the first, and understands that
+              the lender may call on either guarantor for the whole balance.</span></label></div>
+        </div>
+        <div class="fg full">
+          <label>Second guarantor's signature</label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_g2" width="900" height="220" data-sig="g2"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="g2">Clear signature</button>
+              <span class="sigmeta" id="sig_g2_meta">Sign here — not required if there is no second guarantor.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 · COLLATERAL ============ -->
+  <section class="sec" id="a8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Security you are offering</h2>
+        <p>Property, a vehicle, equipment or a deposit that secures the loan. Security is valued by our valuer before an
+          offer is made; nothing you list here is taken until you sign the offer letter.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a8">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="choicegrid" style="margin-bottom:11px">
+        <label class="choicebox"><input type="radio" name="coll" value="None" id="coll_none" checked /><span><b>No security</b>Guarantors only — the loan may be smaller or shorter.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Vehicle" id="coll_veh" /><span><b>Motor vehicle</b>Car, truck, motorcycle or minibus.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Property" id="coll_prop" /><span><b>Property</b>House, plot or commercial building with a title.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Equipment" id="coll_eq" /><span><b>Equipment or stock</b>Machines, tools, inventory.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Deposit" id="coll_dep" /><span><b>Deposit or salary</b>Fixed deposit, or assignment of salary.</span></label>
+      </div>
+      <div id="collFields">
+        <div class="form-grid two">
+          <div class="fg"><label>Description of the asset</label><input id="c_desc" placeholder="e.g. Toyota Hilux 2019, silver" /><div class="err"></div></div>
+          <div class="fg"><label>Registration or title number</label><input id="c_reg" placeholder="e.g. BW 4471 or LIL-44/2" /><div class="err"></div></div>
+          <div class="fg"><label>Owner of the asset</label><input id="c_owner" placeholder="You, your guarantor, or a third party" /><div class="err"></div></div>
+          <div class="fg"><label>Where it is kept</label><input id="c_where" placeholder="Village, street, yard or branch" /><div class="err"></div></div>
+          <div class="fg"><label>Estimated value (MK)</label><input id="c_value" type="number" min="0" data-num /><div class="err"></div></div>
+          <div class="fg"><label>Is it insured?</label>
+            <select id="c_insured"><option>Not insured</option><option>Insured — comprehensive</option><option>Insured — third party</option></select><div class="err"></div></div>
+          <div class="fg"><label>Is anyone else's claim registered against it?</label>
+            <select id="c_claim"><option>No</option><option>Yes — a bank or lender</option><option>Yes — a private arrangement</option><option>I am not sure</option></select><div class="err"></div></div>
+          <div class="fg"><label>Documents you can provide</label>
+            <select id="c_docs"><option>Title deed or registration</option><option>Vehicle registration and log book</option><option>Purchase invoice</option><option>Insurance certificate</option><option>None yet</option></select><div class="err"></div></div>
+        </div>
+      </div>
+      <div class="qhint" style="margin-top:9px">Bring the original documents to the branch. Security is only taken once a valuation
+        has been done and the charge registered in our favour.</div>
+    </div>
+  </section>
+
+  <!-- ============ 9 · DOCUMENTS ============ -->
+  <section class="sec" id="a9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Documents checklist</h2>
+        <p>Tick what you are bringing or uploading. Nothing is uploaded from this page — it is a checklist for the branch so
+          your file is complete on the first visit.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a9">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="decl" id="docList">
+        <label><input type="checkbox" data-doc="Copy of national ID" checked /><span><b>Copy of your national ID</b> — both sides, clearly readable</span></label>
+        <label><input type="checkbox" data-doc="Passport-size photograph" /><span><b>One passport-size photograph</b></span></label>
+        <label><input type="checkbox" data-doc="Proof of address" /><span><b>Proof of address</b> — a utility bill, tenancy agreement or letter from the traditional authority</span></label>
+        <label><input type="checkbox" data-doc="Payslips or bank statements" /><span><b>Last three payslips or bank/mobile-money statements</b> for the past six months</span></label>
+        <label><input type="checkbox" data-doc="Employment letter" /><span><b>Letter from your employer</b> confirming position and salary (salaried applicants)</span></label>
+        <label><input type="checkbox" data-doc="Business registration" /><span><b>Business registration certificate</b> (business loans)</span></label>
+        <label><input type="checkbox" data-doc="Guarantor IDs" /><span><b>Copy of each guarantor's national ID</b></span></label>
+        <label><input type="checkbox" data-doc="Guarantor payslips" /><span><b>Guarantor proof of income</b> — payslip or bank statement</span></label>
+        <label><input type="checkbox" data-doc="Security documents" /><span><b>Title deed, log book or invoice</b> for any security offered</span></label>
+        <label><input type="checkbox" data-doc="Insurance certificate" /><span><b>Insurance certificate</b> where the asset is insured</span></label>
+        <label><input type="checkbox" data-doc="Signed agreement" /><span><b>Signed loan agreement</b> — accepted on the agreement page</span></label>
+      </div>
+      <div class="qhint" id="docCount" style="margin-top:9px">—</div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · DECLARE & SIGN ============ -->
+  <section class="sec" id="a10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Declarations, consent and signature</h2>
+        <p>Read each declaration. Your application cannot be submitted until every one is ticked and signed.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a10">Not started</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="decl">
+        <label><input type="checkbox" id="d_truth" data-req /><span><b>Everything I have written is true.</b> I understand that giving false information, or leaving out a debt, is grounds for refusal and for the loan being recalled immediately.</span></label>
+        <label><input type="checkbox" id="d_bureau" data-req /><span><b>I consent to a credit-bureau search.</b> Golden Financial Services may search, record and share my credit history with a licensed credit reference bureau, now and while the loan runs.</span></label>
+        <label><input type="checkbox" id="d_data" data-req /><span><b>I consent to my data being processed</b> under the Data Protection Act for the purpose of assessing and administering this loan, and to being contacted on the numbers I have given.</span></label>
+        <label><input type="checkbox" id="d_terms" data-req /><span><b>I accept the loan agreement and terms and conditions</b> I read on the <a href="agreement.html" target="_blank" rel="noopener">agreement page</a>, including the interest, the fees and the consequences of default.</span></label>
+        <label><input type="checkbox" id="d_guar" data-req /><span><b>My guarantors know they are guaranteeing this loan</b> and have signed above of their own free will.</span></label>
+        <label><input type="checkbox" id="d_decl" data-req /><span><b>I have not been promised a loan.</b> I understand an application may be refused, and that a fee is only ever charged after an offer is accepted.</span></label>
+      </div>
+      <div class="err" data-err="decls" style="margin-top:6px"></div>
+
+      <div class="form-grid two" style="margin-top:12px">
+        <div class="fg full">
+          <label>Your signature <span class="req">*</span></label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_app" width="900" height="220" data-sig="app"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="app">Clear signature</button>
+              <span class="sigmeta" id="sig_app_meta">Sign inside the box. A typed name below is accepted if you cannot sign.</span>
+            </div>
+          </div>
+          <div class="err" data-err="sig_app"></div>
+        </div>
+        <div class="fg"><label>Or type your full name</label><input id="app_typed" placeholder="Typed signature" /><div class="err"></div></div>
+        <div class="fg"><label>Place</label><input id="app_place" placeholder="Town or city where you sign" /><div class="err"></div></div>
+        <div class="fg"><label>Date <span class="req">*</span></label><input id="app_date" type="date" data-req /><div class="err" data-err="app_date"></div></div>
+        <div class="fg"><label>Best time to call you</label>
+          <select id="app_time"><option>Morning</option><option>Afternoon</option><option>Any time</option></select><div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEW ============ -->
+  <section class="sec" id="review">
+    <div class="sec-head">
+      <div class="sec-num">✓</div>
+      <div><h2>Review and submit</h2>
+        <p>Check the summary, then send the application to the credit team. You will get a reference to quote at the branch.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="revPill">Not ready</span></div>
+    </div>
+    <div class="card panel">
+      <div id="reviewBox"><div class="empty" style="padding:18px 0">Fill in the form and the summary appears here.</div></div>
+    </div>
+  </section>
+
+  <div class="formfoot">
+    <div class="fk" id="footNote">Your answers are saved on this device only. Nothing is sent until you press submit.</div>
+    <button class="btn btn-ghost" id="saveDraft">Save and finish later</button>
+    <button class="btn btn-ghost" id="printForm">Print / save a copy</button>
+    <button class="btn btn-gold" id="submitBtn">Submit application</button>
+  </div>
+
+  <div class="donebox" id="doneBox" style="display:none;margin-top:16px">
+    <h3>Application received</h3>
+    <p>Thank you. Your application is with the credit team and you will be contacted on the number you gave. Keep this
+      reference — quote it at any branch.</p>
+    <div class="ref" id="doneRef">GLS-APP-0000</div>
+    <div class="sigrow" style="margin-top:10px">
+      <button class="btn btn-ghost btn-sm" id="printAck">Print acknowledgement</button>
+      <a class="btn btn-ghost btn-sm" href="apply.html" id="startAnother">Start another application</a>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script>
+/* ============================================================
+   CUSTOMER APPLICATION FORM
+   Draft saving, validation, affordability, the indicative quote,
+   the review panel, three signature pads and submission.
+   ============================================================ */
+(function(){
+  'use strict';
+  const KEY = 'gls_apply_draft_v1';
+  const SUBS = 'gls_applications_v1';
+  const AGREEMENT = 'gls_agreement_v1';
+
+  const $ = id => document.getElementById(id);
+  const $$ = s => Array.prototype.slice.call(document.querySelectorAll(s));
+  const num = v => { const n = Number(String(v).replace(/[^0-9.-]/g, '')); return isFinite(n) ? n : 0; };
+  const money = v => 'MK ' + (Number(v) || 0).toLocaleString('en-GB', { maximumFractionDigits: 0 });
+  const today = () => new Date().toISOString().slice(0, 10);
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  function toast(msg, type){
+    const host = $('toasts');
+    if(!host) return;
+    const t = document.createElement('div');
+    t.className = 'toast ' + (type || 'ok');
+    t.innerHTML = '<span>' + (type === 'err' ? '⚠' : type === 'info' ? 'ℹ' : '✓') + '</span><div>' + esc(msg) + '</div>';
+    host.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = '.25s'; }, 2800);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  /* ---------------- the agreement gate ---------------- */
+  function agreement(){
+    try { return JSON.parse(localStorage.getItem(AGREEMENT) || 'null'); } catch(e){ return null; }
+  }
+  function gate(){
+    const a = agreement();
+    const box = $('gateBox'), text = $('gateText'), link = $('gateLink');
+    const ok = !!(a && a.accepted);
+    if(!box) return ok;
+    box.classList.toggle('ok', ok);
+    box.classList.toggle('locked', !ok);
+    if(ok){
+      text.innerHTML = 'Agreement accepted by <b>' + esc(a.name || 'the applicant') + '</b> on ' + esc(a.date || '—') + '. You may complete the form.';
+      link.textContent = 'Review the agreement';
+      link.className = 'btn btn-ghost btn-sm';
+    } else {
+      text.innerHTML = 'The application is locked until the loan agreement and terms are accepted.';
+      link.textContent = 'Read and accept the agreement';
+      link.className = 'btn btn-gold btn-sm';
+    }
+    $$('.sheet input,.sheet select,.sheet textarea').forEach(n => { n.disabled = !ok; });
+    $$('button[data-clearsig]').forEach(n => { n.disabled = !ok; });
+    if($('submitBtn')) $('submitBtn').disabled = !ok;
+    return ok;
+  }
+
+  /* ---------------- signature pads ---------------- */
+  const pads = {};
+  function initPads(){
+    $$('.sigpad').forEach(cv => {
+      const key = cv.dataset.sig;
+      let ctx = null;
+      try { ctx = cv.getContext && cv.getContext('2d'); } catch(e){ ctx = null; }
+      const state = { canvas:cv, ctx:ctx, drawn:false };
+      pads[key] = state;
+      const meta = $('sig_' + key + '_meta');
+      if(!ctx){
+        if(meta) meta.textContent = 'This browser cannot draw here — type your name below instead.';
+        return;
+      }
+      ctx.lineWidth = 2.4;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#10221B';
+      const pos = ev => {
+        const r = cv.getBoundingClientRect();
+        const p = ev.touches ? ev.touches[0] : ev;
+        return { x:(p.clientX - r.left) * (cv.width / (r.width || cv.width)),
+                 y:(p.clientY - r.top) * (cv.height / (r.height || cv.height)) };
+      };
+      let drawing = false;
+      const start = ev => { ev.preventDefault(); drawing = true; const p = pos(ev);
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); state.drawn = true; cv.classList.add('touched'); if(meta) meta.textContent = 'Signature captured.'; };
+      const move = ev => { if(!drawing) return; ev.preventDefault(); const p = pos(ev); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+      const end = () => { drawing = false; if(state.drawn) refresh(); };
+      ['pointerdown','mousedown','touchstart'].forEach(e => cv.addEventListener(e, start, { passive:false }));
+      ['pointermove','mousemove','touchmove'].forEach(e => cv.addEventListener(e, move, { passive:false }));
+      ['pointerup','mouseup','mouseleave','touchend','pointercancel'].forEach(e => cv.addEventListener(e, end));
+      $$('[data-clearsig="' + key + '"]').forEach(b => b.onclick = () => {
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        state.drawn = false;
+        cv.classList.remove('touched');
+        if(meta) meta.textContent = 'Cleared — sign again if this signature is needed.';
+        save(); refresh();
+      });
+    });
+  }
+  const sigData = key => {
+    const s = pads[key];
+    if(s && s.drawn && s.ctx) { try { return s.canvas.toDataURL('image/png'); } catch(e){ return ''; } }
+    return '';
+  };
+
+  /* ---------------- the draft ---------------- */
+  const FIELDS = $$('.sheet input[id], .sheet select[id], .sheet textarea[id]').map(n => n.id);
+  function collect(){
+    const o = {};
+    FIELDS.forEach(id => {
+      const n = $(id);
+      if(!n) return;
+      o[id] = (n.type === 'checkbox') ? n.checked : n.value;
+    });
+    o.__docs = $$('[data-doc]').filter(n => n.checked).map(n => n.dataset.doc);
+    o.__coll = ($$('input[name="coll"]').filter(n => n.checked)[0] || {}).value || 'None';
+    o.__sig = { app:sigData('app'), g1:sigData('g1'), g2:sigData('g2') };
+    o.__saved = new Date().toISOString();
+    return o;
+  }
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(collect())); } catch(e){}
+    refresh();
+  }
+  function restore(){
+    let o = null;
+    try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+    if(!o) return false;
+    Object.keys(o).forEach(id => {
+      const n = $(id);
+      if(!n || id.indexOf('__') === 0) return;
+      if(n.type === 'checkbox') n.checked = !!o[id];
+      else n.value = o[id];
+    });
+    (o.__docs || []).forEach(d => { const n = $$('[data-doc]').find(x => x.dataset.doc === d); if(n) n.checked = true; });
+    const radio = $$('input[name="coll"]').find(n => n.value === o.__coll);
+    if(radio) radio.checked = true;
+    return true;
+  }
+
+  /* ---------------- validation ---------------- */
+  function fail(id, msg){
+    const n = $(id);
+    const e = document.querySelector('[data-err="' + id + '"]');
+    if(n) n.classList.add('bad');
+    if(e) e.textContent = msg;
+    return false;
+  }
+  function clearErr(id){
+    const n = $(id);
+    const e = document.querySelector('[data-err="' + id + '"]');
+    if(n) n.classList.remove('bad');
+    if(e) e.textContent = '';
+  }
+  const REQUIRED = [
+    ['f_first','Enter your first name'], ['f_surname','Enter your surname'],
+    ['f_dob','Choose your date of birth'], ['f_sex','Choose your sex'],
+    ['f_nid','Enter your national ID number'], ['f_phone','Enter a mobile number we can reach you on'],
+    ['f_district','Choose your district'], ['f_address','Enter your village or street address'],
+    ['f_emp','Choose your employment type'], ['f_employer','Enter your employer or business name'],
+    ['f_income','Enter your net monthly income'], ['f_amount','Enter the amount you are asking for'],
+    ['f_term','Choose a term'], ['f_purpose','Say what the loan is for'],
+    ['g1_name','Enter the guarantor\'s full name'], ['g1_nid','Enter the guarantor\'s national ID'],
+    ['g1_phone','Enter the guarantor\'s mobile number'], ['g1_rel','Choose the guarantor\'s relationship to you'],
+    ['g1_consent','The guarantor must agree to the declaration'], ['app_date','Enter the date you are signing']
+  ];
+  function validateSection(ids){
+    let ok = true;
+    ids.forEach(id => {
+      clearErr(id);
+      const row = REQUIRED.find(r => r[0] === id);
+      if(!row) return;
+      const n = $(id);
+      if(!n) return;
+      if(n.type === 'checkbox'){ if(!n.checked) ok = fail(id, row[1]); return; }
+      if(!String(n.value || '').trim()) ok = fail(id, row[1]);
+      else if(id === 'f_email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(n.value)) ok = fail(id, 'Check the email address');
+      else if((id === 'f_amount') && num(n.value) < 50000) ok = fail(id, 'The smallest loan we make is MK 50,000');
+      else if((id === 'f_phone' || id === 'g1_phone') && String(n.value).replace(/\D/g, '').length < 9) ok = fail(id, 'Enter a full mobile number');
+    });
+    if(ids.indexOf('g1_consent') > -1){
+      const sigOk = !!sigData('g1') || String(($('g1_typed') || {}).value || '').trim().length > 3;
+      const e = document.querySelector('[data-err="sig_g1"]');
+      if(!sigOk){ if(e) e.textContent = 'A drawn or typed signature is required from the first guarantor.'; ok = false; }
+      else if(e) e.textContent = '';
+    }
+    if(ids.indexOf('decls') > -1){
+      const all = ['d_truth','d_bureau','d_data','d_terms','d_guar','d_decl'].every(id => $(id) && $(id).checked);
+      const e = document.querySelector('[data-err="decls"]');
+      if(!all){ if(e) e.textContent = 'Every declaration must be ticked before the application can be submitted.'; ok = false; }
+      else if(e) e.textContent = '';
+      const sigOk = !!sigData('app') || String(($('app_typed') || {}).value || '').trim().length > 3;
+      const e2 = document.querySelector('[data-err="sig_app"]');
+      if(!sigOk){ if(e2) e2.textContent = 'Please sign, or type your full name as a signature.'; ok = false; }
+      else if(e2) e2.textContent = '';
+    }
+    return ok;
+  }
+
+  /* ---------------- calculations ---------------- */
+  function affordability(){
+    const income = num(($('f_income') || {}).value) + num(($('f_other_income') || {}).value);
+    const out = num(($('f_expenses') || {}).value) + num(($('f_debts') || {}).value);
+    const free = Math.max(0, income - out);
+    const cap = Math.max(0, Math.min(free, income * 0.4));
+    const box = $('affordBox');
+    if(!box) return cap;
+    box.innerHTML = income ?
+      '<div><b>' + money(Math.round(cap)) + '</b> a month is the most we would ask you to repay</div>' +
+      '<div class="hint" style="margin-top:3px">Net income ' + money(income) + ' less living costs and existing repayments ' +
+      money(out) + ', capped at 40% of income.</div>'
+      : 'Enter your income to see what you can afford.';
+    return cap;
+  }
+  function quote(){
+    const amount = num(($('f_amount') || {}).value);
+    const term = num(($('f_term') || {}).value) || 0;
+    const box = $('quoteBox');
+    if(!box) return null;
+    if(!amount || !term){ box.textContent = 'Enter an amount and a term to see the monthly repayment.'; return null; }
+    const rate = 0.065;
+    const monthly = amount / term + amount * rate;
+    const fee = amount * 0.03;
+    const total = monthly * term + fee;
+    const afford = affordability();
+    box.innerHTML =
+      '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:baseline">' +
+        '<div><b style="font-size:16px">' + money(Math.round(monthly)) + '</b> <span class="hint">per month</span></div>' +
+        '<div class="hint">Arrangement fee ' + money(Math.round(fee)) + ' · total payable about ' + money(Math.round(total)) + '</div>' +
+      '</div>' +
+      (afford && monthly > afford
+        ? '<div class="signote">This repayment is above the ' + money(Math.round(afford)) + ' you can afford. Consider a longer term or a smaller amount.</div>'
+        : '<div class="hint" style="margin-top:4px;color:#116B49;font-weight:700">This fits within what you can afford.</div>');
+    return monthly;
+  }
+
+  /* ---------------- progress + review ---------------- */
+  const SECTION_IDS = {
+    a1:['f_first','f_surname','f_dob','f_sex','f_nid'],
+    a2:['f_phone','f_district','f_address'],
+    a3:['f_emp','f_employer','f_income'],
+    a4:['f_product','f_amount','f_term','f_purpose'],
+    a5:[],
+    a6:['g1_name','g1_nid','g1_phone','g1_rel','g1_consent'],
+    a7:[],
+    a8:[],
+    a9:[],
+    a10:['app_date']
+  };
+  function sectionState(id){
+    const req = SECTION_IDS[id] || [];
+    const done = req.filter(k => { const n = $(k); return n && (n.type === 'checkbox' ? n.checked : String(n.value || '').trim()); }).length;
+    if(!req.length){
+      if(id === 'a9'){ const d = $$('[data-doc]').filter(n => n.checked).length; return d ? { done:true, label:d + ' document(s) ticked' } : { done:false, label:'Nothing ticked' }; }
+      const any = id === 'a5' ? ['f_bname','f_breg','f_bturnover'].some(k => ($(k) || {}).value)
+        : id === 'a7' ? ['g2_name','g2_nid'].some(k => ($(k) || {}).value)
+        : id === 'a8' ? ($$('input[name="coll"]').some(n => n.checked && n.value !== 'None'))
+        : false;
+      return { done:any || id === 'a5' || id === 'a7', label:any ? 'Provided' : (id === 'a5' || id === 'a7' ? 'Optional' : 'No security') };
+    }
+    return { done:done === req.length, label:done + ' of ' + req.length + ' complete' };
+  }
+  function refresh(){
+    let complete = 0;
+    Object.keys(SECTION_IDS).forEach(id => {
+      const st = sectionState(id);
+      if(st.done) complete++;
+      const chip = document.querySelector('[data-sec="' + id + '"]');
+      const pill = document.querySelector('[data-state="' + id + '"]');
+      if(chip){ chip.classList.toggle('done', st.done); }
+      if(pill){ pill.textContent = st.done ? 'Complete' : st.label; pill.className = 'badge ' + (st.done ? 'b-ok' : 'b-gray'); }
+    });
+    const pctDone = Math.round(complete / 10 * 100);
+    if($('progFill')) $('progFill').style.width = pctDone + '%';
+    if($('progText')) $('progText').textContent = complete + ' of 10 sections complete · ' + pctDone + '%';
+    const ready = validateSection(['f_first','f_surname','f_dob','f_sex','f_nid','f_phone','f_district','f_address',
+      'f_emp','f_employer','f_income','f_product','f_amount','f_term','f_purpose','g1_name','g1_nid','g1_phone','g1_rel']) &&
+      ['d_truth','d_bureau','d_data','d_terms','d_guar','d_decl'].every(id => $(id) && $(id).checked) &&
+      (!!sigData('app') || String(($('app_typed') || {}).value || '').trim().length > 3);
+    const pill = $('revPill');
+    if(pill){ pill.textContent = ready ? 'Ready to submit' : 'Not ready'; pill.className = 'badge ' + (ready ? 'b-ok' : 'b-warn'); }
+    review();
+    const dc = $('docCount');
+    if(dc){ const d = $$('[data-doc]').filter(n => n.checked).length; dc.textContent = d + ' of ' + $$('[data-doc]').length + ' documents ticked.'; }
+    return ready;
+  }
+  function review(){
+    const box = $('reviewBox');
+    if(!box) return;
+    const rows = [
+      ['Applicant', [($('f_first') || {}).value, ($('f_other') || {}).value, ($('f_surname') || {}).value].filter(Boolean).join(' ')],
+      ['National ID', ($('f_nid') || {}).value],
+      ['Contact', [($('f_phone') || {}).value, ($('f_email') || {}).value].filter(Boolean).join(' · ')],
+      ['Address', [($('f_address') || {}).value, ($('f_district') || {}).value].filter(Boolean).join(', ')],
+      ['Employment', [($('f_emp') || {}).value, ($('f_employer') || {}).value].filter(Boolean).join(' · ')],
+      ['Net monthly income', ($('f_income') || {}).value ? money(num($('f_income').value)) : ''],
+      ['Product', ($('f_product') || {}).value],
+      ['Amount requested', ($('f_amount') || {}).value ? money(num($('f_amount').value)) : ''],
+      ['Term', ($('f_term') || {}).value ? $('f_term').value + ' months' : ''],
+      ['Guarantor', [($('g1_name') || {}).value, ($('g1_rel') || {}).value].filter(Boolean).join(' · ')],
+      ['Second guarantor', ($('g2_name') || {}).value],
+      ['Security offered', ($$('input[name="coll"]').filter(n => n.checked)[0] || {}).value || 'None'],
+      ['Documents ticked', $$('[data-doc]').filter(n => n.checked).length + ' of ' + $$('[data-doc]').length],
+      ['Signature', sigData('app') ? 'Drawn on screen' : (String(($('app_typed') || {}).value || '').trim() ? 'Typed: ' + $('app_typed').value : 'Not signed')]
+    ].filter(r => String(r[1] || '').trim());
+    box.innerHTML = rows.length < 5
+      ? '<div class="empty" style="padding:18px 0">Fill in the form and the summary appears here.</div>'
+      : '<div class="recgrid">' + rows.map(r => '<div class="pfield"><div class="pk">' + esc(r[0]) + '</div><div class="pv">' + esc(r[1]) + '</div></div>').join('') + '</div>';
+  }
+
+  /* ---------------- submit ---------------- */
+  function submit(){
+    if(!gate()){ toast('Accept the loan agreement first.', 'err'); return; }
+    const sections = [
+      ['f_first','f_surname','f_dob','f_sex','f_nid'],
+      ['f_phone','f_district','f_address'],
+      ['f_emp','f_employer','f_income'],
+      ['f_product','f_amount','f_term','f_purpose'],
+      ['g1_name','g1_nid','g1_phone','g1_rel','g1_consent']
+    ];
+    let ok = true;
+    sections.forEach(ids => { if(!validateSection(ids)) ok = false; });
+    if(!validateSection(['decls'])) ok = false;
+    if(!ok){
+      const firstBad = document.querySelector('.fg input.bad, .fg select.bad, .fg textarea.bad');
+      if(firstBad && firstBad.scrollIntoView) firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
+      toast('Some required answers are missing — they are marked in red.', 'err');
+      return;
+    }
+    const data = collect();
+    const ref = 'GLS-APP-' + String(Date.now()).slice(-6);
+    let list = [];
+    try { list = JSON.parse(localStorage.getItem(SUBS) || '[]'); } catch(e){ list = []; }
+    list.push({ ref, when:new Date().toISOString(), name:[data.f_first, data.f_surname].filter(Boolean).join(' '),
+      product:data.f_product, amount:num(data.f_amount), term:num(data.f_term), phone:data.f_phone,
+      guarantor:data.g1_name, coll:data.__coll, status:'Submitted', data });
+    try { localStorage.setItem(SUBS, JSON.stringify(list.slice(-25))); } catch(e){}
+    localStorage.removeItem(KEY);
+    if($('doneBox')) $('doneBox').style.display = 'block';
+    if($('doneRef')) $('doneRef').textContent = ref;
+    toast('Application ' + ref + ' submitted.');
+    if($('doneBox') && $('doneBox').scrollIntoView) $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
+    if($('footNote')) $('footNote').textContent = 'Submitted as ' + ref + '. Keep this reference.';
+  }
+
+  /* ---------------- wiring ---------------- */
+  function init(){
+    gate();
+    initPads();
+    restore();
+    if($('app_date') && !$('app_date').value) $('app_date').value = today();
+    if($('g1_date') && !$('g1_date').value) $('g1_date').value = today();
+
+    $$('.sheet input[id], .sheet select[id], .sheet textarea[id]').forEach(n => {
+      n.addEventListener('input', () => { save(); quote(); });
+      n.addEventListener('change', () => { save(); quote(); });
+      n.addEventListener('blur', () => { if(n.dataset.req) validateSection([n.id]); });
+    });
+    $$('[data-doc]').forEach(n => n.addEventListener('change', save));
+    $$('input[name="coll"]').forEach(n => n.addEventListener('change', save));
+    $$('.progchips a').forEach(a => a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(!t) return;
+      e.preventDefault();
+      t.scrollIntoView({ behavior:'smooth', block:'start' });
+    }));
+    if($('saveDraft')) $('saveDraft').onclick = () => { save(); toast('Draft saved on this device.'); };
+    if($('submitBtn')) $('submitBtn').onclick = submit;
+    if($('printForm')) $('printForm').onclick = () => window.print();
+    if($('printAck')) $('printAck').onclick = () => window.print();
+    if($('startAnother')) $('startAnother').onclick = () => { localStorage.removeItem(KEY); };
+    if(window.addEventListener) window.addEventListener('beforeunload', save);
+
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver(es => {
+        es.forEach(en => {
+          if(!en.isIntersecting) return;
+          const id = en.target.id;
+          $$('.progchips a').forEach(a => a.classList.toggle('on', a.dataset.sec === id));
+        });
+      }, { rootMargin:'-45% 0px -50% 0px' });
+      $$('section.sec').forEach(s => io.observe(s));
+    }
+
+    affordability(); quote(); refresh();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+<!-- ==================== SHARED BACK NAVIGATION ==================== -->
+<script>
+/* GOLDEN FINANCIAL SERVICES · back navigation
+   Keeps a per-tab navigation stack so "Back" always walks the pages you actually
+   visited (reports → staff → home) and falls back to the home page when a page is
+   opened directly. Responsive: icon button on phones, labelled button on desktop. */
+(function(){
+  if(window.__glsBack) return;
+  window.__glsBack = true;
+
+  var KEY = 'gls_nav_stack', HOME = 'index.html';
+  var TITLES = {'index.html':'Dashboard','reports.html':'Reports','disbursements.html':'Disbursements',
+                'notifications.html':'Notifications','staff.html':'Staff Management',
+                'settings.html':'System Settings','repayments.html':'Repayments & Collections',
+                'applications.html':'Loan Applications','clients.html':'Customers',
+                'audit.html':'Audit Logs',
+                'analytics.html':'Graphing & Tabulation',
+                'charts.html':'Charts & Analytics',
+                'compliance.html':'Compliance & Intelligence',
+                'security.html':'Security & Protection','website.html':'Website Management & Connections',
+                'payments.html':'Methods of Payment Management',
+                'deposits.html':'Deposits & Withdrawals Management',
+                'transfers.html':'Transfers Management',
+                'savings.html':'Savings Management',
+                'salaries.html':'Salaries, Expenses & Operating Charges',
+                'fees-penalties.html':'Fees & Penalties Management',
+                'roles-permissions.html':'Staff Roles & Permissions',
+                'data-recovery.html':'Data Recovery, Backup & Factory Reset'};
+  var file = (location.pathname.split('/').pop() || HOME) || HOME;
+  if(!/\.html$/i.test(file)) file = HOME;
+
+  function read(){ try{ var s = JSON.parse(sessionStorage.getItem(KEY) || '[]'); return Array.isArray(s) ? s : []; }
+                  catch(e){ return []; } }
+  function write(a){ try{ sessionStorage.setItem(KEY, JSON.stringify(a.slice(-15))); }catch(e){} }
+  function isHome(){ return file === HOME; }
+  function name(p){ return TITLES[p] || p.replace(/\.html$/i,'').replace(/[-_]/g,' '); }
+
+  var stack = read();
+  if(stack[stack.length - 1] !== file) stack.push(file);
+  write(stack);
+
+  function prevPage(){
+    var s = read();
+    return s.length > 1 ? s[s.length - 2] : null;
+  }
+  /* on the dashboard the SPA can show a sub-view; that counts as one level down */
+  function subViewOpen(){
+    if(!isHome()) return false;
+    var d = document.getElementById('page-dashboard');
+    return !!(d && d.classList.contains('hide'));
+  }
+  function canGoBack(){ return !!prevPage() || subViewOpen() || !isHome(); }
+
+  function label(){
+    var p = prevPage();
+    if(p) return 'Back to ' + name(p);
+    if(subViewOpen()) return 'Back to the dashboard';
+    return 'Back to the home page';
+  }
+
+  function refresh(){
+    var b = document.getElementById('backBtn');
+    if(!b) return;
+    var ok = canGoBack();
+    b.disabled = !ok;
+    if(ok){ b.removeAttribute('aria-disabled'); } else { b.setAttribute('aria-disabled','true'); }
+    b.title = label();
+    b.setAttribute('aria-label', b.title);
+    var lab = b.querySelector('.bk-label');
+    if(lab) lab.textContent = 'Back';
+  }
+
+  function goBack(){
+    if(!canGoBack()) return;
+    if(subViewOpen()){
+      var nav = document.querySelector('.nav-item[data-page="dashboard"]');
+      if(nav){ nav.click(); setTimeout(refresh, 40); return; }
+    }
+    var s = read();
+    if(s.length > 1){                                   // walk the visited stack
+      s.pop(); write(s);
+      location.href = s[s.length - 1];
+      return;
+    }
+    if(!isHome()){ write([HOME]); location.href = HOME; return; }   // deep link → home
+  }
+
+  function mount(){
+    var bar = document.querySelector('.topbar');
+    if(!bar || bar.querySelector('#backBtn')) return;
+    var b = document.createElement('button');
+    b.id = 'backBtn'; b.type = 'button'; b.className = 'backbtn';
+    b.innerHTML = '<svg class="bk-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'+
+      '<span class="bk-label">Back</span>';
+    b.addEventListener('click', goBack);
+    bar.insertBefore(b, bar.firstChild);
+    refresh();
+    /* keep the state honest when the SPA swaps views on the dashboard */
+    document.querySelectorAll('.nav-item').forEach(function(n){
+      n.addEventListener('click', function(){ setTimeout(refresh, 60); });
+    });
+  }
+
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', mount); }
+  else { mount(); }
+
+  window.addEventListener('pageshow', function(e){ if(e.persisted) refresh(); });
+  window.glsBack = goBack;
+})();
+</script>
+<script data-gls="records-js">
+/* =====================================================================
+   SHARED RECORD SHEETS — injected into every page by inject_backnav.py
+   ---------------------------------------------------------------------
+   1. Any modal body that is a read-only fieldset (.pfields or an already
+      built .recgrid) is re-rendered as a labelled record sheet: human
+      labels, formatted dates, money, JSON objects flattened, and staff /
+      customer codes resolved to names.
+   2. Any table row that does nothing when clicked opens a record sheet
+      built from its own column headers, so every register behaves the
+      same, with a Print action in the footer.
+   3. A page without a modal (the dashboard) gets one built on demand.
+   Nothing here touches forms, and nothing here throws if a page lacks the
+   helpers (staffName, custName, openModal) — everything is defensive.
+   ===================================================================== */
+(function(){
+  if (window.__glsRecords) return;
+  window.__glsRecords = 1;
+
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var LONG_LABEL = /^(description|notes?|message|terms|reason|detail|details|restriction|proof|comment|comments|address|narration|summary|finding|resolution|payload|body)$/i;
+  var LABELS = {
+    id:'Record', ref:'Reference', txn:'Transaction', cust:'Customer', acct:'Account', account:'Account',
+    stf:'Officer', staff:'Staff', amount:'Amount', fee:'Fee', balance:'Balance', when:'When', date:'Date',
+    status:'State', state:'State', kind:'Kind', type:'Type', method:'Method', provider:'Provider', rail:'Rail',
+    severity:'Severity', lane:'Area', owner:'Officer', officer:'Officer', region:'Branch', branch:'Branch',
+    created:'Created', updated:'Updated', opened:'Opened', due:'Due', paid:'Paid', verified:'Verified',
+    verifiedBy:'Verified by', approvedBy:'Approved by', initiatedBy:'Raised by', notes:'Notes',
+    description:'Description', currency:'Currency', pct:'Rate %', rate:'Rate', qty:'Quantity',
+    n:'Count', count:'Times', total:'Total', subtotal:'Subtotal', vat:'VAT', tax:'Tax',
+    idNumber:'ID number', idType:'ID type', phone:'Phone', email:'Email', address:'Address',
+    code:'Code', label:'Label', name:'Name', role:'Role', level:'Level', type2:'Type'
+  };
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function label(k){
+    k = String(k == null ? '' : k).trim();
+    if (!k) return '';
+    if (LABELS[k]) return LABELS[k];
+    var out = k.replace(/[_-]+/g, ' ').replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/\s+/g, ' ').trim();
+    out = out.replace(/^./, function(c){ return c.toUpperCase(); });
+    return out.replace(/\b(Id|Url|Api|Sms|Pin|Otp|Rls|Kyc|Vat|Fees?)\b/g, function(w){ return w.toUpperCase(); });
+  }
+  /* 2026-10-30 or 2026-10-30 14:05 reads as 30 Oct 2026 · 14:05 */
+  function dateText(s){
+    var m = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?$/.exec(String(s));
+    if (!m) return s;
+    var out = String(+m[3]) + ' ' + MON[+m[2] - 1] + ' ' + m[1];
+    if (m[4]) out += ' · ' + m[4] + ':' + m[5];
+    return out;
+  }
+  function callName(fn, v){
+    try { if (typeof fn === 'function') { var n = fn(v); if (n && String(n) !== String(v)) return String(n); } } catch(e){}
+    return null;
+  }
+  function fromArray(list, v){
+    try {
+      if (!list || !list.length) return null;
+      for (var i = 0; i < list.length; i++) {
+        var r = list[i];
+        if (!r) continue;
+        if (r.id === v || r.no === v || r.account === v || r.staffId === v) return r.name || r.staffName || null;
+      }
+    } catch(e){}
+    return null;
+  }
+  var staffFn = null, custFn = null, STAFF_ARR = null, CUST_ARR = null;
+  try { if (typeof staffName === 'function') staffFn = staffName; } catch(e){}
+  try { if (typeof custName === 'function') custFn = custName; } catch(e){}
+  try { if (typeof STAFF !== 'undefined') STAFF_ARR = STAFF; } catch(e){}
+  try { if (typeof CUSTOMERS !== 'undefined') CUST_ARR = CUSTOMERS; } catch(e){}
+
+  /* a bare number reading under a money label becomes MK 1,234,567; a rate
+     reads as a percentage. Modules that already format keep their text. */
+  var MONEY_LABEL = /(amount|fee|fees|balance|paid|payment|total|subtotal|net|gross|basic|salary|value|cost|price|charge|charges|deduction|deductions|allowance|allowances|bonus|loan|principal|interest|arrears|outstanding|collected|waived|reversed|deposit|withdrawal|limit|budget|actual|expected|credit|debit|vat|tax|paye|pension|nhima|premium|claim|revenue|income|refund|excess|shortfall|contribution|commission|penalty|from|to|previous|updated|current|gross|opening|closing|instalment|installment|emi|repayment|disbursed|received|billed|settled|adjusted|adjustment|difference|variance|overpayment|underpayment|ceiling|floor|cap|minimum|maximum|min|max|threshold|savings|deposits|contributions|dividend|interest paid)/i;
+  var RATE_LABEL = /(\brate\b|percent|%|margin|apy|apr)/i;
+  function thousands(n){
+    var neg = n < 0, a = Math.abs(n);
+    var s = String(a);
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (neg ? '-' : '') + parts.join('.');
+  }
+  function moneyText(s){
+    var raw = String(s).trim().replace(/\s/g, '');
+    if (!/^-?\d{1,3}(,\d{3})+(\.\d{1,2})?$/.test(raw) && !/^-?\d+(\.\d{1,2})?$/.test(raw)) return null;
+    var n = Number(raw.replace(/,/g, ''));
+    if (!isFinite(n)) return null;
+    var dec = /\.\d{1,2}$/.test(raw) ? raw.split('.')[1].length : 0;
+    return 'MK ' + thousands(Number(n.toFixed(dec)));
+  }
+  function rateText(s){
+    var t = String(s).trim().replace(/%$/, '');
+    if (!/^-?\d+(\.\d+)?$/.test(t)) return null;
+    var n = Number(t);
+    if (!isFinite(n)) return null;
+    if (n > 0 && n <= 1) return (Math.round(n * 1000) / 10) + '%';
+    if (n > 1 && n <= 100) return (Math.round(n * 100) / 100) + '%';
+    return null;
+  }
+
+  function human(v, lab){
+    var s = String(v == null ? '' : v).trim();
+    if (!s || s === 'null' || s === 'undefined' || s === '—' || s === '-') return '';
+    if (lab && RATE_LABEL.test(String(lab)) && !/%/.test(s)) {
+      var rt = rateText(s);
+      if (rt) return rt;
+    }
+    if (lab && MONEY_LABEL.test(String(lab)) && !/%/.test(s) && /\d/.test(s)) {
+      var mt2 = moneyText(s);
+      if (mt2 && Math.abs(Number(String(s).replace(/[\s,]/g, ''))) >= 100) return mt2;
+    }
+    /* "Transport: 118500 · Housing: 177500" under an allowance heading */
+    if (lab && MONEY_LABEL.test(String(lab)) && /:/.test(s) && /\d{3}/.test(s) && !/MK\s/.test(s)) {
+      s = s.replace(/(:\s*)(-?\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?|-?\d+(?:\.\d{1,2})?)(?=\s*(?:·|$|;))/g, function(_, sep, n){
+        var t = moneyText(n);
+        return sep + (t || n);
+      });
+    }
+    if (s === 'true') return 'Yes';
+    if (s === 'false') return 'No';
+    if (s.charAt(0) === '{' || s.charAt(0) === '['){
+      try {
+        var o = JSON.parse(s);
+        if (o && typeof o === 'object') {
+          if (Array.isArray(o)) return o.map(function(x){ return typeof x === 'object' ? human(JSON.stringify(x)) : String(x); }).join(' · ');
+          var moneyish = !!(lab && MONEY_LABEL.test(String(lab)));
+          return Object.keys(o).map(function(k){
+            var v = o[k], shown;
+            if (v != null && typeof v === 'object') shown = human(JSON.stringify(v), label(k));
+            else if (typeof v === 'number' && moneyish && Math.abs(v) >= 100) shown = 'MK ' + thousands(v);
+            else shown = human(v, label(k)) || String(v);
+            return label(k) + ': ' + shown;
+          }).join(' · ');
+        }
+      } catch(e){}
+    }
+    var nm;
+    if (/^STF-/i.test(s)) { nm = callName(staffFn, s) || fromArray(STAFF_ARR, s); if (nm) return nm + ' · ' + s; }
+    if (/^GF-/i.test(s)) { nm = callName(custFn, s) || fromArray(CUST_ARR, s); if (nm) return nm + ' · ' + s; }
+    if (/^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/.test(s)) return dateText(s);
+    /* a date sitting inside a longer value reads as a date too, and stray
+       line breaks from the source markup collapse to single spaces */
+    s = s.replace(/(\d{4}-\d{2}-\d{2})(?:[ T](\d{2}:\d{2}))?/g, function(_, d, t){ return dateText(d + (t ? ' ' + t : '')); });
+    return s.replace(/\s+/g, ' ').trim();
+  }
+
+  /* inside a badge we only correct the value shape — money, rate, date —
+     never the words, so a pill keeps its own label */
+  function cellText(v, lab){
+    var s = String(v == null ? '' : v).trim();
+    if (!s) return s;
+    if (lab && RATE_LABEL.test(String(lab)) && !/%/.test(s)) {
+      var rt = rateText(s);
+      if (rt) return rt;
+    }
+    if (lab && MONEY_LABEL.test(String(lab)) && !/%/.test(s) && /\d/.test(s)) {
+      var mt3 = moneyText(s);
+      if (mt3 && Math.abs(Number(String(s).replace(/[\s,]/g, ''))) >= 100) return mt3;
+    }
+    return s.replace(/(\d{4}-\d{2}-\d{2})(?:[ T](\d{2}:\d{2}))?/g, function(_, d, t){ return dateText(d + (t ? ' ' + t : '')); });
+  }
+  function humanizeHtml(html, lab){
+    try {
+      var box = document.createElement('div');
+      box.innerHTML = html;
+      var walker = document.createTreeWalker(box, 4 /* SHOW_TEXT */);
+      var n, changed = false;
+      while ((n = walker.nextNode())) {
+        var t = n.nodeValue;
+        if (!t || !t.trim()) continue;
+        var next = cellText(t, lab);
+        if (next !== t) { n.nodeValue = next; changed = true; }
+      }
+      return changed ? box.innerHTML : html;
+    } catch(e){ return html; }
+  }
+
+  function items(pairs){
+    var out = [], seen = {};
+    pairs.forEach(function(p){
+      var lab = String(p.label || '').trim();
+      var text = String(p.text == null ? '' : p.text).trim();
+      if (!lab || !text) return;
+      var key = lab.toLowerCase() + '\u0001' + text.toLowerCase();
+      if (seen[key]) return;
+      seen[key] = 1;
+      var wide = text.length > 88 || LONG_LABEL.test(lab.replace(/[^a-z]/gi, ''));
+      out.push('<div class="pfield' + (wide ? ' wide' : '') + '"><div class="pk">' + esc(lab) + '</div>' +
+               '<div class="pv">' + (p.html != null ? humanizeHtml(p.html, lab) : esc(human(text, lab))) + '</div></div>');
+    });
+    return out;
+  }
+
+  /* ---- 1. upgrade an existing read-only fieldset into a record sheet ---- */
+  function upgrade(body){
+    if (!body) return;
+    var blocks = body.querySelectorAll('.pfields, .recgrid');
+    for (var i = 0; i < blocks.length; i++){
+      var block = blocks[i];
+      if (block.getAttribute('data-rsc') === '1') continue;
+      if (block.querySelector('input,select,textarea')) continue;   /* a form, not a record */
+      var fields = block.children, pairs = [];
+      for (var j = 0; j < fields.length; j++){
+        var f = fields[j];
+        if (!f.classList || !f.classList.contains('pfield')) continue;
+        var k = f.querySelector('.pk'), v = f.querySelector('.pv');
+        if (!k || !v) continue;
+        var raw = v.textContent.trim();
+        var lab = k.textContent;
+        /* a module that hands over a raw key ("id", "staffId") gets a heading */
+        if (/^[a-z][A-Za-z0-9]*$/.test(lab.trim()) || /[a-z][A-Z]/.test(lab)) {
+          lab = label(lab);
+          if (lab === 'Record' && /^[a-z]*id$/i.test(k.textContent.trim())) lab = 'ID';
+        }
+        pairs.push({ label: lab, text: raw, html: v.children.length ? v.innerHTML : null });
+      }
+      if (pairs.length < 2) continue;
+      var built = items(pairs);
+      if (!built.length) continue;
+      block.setAttribute('data-rsc', '1');
+      block.classList.add('recgrid');
+      /* an inline two-column template would beat the sheet grid, so drop it */
+      try { block.style.gridTemplateColumns = ''; } catch(e){}
+      block.innerHTML = built.join('');
+    }
+  }
+
+  /* any record a module draws itself gets the same Print control */
+  function pairsFromBody(body){
+    var out = [], nodes = body.querySelectorAll('.pfield');
+    for (var i = 0; i < nodes.length; i++){
+      var k = nodes[i].querySelector('.pk'), v = nodes[i].querySelector('.pv');
+      if (!k || !v) continue;
+      var t = v.textContent.trim();
+      if (!t) continue;
+      out.push({label: k.textContent.trim(), text: t});
+    }
+    return out;
+  }
+  function decorate(body){
+    var foot = document.getElementById('modalFoot');
+    if (!foot || !body) return;
+    if (body.querySelector('input,select,textarea')) return;      /* a form, not a record */
+    if (!body.querySelector('.recgrid,.pfields')) return;
+    var has = false;
+    [].forEach.call(foot.querySelectorAll('button'), function(b){ if (/print/i.test(b.textContent)) has = true; });
+    if (has) return;
+    var pairs = pairsFromBody(body);
+    if (!pairs.length) return;
+    var titleEl = document.getElementById('modalTitle'), subEl = document.getElementById('modalSub');
+    /* a sheet titled "2026-10-24" or "45000" tells the reader nothing: when the
+       title carries no words, use the first field that looks like a reference */
+    try {
+      var cur = titleEl ? titleEl.textContent.trim() : '';
+      if (!cur || cur === '—' || /^\d{4}-\d{2}-\d{2}/.test(cur) || /^-?[\d,]+(\.\d+)?%?$/.test(cur)) {
+        var pick = '';
+        for (var i0 = 0; i0 < pairs.length; i0++){ if (/^[A-Za-z0-9]{2,6}[-–]/.test(pairs[i0].text)) { pick = pairs[i0].text; break; } }
+        if (!pick) for (var i1 = 0; i1 < pairs.length; i1++){
+          var v1 = pairs[i1].text;
+          if (/[A-Za-z]/.test(v1) && !/^\d{1,2} [A-Z][a-z]{2}\b/.test(v1) && v1.length <= 60) { pick = v1; break; }
+        }
+        if (pick && titleEl) titleEl.textContent = pick;
+      }
+    } catch(e){}
+    var title = titleEl ? titleEl.textContent : 'Record';
+    var sub = subEl ? subEl.textContent : '';
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn btn-ghost';
+    b.textContent = 'Print';
+    b.addEventListener('click', function(){
+      try {
+        if (typeof printTable === 'function'){
+          printTable(title || 'Record', [{label: 'Field'}, {label: 'Value'}],
+            pairs.map(function(p){ return [p.label, p.text]; }));
+          return;
+        }
+      } catch(e){}
+      printSheet({title: title, sub: sub, pairs: pairs});
+    });
+    foot.insertBefore(b, foot.firstChild);
+  }
+
+  function watch(tries){
+    var body = document.getElementById('modalBody');
+    if (!body) {
+      /* a page without a modal (the dashboard) never needs the watcher, so
+         retry a few times for late-built modals and then give up quietly */
+      if ((tries || 0) < 6) setTimeout(function(){ watch((tries || 0) + 1); }, 400);
+      return;
+    }
+    var busy = false;
+    var mo = new MutationObserver(function(){
+      if (busy) return;
+      busy = true;
+      try { upgrade(body); } catch(e){}
+      try { decorate(body); } catch(e){}
+      busy = false;
+    });
+    try { mo.observe(body, { childList: true, subtree: true }); } catch(e){}
+    try { upgrade(body); } catch(e){}
+    try { decorate(body); } catch(e){}
+  }
+
+  /* headers carry sort arrows, so strip them before they become labels */
+  var ABBR = {id:'ID', ref:'Ref', no:'No', txn:'Txn', ac:'A/C', amt:'Amount', bal:'Balance', pct:'%'};
+  function cleanHead(t){
+    var out = String(t || '').replace(/[\u25B2\u25BC\u25B4\u25BE\u2191\u2193\u2195\u25C2\u25B8\u2303\u2304]/g, '')
+      .replace(/\(click to sort\)/ig, '').replace(/\s+/g, ' ').trim();
+    if (ABBR[out.toLowerCase()]) return ABBR[out.toLowerCase()];
+    if (/^[a-z]{1,4}$/.test(out)) return out.toUpperCase();
+    return out;
+  }
+
+  /* ---- 2. any inert register row opens a sheet built from its headers ---- */
+  function closeEnough(a, b){ return Math.abs(a - b) < 3; }
+
+  function sheetFromRow(tr){
+    var table = tr.closest ? tr.closest('table') : null;
+    if (!table) return null;
+    var head = table.querySelector('thead tr');
+    var heads = head ? [].slice.call(head.children) : [];
+    var cells = [].slice.call(tr.children).filter(function(c){ return c.tagName === 'TD'; });
+    if (cells.length < 2) return null;
+    var pairs = [];
+    cells.forEach(function(td, i){
+      var h = heads[Math.min(i, heads.length - 1)];
+      var lab = h ? cleanHead(h.textContent) : '';
+      if (!lab) return;
+      var hasBadge = td.querySelector('.badge,.pill,.sev,.chip');
+      pairs.push({ label: lab, text: td.textContent, html: hasBadge ? td.innerHTML : null });
+    });
+    var built = items(pairs);
+    if (built.length < 2) return null;
+
+    var texts = cells.map(function(td){ return td.textContent.replace(/\s+/g, ' ').trim(); });
+    var looksDate = function(t){ return /^\d{4}-\d{2}-\d{2}/.test(t) || /^\d{1,2} [A-Z][a-z]{2}\b/.test(t); };
+    var looksNum  = function(t){ return /^-?[\d,]+(\.\d+)?%?$/.test(t); };
+    var title = '';
+    for (var ti = 0; ti < texts.length; ti++){
+      var cand = texts[ti];
+      if (!cand || looksDate(cand) || looksNum(cand)) continue;
+      title = cand;
+      /* a bare code ("STF") reads better with the name beside it */
+      if (cand.length < 7 && texts[ti + 1] && !looksNum(texts[ti + 1]) && !looksDate(texts[ti + 1]))
+        title = cand + ' · ' + texts[ti + 1];
+      break;
+    }
+    if (!title) title = texts[0] || tr.getAttribute('data-ref') || 'Record';
+    if (title.length > 72) title = title.slice(0, 72) + '…';
+
+    var panel = tr.closest('.panel,.card');
+    var ptitle = panel ? panel.querySelector('.panel-title') : null;
+    var sub = ptitle ? ptitle.textContent.trim() : '';
+    var body = '<div class="recsheet"><div class="recgrid">' + built.join('') + '</div>' +
+               (sub ? '<div class="recsrc">' + esc(sub) + '</div>' : '') + '</div>';
+    var printPairs = [];
+    pairs.forEach(function(p){
+      var t = String(p.text == null ? '' : p.text).trim();
+      if (!p.label || !t) return;
+      printPairs.push({label: p.label, text: t});
+    });
+    return { title: title, sub: sub, body: body, pairs: printPairs };
+  }
+
+  function printSheet(sheet){
+    var rows = (sheet.pairs || []).map(function(p){
+      return '<tr><td>' + esc(p.label) + '</td><td>' + esc(p.text) + '</td></tr>';
+    }).join('');
+    var html = '<!doctype html><html><head><meta charset="utf-8"><title>' + esc(sheet.title) + '</title>' +
+      '<style>body{font:12px "Segoe UI",Arial,sans-serif;color:#0F1115;padding:18px}' +
+      'h1{font-size:15px;margin:0 0 3px}p{font-size:10.5px;color:#6B7280;margin:0 0 12px}' +
+      'table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #E6E8EE;padding:6px 4px;vertical-align:top}' +
+      'td:first-child{width:38%;color:#6B7280;text-transform:uppercase;font-size:9.5px;letter-spacing:.4px}</style>' +
+      '</head><body>' + ((typeof window.glsDocBand === "function") ? window.glsDocBand(sheet.title) : '') +
+      '<h1>' + esc(sheet.title) + '</h1><p>' + esc(sheet.sub || '') + '</p><table>' + rows + '</table></body></html>';
+    try {
+      var w = window.open('', '_blank');
+      if (!w) return false;
+      w.document.write(html); w.document.close();
+      setTimeout(function(){ try { w.focus(); w.print(); } catch(e){} }, 250);
+      return true;
+    } catch(e){ return false; }
+  }
+  function sheetActions(sheet){
+    var acts = [];
+    if (sheet.pairs && sheet.pairs.length) {
+      acts.push({label: 'Print', act: function(){
+        try {
+          if (typeof printTable === 'function'){
+            printTable(sheet.title || 'Record', [{label: 'Field'}, {label: 'Value'}],
+              sheet.pairs.map(function(p){ return [p.label, p.text]; }));
+            return;
+          }
+        } catch(e){}
+        printSheet(sheet);
+      }});
+    }
+    acts.push({label: 'Close', act: 'close'});
+    return acts;
+  }
+
+  /* a page without its own modal (the dashboard) still gets a sheet */
+  function ensureModal(){
+    var m = document.getElementById('modal');
+    if (m) return m;
+    m = document.createElement('div');
+    m.className = 'modal';
+    m.id = 'modal';
+    m.innerHTML = '<div class="modal-card"><div class="modal-head"><div><h3 id="modalTitle">Record</h3>' +
+      '<p id="modalSub"></p></div><button class="x" id="modalClose" aria-label="Close">\u2715</button></div>' +
+      '<div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click', function(e){
+      if (e.target === m || e.target.id === 'modalClose') m.classList.remove('on');
+    });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') m.classList.remove('on'); });
+    return m;
+  }
+  function localOpen(title, sub, body, actions){
+    var m = ensureModal();
+    document.getElementById('modalTitle').textContent = title || 'Record';
+    document.getElementById('modalSub').textContent = sub || '';
+    document.getElementById('modalBody').innerHTML = body || '';
+    var foot = document.getElementById('modalFoot');
+    foot.innerHTML = '';
+    (actions || []).forEach(function(a){
+      var b = document.createElement('button');
+      b.className = 'btn ' + (a.act === 'close' ? 'btn-ghost' : 'btn-gold');
+      b.type = 'button';
+      b.textContent = a.label;
+      b.addEventListener('click', function(){
+        if (a.act === 'close') { m.classList.remove('on'); return; }
+        try { a.act(); } catch(e){}
+      });
+      foot.appendChild(b);
+    });
+    m.classList.add('on');
+  }
+
+  function show(sheet){
+    var acts = sheetActions(sheet);
+    try {
+      if (typeof openModal === 'function') { openModal(sheet.title, sheet.sub, sheet.body, acts); return true; }
+    } catch(e){}
+    localOpen(sheet.title, sheet.sub, sheet.body, acts);
+    return true;
+  }
+
+  function modalOpen(){
+    var m = document.getElementById('modal');
+    return !!(m && m.classList && m.classList.contains('on'));
+  }
+
+  /* capture phase: a module may redraw its table on click, detaching the row,
+     so the record is read before that happens */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('a,button,input,select,textarea,label,.badge')) return;
+    var tr = t.closest('tbody tr');
+    if (!tr) return;
+    if (tr.closest('[data-nosheet]')) return;
+    var table = tr.closest('table');
+    if (!table || table.getAttribute('data-nosheet') !== null) return;
+    if (modalOpen()) return;
+    var early = null;
+    try { early = sheetFromRow(tr); } catch(err){ early = null; }
+    var before = document.body.textContent.length;
+    var clickedAt = Date.now();
+    setTimeout(function(){
+      if (modalOpen()) return;                        /* the module opened its own sheet */
+      /* a date sweep landing inside the window changes lengths by itself */
+      var sweepRan = lastSweep > clickedAt;
+      if (!sweepRan && !closeEnough(before, document.body.textContent.length)) return;  /* a panel updated */
+      var sheet = early;
+      if (!sheet) { try { sheet = sheetFromRow(tr); } catch(err){ sheet = null; } }
+      if (!sheet) return;
+      if (!show(sheet)) return;
+      try { tr.setAttribute('data-rsc-hit', '1'); } catch(err){}
+    }, 60);
+  }, true);
+
+  /* ---- 3. table cells print dates as dates, not as 2026-10-30 08:12 ---- */
+  var ISO_CELL = /^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2})?$/;
+
+  function fixCells(root){
+    if (!root || root.nodeType !== 1) return;
+    var cells;
+    if (root.matches && root.matches('td,th')) cells = [root];
+    else if (root.querySelectorAll) cells = root.querySelectorAll('td,th');
+    else return;
+    for (var i = 0; i < cells.length; i++){
+      var td = cells[i];
+      if (td.children.length) continue;            /* keep badges and links intact */
+      var t = td.textContent.trim();
+      if (t.length > 16 || !ISO_CELL.test(t)) continue;
+      td.textContent = dateText(t);
+    }
+  }
+
+  var pending = false;
+  var lastSweep = 0;
+  function sweep(){
+    pending = false;
+    try { fixCells(document.body); } catch(e){}
+    lastSweep = Date.now();
+  }
+  function queueSweep(){
+    if (pending) return;
+    pending = true;
+    if (window.requestAnimationFrame) requestAnimationFrame(sweep);
+    else setTimeout(sweep, 40);
+  }
+
+  function watchTables(){
+    try {
+      var mo = new MutationObserver(function(list){
+        for (var i = 0; i < list.length; i++){
+          var added = list[i].addedNodes;
+          for (var j = 0; j < added.length; j++){
+            var n = added[j];
+            if (n.nodeType === 1 && (n.tagName === 'TR' || n.tagName === 'TD' || n.tagName === 'TABLE')) {
+              queueSweep(); return;
+            }
+          }
+          if (list[i].type === 'characterData'){ queueSweep(); return; }
+        }
+      });
+      mo.observe(document.body, {childList: true, subtree: true, characterData: true});
+    } catch(e){}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ watch(0); queueSweep(); watchTables(); });
+  } else {
+    watch(0); queueSweep(); watchTables();
+  }
+})();
+
+</script>
+<script data-gls="layout-js">
+/* ============================================================================
+   LAYOUT GUARD — shared by every page (see _layout-guard.css)
+
+   Widens any card that sits in a half- or third-width grid column but holds a
+   table too wide for it, and puts bare tables inside a scrolling wrapper.
+
+   Runs after the page's own scripts have filled the tables, because most of
+   these registers are rendered by JavaScript — the columns only exist later.
+   Defensive throughout: a missing element or an unsupported API never throws.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var WIDE_COLUMNS = 5;          /* a table with this many columns needs the full width */
+  var GRID_SELECTOR = '.g2 > *, .g3 > *, .g4 > *';
+  var timers = [];
+
+  function columnCount(table) {
+    var heads = table.querySelectorAll('thead th');
+    if (heads.length) return heads.length;
+    var first = table.querySelector('tbody tr');
+    return first ? first.children.length : 0;
+  }
+
+  function widen(card) {
+    if (!card || card.classList.contains('gls-wide')) return false;
+    /* only cards that are actually in a multi-column grid need widening */
+    var parent = card.parentNode;
+    if (!parent || !parent.classList) return false;
+    if (!/\bg[234]\b/.test(parent.className || '')) return false;
+    card.classList.add('gls-wide');
+    return true;
+  }
+
+  function wrapForScroll(table) {
+    if (table.closest('.tblwrap')) return false;
+    var parent = table.parentNode;
+    if (!parent) return false;
+    var box = document.createElement('div');
+    box.className = 'tblwrap';
+    parent.insertBefore(box, table);
+    box.appendChild(table);
+    return true;
+  }
+
+  function pass() {
+    var changed = 0;
+
+    /* 1. a wide table in a narrow grid column takes the whole row */
+    var cards = document.querySelectorAll(GRID_SELECTOR);
+    for (var i = 0; i < cards.length; i++) {
+      var table = cards[i].querySelector('table');
+      if (table && columnCount(table) >= WIDE_COLUMNS) {
+        if (widen(cards[i])) changed++;
+      }
+    }
+
+    /* 2. a wide table with no scroll wrapper gets one, so it cannot push the
+          page wider than the screen */
+    var tables = document.querySelectorAll('table');
+    for (var j = 0; j < tables.length; j++) {
+      var t = tables[j];
+      if (columnCount(t) >= WIDE_COLUMNS && t.closest('.card, .panel')) {
+        if (wrapForScroll(t)) changed++;
+      }
+    }
+    return changed;
+  }
+
+  function schedule(delay) {
+    var id = setTimeout(function () { try { pass(); } catch (e) {} }, delay);
+    timers.push(id);
+  }
+
+  function boot() {
+    try { pass(); } catch (e) {}
+    /* the registers are filled by the page's own scripts, so re-check */
+    schedule(120);
+    schedule(400);
+    schedule(1200);
+
+    /* and again whenever a script redraws a register or a filter re-renders it */
+    try {
+      var pending = null;
+      var observer = new MutationObserver(function () {
+        if (pending) clearTimeout(pending);
+        pending = setTimeout(function () { try { pass(); } catch (e) {} }, 140);
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    } catch (e) {}
+
+    window.__glsLayoutGuard = pass;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+<script data-gls="brand-js">
+/* ============================================================================
+   BRAND — logo placement and the loading animation, on every page
+
+   Injected after the module scripts by inject_brand.py, so the page is
+   already built when this runs. Everything here is additive and defensive:
+   a missing element, a blocked API or a script error elsewhere on the page
+   never stops the portal working.
+
+   Puts the mark in:
+     * the page footer (with the company line and a few real links)
+     * a print header band that only appears when the page is printed
+     * every document the modules print (doPrint / printTable / record sheets)
+
+   The document mark is embedded as a data URI so a receipt printed or saved
+   later still carries the logo with no network request.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var ASSETS = 'assets/';
+  /* filled in by make-assets.sh from assets/logo-mark-96.png */
+  var GLS_DOC_MARK = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAABF1BMVEUAAACBSBZuMgC/eg7Yoi7atVrlvFXsvEv+9If+8Xr96nb6647898z37LHx5ajg0IyKSwWoXgOhZx3bvnHv23f02XHoqCXusyj4ykblqzb82lXzzFX+/eTl1qfJu5GhXweybBaqbRfkwWfPfwrDew26cwh5Rgy3kkDj16r9+Kb9+beeWgPDhSvlwEfy2pL94lqSUQHppRueTwG/hRj99pa3dxq8ijewaw391kf952fOlC6GSAT6xzflsTfany/0sRv94U3JnTv0vDTNiBWYVAWBQwXLt3vblxjnsS/aqj3WjxD1tyjUmyHQlhzuuDnwujGxagf8xCz70DrjlgvjnBa9mE7EiSuVWQ7IhBPCllXhjwLJhRi8exN4YvlDAAAAAXRSTlMAQObYZgAAC4ZJREFUaN7tWPt3okgWhlREfEStjgKCM+KDJGoQabUFJWhLbIIyiaDb09Od///v2FuYGB9J957dnXP2nM39IREo7vO7X92Cot7lXd7lXd7lXf6nhP4bdJ5Ef9FpjInH2UQylU6fZbLZ/57+HP6QPc8XOI4XinFBlKR8JpMupdPp337/tW90Wa78YkmlepZKJMR4scjV6jUQJUefUBeX2atGM/2LOE5aTCZ9ffLTJWq70WS1GKpgkI5c02sfuxebZ/Tlebv0209epj9AqKWfGqhUe2wvFYsqe1lB/Wo7/enp0UX35ISi1UzqzSi65+1Co3Qmv52cQbXRYwtqeXPdlgSxcFZidl0E59TU2evuZwuiYaZLSfmNCOhhu9nsseoFNYqukXVjWQbbsPeAekFTF7GCevx6Ni9YlthsNpnuGwF8AqQ0My8QwOMbS5gkk+gwESeUKn4+uPlZMnh+arDNZsp5Q//tWalUqu54O+rbljExpYujpTOKkvZi+MLwLsdbVqLR6JlvlAC1m+nS+V72MBgwRFHtXh4t7lJ33sulF587Lr+wzF6jkZgMXtV/mWo0z2J7+iu2ZFmCIQqCKGbOs3uBIHTi/7G9yNEIIdvS2F4vYUj4Nf2VAhi/6cy27wyZm/vFAxiAygmWobHp9NWuie5y5j8XE5G8xh4sk2UThhW8AgCqW4BnN/jjBj6UWizqQBSLaWBFYohaolEqne2mCi3RbrIrcR7wwGpWwL9iYCSxiYSk4E0AtBSOV64O+kGCe5ImLdlrppvNKrVv4QVfsu1apmnG/EUw9o8NMKaZlObKZr0qhAt9vdY5D3nTqRVHlyifaDSbjaQm7NUPodxoW2WHE0zNo1Cw4NCRflvUJszSWUbun7NiGIzXvA3rYtbUysN/HE9BB2qGwOy9jHKdzY9sXKmNhQkDPeSPx0cGPABLXMYb/VfpxCQMFnzcAe8GU8sioBiEVoE1DSMUpL238SapX/KK4uiBjQnFIOvQgCrd89ywtQEXLvU0w1rwUxGW0THIv+iQnnZQ3hAAUtIel85qxKtso64o87XdJSpG6Ob0wEBmqrvDymxT4Ku0OQl4zpb7OYJVAdqAGJiXKTQxBM/H+T2M+BxNZdvrGkTgdCPPR+gwgN9Z1xl+oJ9aLAUJ4nT7ckTsYVs0RPOOZI6i/Xh/Rs/K+10ESk/PimRPGl6Onijy0EDbVpSXTU7SjECfO5trvwhUZEqb3BXtjYcHr/8jHV+tarWvx4T1XAFmibG87UnoWsiYO4wS5t5rpsm2I8U+Gr32evYszuurlfOmfiojY7k/fKYINJ5OF7yuF6NmGTNmMtFrytGT1/W3jcWY06tRXdEpUqkvB3OBet6SnRvnmeTwoDjmFzxv9cjV3E6yvcZ2yzwWlBeCxWJhRxRSkdqJXqlRPTAwaCnu/ba56ZnNL4CAjBSBIx72QFL02/oNIbSsaiXK8J9Sge2x0gETxRCGJt9hADReBMA9QIzeCHnAv6z0pn5pYoSh4FVuo8tcIQXdfthmVbxcW5Nv2wTTaGqFoD/BNnrVGNNj2YL/hv6BqRkAYw8/IddPsawp8PsG0CescGJ7/nLDuSfczPYiAQ5PpGx0+Zp+XzTNyUSKlXPU1kDSmPL7jTIYYOeePVttb+AFkG6CJakh2hNJM5mE2fRoEjrNJxOmZuYRvQ3egSa1eE7eW/fXYOAKvcb45c7CtOw8G/meMJ+F7ZUyO/CjW16qQZ5Xu9stkJpxSS2c8vp+RoW+Mg2TbX2n6qFTptQ8yyaTz+o18ieZPtvi42sq3SAhnud2mqNc1IQpz3HbMe3qClyJ93XeEqXdSWbTspVYHjRroFzUiAlNS/TaT/WjM6VSswHzJd5tPnwvgv61uzUgZQlPDByeE+KHQBnNbnOznFqVIhtEIASTTW64Ot/rwfyWiisEnp4Xa2fOYlBOS1iAfvfu+chCBkI1jh23btuHg8aJUvsOzTOKEd2SKEYWwAZbJeWF7LO99sMqCoghkEjABKMIU44YuKGoD+3Ml1PKJmNsXJ7/wL5ztMkhfwnlG30C9/Nd2stPtAmIMYljVRInZiLFAP9H6WLAminA75o41deu4xB2v14X41EciLlWWjT+Rr0uI0+biBJJtBcaIGHA3YiGMdEYX3nK/yxPZqEA6P2beO+6c8fh4O5wvVpvHLUH+LYs2/DztWmp4mmwSRImHnWlMAinD6JogCmvXH6GZ6XAAvqnkILvYpHodwICxSLHbZ7LONdpEQPeaxGUPSO0JJKK2ci3Am5K9E9u+jvUjZIJLeS5R1AlFWuO03ciwFx+flL4AXdauF+5tB+f37jMZn97jubxAdjY3mxG6JG3JmE4Mey9PVGGYYnnyKyF47B1/lDk+Z6P9AArCr4Y2pszTTaThhZiraenzpTs/0/6PDEEEdw9xF06Euhf6zoxYNfqylLehzyN+3Vlhp0NV9yZ0J8JM/mcr/n9eD3fxEzdRdR8swHcn753d545h02/SMA/n5PJo+goyvLQAFWp1XDFcTZu1dA5MNhEe96Ugul6Xo+qphrE/Yf14yb7ajiBVgA/UNHSAZq1KEVDDNObou8bmIHya/fJ6oxSJ5Dn0LI311zRqS/7sBvdBUEAdx8rAKeoILBhJA1EIrh352QqoqjOzY/lcqkoBxFgdzCo/Xg5tUkA9jDUNpzg2PBKf2BZYRA8uJCdkxluRREA1xoLsFy+Bx/qS7kP3tlDBeQ62DcwmGO75rzsugPQBTGkMhFErjGucxa4H9g+dNas3ELRhOMlzMlUJwaKN1BYjIkBZ1gHcQ4MIAcV3ReqKGMuJOkQelW4V+4r9v1iPA48DIey0S1ulbEO908Y0wjGC4D2rAhBtloI8jJy7LrjuO6BAcr3prq+7YJlDQ9hth6Px2u338U38bE+1p1Bl3wkyOWgKa9d4tWdBLzjyKQGNuhvtfoEc/xq7q65gyJTqLoY89upYgb+2aB/tQJ4MkV3tYK5miCnO2iBgdyHPsEbehA416mDgZH9tdXqtFp14ipHTi2LwwgoJoQU7MU0B/U137YdwLcvk/RVhnKkv0J3iDV0z62dukLctvvgP24R6AzsMbdYBHeHBlQoorDb/UAFyL6xoW0UXB6RCXowaG38H27W4ft1rb8cEANDv4UBnGRLlEE9AG59aADZUFRpbzJRh0OlruAIvLMcbnU6nVwnV8F31tPUHXcIdIjbvgNcU58DE4y+w4EuDI2jFFHdG8MwC1sLyOfm8PqGnKCsoPu2M5uVOwN3/fQVxi8q5FsSMfDJWYL+FdHqCGTTsMZHBmZDUYMht32VPVU9WwdqWVYiRhh1MP748WP59haST9PX8+dEygxUdkawSfVtx1mt1oAt2hFhzwsXRzWg0NyGwadZSheGzMPcx09qyJmqjHHn6aDXVV54tGWTrHUIMcs6QGI8Bq05XSSnu/FxBNTD4PNZOp1u9pidbS23qTcY8E/Iyev79xcgqHYOoINrZAW30qET3WguAv3c+rVR1sf4CvTD9q3ubf8j3Olg+ftx1b5CaMuaHiFWHweBAex4a2vkAO/OXzFAKYg+PSdbgWYwO8cNJEMRBrXj9fKj7DiRrxiOE+FkQqiiPwX989rrwzgGKrtU89rECICLVPXZgCwP5B/7S2kVeUwxLjGSxMRi+YKYhDEslaUvh3HAR2351rQf4QZ5QhDw4zF48oijCICufVIL9Q/vDnYFy+Ilf4BA/kTdbpemK33Znhbitud5VUaKM8OhR/1MZgPH0ddARSAK1aUQlJemvrmuv9bvfF9F6OCD3wlw7HcFz0aEx7D/6HuM+qtv0Gjw+KgsH/3t9EAcphD1SxkhnMvN6C7E+0X99fL/WCBrHvoX/Pq3RSQiFRhvN61q9TxvVmPnMRAv9tfnw4qhKkCIkTQxIcIxiz07y2R+U9W/0813eZd3eZf/c/kn1kkAR+z0LlsAAAAASUVORK5CYII=';
+
+  window.GLS_DOC_MARK = GLS_DOC_MARK;
+  window.GLS_LOGO = ASSETS + 'logo.png';
+  window.GLS_LOGO_MARK = ASSETS + 'logo-mark.png';
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+
+  /* ------------------------------------------------------ header geometry */
+  /* The header is 96px on a desktop and taller when the name wraps on a phone.
+     Its real height is published as --gls-topbar-h so the sticky section bar
+     and the anchor offsets always line up with it — otherwise content slides
+     under the header and the first line of a section is hidden. */
+  function syncHeaderHeight() {
+    var tb = document.querySelector('.topbar');
+    if (!tb) return;
+    var h = Math.round(tb.getBoundingClientRect().height) || tb.offsetHeight || 0;
+    if (!h) {
+      /* a browser that has not laid the bar out yet: fall back to its floor */
+      var mh = parseInt(window.getComputedStyle(tb).minHeight, 10);
+      if (isFinite(mh)) h = mh;
+    }
+    if (h > 0) document.documentElement.style.setProperty('--gls-topbar-h', h + 'px');
+  }
+
+  /* --------------------------------------------------- side bar auto-hide */
+  /* Tapping the menu button slides the side bar in; it slides back out once the
+     user stops using it. Any touch, scroll or key press inside it restarts the
+     clock, Escape closes it at once, and a tap outside closes it — so it can
+     never sit over the page and swallow clicks. The delay can be changed with
+     document.documentElement.dataset.sidebarIdle (milliseconds). */
+  function sidebarAutoHide() {
+    var bar = document.getElementById('sidebar');
+    if (!bar) return;
+
+    var timer = null;
+
+    function delay() {
+      var v = parseInt((document.documentElement.getAttribute('data-sidebar-idle') || ''), 10);
+      if (!isFinite(v) || v < 800) v = 6000;
+      return v;
+    }
+    function isOpen() { return bar.classList.contains('open'); }
+    function isPhone() {
+      try { return window.matchMedia('(max-width:860px)').matches; } catch (e) { return false; }
+    }
+    function close() {
+      clearTimeout(timer); timer = null;
+      bar.classList.remove('open');
+    }
+    function arm() {
+      clearTimeout(timer);
+      timer = null;
+      if (!isOpen() || !isPhone()) return;
+      timer = setTimeout(close, delay());
+    }
+
+    try {
+      new MutationObserver(function () { arm(); })
+        .observe(bar, {attributes: true, attributeFilter: ['class']});
+    } catch (e) {}
+
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) {
+      bar.addEventListener(ev, function () { if (isOpen()) arm(); }, {passive: true});
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && isOpen()) close();
+    });
+
+    document.addEventListener('click', function (ev) {
+      if (!isOpen()) return;
+      var t = ev.target;
+      if (bar.contains(t)) return;
+      if (t && t.closest && t.closest('#menuBtn')) return;
+      close();
+    }, true);
+  }
+
+  /* ------------------------------------------------------------ build stamp */
+  /* the date the browser received this copy, so "is this the latest build?"
+     can be answered by looking at the page instead of guessing at a cache */
+  function buildStamp() {
+    try {
+      var t = new Date(document.lastModified);
+      if (isNaN(t.getTime())) return '';
+      return t.toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'});
+    } catch (e) { return ''; }
+  }
+
+  /* ---------------------------------------------------------------- footer */
+  function footer() {
+    /* inside .content when it exists, so the footer shares the page padding */
+    var host = document.querySelector('.content') || document.querySelector('.main');
+    if (!host || document.querySelector('.gls-footer')) return;
+    var y = new Date().getFullYear();
+    var f = el('footer', 'gls-footer');
+    f.innerHTML =
+      '<div class="gls-foot-brand">' +
+        '<img src="' + ASSETS + 'logo-mark.png" alt="">' +
+        '<div><div class="gls-foot-name">GOLDEN FINANCIAL SERVICES</div>' +
+        '<div class="gls-foot-sub">LILONGWE · MALAWI · LICENSED MONEYLENDER</div></div>' +
+      '</div>' +
+      '<div class="gls-foot-links">' +
+        '<a href="index.html">Dashboard</a>' +
+        '<a href="security.html">Security &amp; privacy</a>' +
+        '<a href="settings.html">Settings</a>' +
+        '<span class="gls-foot-sep"></span>' +
+        '<span class="gls-build" title="The time the browser received this copy of the page — if it looks old, the page was cached.">' +
+          (buildStamp() ? 'Build ' + buildStamp() : '') + '</span>' +
+        '<span>&copy; ' + y + ' Golden Financial Services</span>' +
+      '</div>';
+    host.appendChild(f);
+  }
+
+  /* ----------------------------------------------------------- print header */
+  function printHead() {
+    var main = document.querySelector('.main');
+    if (!main || document.querySelector('.gls-print-head')) return;
+    var h = el('div', 'gls-print-head');
+    h.innerHTML =
+      '<img src="' + ASSETS + 'logo.png" alt="GOLDEN FINANCIAL SERVICES">' +
+      '<div class="gls-ph-txt">' +
+        '<div class="gls-ph-name">GOLDEN FINANCIAL SERVICES</div>' +
+        'Lilongwe, Malawi · Licensed moneylender<br>' +
+        'Printed ' + new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}) +
+        ' · Confidential' +
+      '</div>';
+    main.insertBefore(h, main.firstChild);
+  }
+
+  /* ------------------------------------------------------- printed documents */
+  function docBand(title) {
+    var when;
+    try { when = new Date().toLocaleString('en-GB', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}); }
+    catch (e) { when = ''; }
+    return '<div style="display:flex;align-items:center;gap:10px;padding-bottom:8px;' +
+      'border-bottom:2px solid #C9A227;margin-bottom:12px">' +
+      '<img src="' + GLS_DOC_MARK + '" alt="Golden Financial Services" style="height:38px;width:auto;display:block">' +
+      '<div style="margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5">' +
+        '<div style="font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px">GOLDEN FINANCIAL SERVICES</div>' +
+        'Lilongwe, Malawi · Licensed moneylender<br>' +
+        (title ? String(title).replace(/[<>&]/g, '') + ' · ' : '') + when +
+      '</div></div>';
+  }
+  window.glsDocBand = docBand;
+
+  /* the modules print through their own doPrint(); wrap it once, so every
+     printed table, receipt and export carries the mark even in modules that
+     never had a brand block of their own */
+  function wrapPrint() {
+    var orig = window.doPrint;
+    if (typeof orig !== 'function' || orig.__glsWrapped) return;
+    var wrapped = function (title, html) {
+      try {
+        if (typeof html === 'string' && html.indexOf('brandblock') === -1) {
+          html = docBand(title) + html;
+        }
+      } catch (e) {}
+      return orig.call(this, title, html);
+    };
+    wrapped.__glsWrapped = true;
+    window.doPrint = wrapped;
+  }
+
+  /* --------------------------------------------------------------- lifecycle */
+  /* the block holding the module name, so a phone can drop just that one */
+  function markPageTitle() {
+    var t = document.querySelector('.topbar .page-title');
+    if (t && t.parentNode && t.parentNode.classList) t.parentNode.classList.add('gls-pageid');
+  }
+
+  /* six pages place their sections straight inside .main with no .content
+     wrapper, so they had no gutter at all: the first letter of every heading
+     sat against the screen edge. Marking them lets the stylesheet give them
+     the same padding as the rest of the system. */
+  function markBarePages() {
+    var main = document.querySelector('.main');
+    if (!main) return;
+    if (!main.querySelector('.content')) main.classList.add('gls-pad');
+  }
+
+  function boot() {
+    try { markBarePages(); } catch (e) {}
+    try { markPageTitle(); } catch (e) {}
+    try { syncHeaderHeight(); } catch (e) {}
+    try {
+      window.addEventListener('resize', syncHeaderHeight);
+      window.addEventListener('orientationchange', syncHeaderHeight);
+      setTimeout(syncHeaderHeight, 300);
+      setTimeout(syncHeaderHeight, 1200);
+    } catch (e) {}
+    try { sidebarAutoHide(); } catch (e) {}
+    try { footer(); } catch (e) {}
+    try { printHead(); } catch (e) {}
+    try { wrapPrint(); } catch (e) {}
+    /* modules that finish rendering late still get a wrapped printer */
+    setTimeout(function () { try { wrapPrint(); } catch (e) {} }, 1200);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+</body>
+</html>

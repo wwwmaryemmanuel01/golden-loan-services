@@ -1,0 +1,225 @@
+  <!-- ============ 6 · GUARANTOR 1 ============ -->
+  <section class="sec" id="a6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>First guarantor</h2>
+        <p>A guarantor promises to repay the loan if you do not. At least one guarantor is required; a guarantor may not be
+          your spouse if you are also pledging joint property.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a6">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Full name <span class="req">*</span></label><input id="g1_name" data-req /><div class="err" data-err="g1_name"></div></div>
+        <div class="fg"><label>National ID number <span class="req">*</span></label><input id="g1_nid" data-req /><div class="err" data-err="g1_nid"></div></div>
+        <div class="fg"><label>Mobile number <span class="req">*</span></label><input id="g1_phone" data-req placeholder="+265 …" /><div class="err" data-err="g1_phone"></div></div>
+        <div class="fg"><label>Relationship to you <span class="req">*</span></label>
+          <select id="g1_rel" data-req><option value="">Choose…</option><option>Spouse</option><option>Parent</option><option>Brother or sister</option><option>Uncle or aunt</option><option>Employer</option><option>Business partner</option><option>Friend</option><option>Other</option></select>
+          <div class="err" data-err="g1_rel"></div></div>
+        <div class="fg"><label>Occupation</label><input id="g1_job" /><div class="err"></div></div>
+        <div class="fg"><label>Employer or business</label><input id="g1_emp" /><div class="err"></div></div>
+        <div class="fg"><label>District</label>
+          <select id="g1_dist"><option value="">Choose…</option><option>Lilongwe</option><option>Blantyre</option><option>Mzuzu</option><option>Zomba</option><option>Kasungu</option><option>Mangochi</option><option>Other</option></select><div class="err"></div></div>
+        <div class="fg"><label>Monthly income (MK)</label><input id="g1_income" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg full"><label>Residential address</label><input id="g1_addr" placeholder="Village or street, traditional authority" /><div class="err"></div></div>
+        <div class="fg full">
+          <label>Guarantor's declaration <span class="req">*</span></label>
+          <div class="decl"><label><input type="checkbox" id="g1_consent" data-req />
+            <span>I, the guarantor named above, agree to guarantee this loan. I understand that if the borrower does not pay,
+              Golden Financial Services may require me to pay the outstanding balance, interest and costs from my own
+              resources, and that my credit record may be searched and reported.</span></label></div>
+          <div class="err" data-err="g1_consent"></div>
+        </div>
+        <div class="fg full">
+          <label>Guarantor's signature <span class="req">*</span></label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_g1" width="900" height="220" data-sig="g1"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="g1">Clear signature</button>
+              <span class="sigmeta" id="sig_g1_meta">Sign here with a finger, a stylus or the mouse.</span>
+            </div>
+          </div>
+          <div class="sigrow" style="margin-top:7px">
+            <div class="fg" style="flex:1 1 260px;margin:0"><label>Or type the guarantor's full name</label><input id="g1_typed" placeholder="Typed name counts as a signature" /></div>
+            <div class="fg" style="flex:0 1 160px;margin:0"><label>Date</label><input id="g1_date" type="date" /></div>
+          </div>
+          <div class="err" data-err="sig_g1"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · GUARANTOR 2 ============ -->
+  <section class="sec" id="a7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Second guarantor</h2>
+        <p>Optional, but it strengthens the application — and a second guarantor is required above MK 5,000,000 or where the
+          first guarantor's income does not carry the loan alone.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a7">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Full name</label><input id="g2_name" /><div class="err"></div></div>
+        <div class="fg"><label>National ID number</label><input id="g2_nid" /><div class="err"></div></div>
+        <div class="fg"><label>Mobile number</label><input id="g2_phone" placeholder="+265 …" /><div class="err"></div></div>
+        <div class="fg"><label>Relationship to you</label>
+          <select id="g2_rel"><option value="">Choose…</option><option>Spouse</option><option>Parent</option><option>Brother or sister</option><option>Uncle or aunt</option><option>Employer</option><option>Business partner</option><option>Friend</option><option>Other</option></select><div class="err"></div></div>
+        <div class="fg"><label>Occupation</label><input id="g2_job" /><div class="err"></div></div>
+        <div class="fg"><label>Monthly income (MK)</label><input id="g2_income" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg full">
+          <div class="decl"><label><input type="checkbox" id="g2_consent" />
+            <span>The second guarantor agrees to guarantee this loan on the same terms as the first, and understands that
+              the lender may call on either guarantor for the whole balance.</span></label></div>
+        </div>
+        <div class="fg full">
+          <label>Second guarantor's signature</label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_g2" width="900" height="220" data-sig="g2"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="g2">Clear signature</button>
+              <span class="sigmeta" id="sig_g2_meta">Sign here — not required if there is no second guarantor.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 · COLLATERAL ============ -->
+  <section class="sec" id="a8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Security you are offering</h2>
+        <p>Property, a vehicle, equipment or a deposit that secures the loan. Security is valued by our valuer before an
+          offer is made; nothing you list here is taken until you sign the offer letter.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a8">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="choicegrid" style="margin-bottom:11px">
+        <label class="choicebox"><input type="radio" name="coll" value="None" id="coll_none" checked /><span><b>No security</b>Guarantors only — the loan may be smaller or shorter.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Vehicle" id="coll_veh" /><span><b>Motor vehicle</b>Car, truck, motorcycle or minibus.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Property" id="coll_prop" /><span><b>Property</b>House, plot or commercial building with a title.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Equipment" id="coll_eq" /><span><b>Equipment or stock</b>Machines, tools, inventory.</span></label>
+        <label class="choicebox"><input type="radio" name="coll" value="Deposit" id="coll_dep" /><span><b>Deposit or salary</b>Fixed deposit, or assignment of salary.</span></label>
+      </div>
+      <div id="collFields">
+        <div class="form-grid two">
+          <div class="fg"><label>Description of the asset</label><input id="c_desc" placeholder="e.g. Toyota Hilux 2019, silver" /><div class="err"></div></div>
+          <div class="fg"><label>Registration or title number</label><input id="c_reg" placeholder="e.g. BW 4471 or LIL-44/2" /><div class="err"></div></div>
+          <div class="fg"><label>Owner of the asset</label><input id="c_owner" placeholder="You, your guarantor, or a third party" /><div class="err"></div></div>
+          <div class="fg"><label>Where it is kept</label><input id="c_where" placeholder="Village, street, yard or branch" /><div class="err"></div></div>
+          <div class="fg"><label>Estimated value (MK)</label><input id="c_value" type="number" min="0" data-num /><div class="err"></div></div>
+          <div class="fg"><label>Is it insured?</label>
+            <select id="c_insured"><option>Not insured</option><option>Insured — comprehensive</option><option>Insured — third party</option></select><div class="err"></div></div>
+          <div class="fg"><label>Is anyone else's claim registered against it?</label>
+            <select id="c_claim"><option>No</option><option>Yes — a bank or lender</option><option>Yes — a private arrangement</option><option>I am not sure</option></select><div class="err"></div></div>
+          <div class="fg"><label>Documents you can provide</label>
+            <select id="c_docs"><option>Title deed or registration</option><option>Vehicle registration and log book</option><option>Purchase invoice</option><option>Insurance certificate</option><option>None yet</option></select><div class="err"></div></div>
+        </div>
+      </div>
+      <div class="qhint" style="margin-top:9px">Bring the original documents to the branch. Security is only taken once a valuation
+        has been done and the charge registered in our favour.</div>
+    </div>
+  </section>
+
+  <!-- ============ 9 · DOCUMENTS ============ -->
+  <section class="sec" id="a9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Documents checklist</h2>
+        <p>Tick what you are bringing or uploading. Nothing is uploaded from this page — it is a checklist for the branch so
+          your file is complete on the first visit.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a9">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="decl" id="docList">
+        <label><input type="checkbox" data-doc="Copy of national ID" checked /><span><b>Copy of your national ID</b> — both sides, clearly readable</span></label>
+        <label><input type="checkbox" data-doc="Passport-size photograph" /><span><b>One passport-size photograph</b></span></label>
+        <label><input type="checkbox" data-doc="Proof of address" /><span><b>Proof of address</b> — a utility bill, tenancy agreement or letter from the traditional authority</span></label>
+        <label><input type="checkbox" data-doc="Payslips or bank statements" /><span><b>Last three payslips or bank/mobile-money statements</b> for the past six months</span></label>
+        <label><input type="checkbox" data-doc="Employment letter" /><span><b>Letter from your employer</b> confirming position and salary (salaried applicants)</span></label>
+        <label><input type="checkbox" data-doc="Business registration" /><span><b>Business registration certificate</b> (business loans)</span></label>
+        <label><input type="checkbox" data-doc="Guarantor IDs" /><span><b>Copy of each guarantor's national ID</b></span></label>
+        <label><input type="checkbox" data-doc="Guarantor payslips" /><span><b>Guarantor proof of income</b> — payslip or bank statement</span></label>
+        <label><input type="checkbox" data-doc="Security documents" /><span><b>Title deed, log book or invoice</b> for any security offered</span></label>
+        <label><input type="checkbox" data-doc="Insurance certificate" /><span><b>Insurance certificate</b> where the asset is insured</span></label>
+        <label><input type="checkbox" data-doc="Signed agreement" /><span><b>Signed loan agreement</b> — accepted on the agreement page</span></label>
+      </div>
+      <div class="qhint" id="docCount" style="margin-top:9px">—</div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · DECLARE & SIGN ============ -->
+  <section class="sec" id="a10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Declarations, consent and signature</h2>
+        <p>Read each declaration. Your application cannot be submitted until every one is ticked and signed.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a10">Not started</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="decl">
+        <label><input type="checkbox" id="d_truth" data-req /><span><b>Everything I have written is true.</b> I understand that giving false information, or leaving out a debt, is grounds for refusal and for the loan being recalled immediately.</span></label>
+        <label><input type="checkbox" id="d_bureau" data-req /><span><b>I consent to a credit-bureau search.</b> Golden Financial Services may search, record and share my credit history with a licensed credit reference bureau, now and while the loan runs.</span></label>
+        <label><input type="checkbox" id="d_data" data-req /><span><b>I consent to my data being processed</b> under the Data Protection Act for the purpose of assessing and administering this loan, and to being contacted on the numbers I have given.</span></label>
+        <label><input type="checkbox" id="d_terms" data-req /><span><b>I accept the loan agreement and terms and conditions</b> I read on the <a href="agreement.html" target="_blank" rel="noopener">agreement page</a>, including the interest, the fees and the consequences of default.</span></label>
+        <label><input type="checkbox" id="d_guar" data-req /><span><b>My guarantors know they are guaranteeing this loan</b> and have signed above of their own free will.</span></label>
+        <label><input type="checkbox" id="d_decl" data-req /><span><b>I have not been promised a loan.</b> I understand an application may be refused, and that a fee is only ever charged after an offer is accepted.</span></label>
+      </div>
+      <div class="err" data-err="decls" style="margin-top:6px"></div>
+
+      <div class="form-grid two" style="margin-top:12px">
+        <div class="fg full">
+          <label>Your signature <span class="req">*</span></label>
+          <div class="sigwrap">
+            <canvas class="sigpad" id="sig_app" width="900" height="220" data-sig="app"></canvas>
+            <div class="sigrow">
+              <button type="button" class="btn btn-ghost btn-sm" data-clearsig="app">Clear signature</button>
+              <span class="sigmeta" id="sig_app_meta">Sign inside the box. A typed name below is accepted if you cannot sign.</span>
+            </div>
+          </div>
+          <div class="err" data-err="sig_app"></div>
+        </div>
+        <div class="fg"><label>Or type your full name</label><input id="app_typed" placeholder="Typed signature" /><div class="err"></div></div>
+        <div class="fg"><label>Place</label><input id="app_place" placeholder="Town or city where you sign" /><div class="err"></div></div>
+        <div class="fg"><label>Date <span class="req">*</span></label><input id="app_date" type="date" data-req /><div class="err" data-err="app_date"></div></div>
+        <div class="fg"><label>Best time to call you</label>
+          <select id="app_time"><option>Morning</option><option>Afternoon</option><option>Any time</option></select><div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEW ============ -->
+  <section class="sec" id="review">
+    <div class="sec-head">
+      <div class="sec-num">✓</div>
+      <div><h2>Review and submit</h2>
+        <p>Check the summary, then send the application to the credit team. You will get a reference to quote at the branch.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="revPill">Not ready</span></div>
+    </div>
+    <div class="card panel">
+      <div id="reviewBox"><div class="empty" style="padding:18px 0">Fill in the form and the summary appears here.</div></div>
+    </div>
+  </section>
+
+  <div class="formfoot">
+    <div class="fk" id="footNote">Your answers are saved on this device only. Nothing is sent until you press submit.</div>
+    <button class="btn btn-ghost" id="saveDraft">Save and finish later</button>
+    <button class="btn btn-ghost" id="printForm">Print / save a copy</button>
+    <button class="btn btn-gold" id="submitBtn">Submit application</button>
+  </div>
+
+  <div class="donebox" id="doneBox" style="display:none;margin-top:16px">
+    <h3>Application received</h3>
+    <p>Thank you. Your application is with the credit team and you will be contacted on the number you gave. Keep this
+      reference — quote it at any branch.</p>
+    <div class="ref" id="doneRef">GLS-APP-0000</div>
+    <div class="sigrow" style="margin-top:10px">
+      <button class="btn btn-ghost btn-sm" id="printAck">Print acknowledgement</button>
+      <a class="btn btn-ghost btn-sm" href="apply.html" id="startAnother">Start another application</a>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>

@@ -1,0 +1,199 @@
+/* ============================================================================
+   CUSTOMER APPLICATION FORM + LOAN AGREEMENT
+   Shared by apply.html and agreement.html. The system theme does the rest.
+   ========================================================================= */
+
+  body.cust{background:#EDF6F1;display:block}
+  body.cust .main{width:100%}
+
+  /* the customer header is light, not the staff dark band */
+  .custbar{
+    background:#0F1115;border-bottom:1px solid #23262E;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:12px 22px;min-height:0;height:auto;
+  }
+  .custbrand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:0}
+  .custbrand img{height:32px;width:32px;flex:0 0 auto}
+  .custbrand span{display:flex;flex-direction:column;min-width:0}
+  .custbrand b{
+    font-size:16px;font-weight:800;letter-spacing:.7px;color:#fff;line-height:1.15;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .custbrand i{
+    font-style:normal;font-size:9px;font-weight:800;letter-spacing:2.6px;color:#E4C264;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .custnav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .custnav a{
+    font-size:11.5px;font-weight:700;color:#DCE2EC;text-decoration:none;
+    border:1px solid #2F3541;border-radius:9px;padding:6px 11px;background:#1B1F27;
+  }
+  .custnav a:hover{border-color:#C9A227;color:#F3D67A}
+  .custnav a.on{background:#C9A227;border-color:#B08D1C;color:#241C00}
+
+  /* the form column */
+  .sheet{width:100%;max-width:1080px;margin:0 auto;padding:20px 18px 60px}
+  @media (max-width:640px){ .sheet{padding:14px 12px 44px} }
+
+  /* progress rail */
+  .progwrap{
+    position:sticky;top:0;z-index:30;
+    background:rgba(237,246,241,.95);backdrop-filter:blur(8px);
+    border-bottom:1px solid #CFE2D9;padding:9px 0 10px;margin-bottom:16px;
+  }
+  .progwrap .ptop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+  .progwrap .pt{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#3F5B50}
+  .progwrap .pc{font-size:10.5px;font-weight:800;color:#116B49;font-variant-numeric:tabular-nums}
+  .progbar{height:8px;border-radius:20px;background:#DCEAE3;overflow:hidden;margin-top:7px}
+  .progbar i{display:block;height:100%;background:linear-gradient(90deg,#0E9F6E,#2DD4BF);width:0;transition:width .25s ease}
+  .progchips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+  .progchips a{
+    font-size:10px;font-weight:700;color:#41514B;text-decoration:none;
+    background:#fff;border:1px solid #CFE2D9;border-radius:20px;padding:3px 9px;
+  }
+  .progchips a.on{background:#0F1115;border-color:#0F1115;color:#fff}
+  .progchips a.done{border-color:#8FC7AF;background:#EAF7F1;color:#116B49}
+
+  /* form fields, larger and friendlier than the staff tables */
+  .fg label{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#3F4A57}
+  .fg input,.fg select,.fg textarea{
+    font-size:13px;padding:9px 11px;border-radius:10px;
+    border:1.5px solid #7FAF9C;background:#fff;color:#1D2430;width:100%;
+  }
+  .fg textarea{min-height:74px;resize:vertical}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{
+    outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.16);
+  }
+  .fg input.bad,.fg select.bad,.fg textarea.bad{border-color:#D93F3F;box-shadow:0 0 0 3px rgba(217,63,63,.14)}
+  .fg .err{font-size:9.5px;font-weight:700;color:#A62424;min-height:12px}
+  .fg .hint{font-size:9.5px;color:#667085;line-height:1.45}
+  .fg .req{color:#A62424}
+  .fg.full{grid-column:1 / -1}
+
+  .form-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:760px){
+    .form-grid.two,.form-grid.three{grid-template-columns:1fr}
+  }
+
+  /* choice rows */
+  .choicegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}
+  .choicebox{
+    display:flex;gap:9px;align-items:flex-start;padding:10px 11px;border-radius:11px;
+    border:1.5px solid #A9CDBD;background:#fff;cursor:pointer;
+  }
+  .choicebox input{margin-top:2px;flex:0 0 auto;width:16px;height:16px;accent-color:#059669}
+  .choicebox span{font-size:11px;line-height:1.5;color:#2B303B}
+  .choicebox b{display:block;font-size:11.5px;font-weight:800;color:#12151B}
+  .choicebox:has(input:checked){border-color:#059669;background:#F4FCF8}
+
+  /* the signature pad */
+  .sigwrap{border:2px solid #7FB49F;border-radius:12px;background:#fff;padding:10px}
+  .sigpad{display:block;width:100%;height:170px;border-radius:9px;background:repeating-linear-gradient(0deg,#fff,#fff 27px,#EFF6F2 27px,#EFF6F2 28px);touch-action:none;cursor:crosshair}
+  .sigpad.touched{background:#fff}
+  .sigrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+  .sigmeta{font-size:10px;color:#667085;line-height:1.5}
+  .signote{font-size:10px;font-weight:700;color:#8A5B08;background:#FFF5E3;border:1px solid #F3DFB6;border-radius:9px;padding:7px 10px;margin-top:8px}
+
+  /* declaration list */
+  .decl{display:grid;gap:8px}
+  .decl label{display:flex;gap:9px;align-items:flex-start;font-size:11.5px;line-height:1.6;color:#2B303B;cursor:pointer}
+  .decl input{margin-top:2px;width:16px;height:16px;accent-color:#059669;flex:0 0 auto}
+
+  /* submitted banner */
+  .donebox{
+    border:2px solid #1E9E6A;background:#F2FBF6;border-radius:14px;padding:16px 18px;
+  }
+  .donebox h3{font-size:16px;font-weight:800;color:#116B49}
+  .donebox p{font-size:12px;color:#33544A;margin-top:4px;line-height:1.6}
+  .donebox .ref{
+    display:inline-block;margin-top:9px;font-family:ui-monospace,Consolas,monospace;font-size:14px;font-weight:800;
+    background:#0F1115;color:#E9C766;border-radius:9px;padding:6px 12px;letter-spacing:1px;
+  }
+
+  /* agreement reading column */
+  .terms{counter-reset:cl}
+  .terms .clause{border-bottom:1px dashed #CFE2D9;padding:12px 0}
+  .terms .clause:last-child{border-bottom:0}
+  .terms h3{font-size:13px;font-weight:800;color:#12151B;display:flex;gap:9px;align-items:baseline}
+  .terms h3 span{
+    flex:0 0 auto;font-size:10px;font-weight:800;color:#0F1115;background:#E9C766;
+    border-radius:6px;padding:1px 7px;
+  }
+  .terms p{font-size:12px;line-height:1.7;color:#31394A;margin-top:5px}
+  .terms ul{margin:6px 0 0 18px}
+  .terms li{font-size:11.5px;line-height:1.7;color:#31394A}
+  .terms .k{font-weight:800;color:#12151B}
+  .terms .warnbox{
+    border-left:4px solid #D93F3F;background:#FFF7F7;border-radius:0 10px 10px 0;
+    padding:9px 12px;margin-top:8px;font-size:11.5px;color:#7A1F1F;line-height:1.6;
+  }
+  .terms .okbox{
+    border-left:4px solid #1E9E6A;background:#F4FCF8;border-radius:0 10px 10px 0;
+    padding:9px 12px;margin-top:8px;font-size:11.5px;color:#14523C;line-height:1.6;
+  }
+
+  /* sticky action bar at the foot of a form */
+  .formfoot{
+    position:sticky;bottom:0;z-index:20;margin-top:16px;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border:2px solid #7FB49F;border-radius:14px;
+    padding:11px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    box-shadow:0 -6px 20px -14px rgba(6,78,59,.5);
+  }
+  .formfoot .fk{font-size:10.5px;color:#667085;line-height:1.5;min-width:0;flex:1 1 220px}
+  .formfoot .btn{flex:0 0 auto}
+
+  /* hero block on the customer pages */
+  .custhero{margin:0 0 16px}
+  .custhero h1{font-size:22px;font-weight:800;letter-spacing:-.2px;color:#0F1115;line-height:1.2}
+  .custhero p{font-size:12.5px;line-height:1.7;color:#33544A;margin-top:6px;max-width:78ch}
+  .custhero p a{color:#116B49;font-weight:800;text-decoration:underline}
+  .custhint{
+    display:flex;gap:11px;align-items:center;flex-wrap:wrap;justify-content:space-between;
+    margin-top:12px;padding:11px 13px;border-radius:12px;
+    border:2px solid #A9CDBD;background:#fff;font-size:11.5px;color:#31394A;line-height:1.55;
+  }
+  .custhint span{min-width:0;flex:1 1 260px}
+  .custhint.locked{border-color:#D93F3F;background:#FFF7F7;color:#7A1F1F}
+  .custhint.ok{border-color:#1E9E6A;background:#F2FBF6;color:#14523C}
+  .custhint .btn{flex:0 0 auto}
+
+  /* a standalone field error line, outside the .fg column */
+  .err{font-size:10px;font-weight:700;color:#A62424;min-height:0;margin-top:4px}
+  .err:empty{display:none}
+
+  /* neutral empty state inside the customer column */
+  .empty{
+    border:2px dashed #A9CDBD;border-radius:12px;padding:22px 16px;text-align:center;
+    font-size:11.5px;color:#667085;background:#fff;
+  }
+  .sheet .sec{margin-top:16px}
+  .sheet .card.panel{padding:14px 15px}
+  .sheet .panel+.sec{margin-top:18px}
+  @media (max-width:640px){
+    .custhero h1{font-size:18px}
+    .terms p,.terms li{font-size:11.5px}
+    .sigpad{height:150px}
+  }
+
+  @media print{
+    .custbar .custnav,.formfoot,.progwrap,.sigrow{display:none !important}
+    .sheet{max-width:none;padding:0}
+    .custhero h1{font-size:16pt}
+    .terms .clause{break-inside:avoid}
+  }
+
+  /* toasts (customer pages carry no staff module css) */
+  .toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 36px)}
+  .toast{
+    background:#0F1115;color:#fff;border-radius:11px;padding:11px 14px;font-size:12px;line-height:1.5;
+    box-shadow:0 10px 30px rgba(0,0,0,.28);display:flex;gap:9px;align-items:flex-start;max-width:340px;
+    border-left:3px solid #1E9E6A;
+  }
+  .toast.ok{border-left-color:#1E9E6A}
+  .toast.err{border-left-color:#D93F3F;background:#3A1010}
+  .toast.info{border-left-color:#C9A227}
+  .toast span{flex:0 0 auto;font-weight:800;color:#E9C766}
+  .toast.err span{color:#FF9E9E}
+  @media print{ .toasts{display:none !important} }

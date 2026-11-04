@@ -1,0 +1,132 @@
+  <!-- ============ 10 · CUSTODY ============ -->
+  <section class="sec" id="s10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Physical Custody and Inspection</h2>
+        <p>Where each asset is held, who inspected it and when, its condition, the photographs on file and the next
+          inspection due</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="cusPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Custody Register</div>
+        <div class="panel-sub">Vehicles and equipment are inspected quarterly; property at least annually</div></div>
+        <select id="cusFilter" class="gcsel"></select>
+      </div>
+      <div class="tblwrap" style="max-height:400px">
+        <table class="tbl2 dense"><thead id="cusHead"></thead><tbody id="cusBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11 · COVERAGE ============ -->
+  <section class="sec" id="s11">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>Guarantee, Security and the Exposure They Cover</h2>
+        <p>For every open loan: the balance outstanding, the enforceable guarantee, the realisable security and the gap that
+          remains — the single view a credit committee needs before approving or releasing</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="covPill">—</span></div>
+    </div>
+
+    <div class="exgrid" id="covTiles"></div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Coverage Table</div>
+        <div class="panel-sub">Shortfall is exposure the guarantees and security do not reach</div></div>
+        <button class="btn btn-ghost btn-sm" id="covExport">Export coverage</button>
+      </div>
+      <div class="tblwrap" style="max-height:380px">
+        <table class="tbl2 dense"><thead id="covHead"></thead><tbody id="covBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12 · RELEASE ============ -->
+  <section class="sec" id="s12">
+    <div class="sec-head">
+      <div class="sec-num">12</div>
+      <div><h2>Release, Substitution and Discharge</h2>
+        <p>When a loan is settled the guarantee is discharged and the security released — here is the workflow, the
+          requests waiting on a signature, and the certificates issued</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="relPill">—</span></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Release Workflow</div>
+          <div class="panel-sub">Seven steps from settlement to a released title</div></div></div>
+        <div class="flow" id="relFlow"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Open Requests</div>
+          <div class="panel-sub">Release, substitution and partial discharge asked for and not yet completed</div></div>
+          <span class="badge b-gray" id="relCount">0</span></div>
+        <div class="tblwrap" style="max-height:300px">
+          <table class="tbl2 dense"><thead id="relHead"></thead><tbody id="relBody"></tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 13 · FLAGS ============ -->
+  <section class="sec" id="s13">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div><h2>Risk Flags, Exceptions and Watchlist</h2>
+        <p>Guarantors who are themselves in arrears, security that has fallen below the required cover, expired insurance,
+          and assets pledged twice — each with the action it needs</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="fPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Flags</div>
+        <div class="panel-sub">High flags block further lending until cleared</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="fLevel" class="gcsel"></select>
+          <span class="badge b-gray" id="fCount">—</span>
+        </div>
+      </div>
+      <div class="flaglist" id="flagList"></div>
+    </div>
+  </section>
+
+  <!-- ============ 14 · REPORTS ============ -->
+  <section class="sec" id="s14">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div><h2>Reports, Exports and Audit Trail</h2>
+        <p>The guarantor schedule, the security schedule, the coverage report, the insurance diary and every change made in
+          this module</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="rPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="repGrid" style="margin-bottom:11px"></div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Module Audit Trail</div>
+        <div class="panel-sub">Who changed what, when, and from which value to which</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="audKind" class="gcsel"></select>
+          <span class="badge b-gray" id="audCount">—</span>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:360px">
+        <table class="tbl2 dense"><thead id="audHead"></thead><tbody id="audBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

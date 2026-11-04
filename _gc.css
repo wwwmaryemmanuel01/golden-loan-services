@@ -1,0 +1,90 @@
+/* ============================================================================
+   GUARANTORS & COLLATERAL — page-specific pieces
+   The shared chrome (topbar, sections, cards, tables, KPIs, modal, forms)
+   comes from _module.css; only what is unique to this module lives here.
+   ========================================================================= */
+
+  /* a coverage bar: how much of a loan the guarantees and security cover */
+  .cvr{display:grid;gap:4px;min-width:150px}
+  .cvr .cvrl{display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:700;color:#2B303B}
+  .cvr .cvrl span:last-child{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .cvr .cvrt{height:8px;border-radius:20px;background:#EEF1F6;overflow:hidden;display:flex}
+  .cvr .cvrt i{display:block;height:100%}
+  .cvr .cvrt i.g{background:#C9A227}
+  .cvr .cvrt i.c{background:#1E9E6A}
+  .cvr .cvrt i.short{background:#D93F3F}
+
+  /* document chips: what is on file, what is missing */
+  .docs{display:flex;flex-wrap:wrap;gap:4px}
+  .docs span{
+    font-size:9px;font-weight:800;letter-spacing:.3px;
+    padding:2px 6px;border-radius:6px;border:1px solid transparent;white-space:nowrap;
+  }
+  .docs .on{background:#E9F7F0;color:#116B49;border-color:#C9EBDC}
+  .docs .off{background:#FDECEC;color:#A62424;border-color:#F6D2D2}
+  .docs .wait{background:#FFF5E3;color:#8A5B08;border-color:#F3DFB6}
+
+  /* exposure tiles: one per loan, showing guarantee vs collateral vs gap */
+  .exgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+  .extile{border:1.5px solid #7FB49F;border-radius:12px;padding:11px 12px;background:#fff;display:grid;gap:7px}
+  .extile .exh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .extile .exn{font-size:11.5px;font-weight:800;color:var(--ink)}
+  .extile .exb{font-size:9.5px;color:var(--muted);margin-top:1px}
+  .extile .exv{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+  .extile .exseg{display:flex;height:9px;border-radius:20px;overflow:hidden;background:#EEF1F6}
+  .extile .exseg i{display:block;height:100%}
+  .extile .exleg{display:flex;flex-wrap:wrap;gap:9px;font-size:9px;color:var(--muted);font-weight:700}
+  .extile .exleg b{color:#2B303B}
+
+  /* flags */
+  .flaglist{display:grid;gap:8px}
+  .flag{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:#fff;
+  }
+  .flag.hi{border-left:4px solid #D93F3F;background:#FFFAFA}
+  .flag.md{border-left:4px solid #E08C1E;background:#FFFCF5}
+  .flag.lo{border-left:4px solid #2F6FED;background:#FAFCFF}
+  .flag .fi{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+    font-size:11px;font-weight:800;background:#F1F4F9;color:#3F4756;
+  }
+  .flag .fn{font-size:11.5px;font-weight:800;color:var(--ink)}
+  .flag .fs{font-size:10px;color:var(--muted);margin-top:1px;line-height:1.5}
+  .flag .fa{margin-left:auto;flex:0 0 auto}
+
+  /* signature / consent preview inside a record sheet */
+  .sigbox{
+    border:1.5px dashed #A9CDBD;border-radius:10px;background:#FCFEFD;
+    min-height:64px;display:grid;place-items:center;font-size:10px;color:var(--muted);
+    padding:8px;
+  }
+  .sigbox img{max-height:58px;max-width:100%;object-fit:contain}
+
+  /* the workflow list in section 12 */
+  .flow{display:grid;gap:0}
+  .flow .fstep{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed #DCEAE3}
+  .flow .fstep:last-child{border-bottom:0}
+  .flow .fd{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+    font-size:9px;font-weight:800;background:#0F1115;color:#E9C766}
+  .flow .ft{font-size:11.5px;font-weight:700;color:#2B303B}
+  .flow .fq{font-size:10px;color:var(--muted);line-height:1.5}
+
+  /* selects in the section headers */
+  .gcsel{
+    font-size:11px;padding:5px 8px;border:1.5px solid #A9CDBD;border-radius:8px;
+    background:#fff;color:#2B303B;max-width:100%;
+  }
+  .gcsel:focus{outline:2px solid #C9A227;outline-offset:1px}
+
+  /* the band figures inside .modband */
+  .modband .band-stats{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px}
+  .modband .bl{font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#A9B0BD}
+  .modband .bv{font-size:15px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+
+  /* the small "risk" rows used in several panels */
+  .risk{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px dashed #DCEAE3}
+  .risk:last-child{border-bottom:0}
+  .risk .rn{font-size:11.5px;font-weight:700;color:#2B303B;line-height:1.45}
+  .risk .rs{font-size:10px;color:#667085;margin-top:1px;line-height:1.5}
+  .risk .rv{flex:0 0 auto}

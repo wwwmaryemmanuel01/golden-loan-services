@@ -114,6 +114,68 @@ merge a duplicate record (loans, payments, messages and tickets move across and 
 duplicate is retired), and close an account. Reports (9) compute from the live register
 and export as CSV or a real `.xlsx` workbook, with a print/PDF preview fallback.
 
+## Guarantors & Collateral module
+
+`guarantors-collateral.html` is the register of who stands behind each loan and what
+security is pledged: **14 sections** — the overview of coverage against exposure, the
+guarantor register, identity and KYC, capacity and net worth, consent and signature,
+the collateral register, valuation and loan-to-value, ownership/title and perfection
+of charge, insurance, physical custody and inspection, guarantee-and-security cover,
+release/substitution/discharge, risk flags and watchlist, and reports, exports and the
+audit trail.
+
+It runs on one in-memory book of **12 loans, 14 guarantors and 16 collateral items**
+across nine security types, and every number is derived from it. A guarantor carries six
+KYC checks; only a *verified* guarantor contributes enforceable guarantee value, and only
+security that is *Charged* or *Pledged* contributes its forced-sale value. Coverage is
+those two against the balance outstanding, so verifying a guarantor or revaluing a
+vehicle moves the coverage meters, the exposure table and the risk band on section 11 at
+the same time.
+
+Guarantors can be added from the header (name, national ID, phone, relationship,
+district, employment, income, existing commitments, consent and signature); the record
+is validated, given a reference and dropped straight into the register. Consent is a real
+gate — an unsigned guarantor is flagged in section 5 and in the exception list. Collateral
+shows valuation age, LTV against the loan, title and charge status, insurance expiry
+(where a positive day count means overdue), custody location and last inspection, and
+every report exports as CSV or the whole register as JSON, plus a print view.
+
+## Customer application form
+
+`apply.html` is the form a customer fills at the branch or on their own phone:
+**10 sections** — applicant details, contact and address, income and affordability,
+the loan requested, business details, first guarantor, second guarantor, security
+offered, documents, and declarations with a signature — followed by a live review and
+submission.
+
+It is a customer page: the staff sidebar is gone, and a light customer header links to
+the agreement, this form and staff sign-in. Everything is saved in `localStorage` as it is
+typed, so a half-finished form survives a reload; the progress rail shows which of the
+ten sections are complete; the affordability block and the repayment quote compute from
+the amount, term, income and expenses as you type (6.5% per month, 3% arrangement fee,
+capped at 40% of income). Three signature pads — first guarantor, second guarantor and
+the applicant — capture a real drawn signature on `<canvas>`, with a typed-name fallback
+for keyboards and a clear button on each. Submission is refused until every required
+answer, the guarantor consent, all six declarations and the applicant signature are in
+place; it then issues a reference (`GLS-APP-nnnnnn`), shows the acknowledgement, and can
+print or start a fresh form.
+
+## Loan agreement and acceptance
+
+`agreement.html` carries the terms and conditions in **thirteen clauses** — parties,
+the offer, amount/interest (6.5% per month on the declining balance) and fees (3%
+arrangement), repayment and late payment, guarantors and security, borrower duties,
+lender duties, default and enforcement, early settlement, data and credit bureaus,
+complaints, changes, and the declarations made before acceptance — with the key figures
+repeated in a strip at the top so nothing important is buried in prose.
+
+Acceptance is a gate, not a formality: all four confirmations, the name, the national ID,
+the date and a drawn signature are required before the record is written to
+`localStorage` under `gls_agreement_v1`. `apply.html` reads that same key on load, so an
+unaccepted agreement leaves the application fields, the signature pads and the submit
+button disabled, with a button straight to the agreement. Acceptance can be withdrawn,
+which locks the form again.
+
 ## Audit Logs module
 
 `audit.html` is the audit and compliance console: **18 sections** — overview, the all-logs
@@ -752,6 +814,9 @@ Every module now behaves the same way when you open a record or pick up a phone.
 | Savings Management | `savings.html` | 20 · 22 charts · 12 reports |
 | Salaries, Expenses & Operating Charges | `salaries.html` | 20 · 39 charts · 14 reports |
 
+| Guarantors & Collateral | `guarantors-collateral.html` | 14 |
+| Customer application | `apply.html` | 10 · signature pads |
+| Loan agreement & T&Cs | `agreement.html` | 13 clauses · acceptance gate |
 | Fees & Penalties | `fees-penalties.html` | 20 |
 | Roles & Permissions | `roles-permissions.html` | 11 |
 | Data Recovery | `data-recovery.html` | 12 |
@@ -782,6 +847,9 @@ payments.html           Module 16 (built · 20 payment & connection sections)
 deposits.html           Module 17 (built · 18 deposit & withdrawal sections)
 transfers.html          Module 18 (built · 20 transfer sections)
 
+guarantors-collateral.html  Guarantors & Collateral (built · 14 registers)
+apply.html              customer application form (built · 10 sections, 3 signature pads)
+agreement.html          loan agreement & T&Cs (built · acceptance gate)
 assets/                 logo, emblem, favicons (built by make-assets.sh)
 login.html              sign-in screen (standalone, not generated)
 _brand.css              logo placement, footer, splash, print band
@@ -816,6 +884,9 @@ build-settings.sh       rebuilds settings.html from its partials
 build-repayments.sh     rebuilds repayments.html from its partials
 build-applications.sh   rebuilds applications.html from its partials
 build-clients.sh        rebuilds clients.html from its partials
+build-guarantors.sh     rebuilds guarantors-collateral.html from its partials
+build-apply.sh          rebuilds apply.html (customer header, no staff sidebar)
+build-agreement.sh      rebuilds agreement.html
 build-audit.sh          rebuilds audit.html from its partials
 build-analytics.sh      rebuilds analytics.html from its partials
 build-charts.sh         rebuilds charts.html from its partials
@@ -850,6 +921,9 @@ _pmbodyA–E.html _pmjsA–G.js  methods of payment partials
 _dwbodyA–E.html _dwjsA–G.js  deposits & withdrawals partials
 _trbodyA–E.html _trjsA–H.js  transfers partials
 _slbodyA–E.html _sljsA–H.js  salaries & expenses partials
+_gcbodyA–C.html _gcjsA–C.js   guarantors & collateral partials
+_apfbodyA–B.html _apfjsA.js     customer application partials (_compose_customer.py builds the head)
+_agrbodyA.html   _agrjs.js      loan agreement partials
 
 preview-*.png           full-page screenshots at 1280px
 ```
@@ -865,6 +939,9 @@ Each built page is assembled from partials so the shared shell stays in one plac
 ./build-repayments.sh     # repayments.html
 ./build-applications.sh   # applications.html
 ./build-clients.sh        # clients.html
+./build-guarantors.sh     # guarantors-collateral.html
+./build-apply.sh          # apply.html
+./build-agreement.sh      # agreement.html
 ./build-audit.sh          # audit.html
 ./build-analytics.sh      # analytics.html
 ./build-charts.sh         # charts.html
@@ -889,6 +966,13 @@ All data is sample data held in memory — creating staff, changing statuses, as
 tasks, resetting passwords and processing closures all update the in-page state so the
 full lifecycle can be walked end to end. Nothing is sent anywhere and no credentials
 are stored or displayed.
+
+The two customer pages keep their working state in the browser only, under three
+`localStorage` keys: `gls_agreement_v1` (the acceptance record — name, ID, date, place,
+the four confirmations and the drawn signature), `gls_apply_draft_v1` (the application
+draft, replaced on every keystroke) and `gls_applications_v1` (the last 25 submitted
+applications with their `GLS-APP-nnnnnn` reference). Clearing site data resets all three;
+nothing in them is sent to a server, and no credential is ever written there.
 
 ### Header layout
 
