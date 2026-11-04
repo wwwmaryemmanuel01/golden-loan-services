@@ -44,8 +44,8 @@ JS_BLOCK = '<script ' + JS_MARK + '>\n' + JS + '\n</script>\n'
 
 # ---------------------------------------------------------------------------
 # per-module accent colours — the one hue each main module is known by. Deep
-# tones only: the white portal name and the gold sub-line must keep their
-# contrast on every one of them. The dashboard keeps the house black.
+# tones only, and they colour the module band, section badges and active chip
+# — never the system header, which stays the house black on every page.
 MODULE_ACCENTS = {
     'index':                '#0F1115',   # dashboard — the house black
     'applications':         '#1E3A8A',   # deep blue
