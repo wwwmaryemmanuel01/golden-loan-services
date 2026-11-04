@@ -1,0 +1,59 @@
+name: security checks
+
+# Three checks that can be made honestly from a static repository:
+#   1. no credential-shaped string is committed
+#   2. every published page carries the referrer policy and the limited CSP
+#   3. no .env file is tracked
+# Anything that needs Supabase, Railway or the hosting dashboard cannot be checked
+# here, and is not claimed by this workflow.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No credential-shaped strings
+        run: |
+          set -e
+          fail=0
+          pats=(
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.[A-Za-z0-9_-]{20,}'
+            'service_role[[:space:]]*[:=][[:space:]]*.{10,}'
+            'AKIA[0-9A-Z]{16}'
+            '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'
+            '(api[_-]?key|secret[_-]?key|password)[[:space:]]*[:=][[:space:]]*["'"'"'][A-Za-z0-9/+_-]{16,}["'"'"']'
+          )
+          for p in "${pats[@]}"; do
+            if git grep -nIE -e "$p" -- . ':!*.png' ':!*.jpg' ':!SECURITY.md' ':!.github/*' ; then
+              echo "::error::credential-shaped string matched: $p"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: No tracked .env file
+        run: |
+          if git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$'; then
+            echo "::error::an .env file is tracked"
+            exit 1
+          fi
+          echo "no .env file tracked"
+
+      - name: Every page carries the security meta tags
+        run: |
+          set -e
+          fail=0
+          for f in $(ls *.html | grep -v '^_'); do
+            grep -q 'name="referrer" content="strict-origin-when-cross-origin"' "$f" || { echo "::error::$f has no referrer policy"; fail=1; }
+            grep -q "http-equiv=\"Content-Security-Policy\"" "$f" || { echo "::error::$f has no CSP"; fail=1; }
+          done
+          echo "checked $(ls *.html | grep -vc '^_') pages"
+          exit $fail

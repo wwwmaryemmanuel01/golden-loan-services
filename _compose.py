@@ -3,6 +3,13 @@ Extracts the shared <style> block + sidebar, then composes a module page
 with its own topbar/sections/script. Keeps one source of truth for the theme."""
 import re, sys, pathlib
 
+# Applied to every page composed from the master shell. Only directives the
+# browser honours inside a <meta> tag, and only ones that restrict nothing a
+# page here actually needs — see SECURITY.md before tightening them.
+META = ('<meta name="referrer" content="strict-origin-when-cross-origin" />\n'
+        '<meta http-equiv="Content-Security-Policy" content="object-src \'none\'; '
+        'base-uri \'self\'; form-action \'self\'" />\n')
+
 ROOT = pathlib.Path(__file__).parent
 MASTER = (ROOT / "index.html").read_text()
 
@@ -40,7 +47,7 @@ def head(title, extra_css=""):
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 {FAVICON}
-<title>{title} — GOLDEN FINANCIAL SERVICES</title>
+{META}<title>{title} — GOLDEN FINANCIAL SERVICES</title>
 <style>{STYLE}
 {extra_css}</style>
 </head>

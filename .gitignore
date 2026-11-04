@@ -4,3 +4,14 @@ node_modules/
 .arena/
 .playwright-cli/
 __pycache__/
+
+# ---- secrets: never commit real credentials ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+.secrets
