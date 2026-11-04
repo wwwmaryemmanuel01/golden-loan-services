@@ -1,0 +1,113 @@
+
+  <!-- ============ 4 · COMPARE ALL LOAN PRODUCTS ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Compare All Loan Products</h2>
+        <p>The same principal and the same dates taken through every product on the book, each at its own rate, fee,
+          method and shortest term — so the cheapest route is obvious before a word is promised</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="lcCmpPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Product comparison</div>
+        <div class="panel-sub" id="lcCmpSub">—</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center" class="no-print">
+          <button class="btn btn-ghost btn-sm" id="lcCmpCsv">Export comparison (CSV)</button>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:420px">
+        <table class="tbl2 dense lccmp">
+          <thead id="lcCmpHead"></thead>
+          <tbody id="lcCmpBody"></tbody>
+        </table>
+      </div>
+      <div class="qhint" id="lcCmpFoot" style="margin-top:7px"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · ASSUMPTIONS AND EXPORTS ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Assumptions, Rounding and Exports</h2>
+        <p>Exactly what is included in the figures, what is not, and how to take the result sheet away</p></div>
+      <div class="sec-tools"><span class="badge b-gray">Illustration only</span></div>
+    </div>
+
+    <div class="lc2up">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What the figures assume</div>
+          <div class="panel-sub">Read this before quoting a customer</div></div></div>
+        <div class="tblwrap" style="max-height:none">
+          <table class="tbl2 dense">
+            <thead><tr><th>Rule</th><th>How it works here</th></tr></thead>
+            <tbody>
+              <tr><td><b>Flat interest</b></td><td>Interest is charged on the original principal for the whole
+                term, so every instalment is the same size.</td></tr>
+              <tr><td><b>Reducing balance</b></td><td>Interest is charged on what is still owed each period, so the
+                interest falls as the loan is paid down.</td></tr>
+              <tr><td><b>Equal instalments</b></td><td>One steady instalment throughout; a larger share of principal
+                is repaid each period and the interest falls.</td></tr>
+              <tr><td><b>Equal principal</b></td><td>The principal is repaid in equal slices and the interest is added
+                on the reducing balance, so instalments fall each period.</td></tr>
+              <tr><td><b>Processing fee</b></td><td>Charged once as a percentage of the principal and deducted from the
+                cash handed over, the way the book charges it. It is a cost of the loan and is not repaid again, so
+                total repayment is the principal plus interest.</td></tr>
+              <tr><td><b>Rate basis</b></td><td>The rate is quoted per month. Weekly and fortnightly loans convert it
+                from the annualised rate so the cost of borrowing does not change with the payment rhythm.</td></tr>
+              <tr><td><b>Annual period</b></td><td>The number of months the rate is annualised over; the default is a
+                1-year period, i.e. 12 monthly periods.</td></tr>
+              <tr><td><b>Dates</b></td><td>The first instalment falls one period after the disbursement date; month
+                ends are clamped so a loan on the 31st never rolls into the next month.</td></tr>
+              <tr><td><b>Rounding</b></td><td>Every figure is rounded to the nearest kwacha; the last instalment
+                absorbs the difference so the balance closes at exactly zero.</td></tr>
+              <tr><td><b>Not included</b></td><td>Late payment penalties, insurance, valuation, stamp duty and any
+                negotiated discount. Those are added by Fees &amp; Penalties and the loan agreement.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Take the result away</div>
+          <div class="panel-sub">Print it for the customer, or export it for the file</div></div></div>
+        <div class="kgrid">
+          <div class="kpi gold"><div class="kl">Result sheet</div><div class="kv" id="lcK1">—</div>
+            <div class="ks">total repayment</div></div>
+          <div class="kpi"><div class="kl">Instalment</div><div class="kv" id="lcK2">—</div>
+            <div class="ks" id="lcK2s">monthly</div></div>
+          <div class="kpi"><div class="kl">Cost of credit</div><div class="kv" id="lcK3">—</div>
+            <div class="ks">interest and fees against the principal</div></div>
+        </div>
+        <div class="form-actions" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-gold" id="lcPrint3">Print the result sheet</button>
+          <button class="btn btn-ghost" id="lcCsv2">Export the schedule (CSV)</button>
+          <a class="btn btn-ghost" href="agreement.html">Loan agreement &amp; T&amp;Cs</a>
+        </div>
+        <div class="note gold" style="margin-top:11px">
+          <div>These figures are an illustration for the counter and the customer. The signed agreement, the approved
+            product ticket and the disbursement slip always govern.</div>
+        </div>
+        <div class="minihead">Where this figure is used</div>
+        <div class="qhint">
+          The same calculation runs on the customer application form, in repayments when a schedule is rebuilt, and in
+          the loan agreement that prints the instalment table.
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h3 id="modalTitle">Record</h3><p id="modalSub"></p></div>
+      <button class="x" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>

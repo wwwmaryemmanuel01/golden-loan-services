@@ -1,0 +1,87 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Loan Calculator</div>
+      <div class="page-sub">Flat or reducing, any loan product, with a dated repayment schedule · <span id="topToday">—</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a product, a rate or a term…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="lcReset" title="Back to 1% a month, 1 month, a 1-year period and a 1% fee">Reset</button>
+      <button class="btn btn-ghost" id="lcPrint" title="Print the result sheet">Print</button>
+      <button class="btn btn-gold" id="lcApply">Use terms</button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Product &amp; amount</a>
+    <a class="snav" href="#s2">2 · Method &amp; terms</a>
+    <a class="snav" href="#s3">3 · Result sheet</a>
+    <a class="snav" href="#s4">4 · Compare products</a>
+    <a class="snav" href="#s5">5 · Assumptions</a>
+  </nav>
+
+  <div class="modband">
+    <div>
+      <h1>Work out a loan before you quote it</h1>
+      <p>Pick the product, enter the amount, choose flat or reducing, and the result sheet shows the interest,
+        the processing fee and every instalment with its date — the same figures the customer will sign for.</p>
+    </div>
+    <div class="band-stats" id="lcBand"></div>
+    <div class="mb-actions">
+      <a class="btn btn-ghost" href="apply.html">Customer application form</a>
+      <button class="btn btn-gold" id="lcCalcTop">Recalculate</button>
+    </div>
+  </div>
+
+  <!-- ============ 1 · LOAN PRODUCT AND AMOUNT ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Loan Product and Amount</h2>
+        <p>Every product on the book, each with its own limits, rate and processing fee — or a custom loan with your
+          own figures</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="lcProdPill">—</span></div>
+    </div>
+
+    <div class="lc2up">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What is being borrowed</div>
+          <div class="panel-sub">The product sets the starting rate, fee and method; every field stays editable</div></div></div>
+
+        <div class="form-grid">
+          <div class="fg" style="grid-column:1/-1">
+            <label for="lcProduct">Loan product</label>
+            <select id="lcProduct" class="lcsel"></select>
+            <div class="hint" id="lcProductHint">All major products are listed, plus a custom loan.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcAmount">Principal (MK)</label>
+            <input id="lcAmount" type="number" min="1000" step="1000" value="500000" inputmode="numeric" />
+            <div class="hint" id="lcAmountHint">The amount handed to the customer before the fee.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcDate">Disbursement date</label>
+            <input id="lcDate" type="date" />
+            <div class="hint">The schedule dates count from this day.</div>
+          </div>
+        </div>
+
+        <div class="minihead">Quick amounts</div>
+        <div class="tagline" id="lcChips"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Product terms</div>
+          <div class="panel-sub">What this product allows and what it charges</div></div></div>
+        <div id="lcProdInfo"></div>
+      </div>
+    </div>
+  </section>

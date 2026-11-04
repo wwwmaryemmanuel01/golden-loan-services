@@ -1,0 +1,137 @@
+
+  <!-- ============ 2 · CALCULATION METHOD AND TERMS ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Calculation Method and Terms</h2>
+        <p>Flat or reducing, the interest rate, how long the loan runs, the annual period the rate is quoted against,
+          and the processing fee</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="lcMethodPill">Flat</span></div>
+    </div>
+
+    <div class="lc2up">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Terms</div>
+          <div class="panel-sub">Defaults: 1% a month, 1 month, a 1-year annual period and a 1% processing fee</div></div></div>
+
+        <div class="form-grid">
+          <div class="fg">
+            <label for="lcMethod">Calculation</label>
+            <select id="lcMethod" class="lcsel">
+              <option value="flat">Flat</option>
+              <option value="reducing">Reducing balance</option>
+            </select>
+            <div class="hint" id="lcMethodHint">Interest on the original principal for the whole term.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcRate">Interest rate (% a month)</label>
+            <input id="lcRate" type="number" min="0" max="100" step="0.01" value="1" inputmode="decimal" />
+            <div class="hint" id="lcRateHint">1% a month · 12% a year at a 1-year annual period.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcDur">Duration period</label>
+            <div style="display:flex;gap:7px;min-width:0">
+              <input id="lcDur" type="number" min="1" step="1" value="1" inputmode="numeric" style="flex:1 1 70px" />
+              <select id="lcDurUnit" class="lcsel" style="flex:1 1 110px">
+                <option value="months" selected>Months</option>
+                <option value="weeks">Weeks</option>
+                <option value="years">Years</option>
+              </select>
+            </div>
+            <div class="hint" id="lcDurHint">1 month · one instalment.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcAnnual">Annual period</label>
+            <select id="lcAnnual" class="lcsel">
+              <option value="12" selected>1 year · 12 months</option>
+              <option value="6">6 months</option>
+              <option value="3">3 months</option>
+              <option value="1">1 month</option>
+            </select>
+            <div class="hint" id="lcAnnualHint">The rate is annualised over 12 months.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcFee">Processing fee (%)</label>
+            <input id="lcFee" type="number" min="0" max="25" step="0.01" value="1" inputmode="decimal" />
+            <div class="hint" id="lcFeeHint">Charged once, up front, and deducted from the disbursement.</div>
+          </div>
+
+          <div class="fg">
+            <label for="lcFreq">Repayment frequency</label>
+            <select id="lcFreq" class="lcsel">
+              <option value="monthly" selected>Monthly</option>
+              <option value="fortnightly">Fortnightly</option>
+              <option value="weekly">Weekly</option>
+            </select>
+            <div class="hint" id="lcFreqHint">Monthly instalments, 12 a year.</div>
+          </div>
+
+          <div class="fg" style="grid-column:1/-1" id="lcRedWrap">
+            <label for="lcRedStyle">Reducing balance method</label>
+            <select id="lcRedStyle" class="lcsel">
+              <option value="equal-instalment" selected>Equal instalments (interest on the reducing balance)</option>
+              <option value="equal-principal">Equal principal (instalments fall each period)</option>
+            </select>
+            <div class="hint">Only used when the calculation is reducing balance.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">How this is worked out</div>
+          <div class="panel-sub">The formula behind the figures, live</div></div></div>
+        <div class="lcform" id="lcFormula">—</div>
+        <div class="kgrid" id="lcDerived" style="margin-top:10px"></div>
+        <div class="note gold" style="margin-top:10px">
+          <div>The rate is a monthly rate. A weekly or fortnightly loan converts it from the annualised figure, so a
+            1% month is the same 12% a year however often the customer pays.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · RESULT SHEET ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Result Sheet</h2>
+        <p>Principal, processing fee percentage, interest rate, duration period, interest, total fees, total repayment —
+          and every instalment with the date it falls due</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="lcResPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head">
+        <div><div class="panel-title">Result sheet</div>
+          <div class="panel-sub" id="lcResSub">—</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center" class="no-print">
+          <button class="btn btn-ghost btn-sm" id="lcCsv">Export schedule (CSV)</button>
+          <button class="btn btn-ghost btn-sm" id="lcPrint2">Print</button>
+        </div>
+      </div>
+
+      <div class="lcfigs" id="lcFigs"></div>
+
+      <div class="lchero" id="lcHero">
+        <div>
+          <div class="hk">Total repayment</div>
+          <div class="hv" id="lcTotal">—</div>
+          <div class="hs" id="lcTotalSub">—</div>
+        </div>
+        <div class="hside" id="lcHeroSide"></div>
+      </div>
+
+      <div class="minihead">Repayment schedule with dates · <span id="lcSchCount">—</span></div>
+      <div class="tblwrap" style="max-height:460px">
+        <table class="tbl2 dense lcsch">
+          <thead id="lcSchHead"></thead>
+          <tbody id="lcSchBody"></tbody>
+        </table>
+      </div>
+      <div class="qhint" id="lcSchFoot" style="margin-top:7px"></div>
+    </div>
+  </section>
