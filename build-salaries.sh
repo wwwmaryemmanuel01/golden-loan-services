@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")"
 python3 _compose.py _slhead.html salaries
 cat _slhead.html _slbodyA.html _slbodyB.html _slbodyC.html _slbodyD.html _slbodyE.html \
-    _sljsA.js _sljsB.js _sljsC.js _sljsD.js _sljsE.js _sljsF.js _sljsG.js _sljsH.js > salaries.html
+    _sljsA.js _sljsB.js _sljsC.js _sljsD.js _sljsE.js _sljsF.js _sljsG.js _sljsH.js _sljsI.js > salaries.html
 python3 - <<'PY'
 import pathlib
 p = pathlib.Path('salaries.html'); s = p.read_text()

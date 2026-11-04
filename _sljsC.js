@@ -422,6 +422,7 @@ const SE_SYSTEM = [
    invoice: 'LIC-8810', renewal: addDays(TODAY, 28), start: addMonths(TODAY, -2), end: addMonths(TODAY, 10), dept: 'Finance'}
 ].map((c, i) => Object.assign(c, {
   id: 'SYS-' + pad(2100 + i, 4), status: i === 15 ? 'Unpaid' : i === 3 ? 'Review' : 'Paid',
+  when: c.start,
   billing: c.cycle === 'Annual' ? 'Paid annually in advance' : 'Charged monthly in arrears',
   variance: c.actual - c.expected,
   lane: 'System', severity: c.actual > c.expected * 1.1 ? 'Medium' : 'Low', owner: 'STF-009', region: 'Lilongwe'
@@ -433,6 +434,7 @@ const SE_SYSTEM_ACTUAL = sum(SE_SYSTEM, c => c.actual);
 const SE_RECURRING = SE_SYSTEM.map((c, i) => Object.assign({}, {
   id: 'REC-' + pad(3100 + i, 4), charge: c.id, name: c.name, provider: c.provider, cycle: c.cycle,
   expected: c.expected, actual: c.actual, renewal: c.renewal, contractStart: c.start, contractEnd: c.end,
+  when: c.start,
   reminder: addDays(c.renewal, -SE_SET.reminderDays),
   approval: c.expected > 400000 ? 'Finance manager' : 'Automatic', status: c.status,
   lane: 'Recurring', severity: c.actual > c.expected * 1.1 ? 'Medium' : 'Low', owner: 'STF-009', region: 'Lilongwe'

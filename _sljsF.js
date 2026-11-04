@@ -107,6 +107,8 @@ function seSystemAction(act){
   if(!x){ toast('Pick a provider first', 'err'); return; }
   if(act === 'pay'){
     x.status = 'Paid';
+    if(typeof seCardRecord === 'function' && seCardDefault())
+      seCardRecord('System charge', x.provider + ' · ' + x.name, x.actual, x.invoice);
     seAudit('Pay system charge', x.id, x.provider + ' · ' + seM(x.actual));
     toast(x.provider + ' marked paid for ' + seM(x.actual));
   } else if(act === 'renew'){

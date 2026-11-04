@@ -564,6 +564,8 @@ function seExpenseAction(act){
   } else if(act === 'pay'){
     if(e.status !== 'Approved'){ toast('Approve it before marking it paid', 'err'); return; }
     e.status = 'Paid'; e.reference = 'PAY-' + pad(6900 + SE_EXPENSES.indexOf(e), 5);
+    if(typeof seCardRecord === 'function' && seCardDefault())
+      seCardRecord('Expense', e.supplier + ' · ' + e.category, e.amount, e.id);
   } else if(act === 'receipt'){
     put('bxReceiptBox', `<div class="receiptdoc">
       <div class="sliphead"><div><b>${esc(e.supplier)}</b><div class="qhint">Supplier invoice</div></div>
