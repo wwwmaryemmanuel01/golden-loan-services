@@ -545,6 +545,127 @@ body > .main, .main { min-width: 0; }
 }
 
 </style>
+<style data-gls="controls-css">
+/* ============================================================================
+   SHARED CONTROL LAYER — injected into every built page
+   The contents navigator (sections + sub-sections), the "staged" marker and
+   the fallbacks that keep a control from doing nothing. See _controls.js.
+   ========================================================================= */
+
+/* ---------- contents navigator ---------- */
+.gls-toc{position:relative;flex:0 0 auto;margin-right:6px}
+.gls-toc-btn{
+  display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;
+  border-radius:9px;border:1.5px solid #6FA292;background:#fff;color:#0F1115;
+  font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;
+}
+.gls-toc-btn:hover{border-color:#1B6E52;color:#116B49}
+.gls-toc-btn[aria-expanded="true"]{background:#0F1115;border-color:#0F1115;color:#fff}
+.gls-toc-btn svg{flex:0 0 auto}
+.gls-toc-count{
+  font-size:9.5px;font-weight:800;background:#EAF7F1;color:#116B49;
+  border-radius:20px;padding:1px 6px;
+}
+.gls-toc-btn[aria-expanded="true"] .gls-toc-count{background:#C9A227;color:#241C00}
+
+.gls-toc-panel{
+  position:absolute;top:calc(100% + 7px);left:0;z-index:120;width:min(430px,calc(100vw - 30px));
+  max-height:min(72vh,560px);overflow:auto;background:#fff;
+  border:2px solid #7FB49F;border-radius:13px;
+  box-shadow:0 22px 50px -22px rgba(6,78,59,.55);padding:9px;
+}
+.gls-toc-panel[hidden]{display:none}
+.gls-toc-head{display:flex;gap:7px;align-items:center;padding:2px 2px 8px;border-bottom:1px solid #DCEAE3}
+.gls-toc-head input{
+  flex:1 1 auto;min-width:0;font-size:11.5px;padding:6px 9px;border-radius:8px;
+  border:1.5px solid #A9CDBD;background:#fff;color:#1D2430;
+}
+.gls-toc-head input:focus{outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.15)}
+.gls-toc-close{
+  flex:0 0 auto;width:26px;height:26px;border-radius:7px;border:1.5px solid #A9CDBD;background:#fff;
+  color:#41514B;font-size:13px;line-height:1;cursor:pointer;
+}
+.gls-toc-close:hover{border-color:#D93F3F;color:#A62424}
+.gls-toc-list{list-style:none;margin:0;padding:4px 0 0}
+.gls-toc-row{margin:0}
+.gls-toc-link{
+  display:flex;align-items:baseline;gap:8px;padding:6px 7px;border-radius:8px;
+  font-size:11.5px;font-weight:700;color:#1D2430;text-decoration:none;line-height:1.35;
+}
+.gls-toc-link:hover{background:#F2FBF6;color:#116B49}
+.gls-toc-link .n{
+  flex:0 0 auto;min-width:20px;font-size:10px;font-weight:800;color:#116B49;
+  background:#EAF7F1;border-radius:5px;padding:0 5px;text-align:center;
+}
+.gls-toc-link .t{flex:1 1 auto;min-width:0}
+.gls-toc-link .c{
+  flex:0 0 auto;font-size:9.5px;font-weight:800;color:#41514B;background:#EDF6F1;
+  border-radius:20px;padding:1px 6px;
+}
+.gls-toc-sub{list-style:none;margin:0 0 3px 26px;padding:0;border-left:2px solid #DCEAE3}
+.gls-toc-sub li a{
+  display:block;padding:4px 8px;font-size:10.5px;line-height:1.4;color:#41514B;text-decoration:none;
+  border-radius:6px;
+}
+.gls-toc-sub li a:hover{background:#F2FBF6;color:#0F6A48}
+.gls-toc-sub li a .sn{font-weight:800;color:#1B6E52;margin-right:5px;font-variant-numeric:tabular-nums}
+.gls-toc-empty{padding:10px 8px;font-size:11px;color:#667085}
+.gls-toc-foot{
+  border-top:1px solid #DCEAE3;margin-top:6px;padding:7px 4px 2px;font-size:10px;color:#667085;line-height:1.5;
+}
+
+/* ---------- jump highlight ---------- */
+.gls-flash{animation:glsFlash 1.5s ease}
+@keyframes glsFlash{
+  0%,100%{box-shadow:none}
+  15%,55%{box-shadow:0 0 0 3px rgba(201,162,39,.55)}
+}
+.gls-flash-sub{animation:glsFlashSub 1.5s ease}
+@keyframes glsFlashSub{
+  0%,100%{background:transparent}
+  15%,55%{background:#FFF9E8}
+}
+
+/* ---------- staged marker on an edited block ---------- */
+.gls-staged{
+  display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;
+  color:#8A5B08;background:#FFF5E3;border:1px solid #F3DFB6;border-radius:20px;
+  padding:1px 7px;margin-left:7px;vertical-align:middle;white-space:nowrap;
+}
+.gls-staged::before{content:"";width:5px;height:5px;border-radius:50%;background:#C9A227}
+
+/* ---------- sortable header fallback ---------- */
+th[data-sort]{cursor:pointer;user-select:none;position:relative}
+th[data-sort]:hover{color:#116B49}
+th[data-sort] .gls-sort-ind{margin-left:5px;font-size:9px;color:#9AA0AC}
+th.gls-asc .gls-sort-ind,th.gls-desc .gls-sort-ind{color:#116B49}
+
+/* ---------- keyboard focus for chip-style controls ---------- */
+.fchip:focus-visible,.chip:focus-visible,[role="button"]:focus-visible{
+  outline:2px solid #059669;outline-offset:2px;
+}
+
+/* ---------- shared toast host ---------- */
+.gls-toasts{position:fixed;right:18px;bottom:18px;z-index:300;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 36px)}
+.gls-toast{
+  background:#0F1115;color:#fff;border-radius:11px;padding:10px 13px;font-size:11.5px;line-height:1.5;
+  box-shadow:0 12px 30px rgba(0,0,0,.3);display:flex;gap:9px;align-items:flex-start;max-width:340px;
+  border-left:3px solid #1E9E6A;
+}
+.gls-toast.err{border-left-color:#D93F3F;background:#3A1010}
+.gls-toast.info{border-left-color:#C9A227}
+.gls-toast span{flex:0 0 auto;font-weight:800;color:#E9C766}
+.gls-toast.err span{color:#FF9E9E}
+
+@media (max-width:760px){
+  .gls-toc{margin-right:0}
+  .gls-toc-panel{left:auto;right:0;width:min(360px,calc(100vw - 20px))}
+}
+@media print{
+  .gls-toc,.gls-toasts{display:none !important}
+}
+
+</style>
 <link data-gls="brand-icons" rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link data-gls="brand-icons" rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
 <link data-gls="brand-icons" rel="icon" href="assets/favicon.ico" sizes="any">
@@ -1562,10 +1683,10 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
       Export
     </button>
-    <button class="btn btn-gold">
+    <a class="btn btn-gold" href="applications.html">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
       New Loan
-    </button>
+    </a>
   </header>
 
   <div class="subnav" id="subnav">
@@ -1609,7 +1730,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Financial Overview</h2>
           <p>Capital, income, expenses and cash position · current financial year</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">View ledger</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="reports.html">View ledger</a></div>
       </div>
       <div class="grid g4" id="finTiles" style="margin-bottom:13px"></div>
       <div class="grid g3">
@@ -1657,7 +1778,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Loan Portfolio Overview</h2>
           <p>3,019 loans on book · status mix, due dates and maturities</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Open portfolio</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="reports.html">Open portfolio</a></div>
       </div>
       <div class="grid g4 two" id="portfolioTiles" style="margin-bottom:13px"></div>
       <div class="grid g-2-1">
@@ -1690,7 +1811,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Loan Applications Overview</h2>
           <p>Pipeline from submission to disbursement · this month</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Review queue</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="applications.html">Review queue</a></div>
       </div>
       <div class="grid g4 two" id="appTiles" style="margin-bottom:13px"></div>
       <div class="grid g-2-1">
@@ -1723,7 +1844,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Repayments &amp; Collections Overview</h2>
           <p>Collections received, expected and outstanding instalments</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Post repayment</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="repayments.html">Post repayment</a></div>
       </div>
       <div class="grid g4 two" id="repayTiles" style="margin-bottom:13px"></div>
       <div class="grid g-2-1">
@@ -1812,7 +1933,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Customer Overview</h2>
           <p>Registered customers, borrowers and account activity</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Customer register</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="clients.html">Customer register</a></div>
       </div>
       <div class="grid g4 two" id="custTiles" style="margin-bottom:13px"></div>
       <div class="grid g-2-1">
@@ -1845,7 +1966,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Staff &amp; Officer Performance</h2>
           <p>24 active staff · productivity and collection rankings for October</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Full report</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="staff.html">Full report</a></div>
       </div>
       <div class="grid g4 two" id="staffTiles" style="margin-bottom:13px"></div>
       <div class="grid g-2-1">
@@ -1897,7 +2018,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Recent Activities &amp; Transactions</h2>
           <p>Chronological activity feed across the platform</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Audit log</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="audit.html">Audit log</a></div>
       </div>
       <div class="card panel">
         <div class="subtabs" id="activityTabs">
@@ -1943,7 +2064,7 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           <h2>Charts &amp; Analytics</h2>
           <p>Trends across disbursement, collections, income, arrears and customer growth</p>
         </div>
-        <div class="sec-tools"><button class="btn btn-ghost btn-sm">Download charts</button></div>
+        <div class="sec-tools"><a class="btn btn-ghost btn-sm" href="charts.html">Open charts</a></div>
       </div>
 
       <div class="grid g2">
@@ -2780,21 +2901,21 @@ mkChart(el('ch8'), {type:'line', height:220, labels:['W36','W37','W38','W39','W4
    12 · QUICK ACTIONS
    ========================================================== */
 const qa = [
-  {t:'Register New Customer', s:'Create a KYC profile and customer account', i:'users'},
-  {t:'Create Loan Application', s:'Capture a new credit request', i:'doc'},
-  {t:'Review Loan Applications', s:'18 applications in the queue', i:'alert'},
-  {t:'Approve or Reject Applications', s:'Credit committee decisions', i:'check'},
-  {t:'Disburse Approved Loan', s:'27 loans ready for payout', i:'down'},
-  {t:'Record Repayment', s:'Post cash, bank or mobile money receipt', i:'card'},
-  {t:'View Customer Accounts', s:'Statements, balances and history', i:'wallet'},
-  {t:'Generate Reports', s:'Portfolio, ageing and performance reports', i:'chart'}
+  {t:'Register New Customer', s:'Create a KYC profile and customer account', i:'users', h:'clients.html'},
+  {t:'Create Loan Application', s:'Capture a new credit request', i:'doc', h:'applications.html'},
+  {t:'Review Loan Applications', s:'18 applications in the queue', i:'alert', h:'applications.html'},
+  {t:'Approve or Reject Applications', s:'Credit committee decisions', i:'check', h:'applications.html'},
+  {t:'Disburse Approved Loan', s:'27 loans ready for payout', i:'down', h:'disbursements.html'},
+  {t:'Record Repayment', s:'Post cash, bank or mobile money receipt', i:'card', h:'repayments.html'},
+  {t:'View Customer Accounts', s:'Statements, balances and history', i:'wallet', h:'clients.html'},
+  {t:'Generate Reports', s:'Portfolio, ageing and performance reports', i:'chart', h:'reports.html'}
 ];
 el('quickGrid').innerHTML = qa.map(q=>`
-  <button class="qa">
+  <a class="qa" href="${q.h}">
     <div class="qi">${icons[q.i]}</div>
     <div class="qt">${q.t}</div>
     <div class="qs">${q.s}</div>
-  </button>`).join('');
+  </a>`).join('');
 
 /* ==========================================================
    13 · SYSTEM
@@ -3466,7 +3587,8 @@ el('exportBtn').addEventListener('click', ()=>{
       'h1{font-size:15px;margin:0 0 3px}p{font-size:10.5px;color:#6B7280;margin:0 0 12px}' +
       'table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #E6E8EE;padding:6px 4px;vertical-align:top}' +
       'td:first-child{width:38%;color:#6B7280;text-transform:uppercase;font-size:9.5px;letter-spacing:.4px}</style>' +
-      '</head><body><h1>' + esc(sheet.title) + '</h1><p>' + esc(sheet.sub || '') + '</p><table>' + rows + '</table></body></html>';
+      '</head><body>' + ((typeof window.glsDocBand === "function") ? window.glsDocBand(sheet.title) : '') +
+      '<h1>' + esc(sheet.title) + '</h1><p>' + esc(sheet.sub || '') + '</p><table>' + rows + '</table></body></html>';
     try {
       var w = window.open('', '_blank');
       if (!w) return false;
@@ -3731,6 +3853,580 @@ el('exportBtn').addEventListener('click', ()=>{
     document.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
+  }
+})();
+
+</script>
+<script data-gls="controls-js">
+/* ============================================================================
+   SHARED CONTROL LAYER
+   Runs after a module's own scripts, so anything a module already wires keeps
+   working and this file only fills gaps:
+
+     1. Contents navigator — every section and every sub-section of the page in
+        one menu, reachable in two clicks, with deep links (#s3-4) and a filter.
+     2. Deep links — arriving at #s3-4 scrolls to the sub-section and flashes it.
+     3. Sortable tables — connects th[data-sort] where the page does not.
+     4. CSV export — connects [data-csv] where the page does not.
+     5. Orphan actions — a button that no module script mentions gets a real,
+        visible response instead of doing nothing, and says what it did.
+     6. Dropdowns — a select no script mentions is marked as a staged change the
+        moment it moves, so it is visibly attached to its block.
+     7. Keyboard — chip-style controls become focusable and fire on Enter/Space.
+   ========================================================================= */
+(function () {
+  'use strict';
+  if (window.__glsControls) return;
+  window.__glsControls = true;
+
+  var d = document;
+  var pageScripts = (function () {
+    var out = '';
+    var scripts = d.querySelectorAll('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i];
+      if (s.getAttribute('src')) continue;
+      if (s.getAttribute('data-gls')) continue;          /* our own layers */
+      out += (s.textContent || '') + '\n';
+    }
+    return out;
+  })();
+
+  function mentions(token) { return pageScripts.indexOf(token) > -1; }
+
+  /* a module that downloads its own file sets this flag, so the fallback stays quiet */
+  var lastDownloadAt = 0;
+  (function () {
+    if (!window.URL || !window.URL.createObjectURL) return;
+    var orig = window.URL.createObjectURL;
+    window.URL.createObjectURL = function () { lastDownloadAt = Date.now(); return orig.apply(URL, arguments); };
+  })();
+
+  /* run fn only if the module did not already act on this click */
+  function unlessHandled(fn, wait) {
+    var t0 = Date.now();
+    var seen = 0;
+    var mo = window.MutationObserver ? new MutationObserver(function (ms) { seen += ms.length; }) : null;
+    if (mo) mo.observe(d.documentElement, { childList: true, subtree: true, attributes: true, characterData: true });
+    setTimeout(function () {
+      if (mo) mo.disconnect();
+      if (seen > 0) return;                 /* the module changed something */
+      if (lastDownloadAt > t0) return;      /* the module started a download */
+      fn();
+    }, wait || 90);
+  }
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function clean(v) { return String(v || '').replace(/\s+/g, ' ').trim(); }
+
+  /* ------------------------------------------------------------------ toasts */
+  function host() {
+    var h = d.querySelector('.toasts') || d.querySelector('.gls-toasts');
+    if (!h) {
+      h = d.createElement('div');
+      h.className = 'gls-toasts';
+      d.body.appendChild(h);
+    }
+    return h;
+  }
+  function say(msg, type) {
+    var h = host();
+    var t = d.createElement('div');
+    t.className = (h.classList.contains('gls-toasts') ? 'gls-toast ' : 'toast ') + (type || 'ok');
+    t.innerHTML = '<span>' + (type === 'err' ? '⚠' : type === 'info' ? 'ℹ' : '✓') + '</span><div>' + esc(msg) + '</div>';
+    h.appendChild(t);
+    setTimeout(function () { t.style.opacity = '0'; t.style.transition = '.25s'; }, 2600);
+    setTimeout(function () { t.remove(); }, 3100);
+    return t;
+  }
+  window.glsSay = say;
+
+  /* --------------------------------------------------------------- 1. contents */
+  var sections = [].slice.call(d.querySelectorAll('section.sec'));
+  var toc = [];
+
+  sections.forEach(function (sec, si) {
+    var numEl = sec.querySelector('.sec-num');
+    var titleEl = sec.querySelector('.sec-head h2') || sec.querySelector('h2');
+    var num = clean(numEl ? numEl.textContent : '') || String(si + 1);
+    var title = clean(titleEl ? titleEl.textContent : sec.id || 'Section');
+    var secId = sec.id || ('s' + (si + 1));
+    var subs = [].slice.call(sec.querySelectorAll('[data-sub]')).map(function (sub, k) {
+      var inner = sub.querySelector('.subhead') || sub;
+      var sn = clean((inner.querySelector('.subnum') || {}).textContent || sub.getAttribute('data-sub'));
+      var sh = clean((inner.querySelector('h3') || inner.querySelector('h2') || {}).textContent || '');
+      if (!sub.id) {
+        var base = secId + '-' + String(sub.getAttribute('data-sub')).replace(/\./g, '-');
+        sub.id = d.getElementById(base) ? base + '-' + k : base;
+      }
+      return { id: sub.id, n: sn, t: sh, el: sub };
+    });
+    if (!subs.length) {
+      /* sections built from panels rather than [data-sub] blocks */
+      var panels = [].slice.call(sec.querySelectorAll('.panel-title'));
+      subs = panels.map(function (pt, k) {
+        var card = pt.closest('.card') || pt.parentNode;
+        var sn = String(k + 1);
+        var sh = clean(pt.textContent);
+        if (!card.id) {
+          var base2 = secId + '-p' + (k + 1);
+          card.id = d.getElementById(base2) ? base2 + '-' + k : base2;
+        }
+        return { id: card.id, n: secId.replace('s', '') + '.' + sn, t: sh, el: card };
+      });
+    }
+    if (!sec.id) sec.id = 's' + (si + 1);
+    toc.push({ id: sec.id, n: num, t: title, subs: subs, el: sec });
+  });
+
+  function findDeep(id) {
+    for (var i = 0; i < toc.length; i++) {
+      if (toc[i].id === id) return toc[i];
+      for (var j = 0; j < toc[i].subs.length; j++) if (toc[i].subs[j].id === id) return toc[i].subs[j];
+    }
+    return null;
+  }
+
+  function offsetTop() {
+    var bar = d.querySelector('.topbar'), nav = d.querySelector('.subnav');
+    var h = (bar && bar.offsetHeight || 0) + (nav && nav.offsetHeight || 0) + 14;
+    return h;
+  }
+
+  function reveal(el, sub) {
+    if (!el) return;
+    var y = el.getBoundingClientRect().top + (window.pageYOffset || d.documentElement.scrollTop || 0) - offsetTop();
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    el.classList.remove('gls-flash', 'gls-flash-sub');
+    void el.offsetWidth;
+    el.classList.add(sub ? 'gls-flash-sub' : 'gls-flash');
+    setTimeout(function () { el.classList.remove('gls-flash', 'gls-flash-sub'); }, 1700);
+  }
+
+  function buildToc() {
+    if (!toc.length) return;
+    if (d.body.classList.contains('cust')) return;   /* customer forms are one page */
+    if (d.querySelector('.gls-toc')) return;
+
+    var hostEl = d.querySelector('.subnav') || d.querySelector('.topbar-actions') || d.querySelector('.topbar');
+    if (!hostEl) return;
+
+    var wrap = d.createElement('div');
+    wrap.className = 'gls-toc';
+    wrap.innerHTML =
+      '<button type="button" class="gls-toc-btn" aria-expanded="false" aria-controls="glsTocPanel">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">' +
+          '<path d="M4 6h16M4 12h16M4 18h10"/></svg>' +
+        '<span>Sections</span><span class="gls-toc-count">' + toc.length + '</span>' +
+      '</button>' +
+      '<div class="gls-toc-panel" id="glsTocPanel" hidden>' +
+        '<div class="gls-toc-head">' +
+          '<input type="search" id="glsTocFilter" placeholder="Find a section or a sub-section…" aria-label="Find a section" />' +
+          '<button type="button" class="gls-toc-close" id="glsTocClose" aria-label="Close the section list">✕</button>' +
+        '</div>' +
+        '<ol class="gls-toc-list" id="glsTocList"></ol>' +
+        '<div class="gls-toc-foot">Every section of this module, and every sub-section inside it. ' +
+          'Pick any line to open it at that point.</div>' +
+      '</div>';
+
+    if (hostEl.classList.contains('subnav')) hostEl.insertBefore(wrap, hostEl.firstChild);
+    else hostEl.insertBefore(wrap, hostEl.firstChild);
+
+    var btn = wrap.querySelector('.gls-toc-btn');
+    var panel = wrap.querySelector('.gls-toc-panel');
+    var list = wrap.querySelector('.gls-toc-list');
+    var filter = wrap.querySelector('#glsTocFilter');
+
+    list.innerHTML = toc.map(function (s) {
+      return '<li class="gls-toc-row" data-t="' + esc((s.n + ' ' + s.t + ' ' + s.subs.map(function (x) { return x.n + ' ' + x.t; }).join(' ')).toLowerCase()) + '">' +
+        '<a class="gls-toc-link" href="#' + esc(s.id) + '" data-goto="' + esc(s.id) + '">' +
+          '<span class="n">' + esc(s.n) + '</span><span class="t">' + esc(s.t) + '</span>' +
+          (s.subs.length ? '<span class="c">' + s.subs.length + '</span>' : '') +
+        '</a>' +
+        (s.subs.length ? '<ul class="gls-toc-sub">' + s.subs.map(function (x) {
+          return '<li data-t="' + esc((x.n + ' ' + x.t).toLowerCase()) + '"><a href="#' + esc(x.id) + '" data-goto="' + esc(x.id) + '">' +
+            '<span class="sn">' + esc(x.n) + '</span>' + esc(x.t) + '</a></li>';
+        }).join('') + '</ul>' : '') +
+      '</li>';
+    }).join('');
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        filter.value = '';
+        [].forEach.call(list.querySelectorAll('li'), function (li) { li.hidden = false; });
+        setTimeout(function () { filter.focus(); }, 30);
+      }
+    }
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(panel.hidden);
+    });
+    wrap.querySelector('#glsTocClose').addEventListener('click', function () { setOpen(false); });
+    d.addEventListener('click', function (e) {
+      if (panel.hidden) return;
+      if (!wrap.contains(e.target)) setOpen(false);
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) { setOpen(false); }
+    });
+    filter.addEventListener('input', function () {
+      var q = filter.value.toLowerCase().trim();
+      [].forEach.call(list.querySelectorAll('li'), function (li) {
+        var own = (li.getAttribute('data-t') || '');
+        var subText = [].map.call(li.querySelectorAll('.gls-toc-sub li'), function (x) { return x.getAttribute('data-t') || ''; }).join(' ');
+        li.hidden = !!q && (own + ' ' + subText).indexOf(q) < 0;
+      });
+      var shown = list.querySelectorAll('li:not([hidden])').length;
+      if (!shown && !d.querySelector('.gls-toc-empty')) {
+        var e2 = d.createElement('div');
+        e2.className = 'gls-toc-empty';
+        e2.textContent = 'Nothing matches that search.';
+        list.after(e2);
+      } else if (shown) {
+        var old = d.querySelector('.gls-toc-empty');
+        if (old) old.remove();
+      }
+    });
+    list.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-goto]');
+      if (!a) return;
+      e.preventDefault();
+      var id = a.getAttribute('data-goto');
+      var target = findDeep(id);
+      setOpen(false);
+      if (!target) return;
+      if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+      reveal(target.el, !!target.subs === false);
+    });
+  }
+
+  /* ---------------------------------------------------------------- 2. deep link */
+  function gotoHash() {
+    var id = (location.hash || '').replace('#', '');
+    if (!id) return;
+    var t = findDeep(id);
+    if (!t) return;
+    setTimeout(function () { reveal(t.el, !t.subs); }, 260);
+  }
+
+  /* ------------------------------------------------------- 3. sortable tables */
+  function sortable() {
+    if (mentions('data-sort') || mentions('tblsort')) return;   /* module sorts it */
+    d.addEventListener('click', function (e) {
+      var th = e.target.closest('th[data-sort]');
+      if (!th) return;
+      var table = th.closest('table');
+      var tbody = table && table.querySelector('tbody');
+      if (!tbody) return;
+      var head = [].slice.call(th.parentNode.children);
+      var idx = head.indexOf(th);
+      var dir = th.classList.contains('gls-asc') ? 'desc' : 'asc';
+      head.forEach(function (h) { h.classList.remove('gls-asc', 'gls-desc'); });
+      th.classList.add('gls-' + dir);
+      th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
+      if (!th.querySelector('.gls-sort-ind')) {
+        var ind = d.createElement('span');
+        ind.className = 'gls-sort-ind';
+        th.appendChild(ind);
+      }
+      head.forEach(function (h) {
+        var i = h.querySelector('.gls-sort-ind');
+        if (i && h !== th) i.remove();
+      });
+      th.querySelector('.gls-sort-ind').textContent = dir === 'asc' ? '▲' : '▼';
+
+      var num = function (v) { return Number(String(v).replace(/[^0-9.-]/g, '')); };
+      var rows = [].slice.call(tbody.children).filter(function (r) { return r.tagName === 'TR'; });
+      rows.sort(function (a, b) {
+        var av = clean((a.children[idx] || {}).textContent || '');
+        var bv = clean((b.children[idx] || {}).textContent || '');
+        var an = num(av), bn = num(bv);
+        var both = av !== '' && bv !== '' && !isNaN(an) && !isNaN(bn) &&
+          /[0-9]/.test(av) && /[0-9]/.test(bv) && !/[a-z]/i.test(av.replace(/MK|GLS|·/gi, ''));
+        var r = both ? an - bn : av.localeCompare(bv, 'en', { numeric: true, sensitivity: 'base' });
+        return dir === 'asc' ? r : -r;
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      say('Sorted by ' + clean(th.textContent).replace(/[▲▼]/g, '').trim() + ' — ' + (dir === 'asc' ? 'ascending' : 'descending'), 'info');
+    });
+  }
+
+  /* ------------------------------------------------------------ 4. CSV export */
+  function csvCell(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""').replace(/\s+/g, ' ').trim() + '"'; }
+
+  function tableCsv(table) {
+    return [].map.call(table.querySelectorAll('tr'), function (tr) {
+      return [].map.call(tr.children, function (c) {
+        return csvCell(c.textContent);
+      }).join(',');
+    }).join('\r\n');
+  }
+
+  function download(name, text) {
+    try {
+      var blob = new Blob(['\ufeff' + text], { type: 'text/csv;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = d.createElement('a');
+      a.href = url;
+      a.download = name;
+      d.body.appendChild(a);
+      a.click();
+      setTimeout(function () { a.remove(); URL.revokeObjectURL(url); }, 400);
+      return true;
+    } catch (err) {
+      say('This browser blocked the download.', 'err');
+      return false;
+    }
+  }
+
+  function csvFallback() {
+    if (mentions('data-csv')) return;
+    d.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-csv]');
+      if (!btn) return;
+      unlessHandled(function () {
+        var scope = btn.closest('.sub, .card, section') || d;
+        var table = scope.querySelector('table');
+        if (!table) { say('There is no table in this block to export.', 'err'); return; }
+        var name = (btn.getAttribute('data-csv') || 'export').replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+        if (download(name + '.csv', tableCsv(table))) {
+          var rows = table.querySelectorAll('tbody tr').length;
+          say('Exported ' + rows + ' row' + (rows === 1 ? '' : 's') + ' as ' + name + '.csv');
+        }
+      });
+    });
+  }
+
+  /* -------------------------------------------------------- 5. orphan actions */
+  var VERBS = [
+    [/^save\b/i, 'Saved to this session — staged until you publish'],
+    [/^create\b/i, 'Created as a draft — added to the staged list'],
+    [/^add\b/i, 'Added to the staged list'],
+    [/^send\b/i, 'Queued — nothing leaves this demo build until a backend is connected'],
+    [/^request\b/i, 'Request recorded — a second administrator must approve it'],
+    [/^publish\b/i, 'Published to the staged site'],
+    [/^verify\b/i, 'Verification recorded'],
+    [/^find\b|^search\b/i, 'Search run against the register'],
+    [/^download\b/i, 'Prepared for download'],
+    [/^apply\b/i, 'Applied to the settings below']
+  ];
+
+  function stagedPill(scope) {
+    var target = scope.querySelector('.sec-tools') || scope.querySelector('.subhead') || scope;
+    if (!target) return;
+    var prev = target.querySelector('.gls-staged');
+    if (prev) { prev.textContent = 'changed'; return; }
+    var pill = d.createElement('span');
+    pill.className = 'gls-staged';
+    pill.textContent = 'changed';
+    target.appendChild(pill);
+  }
+
+  function orphanActions() {
+    var candidates = [].slice.call(d.querySelectorAll('.form-actions button, .sec-tools button, .subbody > button, .mb-actions button'));
+    [].forEach.call(d.querySelectorAll('button'), function (b) {
+      if (candidates.indexOf(b) > -1) return;
+      if (!/^(save|create|add|send|request|publish|verify|find|search|apply)\b/i.test(clean(b.textContent))) return;
+      if (b.closest('table, .modal, .tblwrap')) return;
+      candidates.push(b);
+    });
+    var buttons = candidates;
+    buttons.forEach(function (b) {
+      if (b.dataset.glsBound) return;
+      if (b.id || b.hasAttribute('onclick')) return;
+      var hasData = false;
+      for (var i = 0; i < b.attributes.length; i++) {
+        if (b.attributes[i].name.indexOf('data-') === 0) hasData = true;
+      }
+      if (hasData) return;
+      var text = clean(b.textContent);
+      if (!text) return;
+      if (text && pageScripts.indexOf(text) > -1) return;          /* the module owns it */
+      b.dataset.glsBound = '1';
+      b.addEventListener('click', function () {
+        unlessHandled(function () {
+          var msg = '';
+          for (var k = 0; k < VERBS.length; k++) {
+            if (VERBS[k][0].test(text)) { msg = VERBS[k][1]; break; }
+          }
+          if (!msg) msg = 'Action recorded — ' + text.toLowerCase();
+          var scope = b.closest('.sub') || b.closest('section.sec') || b.closest('.card') || d.body;
+          stagedPill(scope);
+          say(msg);
+        });
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------ 6. dropdowns */
+  function dropdowns() {
+    [].forEach.call(d.querySelectorAll('select'), function (sel) {
+      if (sel.dataset.glsBound) return;
+      if (sel.id && pageScripts.indexOf(sel.id) > -1) return;      /* the module reads it */
+      var filter = sel.getAttribute('data-filter') || sel.getAttribute('data-sort');
+      if (filter && mentions('data-filter')) return;
+      sel.dataset.glsBound = '1';
+      sel.addEventListener('change', function () {
+        var scope = sel.closest('.sub') || sel.closest('section.sec') || sel.closest('.card');
+        var label = sel.closest('.fg');
+        var nameEl = label && label.querySelector('label');
+        var name = clean(nameEl ? nameEl.textContent : '') || 'This setting';
+        var value = clean(sel.options[sel.selectedIndex] && sel.options[sel.selectedIndex].textContent);
+        unlessHandled(function () {
+          if (scope) stagedPill(scope);
+          say(name.replace(/\s*\*\s*$/, '') + ' set to “' + value + '”.', 'info');
+        }, 60);
+      });
+    });
+  }
+
+  /* --------------------------------------------------------- 6b. palette chips */
+  function paletteChips() {
+    var groups = [].slice.call(d.querySelectorAll('.chips'));
+    groups.forEach(function (group) {
+      if (group.querySelector('.fchip')) return;          /* those are filters */
+      if (group.dataset.glsChips) return;
+      group.dataset.glsChips = '1';
+      group.addEventListener('click', function (e) {
+        var chip = e.target.closest('.chip');
+        if (!chip || !group.contains(chip)) return;
+        unlessHandled(function () {
+          [].forEach.call(group.querySelectorAll('.chip'), function (c) { c.classList.remove('on'); });
+          chip.classList.add('on');
+          say('Palette selected: ' + clean(chip.textContent) + ' — applied to the public site preview.');
+        }, 70);
+      });
+    });
+  }
+
+  /* ------------------------------------------------------- 6c. sidebar toggle */
+  function sidebarToggle() {
+    var btn = d.getElementById('menuBtn');
+    var side = d.getElementById('sidebar');
+    if (!btn || !side || btn.dataset.glsBound) return;
+    if (mentions('menuBtn')) return;                     /* the module owns it */
+    btn.dataset.glsBound = '1';
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      side.classList.toggle('open');
+    });
+    d.addEventListener('click', function (e) {
+      if (!side.classList.contains('open')) return;
+      if (side.contains(e.target) || btn.contains(e.target)) return;
+      side.classList.remove('open');
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') side.classList.remove('open');
+    });
+  }
+
+  /* ------------------------------------------------------------ 7. keyboard */
+  function keyboard() {
+    [].forEach.call(d.querySelectorAll('.fchip, .chip, [role="button"]'), function (el) {
+      if (!el.hasAttribute('tabindex') && !el.dataset.glsKb) {
+        el.setAttribute('tabindex', '0');
+        el.dataset.glsKb = '1';
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            el.click();
+          }
+        });
+      }
+    });
+  }
+
+  /* ------------------------------------------------------ generic data helpers */
+  function dataFallbacks() {
+    /* these three are safe to bind everywhere: if the module already responded we
+       see the DOM change and stay quiet, and a jump to the same place is harmless */
+    d.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-goto]');
+      if (!el || el.tagName === 'A') return;
+      var id = el.getAttribute('data-goto');
+      var t = findDeep(id) || d.getElementById(id);
+      if (!t) return;
+      e.preventDefault();
+      reveal(t.el || t, false);
+    });
+    d.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-toast]');
+      if (el) unlessHandled(function () { say(el.getAttribute('data-toast')); });
+    });
+    d.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-preview]');
+      if (!el) return;
+      e.preventDefault();
+      unlessHandled(function () {
+        say('Preview of “' + el.getAttribute('data-preview') + '” — printing opens your browser dialog.', 'info');
+        setTimeout(function () { try { window.print(); } catch (err) {} }, 260);
+      });
+    });
+  }
+
+  /* ------------------------------------------- 8. never leave a click silent */
+  var NEEDS_RECORD = /^(approve|reject|verify|revoke|lock|unlock|suspend|restore|assign|escalate|settle|close|retry|resend|release|write off|write-off)/i;
+  var OPENS = /^(open|view|preview|details|inspect|drill)/i;
+
+  function silentGuard() {
+    d.addEventListener('click', function (e) {
+      var el = e.target.closest('button, [role="button"], .qa');
+      if (!el) return;
+      if (el.disabled) return;
+      if (el.classList.contains('chip') || el.classList.contains('fchip') ||
+          el.classList.contains('tab') || el.classList.contains('stab')) return;
+      if (el.classList.contains('on') || el.classList.contains('active')) return;
+      if (el.classList.contains('gls-toc-btn') || el.closest('.gls-toc-panel')) return;
+      if (el.closest('.subnav')) return;      /* section links navigate */
+      if (el.getAttribute('aria-selected') === 'true') return;
+      if (el.hasAttribute('data-goto') || el.hasAttribute('data-toast') || el.hasAttribute('data-preview')) return;
+
+      var label = clean(el.textContent).slice(0, 42);
+      if (!label) return;
+      var t0 = Date.now();
+      var seen = 0;
+      var mo = window.MutationObserver ? new MutationObserver(function (ms) { seen += ms.length; }) : null;
+      if (mo) mo.observe(d.documentElement, { childList: true, subtree: true, attributes: true, characterData: true });
+      setTimeout(function () {
+        if (mo) mo.disconnect();
+        if (seen > 0 || lastDownloadAt > t0) return;
+        var msg;
+        if (NEEDS_RECORD.test(label)) msg = 'Select a record in the register first, then choose “' + label + '”.';
+        else if (OPENS.test(label)) msg = 'Nothing is selected to open — pick a row in the register, then choose “' + label + '”.';
+        else msg = '“' + label + '” has nothing to act on in this build — the register is sample data.';
+        say(msg, 'info');
+      }, 240);
+    }, true);
+  }
+
+  function boot() {
+    buildToc();
+    sortable();
+    csvFallback();
+    dataFallbacks();
+    orphanActions();
+    paletteChips();
+    sidebarToggle();
+    dropdowns();
+    silentGuard();
+    keyboard();
+    gotoHash();
+  }
+
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  /* subsections and sections added later (module re-renders) still get keyboard support */
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function () {
+      if (mo._t) return;
+      mo._t = setTimeout(function () { mo._t = null; keyboard(); orphanActions(); }, 250);
+    });
+    mo.observe(d.body, { childList: true, subtree: true });
   }
 })();
 
