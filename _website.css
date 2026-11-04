@@ -132,7 +132,8 @@
 
   /* ---- section headers ---- */
   .sec{scroll-margin-top:64px}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 10px}
+  .sec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 0 10px}
+  .sec-head>div:nth-child(2){flex:1 1 auto;min-width:0}
   .sec-head h2{font-size:15.5px;letter-spacing:-.25px}
   .sec-head p{font-size:10.5px;color:var(--muted);margin-top:3px;max-width:70ch}
   .sec-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -268,7 +269,8 @@
   /* a grid that carries a table stacks its panels … */
   .g2.gt,.g3.gt{grid-template-columns:1fr}
   /* … until the screen is wide enough for two comfortable halves */
-  @media(min-width:1560px){ .g2.gt{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  /* deliberately no wide-screen override: a six-column register
+     needs the full width at every size, so these panels always stack */
 
   /* grid children may shrink below their content width, so a scrolling
      table never pushes the page sideways */
