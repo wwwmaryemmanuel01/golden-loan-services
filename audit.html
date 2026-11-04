@@ -1597,9 +1597,9 @@ html,body{max-width:100%;overflow-x:clip}
   --emerald-600:#059669;
   --emerald-500:#0E9F6E;
   --emerald-100:#D9F2E8;
-  --gls-edge:#BFD6CB;        /* card, tile and section edge */
-  --gls-edge-2:#A6C6B8;      /* control edge */
-  --gls-edge-hover:#8CBCA7;
+  --gls-edge:#7FB49F;        /* card, tile and section edge */
+  --gls-edge-2:#6FA292;      /* control edge */
+  --gls-edge-hover:#1B6E52;
 }
 
 /* ---- the canvas ----------------------------------------------------------- */
@@ -1621,7 +1621,7 @@ body{
 /* ---- sections: bolder edge, same quiet card -------------------------------- */
 section.sec{
   border:2px solid var(--gls-edge);
-  box-shadow:0 1px 2px rgba(6,78,59,.05),0 14px 34px -26px rgba(6,78,59,.45);
+  box-shadow:0 1px 2px rgba(6,78,59,.08),0 14px 34px -26px rgba(6,78,59,.5);
 }
 section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba(45,212,191,0) 100%)}
 
@@ -1636,7 +1636,7 @@ section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba
   box-shadow:0 2px 4px rgba(6,78,59,.06),0 16px 34px -22px rgba(6,78,59,.45);
 }
 .card .card,.card .panel,.panel .card,.panel .panel{
-  border-width:1px;border-color:#D5E6DE;box-shadow:none;
+  border-width:1px;border-color:#B9D6C9;box-shadow:none;
 }
 /* the gold title rule becomes an emerald-to-gold marker so the theme reads */
 .panel-title::before{background:linear-gradient(180deg,#0E9F6E,#C9A227)}
@@ -1667,7 +1667,7 @@ section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba
 /* form blocks get a defined frame of their own */
 .form-grid{
   padding:14px 14px 4px;
-  border:1.5px solid #D2E4DB;
+  border:1.5px solid #A9CDBD;
   border-radius:12px;
   background:#FCFEFD;
 }
@@ -1688,13 +1688,13 @@ section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba
   box-shadow:0 1px 2px rgba(6,78,59,.06),inset 0 0 0 1px #fff,0 12px 28px -24px rgba(6,78,59,.5);
 }
 .receipt .rh{border-bottom:1.5px solid var(--emerald-100)}
-.receipt .rrow{border-bottom:1px dashed #DCEBE4}
+.receipt .rrow{border-bottom:1px dashed #C9DED4}
 .recsheet{border-color:var(--gls-edge)}
 .gls-docmark{filter:none}
 
 /* ---- tables tie into the theme without losing legibility ------------------ */
-table thead th{background:#F1F8F4;color:#3F5B50;border-bottom:1.5px solid #CFE2D9}
-table tbody tr + tr td{border-top:1px solid #E7F1EC}
+table thead th{background:#EAF4EF;color:#33544A;border-bottom:1.5px solid #A9CDBD}
+table tbody tr + tr td{border-top:1px solid #DCEAE3}
 table tbody tr:hover td{background:#F7FCF9}
 .tblwrap table thead th:first-child,.tbl-wrap table thead th:first-child{background:#F1F8F4}
 .tblwrap::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb{background:#C4DACE}
@@ -1710,6 +1710,113 @@ table tbody tr:hover td{background:#F7FCF9}
     border:1px solid #C9CDD2!important;box-shadow:none!important;
   }
   table thead th{background:none;color:#333;border-bottom:1px solid #C9CDD2}
+}
+
+/* ============================================================================
+   HEADER LAYOUT — nothing may overlap, nothing may spill
+
+   The bar holds a back button, the emblem, the name in large print, the module
+   name, a search field and up to three action buttons. Every one of those is a
+   flex item, and the text items used to be nowrap without a clip, so a long
+   module name spilled over the name beside it and the action buttons sat on
+   top of the title. Now:
+     * the bar wraps onto a second row instead of overlapping;
+     * every text block clips with an ellipsis instead of bleeding sideways;
+     * buttons keep their own width and never shrink into their label;
+     * the logout control in the sidebar footer keeps its own slot.
+   ========================================================================= */
+.topbar{
+  display:flex;align-items:center;
+  flex-wrap:wrap;row-gap:8px;column-gap:14px;
+  min-height:0;height:auto;
+  padding:10px 22px;
+}
+.topbar > *{min-width:0}
+
+/* the emblem and the small controls never shrink */
+.gls-topbar-logo,.topbar .menu-btn,.topbar .backbtn,.topbar .icon-btn,
+.topbar .btn,.topbar .gls-signout{flex:0 0 auto}
+
+/* the large name, clipped rather than spilled */
+.gls-brandbar{flex:0 1 auto;min-width:0;max-width:100%;overflow:hidden}
+.gls-brandbar-name{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.gls-brandbar-sub{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+
+/* the module name (page id) is the part that gives way first */
+.topbar .gls-pageid{
+  flex:1 1 220px;min-width:0;max-width:100%;overflow:hidden;
+}
+.topbar .page-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.topbar .page-sub{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+
+/* search and actions share the remaining room on the first row */
+.topbar .search{flex:1 1 200px;min-width:150px}
+.topbar .topbar-actions{flex:0 0 auto;display:flex;align-items:center;gap:8px;margin-left:auto}
+
+@media (max-width:1120px){
+  /* the module name is printed again in the page body — drop it before the
+     controls start crowding the brand */
+  .topbar .gls-pageid{display:none}
+  .topbar .search{flex:1 1 160px;min-width:130px}
+}
+@media (max-width:760px){
+  .topbar{column-gap:10px;row-gap:8px;padding:8px 12px}
+  .topbar .search{flex:1 1 100%;order:9;min-width:0}
+  .topbar .topbar-actions{margin-left:auto;order:8}
+}
+@media (max-width:520px){
+  .gls-brandbar-name{font-size:12.5px;letter-spacing:.3px}
+  .gls-brandbar-sub{font-size:7px;letter-spacing:1.2px}
+  .topbar .btn{padding:7px 9px;font-size:10.5px}
+  .topbar .btn svg{display:none}
+}
+
+/* ---- the sidebar footer: name, role, then the logout control -------------- */
+.sidebar-foot{gap:10px;min-width:0;overflow:hidden}
+.sidebar-foot .avatar{flex:0 0 auto}
+.sidebar-foot > div:not(.avatar){flex:1 1 auto;min-width:0;overflow:hidden}
+.sf-name,.sf-role{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gls-signout{
+  flex:0 0 auto;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:9px;
+}
+.gls-signout svg{width:16px;height:16px;flex:0 0 auto}
+
+/* ---- sidebar labels clip instead of spilling ------------------------------ */
+.nav-item{overflow:hidden}
+.nav-item .pill{flex:0 0 auto}
+.nav-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- headings and their tools wrap instead of colliding ------------------- */
+.sec-head,.panel-head,.card-head{flex-wrap:wrap}
+.sec-head > *,.panel-head > *{min-width:0}
+.sec-head h2,.panel-head .panel-title{overflow-wrap:break-word}
+.badge,.pill,.chip{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.sec-tools{flex-wrap:wrap;justify-content:flex-end}
+
+/* ---- a last, deliberately late edge pass: clear lines, never faint -------- */
+section.sec{border:2px solid #7FB49F}
+.card,.panel,.chartcard,.repcard{border:1.5px solid #7FB49F;border-left:1.5px solid #7FB49F}
+.kpi{border:1.5px solid #7FB49F;border-top-width:3px;border-top-color:#C9A227}
+.kpi.gold{border-top-color:#C9A227}
+.kpi.amber{border-top-color:#E08C1E}
+.kpi.green{border-top-color:#1E9E6A}
+.kpi.blue{border-top-color:#2F6FED}
+.kpi.red{border-top-color:#D93F3F}
+.fg input,.fg select,.fg textarea,.fld{border:1.5px solid #6FA292}
+.receipt,.receiptdoc,.slip{border:2px solid #7FB49F}
+.form-grid{border:1.5px solid #A9CDBD}
+table thead th{border-bottom:1.5px solid #A9CDBD}
+@media print{
+  section.sec,.card,.panel,.kpi,.receipt,.receiptdoc,.slip,.form-grid,.fg input,.fg select,.fg textarea,.fld{
+    border:1px solid #C9CDD2!important;
+  }
 }
 
 </style>
