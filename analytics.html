@@ -1295,6 +1295,70 @@ table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
   .brand-mark img,.gls-signout{transition:none}
 }
 
+/* ============================================================================
+   COLOURED FRAMES — module sections, cards and panels
+
+   Every module section reads as one framed block with a gold rail along its
+   top edge, and every card inside it carries a gold rail on its left, so the
+   structure of a module is visible at a glance instead of a field of grey
+   hairlines. The frames are decoratation only: no padding or margin is
+   subtracted anywhere, so nothing can be pulled outside the page gutter.
+   ========================================================================= */
+:root{
+  --gls-frame:#E8D9A6;        /* hairline around a card or section */
+  --gls-frame-deep:#D9C479;   /* hairline on hover */
+}
+
+/* ---- a module section: white block, gold rail across the top ------------- */
+section.sec{
+  background:#FCFBF5;
+  border:1px solid var(--gls-frame);
+  border-top:4px solid var(--gold);
+  border-radius:16px;
+  padding:16px 14px 8px;
+  box-shadow:0 1px 2px rgba(16,18,24,.05),0 10px 24px rgba(16,18,24,.045);
+}
+@media (max-width:860px){
+  section.sec{padding:13px 12px 6px;border-radius:14px;border-top-width:3px}
+}
+
+/* ---- cards and panels: gold rail on the left ----------------------------- */
+.card,.panel,.chartcard,.repcard{
+  border:1px solid var(--gls-frame);
+  border-left:4px solid var(--gold);
+  box-shadow:0 1px 2px rgba(16,18,24,.05),0 8px 20px rgba(16,18,24,.045);
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+.card:hover,.panel:hover,.chartcard:hover,.repcard:hover{
+  border-color:var(--gls-frame-deep);
+  border-left-color:var(--gold-dark);
+  box-shadow:0 2px 4px rgba(16,18,24,.06),0 12px 26px rgba(201,162,39,.15);
+}
+/* a card inside a card keeps only the outer rail */
+.card .card,.card .panel,.panel .card,.panel .panel{
+  border-left-width:1px;border-left-color:var(--gls-frame);
+}
+
+/* ---- KPI tiles carry their own tone on the rail -------------------------- */
+.kpi{border-left:4px solid var(--gold)}
+.kpi.gold{border-left-color:var(--gold)}
+.kpi.amber{border-left-color:var(--amber)}
+.kpi.green{border-left-color:var(--green)}
+.kpi.blue{border-left-color:var(--blue)}
+.kpi.red{border-left-color:var(--red)}
+
+/* ---- print: keep the structure, drop most of the ink ---------------------- */
+@media print{
+  section.sec{
+    background:none;border:1px solid #D8DADD;border-top:2px solid #9AA0AA;
+    box-shadow:none;padding:0 0 4px;border-radius:0;break-inside:auto;
+  }
+  .card,.panel,.chartcard,.repcard{
+    border:1px solid #D8DADD;border-left:3px solid #9AA0AA;box-shadow:none;
+  }
+  .kpi{border-left:3px solid #9AA0AA}
+}
+
 </style>
 </head>
 <body>
