@@ -801,7 +801,8 @@
 
   /* ---- section headers ---- */
   .sec{scroll-margin-top:64px}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 10px}
+  .sec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 0 10px}
+  .sec-head>div:nth-child(2){flex:1 1 auto;min-width:0}
   .sec-head h2{font-size:15.5px;letter-spacing:-.25px}
   .sec-head p{font-size:10.5px;color:var(--muted);margin-top:3px;max-width:70ch}
   .sec-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -1017,6 +1018,10 @@ tr[data-rsc-hit]{cursor:pointer}
   .btn{padding:9px 13px}
   .btn-sm{padding:6px 10px}
   .snav{padding:7px 12px;font-size:12px}
+  .subnav{position:static;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding:8px 12px}
+  .subnav::-webkit-scrollbar{height:0}
+  .snav{flex:0 0 auto}
   .chip{padding:6px 10px;font-size:11.5px}
   .modal-body .tblwrap{max-height:none}
 
@@ -1035,7 +1040,12 @@ tr[data-rsc-hit]{cursor:pointer}
 
   /* wide registers scroll sideways instead of crushing every column */
   .tblwrap{max-height:62vh;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .tblwrap table th,.tblwrap table td{white-space:nowrap}
+  /* text wraps inside the cell, so a five-column register fits the phone
+     instead of running off the right edge */
+  .tblwrap table th,.tblwrap table td{white-space:normal;overflow-wrap:anywhere}
+  .tblwrap table td.num,.tblwrap table th.num{white-space:nowrap}
+  .tbl2{font-size:11px}
+  .tbl2 thead th{font-size:8.5px;letter-spacing:.4px}
   .tblwrap table th:first-child,.tblwrap table td:first-child{
     position:sticky;left:0;background:#fff;z-index:1;box-shadow:1px 0 0 var(--line-2)}
   .tblwrap table thead th:first-child{z-index:3;background:#fff}
@@ -1047,7 +1057,10 @@ tr[data-rsc-hit]{cursor:pointer}
   .panel-head{flex-wrap:wrap;gap:6px}
   .form-actions{flex-wrap:wrap;gap:6px}
   .form-actions .btn{flex:1 1 auto;justify-content:center}
-  .topbar{padding:10px 12px;flex-wrap:wrap;gap:8px}
+  /* the header keeps one row and sizes itself: a fixed height plus
+     wrapping was clipping the title and the buttons */
+  .topbar{height:auto;min-height:56px;padding:8px 12px;flex-wrap:nowrap;gap:8px}
+  .topbar .page-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .sec{padding:0 2px}
   img,svg{max-width:100%}
 }
@@ -1070,6 +1083,25 @@ tr[data-rsc-hit]{cursor:pointer}
 @media print{
   .recgrid{grid-template-columns:1fr 1fr!important}
   .recmeta{display:none}
+}
+
+/* ---------- anchor offsets ----------
+   The section chips are sticky and wrap onto two or three rows on a wide
+   screen, so a jump to #s7 has to clear the topbar plus the whole chip bar.
+   Without this the heading landed underneath the bar. */
+.sec{scroll-margin-top:152px}
+@media(max-width:1100px){ .sec{scroll-margin-top:140px} }
+@media(max-width:860px){ .sec{scroll-margin-top:124px} }
+@media(max-width:760px){ .sec{scroll-margin-top:74px} }
+
+/* ---------- the module band ----------
+   Four figures beside the title must never push the band past the screen. */
+.band-stats{flex-wrap:wrap;row-gap:8px}
+@media(max-width:760px){
+  .band-stats{width:100%;margin-left:0;flex-wrap:wrap;gap:10px 0}
+  .band-stat{padding-left:0;border-left:0;padding-right:14px;white-space:normal}
+  .modband h1{font-size:17px}
+  .modband p{font-size:11px}
 }
 
 </style>
