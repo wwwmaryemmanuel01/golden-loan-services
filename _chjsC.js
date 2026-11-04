@@ -86,7 +86,7 @@ function renderOverview(){
   el('ovScorePill').textContent = score + ' / 100 · ' + (score >= 80 ? 'healthy' : score >= 60 ? 'watch' : 'at risk');
   el('ovPerf').innerHTML = parts.map(([label, v, good, ok, hint])=>{
     const cls = v >= good ? 'ok' : v >= ok ? 'warn' : 'bad';
-    return `<div class="meter">
+    return `<div class="perfm">
       <div class="mt"><div>${label}</div><span>${r1(v)}%</span></div>
       <div class="mbar"><i class="${cls}" style="width:${clamp(v,0,100).toFixed(1)}%"></i></div>
       <div class="qhint" style="margin-top:1px">${hint}</div>

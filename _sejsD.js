@@ -17,7 +17,7 @@ function chartBox(o){
 }
 function meter(label, value, good, ok, hint){
   const cls = value >= good ? 'ok' : value >= ok ? 'warn' : 'bad';
-  return `<div class="meter">
+  return `<div class="perfm">
     <div class="mt"><div>${esc(label)}</div><span>${r1(value)}%</span></div>
     <div class="mbar"><i class="${cls}" style="width:${clamp(value, 0, 100).toFixed(1)}%"></i></div>
     <div class="qhint" style="margin-top:1px">${esc(hint)}</div>

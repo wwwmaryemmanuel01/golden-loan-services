@@ -890,6 +890,23 @@ tasks, resetting passwords and processing closures all update the in-page state 
 full lifecycle can be walked end to end. Nothing is sent anywhere and no credentials
 are stored or displayed.
 
+### Clipping and crush guards
+
+Two presentation faults are now guard-railed system-wide, because both are
+invisible in code review and obvious on a phone:
+
+* **A component may not borrow another component's class.** The performance
+  meters (label, bar and hint stacked) used `.meter`, which the shell also uses
+  for the thin 6px progress bar. A module that restyled `.meter` only added
+  `display:grid`, so the leftover `height:6px` and `overflow:hidden` sliced
+  every row to a sliver of text. The stack now uses `.perfm`, defined complete
+  in `_brand.css`.
+* **No register may crush to one letter per line.** Table headers are
+  `white-space:nowrap` (with `!important`), cells break between words, every
+  table sits in a `.tblwrap` / `.tbl-wrap` that scrolls sideways, and the page
+  itself is `overflow-x:clip`, so a wide register can never push the sidebar
+  off the left edge of the screen.
+
 ### Delivery-status wording
 
 SMS, email and in-app delivery logs use three states: **Delivered**, **Awaiting provider**
