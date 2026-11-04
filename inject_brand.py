@@ -42,6 +42,54 @@ ICONS = (
 CSS_BLOCK = '<style ' + CSS_MARK + '>\n' + CSS + '\n</style>\n'
 JS_BLOCK = '<script ' + JS_MARK + '>\n' + JS + '\n</script>\n'
 
+# ---------------------------------------------------------------------------
+# per-module accent colours — the one hue each main module is known by. Deep
+# tones only: the white portal name and the gold sub-line must keep their
+# contrast on every one of them. The dashboard keeps the house black.
+MODULE_ACCENTS = {
+    'index':                '#0F1115',   # dashboard — the house black
+    'applications':         '#1E3A8A',   # deep blue
+    'clients':              '#115E59',   # deep teal
+    'repayments':           '#14532D',   # forest green
+    'disbursements':        '#312E81',   # deep indigo
+    'guarantors-collateral':'#581C87',   # deep plum
+    'loan-calculator':      '#7C2D12',   # deep rust
+    'fees-penalties':       '#7F1D1D',   # deep maroon
+    'savings':              '#064E3B',   # deep emerald
+    'deposits':             '#164E63',   # deep petrol
+    'transfers':            '#0C4A6E',   # deep ocean
+    'payments':             '#4C1D95',   # deep violet
+    'salaries':             '#78350F',   # deep tan
+    'compliance':           '#365314',   # deep olive
+    'audit':                '#3F3F46',   # deep zinc
+    'reports':              '#172554',   # deep navy
+    'charts':               '#881337',   # deep wine
+    'analytics':            '#4A044E',   # deep mulberry
+    'notifications':        '#9A3412',   # deep copper
+    'staff':                '#334155',   # deep slate
+    'roles-permissions':    '#3730A3',   # deep iris
+    'settings':             '#1C1917',   # warm charcoal
+    'security':             '#3D0C11',   # oxblood
+    'data-recovery':        '#422006',   # deep umber
+    'website':              '#264653',   # deep canal
+}
+
+def add_module_accent(html, name=None):
+    """Tags <body> with data-gls-module="stem" so _brand.css can pick the
+    module's accent colour. Idempotent: an existing tag is replaced."""
+    if not name:
+        return html
+    stem = name.rsplit('.', 1)[0] if '.' in name else name
+    if stem not in MODULE_ACCENTS:
+        return html
+    m = re.search(r'<body\b[^>]*>', html)
+    if not m:
+        return html
+    tag = m.group(0)
+    clean = re.sub(r'\s*data-gls-module="[^"]*"', '', tag)
+    new_tag = clean[:-1] + ' data-gls-module="%s">' % stem
+    return html[:m.start()] + new_tag + html[m.end():]
+
 BRAND_IMG = ('<img src="assets/logo-mark.png" width="44" height="44" '
              'alt="GOLDEN FINANCIAL SERVICES" loading="eager">')
 TOP_LOGO = ('<img class="gls-topbar-logo" src="assets/logo-mark.png" width="34" height="34" '
@@ -150,7 +198,7 @@ def add_signout(html):
     return html[:cut] + '  ' + SIGNOUT + '\n  ' + html[cut:]
 
 
-def transform(html):
+def transform(html, name=None):
     html = strip_previous(html)
 
     # element swaps first: the stylesheet below mentions these class names,
@@ -158,6 +206,7 @@ def transform(html):
     html = mark_brand(html)
     html = add_header_logo(html)
     html = add_signout(html)
+    html = add_module_accent(html, name)
 
     i = head_at(html)
     if i >= 0:

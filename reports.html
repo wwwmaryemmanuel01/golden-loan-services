@@ -1187,10 +1187,14 @@ html{scroll-padding-top:calc(var(--gls-topbar-h,96px) + 16px)}
 }
 @media (max-width:520px){ .gls-topbar-logo{height:24px} }
 
-/* ---- header: a wide dark bar carrying the name in large print ------------ */
+/* ---- header: a wide dark bar carrying the name in large print ------------
+   Each main module carries its own deep accent colour (set per page by
+   inject_brand.py as --gls-accent). The dashboard keeps the house black.
+   Every accent is dark enough that the white name and the gold sub-line
+   stay fully legible. */
 .topbar{
-  background:rgba(15,17,21,.98);
-  border-bottom:1px solid #23262E;
+  background:var(--gls-accent,rgba(15,17,21,.98));
+  border-bottom:1px solid rgba(9,11,15,.55);
   box-shadow:0 8px 22px rgba(9,11,15,.16);
   backdrop-filter:none;
   height:auto;
@@ -1529,9 +1533,10 @@ section.sec > .sec-head{
 .sec-head p{font-size:11.5px;line-height:1.5;color:var(--gls-slate);margin-top:3px;max-width:82ch}
 .sec-num{
   width:28px;height:28px;flex:0 0 28px;border-radius:9px;
-  background:linear-gradient(180deg,#171A21,#0F1115);
-  color:#E9C766;font-weight:800;
-  box-shadow:inset 0 0 0 1px rgba(201,162,39,.45),0 1px 2px rgba(16,24,40,.15);
+  background:var(--gls-accent,#171A21);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.10),rgba(0,0,0,.22));
+  color:#fff;font-weight:800;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),0 1px 2px rgba(16,24,40,.15);
 }
 .sec-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
@@ -1641,7 +1646,7 @@ table tbody tr:hover td{background:#FBFCFE}
 
 /* ---- sub-navigation chips and tabs --------------------------------------- */
 .snav,.stab{font-weight:700;border-color:var(--gls-line);background:#fff;color:#414B5A}
-.snav.on,.stab.on{background:var(--gls-ink);border-color:var(--gls-ink);color:#fff;box-shadow:0 1px 2px rgba(16,24,40,.16)}
+.snav.on,.stab.on{background:var(--gls-accent,var(--gls-ink));border-color:var(--gls-accent,var(--gls-ink));color:#fff;box-shadow:0 1px 2px rgba(16,24,40,.16)}
 .snav:hover,.stab:hover{border-color:#C9A227;color:#7A5C08;background:#FDF8E7}
 
 /* ---- focus ring, one shape everywhere ------------------------------------ */
@@ -1986,9 +1991,54 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
   }
 }
 
+/* ==== per-module accent colours ============================================
+   Every main module carries its own deep colour: the header band, the module
+   band under it, the section-number badges and the active sub-navigation chip
+   take the module colour. All accents are deep tones, so the white and gold
+   text on them keeps its contrast and nothing hides the writing. The page
+   background, the green borders, the footers, the logo and the black header
+   bands on printed documents and receipts are untouched. The dashboard keeps
+   the house black as the anchor. */
+body[data-gls-module="index"]                {--gls-accent:#0F1115}
+body[data-gls-module="applications"]         {--gls-accent:#1E3A8A}
+body[data-gls-module="clients"]              {--gls-accent:#115E59}
+body[data-gls-module="repayments"]           {--gls-accent:#14532D}
+body[data-gls-module="disbursements"]        {--gls-accent:#312E81}
+body[data-gls-module="guarantors-collateral"]{--gls-accent:#581C87}
+body[data-gls-module="loan-calculator"]      {--gls-accent:#7C2D12}
+body[data-gls-module="fees-penalties"]       {--gls-accent:#7F1D1D}
+body[data-gls-module="savings"]              {--gls-accent:#064E3B}
+body[data-gls-module="deposits"]             {--gls-accent:#164E63}
+body[data-gls-module="transfers"]            {--gls-accent:#0C4A6E}
+body[data-gls-module="payments"]             {--gls-accent:#4C1D95}
+body[data-gls-module="salaries"]             {--gls-accent:#78350F}
+body[data-gls-module="compliance"]           {--gls-accent:#365314}
+body[data-gls-module="audit"]                {--gls-accent:#3F3F46}
+body[data-gls-module="reports"]              {--gls-accent:#172554}
+body[data-gls-module="charts"]               {--gls-accent:#881337}
+body[data-gls-module="analytics"]            {--gls-accent:#4A044E}
+body[data-gls-module="notifications"]        {--gls-accent:#9A3412}
+body[data-gls-module="staff"]                {--gls-accent:#334155}
+body[data-gls-module="roles-permissions"]    {--gls-accent:#3730A3}
+body[data-gls-module="settings"]             {--gls-accent:#1C1917}
+body[data-gls-module="security"]             {--gls-accent:#3D0C11}
+body[data-gls-module="data-recovery"]        {--gls-accent:#422006}
+body[data-gls-module="website"]              {--gls-accent:#264653}
+
+/* the module title band picks up the same accent (base rule lives in the
+   module stylesheet, which loads before this one) */
+.modband{
+  background:var(--gls-accent,#0F1115);
+  background-image:linear-gradient(120deg,rgba(255,255,255,.07) 0%,rgba(0,0,0,.30) 100%);
+}
+.modband h1{color:#fff}
+.modband p{color:#E8E4D8}
+.modband .band-stat b,.modband .band-stat span{color:#fff}
+.modband .badge{border-color:rgba(255,255,255,.35)}
+
 </style>
 </head>
-<body>
+<body data-gls-module="reports">
 <aside class="sidebar" id="sidebar">
   <div class="brand">
     <div class="brand-mark has-logo"><img src="assets/logo-mark.png" width="44" height="44" alt="GOLDEN FINANCIAL SERVICES" loading="eager"></div>

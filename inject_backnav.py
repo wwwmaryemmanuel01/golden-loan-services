@@ -115,7 +115,7 @@ for name in sys.argv[1:]:
         s = s[:i_body] + backnav + JS_BLOCK + LG_JS_BLOCK + CT_JS_BLOCK + s[i_body:]
         notes.append('back nav + sheet js + layout guard + controls')
 
-    s = inject_brand.transform(s)
+    s = inject_brand.transform(s, name)
 
     if s != original:
         p.write_text(s)
