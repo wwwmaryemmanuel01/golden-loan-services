@@ -1513,6 +1513,26 @@ table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
 .gls-doc-head .gls-doc-title b,.gls-doc-head .sliphead b{color:#FFFFFF;font-size:12.5px;letter-spacing:.5px}
 .gls-doc-head .qhint{color:#C7CEDA;margin-top:2px}
 
+/* ---- receipts, forms and documents: clear, bold, never-faint borders ------
+   Every receipt, slip, letter, record sheet and form window carries the same
+   border the cards use — visible on screen and carried onto paper. */
+.receipt,.receiptdoc,.slip,.letterhead,.recsheet{
+  border:2px solid #7FB49F;
+}
+.letterhead,.recsheet{
+  background:#fff;border-radius:11px;padding:13px 14px;
+}
+.modal-card{border:1.5px solid #7FB49F}
+@media (max-width:760px){
+  .modal-card{border-left:0;border-right:0}
+}
+@media print{
+  .receipt,.receiptdoc,.slip,.letterhead,.recsheet{
+    border:2px solid #7FB49F !important;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+}
+
 @media (prefers-reduced-motion: reduce){
   .brand-mark img,.gls-signout{transition:none}
 }
@@ -4716,7 +4736,7 @@ function settleModal(s){
 function settlementLetter(loanNo){
   const h = SETTLE_HIST.find(x=>x[2]===loanNo) || SETTLE_HIST[0];
   openModal('Settlement letter', h[1] + ' · ' + h[2], `
-    <div class="letterhead" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px">
+    <div class="letterhead" style="background:#fff;border:2px solid #7FB49F;border-radius:11px;padding:14px">
       <div class="gls-doc-head">
         <img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
         <div class="gls-doc-title"><b style="font-size:12.5px;letter-spacing:.5px">GOLDEN FINANCIAL SERVICES</b>
