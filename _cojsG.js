@@ -26,7 +26,7 @@ function renderRules(){
     ['Proof of address above MK 1,000,000', 'Facilities', 'Enforced'],
     ['Two approvals above MK 2,000,000', 'Facilities', 'Enforced'],
     ['KYC refresh within ' + RULES.kycRenewal + ' months', 'Every customer', 'Enforced'],
-    ['Guarantor identity checked', 'Group lending', 'Advisory']
+    ['Guarantor identity checked', 'Personal Loans', 'Advisory']
   ].map(([rule, who, state]) => `<tr><td>${esc(rule)}</td><td>${esc(who)}</td>
       <td>${badge(state, state === 'Enforced' ? 'b-ok' : 'b-warn')}</td></tr>`).join('');
 

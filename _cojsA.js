@@ -115,11 +115,11 @@ function pick(a){ return a[Math.floor(rnd()*a.length)]; }
 
 /* ---------------- reference data ---------------- */
 const PRODUCTS = [
-  {id:'SL', name:'Salary Loan',     rate:0.032, min:150000, max:3000000, terms:[6,9,12,18], colour:'#C9A227'},
-  {id:'BB', name:'Business Boost',  rate:0.038, min:300000, max:5000000, terms:[12,18,24],  colour:'#1E9E6A'},
-  {id:'EL', name:'Emergency Loan',  rate:0.045, min:50000,  max:500000,  terms:[3,6],       colour:'#D93F3F'},
-  {id:'AF', name:'Asset Finance',   rate:0.028, min:800000, max:8000000, terms:[12,24,36],  colour:'#2F6FED'},
-  {id:'GL', name:'Group Lending',   rate:0.035, min:100000, max:1500000, terms:[6,12],      colour:'#7C5CF0'}
+  {id:'PL', name:'Personal Loans',       rate:0.030, min:50000,  max:1000000,  terms:[1,3,6,12],        colour:'#C9A227'},
+  {id:'BL', name:'Business Loans',       rate:0.035, min:100000, max:10000000, terms:[6,9,12,18,24,36], colour:'#1E9E6A'},
+  {id:'AL', name:'Agricultural Loans',   rate:0.030, min:40000,  max:1500000,  terms:[3,6,9,12],        colour:'#7C5CF0'},
+  {id:'SA', name:'Salary Advance Loans', rate:0.025, min:50000,  max:800000,   terms:[1,3,6],           colour:'#2F6FED'},
+  {id:'CL', name:'Collateral Loans',     rate:0.028, min:500000, max:10000000, terms:[12,18,24,36],     colour:'#D93F3F'}
 ];
 const REGIONS = ['Lilongwe','Blantyre','Mzuzu','Zomba'];
 const METHODS = ['Airtel Money','TNM Mpamba','Bank transfer','Cash'];

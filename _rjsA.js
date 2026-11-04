@@ -93,7 +93,7 @@ const FIRST=['Thokozani','Grace','Peter','Memory','Yamikani','Esther','Isaac','F
   'Ephraim','Loveness','Mphatso','Ruth','Stevenson','Lydia'];
 const LAST=['Banda','Mvula','Kachale','Nkhoma','Gondwe','Kamanga','Mponda','Salimu','Chikopa','Msiska',
   'Tembo','Zulu','Chatsika','Jimu','Kaunda','Phiri','Mwale','Nyirenda','Chirwa','Mbewe'];
-const PRODUCTS=['Business Growth','Salary Loan','Agri Loan','Emergency Loan','Asset Finance'];
+const PRODUCTS=['Personal Loans','Business Loans','Agricultural Loans','Salary Advance Loans','Collateral Loans'];
 const OFFICERS=['Tadala Nkhoma','Blessings Tembo','Memory Nkhoma','Joseph Mwale','Yamikani Gondwe','Rose Chikopa'];
 const BRANCHES=['Lilongwe City','Lilongwe Area 47','Blantyre','Mzuzu','Zomba','Kasungu'];
 const METHODS=['Airtel Money','TNM Mpamba','Bank transfer','Cash','Cheque'];

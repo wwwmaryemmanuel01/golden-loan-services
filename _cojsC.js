@@ -73,7 +73,7 @@ for(let i = 0; i < CUSTOMERS.length && DUPLICATE_GROUPS.length < 4; i++){
 /* ---------------- 3 · loan policy tests ---------------- */
 const AUTHORITY = {'Loan Officer':2500000, 'Credit Analyst':1500000, 'Head of Credit':8000000,
   'Collections Officer':0, 'Cashier':0, 'Customer Care':0};
-const TERMS = {SL:[6,9,12,18], BB:[12,18,24], EL:[3,6], AF:[12,24,36], GL:[6,12]};
+const TERMS = {PL:[1,3,6,12], BL:[6,9,12,18,24,36], AL:[3,6,9,12], SA:[1,3,6], CL:[12,18,24,36]};
 
 const LOAN_CHECKS = LOANS.map((l, i) => {
   const prod = PROD_BY_ID[l.product];
@@ -333,7 +333,7 @@ const COMPLIANCE_TASKS = [
   ['Close the two open audit findings', 'Audit', 'STF-003', 9, 'Open', 'High'],
   ['Review privileged-access list', 'Access', 'STF-009', 4, 'In progress', 'High'],
   ['Credit bureau submission for October', 'Regulatory', 'STF-004', 3, 'Open', 'High'],
-  ['Chase the missing logbook for asset finance', 'Collateral', 'STF-001', -2, 'Overdue', 'Medium'],
+  ['Chase the missing logbook for Collateral Loans', 'Collateral', 'STF-001', -2, 'Overdue', 'Medium'],
   ['Re-paper the consent wording', 'Data protection', 'STF-008', -5, 'Overdue', 'High'],
   ['Evidence the daily reconciliation', 'Reconciliation', 'STF-006', 7, 'Open', 'Medium'],
   ['Minute the interest recalculation', 'Credit', 'STF-003', 15, 'Open', 'Low'],

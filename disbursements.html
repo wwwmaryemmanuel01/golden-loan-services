@@ -2155,8 +2155,8 @@ table thead th{border-bottom:1.5px solid #A9CDBD}
           </select></div>
           <div class="fld"><select id="apprProduct">
             <option value="">All products</option>
-            <option>Business Growth</option><option>Salary Advance</option><option>Agri Input Loan</option>
-            <option>Group Loan</option><option>Asset Finance</option><option>Emergency Loan</option>
+            <option>Personal Loans</option><option>Business Loans</option><option>Agricultural Loans</option>
+            <option>Salary Advance Loans</option><option>Collateral Loans</option>
           </select></div>
           <button class="btn btn-ghost btn-sm" id="apprClear">Reset</button>
         </div>
@@ -2779,28 +2779,28 @@ function calcFees(amount, proc=FEE.proc, ins=FEE.ins, other=FEE.other, waive=FEE
 const state = {
   seq: 1042,
   loans: [
-    {app:'LN-2026-1842', cust:'Thokozani Banda', acct:'CUS-004286', product:'Business Growth',
+    {app:'LN-2026-1842', cust:'Thokozani Banda', acct:'CUS-004286', product:'Business Loans',
      approved:2500000, rate:'4.2% / month', term:'12 months', officer:'T. Phiri', approvedOn:'2026-10-29',
      docs:{agreement:true, id:true, payslip:true, guarantor:false}, prepared:false},
-    {app:'LN-2026-1839', cust:'Grace Mvula', acct:'CUS-004121', product:'Group Loan',
+    {app:'LN-2026-1839', cust:'Grace Mvula', acct:'CUS-004121', product:'Personal Loans',
      approved:800000, rate:'3.8% / month', term:'8 months', officer:'A. Mbewe', approvedOn:'2026-10-29',
      docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
-    {app:'LN-2026-1827', cust:'Peter Kachale', acct:'CUS-003902', product:'Asset Finance',
+    {app:'LN-2026-1827', cust:'Peter Kachale', acct:'CUS-003902', product:'Collateral Loans',
      approved:4800000, rate:'3.5% / month', term:'24 months', officer:'S. Zimba', approvedOn:'2026-10-28',
      docs:{agreement:true, id:true, payslip:false, guarantor:true}, prepared:false},
-    {app:'LN-2026-1831', cust:'Memory Nkhoma', acct:'CUS-004008', product:'Salary Advance',
+    {app:'LN-2026-1831', cust:'Memory Nkhoma', acct:'CUS-004008', product:'Salary Advance Loans',
      approved:450000, rate:'4.5% / month', term:'6 months', officer:'L. Chirwa', approvedOn:'2026-10-28',
      docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
-    {app:'LN-2026-1815', cust:'Yamikani Gondwe', acct:'CUS-003744', product:'Agri Input Loan',
+    {app:'LN-2026-1815', cust:'Yamikani Gondwe', acct:'CUS-003744', product:'Agricultural Loans',
      approved:1200000, rate:'3.9% / month', term:'10 months', officer:'T. Phiri', approvedOn:'2026-10-27',
      docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false},
-    {app:'LN-2026-1822', cust:'Esther Kamanga', acct:'CUS-003981', product:'Emergency Loan',
+    {app:'LN-2026-1822', cust:'Esther Kamanga', acct:'CUS-003981', product:'Personal Loans',
      approved:150000, rate:'5.0% / month', term:'4 months', officer:'L. Chirwa', approvedOn:'2026-10-27',
      docs:{agreement:false, id:true, payslip:true, guarantor:true}, prepared:false},
-    {app:'LN-2026-1809', cust:'Isaac Mponda', acct:'CUS-003612', product:'Business Growth',
+    {app:'LN-2026-1809', cust:'Isaac Mponda', acct:'CUS-003612', product:'Business Loans',
      approved:3200000, rate:'4.2% / month', term:'18 months', officer:'S. Zimba', approvedOn:'2026-10-26',
      docs:{agreement:true, id:false, payslip:true, guarantor:true}, prepared:false},
-    {app:'LN-2026-1836', cust:'Fatima Salimu', acct:'CUS-004233', product:'Salary Advance',
+    {app:'LN-2026-1836', cust:'Fatima Salimu', acct:'CUS-004233', product:'Salary Advance Loans',
      approved:600000, rate:'4.5% / month', term:'6 months', officer:'A. Mbewe', approvedOn:'2026-10-30',
      docs:{agreement:true, id:true, payslip:true, guarantor:true}, prepared:false}
   ],
@@ -2812,26 +2812,26 @@ const state = {
 
 /* seed disbursement records across the lifecycle */
 const seed = [
-  ['DIS-2026-1041','LN-2026-1810','Kondwani Msiska','CUS-003811','Group Loan',900000,'Bank Transfer','T. Phiri','2026-10-30','Successful','FT2610307712',true],
-  ['DIS-2026-1040','LN-2026-1812','Rose Chikopa','CUS-003844','Salary Advance',320000,'Airtel Money','L. Chirwa','2026-10-30','Successful','AM2610304451',true],
-  ['DIS-2026-1039','LN-2026-1818','Alfred Jimu','CUS-003889','Business Growth',1750000,'Bank Transfer','S. Zimba','2026-10-30','Awaiting confirmation','FT2610306602',false],
-  ['DIS-2026-1038','LN-2026-1819','Blessings Tembo','CUS-003901','Emergency Loan',240000,'TNM Mpamba','A. Mbewe','2026-10-30','Processing','MP2610301188',false],
-  ['DIS-2026-1037','LN-2026-1805','Dorothy Nyirenda','CUS-003699','Agri Input Loan',1400000,'Bank Transfer','T. Phiri','2026-10-29','Failed','FT2610295510',false],
-  ['DIS-2026-1036','LN-2026-1802','Chimwemwe Zulu','CUS-003655','Asset Finance',2600000,'Bank Transfer','S. Zimba','2026-10-29','Successful','FT2610294408',true],
-  ['DIS-2026-1035','LN-2026-1798','Mercy Chatsika','CUS-003590','Group Loan',700000,'Airtel Money','L. Chirwa','2026-10-29','Successful','AM2610293390',true],
-  ['DIS-2026-1034','LN-2026-1795','Daniel Kaunda','CUS-003544','Salary Advance',380000,'Cash','G. Mtemang\'ombe','2026-10-28','Successful','CSH-261028-04',true],
-  ['DIS-2026-1033','LN-2026-1791','Sarah Kaunda','CUS-003501','Business Growth',2000000,'Bank Transfer','T. Phiri','2026-10-28','Reversed','FT2610282277',false],
-  ['DIS-2026-1032','LN-2026-1789','Joseph Mwale','CUS-003488','Agri Input Loan',1150000,'TNM Mpamba','A. Mbewe','2026-10-28','Successful','MP2610280755',true],
-  ['DIS-2026-1031','LN-2026-1784','Tadala Nkhoma','CUS-003412','Emergency Loan',180000,'Airtel Money','L. Chirwa','2026-10-27','Cancelled','',false],
-  ['DIS-2026-1030','LN-2026-1780','Peter Kachale','CUS-003390','Asset Finance',4500000,'Bank Transfer','S. Zimba','2026-10-27','Successful','FT2610279001',true],
-  ['DIS-2026-1029','LN-2026-1776','Grace Mvula','CUS-003355','Group Loan',650000,'Bank Transfer','A. Mbewe','2026-10-26','Failed','FT2610264488',false],
-  ['DIS-2026-1028','LN-2026-1770','Thokozani Banda','CUS-003311','Business Growth',2400000,'Bank Transfer','T. Phiri','2026-10-26','Successful','FT2610263312',true],
-  ['DIS-2026-1027','LN-2026-1765','Memory Nkhoma','CUS-003280','Salary Advance',500000,'Airtel Money','L. Chirwa','2026-10-25','Successful','AM2610251140',true],
-  ['DIS-2026-1026','LN-2026-1761','Isaac Mponda','CUS-003244','Business Growth',3000000,'Bank Transfer','S. Zimba','2026-10-25','Rejected','',false],
-  ['DIS-2026-1025','LN-2026-1758','Fatima Salimu','CUS-003210','Salary Advance',540000,'Bank Transfer','A. Mbewe','2026-10-24','Successful','FT2610247781',true],
-  ['DIS-2026-1024','LN-2026-1752','Yamikani Gondwe','CUS-003178','Agri Input Loan',1250000,'Bank Transfer','T. Phiri','2026-10-24','Successful','FT2610246690',true],
-  ['DIS-2026-1023','LN-2026-1749','Esther Kamanga','CUS-003141','Emergency Loan',160000,'Cash','G. Mtemang\'ombe','2026-10-23','Successful','CSH-261023-11',true],
-  ['DIS-2026-1022','LN-2026-1744','Alfred Jimu','CUS-003102','Business Growth',1600000,'Bank Transfer','S. Zimba','2026-10-23','Failed','FT2610235520',false]
+  ['DIS-2026-1041','LN-2026-1810','Kondwani Msiska','CUS-003811','Personal Loans',900000,'Bank Transfer','T. Phiri','2026-10-30','Successful','FT2610307712',true],
+  ['DIS-2026-1040','LN-2026-1812','Rose Chikopa','CUS-003844','Salary Advance Loans',320000,'Airtel Money','L. Chirwa','2026-10-30','Successful','AM2610304451',true],
+  ['DIS-2026-1039','LN-2026-1818','Alfred Jimu','CUS-003889','Business Loans',1750000,'Bank Transfer','S. Zimba','2026-10-30','Awaiting confirmation','FT2610306602',false],
+  ['DIS-2026-1038','LN-2026-1819','Blessings Tembo','CUS-003901','Personal Loans',240000,'TNM Mpamba','A. Mbewe','2026-10-30','Processing','MP2610301188',false],
+  ['DIS-2026-1037','LN-2026-1805','Dorothy Nyirenda','CUS-003699','Agricultural Loans',1400000,'Bank Transfer','T. Phiri','2026-10-29','Failed','FT2610295510',false],
+  ['DIS-2026-1036','LN-2026-1802','Chimwemwe Zulu','CUS-003655','Collateral Loans',2600000,'Bank Transfer','S. Zimba','2026-10-29','Successful','FT2610294408',true],
+  ['DIS-2026-1035','LN-2026-1798','Mercy Chatsika','CUS-003590','Personal Loans',700000,'Airtel Money','L. Chirwa','2026-10-29','Successful','AM2610293390',true],
+  ['DIS-2026-1034','LN-2026-1795','Daniel Kaunda','CUS-003544','Salary Advance Loans',380000,'Cash','G. Mtemang\'ombe','2026-10-28','Successful','CSH-261028-04',true],
+  ['DIS-2026-1033','LN-2026-1791','Sarah Kaunda','CUS-003501','Business Loans',2000000,'Bank Transfer','T. Phiri','2026-10-28','Reversed','FT2610282277',false],
+  ['DIS-2026-1032','LN-2026-1789','Joseph Mwale','CUS-003488','Agricultural Loans',1150000,'TNM Mpamba','A. Mbewe','2026-10-28','Successful','MP2610280755',true],
+  ['DIS-2026-1031','LN-2026-1784','Tadala Nkhoma','CUS-003412','Personal Loans',180000,'Airtel Money','L. Chirwa','2026-10-27','Cancelled','',false],
+  ['DIS-2026-1030','LN-2026-1780','Peter Kachale','CUS-003390','Collateral Loans',4500000,'Bank Transfer','S. Zimba','2026-10-27','Successful','FT2610279001',true],
+  ['DIS-2026-1029','LN-2026-1776','Grace Mvula','CUS-003355','Personal Loans',650000,'Bank Transfer','A. Mbewe','2026-10-26','Failed','FT2610264488',false],
+  ['DIS-2026-1028','LN-2026-1770','Thokozani Banda','CUS-003311','Business Loans',2400000,'Bank Transfer','T. Phiri','2026-10-26','Successful','FT2610263312',true],
+  ['DIS-2026-1027','LN-2026-1765','Memory Nkhoma','CUS-003280','Salary Advance Loans',500000,'Airtel Money','L. Chirwa','2026-10-25','Successful','AM2610251140',true],
+  ['DIS-2026-1026','LN-2026-1761','Isaac Mponda','CUS-003244','Business Loans',3000000,'Bank Transfer','S. Zimba','2026-10-25','Rejected','',false],
+  ['DIS-2026-1025','LN-2026-1758','Fatima Salimu','CUS-003210','Salary Advance Loans',540000,'Bank Transfer','A. Mbewe','2026-10-24','Successful','FT2610247781',true],
+  ['DIS-2026-1024','LN-2026-1752','Yamikani Gondwe','CUS-003178','Agricultural Loans',1250000,'Bank Transfer','T. Phiri','2026-10-24','Successful','FT2610246690',true],
+  ['DIS-2026-1023','LN-2026-1749','Esther Kamanga','CUS-003141','Personal Loans',160000,'Cash','G. Mtemang\'ombe','2026-10-23','Successful','CSH-261023-11',true],
+  ['DIS-2026-1022','LN-2026-1744','Alfred Jimu','CUS-003102','Business Loans',1600000,'Bank Transfer','S. Zimba','2026-10-23','Failed','FT2610235520',false]
 ];
 const pendingActivation = ['DIS-2026-1041','DIS-2026-1040','DIS-2026-1036'];
 seed.forEach(([ref,app,cust,acct,product,amount,method,officer,date,status,txn,activated])=>{
@@ -2844,9 +2844,9 @@ seed.forEach(([ref,app,cust,acct,product,amount,method,officer,date,status,txn,a
 });
 
 /* seed: two pending authorization + one draft */
-[['LN-2026-1817','Chisomo Mhango','CUS-003777','Business Growth',1900000,'Airtel Money','T. Phiri','Awaiting authorization'],
- ['LN-2026-1816','Patrick Nsanja','CUS-003755','Asset Finance',3400000,'Bank Transfer','S. Zimba','Awaiting authorization'],
- ['LN-2026-1814','Loveness Kalua','CUS-003712','Group Loan',720000,'Cash','A. Mbewe','Draft']
+[['LN-2026-1817','Chisomo Mhango','CUS-003777','Business Loans',1900000,'Airtel Money','T. Phiri','Awaiting authorization'],
+ ['LN-2026-1816','Patrick Nsanja','CUS-003755','Collateral Loans',3400000,'Bank Transfer','S. Zimba','Awaiting authorization'],
+ ['LN-2026-1814','Loveness Kalua','CUS-003712','Personal Loans',720000,'Cash','A. Mbewe','Draft']
 ].forEach(([app,cust,acct,product,amount,method,officer,status])=>{
   const ref = 'DIS-2026-' + (++state.seq);
   const f = calcFees(amount);
@@ -3610,11 +3610,11 @@ function renderReports(){
     </div>`).join('');
 
   mkHBars(el('chProduct'), [
-    {label:'Business Growth', value:26.4, color:'#C9A227', display:'26.4M'},
-    {label:'Asset Finance', value:14.2, color:'#2F6FED', display:'14.2M'},
+    {label:'Business Loans', value:26.4, color:'#C9A227', display:'26.4M'},
+    {label:'Collateral Loans', value:14.2, color:'#2F6FED', display:'14.2M'},
     {label:'Agri Input', value:8.6, color:'#1E9E6A', display:'8.6M'},
-    {label:'Group Loan', value:6.1, color:'#7C5CF0', display:'6.1M'},
-    {label:'Salary Advance', value:5.4, color:'#E08C1E', display:'5.4M'},
+    {label:'Personal Loans', value:6.1, color:'#7C5CF0', display:'6.1M'},
+    {label:'Salary Advance Loans', value:5.4, color:'#E08C1E', display:'5.4M'},
     {label:'Emergency', value:2.7, color:'#D93F3F', display:'2.7M'}
   ]);
 

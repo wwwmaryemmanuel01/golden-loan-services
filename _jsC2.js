@@ -30,11 +30,11 @@ function renderReports(){
     </div>`).join('');
 
   mkHBars(el('chProduct'), [
-    {label:'Business Growth', value:26.4, color:'#C9A227', display:'26.4M'},
-    {label:'Asset Finance', value:14.2, color:'#2F6FED', display:'14.2M'},
+    {label:'Business Loans', value:26.4, color:'#C9A227', display:'26.4M'},
+    {label:'Collateral Loans', value:14.2, color:'#2F6FED', display:'14.2M'},
     {label:'Agri Input', value:8.6, color:'#1E9E6A', display:'8.6M'},
-    {label:'Group Loan', value:6.1, color:'#7C5CF0', display:'6.1M'},
-    {label:'Salary Advance', value:5.4, color:'#E08C1E', display:'5.4M'},
+    {label:'Personal Loans', value:6.1, color:'#7C5CF0', display:'6.1M'},
+    {label:'Salary Advance Loans', value:5.4, color:'#E08C1E', display:'5.4M'},
     {label:'Emergency', value:2.7, color:'#D93F3F', display:'2.7M'}
   ]);
 
