@@ -17,28 +17,53 @@ STYLE = re.search(r"<style>(.*?)</style>", MASTER, re.S).group(1)
 SIDEBAR = re.search(r'(<aside class="sidebar" id="sidebar">.*?</aside>)', MASTER, re.S).group(1)
 FAVICON = re.search(r'(<link rel="icon"[^>]+>)', MASTER).group(1)
 
+# One mapping for every sidebar entry, so no page can link to a module that
+# does not exist and none can fall through to a placeholder.
+PAGE_FILES = {
+    "dashboard": "index.html",
+    "applications": "applications.html",
+    "repayments": "repayments.html",
+    "clients": "clients.html",
+    "disbursements": "disbursements.html",
+    "reports": "reports.html",
+    "analytics": "analytics.html",
+    "charts": "charts.html",
+    "compliance": "compliance.html",
+    "security": "security.html",
+    "website": "website.html",
+    "payments": "payments.html",
+    "deposits": "deposits.html",
+    "transfers": "transfers.html",
+    "savings": "savings.html",
+    "salaries": "salaries.html",
+    "fees-penalties": "fees-penalties.html",
+    "notifications": "notifications.html",
+    "audit": "audit.html",
+    "staff": "staff.html",
+    "roles": "roles-permissions.html",
+    "recovery": "data-recovery.html",
+    "settings": "settings.html",
+    # no page of their own yet — they resolve to the dashboard section that covers them
+    "loans": "index.html#s3",
+    "collections": "index.html#s5",
+    "guarantors": "index.html#s3",
+    "transactions": "index.html#s9",
+}
+
+
 def sidebar(active):
     s = SIDEBAR
     s = s.replace('class="nav-item active"', 'class="nav-item"')
-    s = s.replace('data-page="dashboard" href="#dashboard"', 'data-page="dashboard" href="index.html"')
-    s = s.replace('data-page="disbursements" href="#disbursements"', 'data-page="disbursements" href="disbursements.html"')
-    s = s.replace('data-page="notifications" href="#notifications"', 'data-page="notifications" href="notifications.html"')
-    s = s.replace('data-page="staff" href="#staff"', 'data-page="staff" href="staff.html"')
-    s = s.replace('data-page="settings" href="#settings"', 'data-page="settings" href="settings.html"')
-    s = s.replace('data-page="repayments" href="#repayments"', 'data-page="repayments" href="#repayments"')
-    for slug in ["applications","loans","repayments","collections","clients","guarantors",
-                 "transactions","reports"]:
-        s = s.replace(f'data-page="{slug}" href="#{slug}"', f'data-page="{slug}" href="#"')
-    s = s.replace('data-page="reports" href="#"', 'data-page="reports" href="reports.html"')
-    s = s.replace('data-page="repayments" href="#"', 'data-page="repayments" href="repayments.html"')
-    s = s.replace('data-page="applications" href="#"', 'data-page="applications" href="applications.html"')
-    s = s.replace('data-page="clients" href="#"', 'data-page="clients" href="clients.html"')
-    s = s.replace('data-page="payments" href="#payments"', 'data-page="payments" href="payments.html"')
-    s = s.replace('data-page="deposits" href="#deposits"', 'data-page="deposits" href="deposits.html"')
-    # mark active item
+
+    def fix(m):
+        page = m.group(2)
+        return '%s%s"' % (m.group(1), PAGE_FILES.get(page, "index.html"))
+
+    s = re.sub(r'(data-page="([a-z-]+)"\s+href=")[^"]*"', fix, s)
     s = re.sub(r'<a class="nav-item" (data-page="%s")' % re.escape(active),
                r'<a class="nav-item active" \1', s)
     return s
+
 
 def head(title, extra_css=""):
     return f"""<!DOCTYPE html>
