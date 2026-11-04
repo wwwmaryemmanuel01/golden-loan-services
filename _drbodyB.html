@@ -1,0 +1,172 @@
+  <!-- ============ 5 · RESTORE TO FACTORY SETTINGS ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Restore to Factory Settings — Safe Reset Modes</h2>
+        <p>Four separated modes with their own permission and confirmation. Each one states exactly what it changes and what it leaves alone, before anything runs</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="modePill">—</span></div>
+    </div>
+
+    <div class="note gold" style="margin-bottom:11px"><div><b>A factory reset is never a fix for a login, a layout or a failed deployment.</b>
+      Mode A and Mode B touch no financial record at all. Mode C redeploys code and keeps the database. Mode D is a disaster-recovery
+      or decommissioning procedure with its own approvals — it is not offered here as a button, and it is disabled until a separate security review signs it off.</div></div>
+
+    <div class="modes" id="modesHost"></div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Staged Confirmation</div>
+          <div class="panel-sub">Target, consequences, reauthentication, typed confirmation, second name — in that order</div></div>
+          <span class="badge b-gray" id="modeStepPill">idle</span></div>
+        <div class="steps" id="modeSteps"></div>
+        <div id="modeWizard"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What Every Mode Preserves</div>
+          <div class="panel-sub">The records a reset may never delete, whichever mode is chosen</div></div>
+          <span class="badge b-ok">protected</span></div>
+        <div id="modePreserve"></div>
+        <div class="minihead">Destructive actions by role</div>
+        <div class="tblwrap" style="max-height:190px"><table class="tbl2 dense"><thead id="modeRoleHead"></thead><tbody id="modeRoleBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · FACTORY RESET PROTECTION ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Factory Reset Protection</h2>
+        <p>The guards around a destructive run: the environment is named, the mode is chosen, the request is locked, the job is tracked, and the audit trail survives the reset</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="protPill">—</span></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Target Environment</div>
+          <div class="panel-sub">Development, staging and production are visibly different, and only one carries the hard warning</div></div>
+          <span class="badge b-gray" id="envPill">—</span></div>
+        <div class="chips" id="envChips"></div>
+        <div id="envDetail" style="margin-top:9px"></div>
+        <div class="minihead">Maintenance mode</div>
+        <div id="maintBox"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Protection Checks</div>
+          <div class="panel-sub">Each guard is either holding or it blocks the run</div></div>
+          <span class="badge b-ok" id="guardPill">—</span></div>
+        <div id="guardList"></div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Reset Jobs</div>
+        <div class="panel-sub">Trackable, idempotent where practical, and safe to retry — a duplicate request cannot start a second run</div></div>
+        <span class="badge b-gray" id="jobCount">—</span></div>
+      <div id="jobOut"></div>
+      <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="jobHead"></thead><tbody id="jobBody"></tbody></table></div>
+    </div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Administrator Notifications</div>
+          <div class="panel-sub">Who was told when a high-risk run began and when it ended</div></div>
+          <span class="badge b-gray" id="ntfCount">—</span></div>
+        <div class="tblwrap" style="max-height:250px"><table class="tbl2 dense"><thead id="ntfHead"></thead><tbody id="ntfBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Double-Submit and Partial-Run Guards</div>
+          <div class="panel-sub">Why a refresh, a second tab or a retried request cannot corrupt the books</div></div>
+          <span class="badge b-info">design</span></div>
+        <div id="protNotes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · DISASTER RECOVERY SCENARIOS ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Disaster Recovery Scenarios</h2>
+        <p>Six ways this system realistically breaks, what each one costs in data and time, what cannot be recovered, and the step-by-step route back</p></div>
+      <div class="sec-tools"><span class="badge b-warn" id="scPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="scKpis" style="margin-bottom:11px"></div>
+    <div class="tilegrid" id="scHost"></div>
+
+    <div class="g2" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Incident Response and Escalation</div>
+          <div class="panel-sub">Who is called, in what order, and how long each stage may take</div></div>
+          <span class="badge b-gray">procedure</span></div>
+        <ul class="runbook" id="irRunbook"></ul>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Limits We State Plainly</div>
+          <div class="panel-sub">Provider limitations and what no backup on this plan can bring back</div></div>
+          <span class="badge b-crit">honest limits</span></div>
+        <div id="limitList"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="scGrid" style="margin-top:11px"></div>
+  </section>
+
+  <!-- ============ 8 · RECOVERY TESTING AND HEALTH ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Recovery Testing and Health Monitoring</h2>
+        <p>A backup that has never been restored is a hope, not a backup. Tests run off production, results are recorded, and the health of the database is watched between them</p></div>
+      <div class="sec-tools"><span class="badge b-ok" id="tstPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="tstKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Restoration Tests</div>
+          <div class="panel-sub">Every rehearsal, the copy it restored, the result and the corrective action</div></div>
+          <span class="badge b-gray" id="tstCount">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="tstHead"></thead><tbody id="tstBody"></tbody></table></div>
+        <div class="form-actions">
+          <button class="btn btn-gold" id="tstRunBtn">Schedule the next test</button>
+        </div>
+        <div class="qhint" id="tstMsg"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Smoke Tests After a Recovery</div>
+          <div class="panel-sub">Login, records and reports — the paths a customer and a teller actually use</div></div>
+          <span class="badge b-gray" id="smokePill">—</span></div>
+        <div id="smokeList"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="smokeRunBtn">Run the smoke tests</button>
+        </div>
+        <div class="qhint" id="smokeMsg"></div>
+      </div>
+    </div>
+
+    <div class="g3" style="margin-top:11px">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">What a Passing Restore Must Show</div>
+          <div class="panel-sub">Counts, samples, relationships, functions and policies — not just a green job status</div></div>
+          <span class="badge b-gray">verification</span></div>
+        <div id="verifyHost"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Recovery Objectives</div>
+          <div class="panel-sub">The data loss and downtime the business says it can survive</div></div>
+          <span class="badge b-gray">RPO / RTO</span></div>
+        <div class="tilegrid" id="objHost"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">System Health</div>
+          <div class="panel-sub">Database size, storage capacity, backup age and job failures</div></div>
+          <span class="badge b-gray" id="healthPill">—</span></div>
+        <div id="healthList"></div>
+      </div>
+    </div>
+
+    <div class="chartgrid" id="tstGrid" style="margin-top:11px"></div>
+  </section>

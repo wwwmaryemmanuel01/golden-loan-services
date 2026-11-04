@@ -3,7 +3,7 @@
 # Run after editing _roles.css, _rlbody*.html, _rljs*.js or adding a nav entry.
 set -e
 cd "$(dirname "$0")"
-python3 _compose.py _rlhead.html roles-permissions
+python3 _compose.py _rlhead.html roles _roles.css
 cat _rlhead.html _rlbodyA.html _rlbodyB.html _rlbodyC.html \
     _rljsA.js _rljsB.js _rljsC.js _rljsD.js _rljsE.js _rljsF.js > roles-permissions.html
 python3 - <<'PY'
