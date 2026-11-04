@@ -12,8 +12,10 @@ It does six things, each idempotent (a second run replaces its own work):
   5. sign-out   — a link from the sidebar footer to the sign-in screen
   6. runtime    — _brand.js, which adds the footer, the print header band,
                   the header geometry and the logo on printed documents
-  7. sections   — _sections.css / _sections.js, which start every section
-                  closed and open one at a time
+
+Sections are NOT folded: every module section is displayed open and spread, as
+it was originally designed. The collapse/expand layer was retired — this script
+strips any of its leftover blocks it still finds in a page.
 """
 import pathlib
 import re
@@ -21,13 +23,9 @@ import re
 ROOT = pathlib.Path(__file__).parent
 CSS = (ROOT / '_brand.css').read_text()
 JS = (ROOT / '_brand.js').read_text()
-SEC_CSS = (ROOT / '_sections.css').read_text()
-SEC_JS = (ROOT / '_sections.js').read_text()
 
 CSS_MARK = 'data-gls="brand-css"'
 JS_MARK = 'data-gls="brand-js"'
-SEC_CSS_MARK = 'data-gls="sections-css"'
-SEC_JS_MARK = 'data-gls="sections-js"'
 ICON_MARK = 'data-gls="brand-icons"'
 
 ICONS = (
@@ -43,8 +41,6 @@ ICONS = (
 
 CSS_BLOCK = '<style ' + CSS_MARK + '>\n' + CSS + '\n</style>\n'
 JS_BLOCK = '<script ' + JS_MARK + '>\n' + JS + '\n</script>\n'
-SEC_CSS_BLOCK = '<style ' + SEC_CSS_MARK + '>\n' + SEC_CSS + '\n</style>\n'
-SEC_JS_BLOCK = '<script ' + SEC_JS_MARK + '>\n' + SEC_JS + '\n</script>\n'
 
 BRAND_IMG = ('<img src="assets/logo-mark.png" width="44" height="44" '
              'alt="GOLDEN FINANCIAL SERVICES" loading="eager">')
@@ -107,6 +103,7 @@ def body_at(html):
 def strip_previous(html):
     html = re.sub(r'<style data-gls="brand-css">.*?</style>\n?', '', html, flags=re.S)
     html = re.sub(r'<script data-gls="brand-js">.*?</script>\n?', '', html, flags=re.S)
+    # retired fold layer — remove it wherever an older page still carries it
     html = re.sub(r'<style data-gls="sections-css">.*?</style>\n?', '', html, flags=re.S)
     html = re.sub(r'<script data-gls="sections-js">.*?</script>\n?', '', html, flags=re.S)
     html = re.sub(r'<link data-gls="brand-icons"[^>]*>\n?', '', html)
@@ -164,11 +161,11 @@ def transform(html):
 
     i = head_at(html)
     if i >= 0:
-        html = html[:i] + ICONS + CSS_BLOCK + SEC_CSS_BLOCK + html[i:]
+        html = html[:i] + ICONS + CSS_BLOCK + html[i:]
 
     i = body_at(html)
     if i >= 0:
-        html = html[:i] + JS_BLOCK + SEC_JS_BLOCK + html[i:]
+        html = html[:i] + JS_BLOCK + html[i:]
     return html
 
 
