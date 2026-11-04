@@ -632,21 +632,42 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
    embedded as a data URI, so a document printed or saved later still carries the logo.
    Printed pages also get a print-only header band with the full lock-up, the branch line
    and the print time.
-7. **Side bar that closes itself.** On a phone the side bar is off-canvas: tapping the menu
+7. **Every section starts closed.** A module carries 11–29 sections; laying them all open put a
+   phone user in front of a wall of figures, and every section's private detail at once. Each
+   section now starts closed, and opening one closes the one before it, so a single section is on
+   screen at a time. The open section is named in three places — a state chip on its heading
+   (*Open* / *Closed*), a dark bar above the content, and a chip in the header (*Section 5 open*)
+   — plus a **Close section** button on that bar. Tapping a chip in the section bar, or following
+   a `#sN` link, opens that section. Collapsing uses `height:0` with `visibility:hidden` rather
+   than `display:none`, so the module's own scripts still measure a real width and charts stay
+   correct; printing expands every section, so a printed page is complete.
+8. **Side bar that closes itself.** On a phone the side bar is off-canvas: tapping the menu
    slides it in and it slides back out once you stop using it (6 seconds idle, restarted by any
    touch, scroll or key press inside it). `Escape` and a tap outside close it immediately, so it
    can never sit over the page swallowing clicks. The delay is configurable with
    `document.documentElement.dataset.sidebarIdle` in milliseconds.
-8. **No loading overlay.** An earlier build covered the page with a splash while it loaded;
+9. **No loading overlay.** An earlier build covered the page with a splash while it loaded;
    it is gone. It could hold the overlay over the sidebar when a navigation did not actually
    happen, which made the sidebar look broken (clicks swallowed). Pages now paint directly —
    nothing sits between the pointer and the page.
-9. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
+10. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
+
+**On a phone.** The header keeps the name on one line (clipped with an ellipsis, never wrapped
+onto three lines that made the bar taller than its own sticky offset) and drops the module name,
+which the page body already carries. The bar's real height is measured at run time into
+`--gls-topbar-h`, and the sticky section bar and anchor offsets are derived from it — so content
+can no longer slide under the header. `text-size-adjust:100%` stops mobile Chrome from enlarging
+small labels inside fixed rows, which used to clip the top or bottom off the letters.
+
+**Tables on a phone.** A register no longer breaks words at every character (the stacked
+`R E F E R E N C E` columns): a header keeps its word whole, a cell breaks only between words,
+and a register wider than its card scrolls sideways inside it. Checked on all 847 tables.
 
 **Text contrast.** Every label in the shell was checked against its background for a contrast
 ratio of at least 4.5:1: header name 19:1, gold portal line 11:1, page subtitle 11:1, sidebar
-navigation 13:1, sidebar role line 8.9:1, search placeholder 6.4:1, footer text 9.4:1 and footer
-links 10.5:1. Colour is never used to carry meaning on its own.
+navigation 13:1, sidebar role line 8.9:1, search placeholder 6.4:1. The footer is now the same
+dark band as the header: `#C7CBD4` text (11.2:1) and `#E4C264` links (10.8:1) on `#0F1115`.
+Colour is never used to carry meaning on its own.
 
 Every insertion is idempotent: running a build twice replaces its own blocks rather than
 stacking them. `python3 inject_brand.py` alone re-brands existing pages without a rebuild.
