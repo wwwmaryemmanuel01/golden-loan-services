@@ -371,3 +371,50 @@ section.sec{
   }
   .kpi{border-left:3px solid #9AA0AA}
 }
+
+/* ============================================================================
+   PERFORMANCE METERS — a label, a bar and a hint, stacked
+
+   These used the class .meter, which the shell also uses for the thin 6px
+   progress bar (height:6px; overflow:hidden). A module that restyled .meter
+   as a stack only added display:grid, so the leftover 6px height and the
+   hidden overflow clipped every row to a sliver of text. The stack now has
+   its own class, so the two can never collide again.
+   ========================================================================= */
+.perfm{display:grid;gap:4px;height:auto;max-height:none;overflow:visible;background:none;border-radius:0;margin-top:0}
+.perfm .mt{display:flex;justify-content:space-between;gap:10px;font-size:10px;font-weight:700;color:#2B303B;line-height:1.45}
+.perfm .mt > div{min-width:0;overflow-wrap:break-word}
+.perfm .mt > span{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:800;white-space:nowrap;flex:0 0 auto}
+.perfm .mbar{height:7px;border-radius:20px;background:#EEF0F4;overflow:hidden}
+.perfm .mbar i{display:block;height:100%;border-radius:20px;background:var(--gold)}
+.perfm .mbar i.ok{background:var(--green)}
+.perfm .mbar i.warn{background:var(--amber)}
+.perfm .mbar i.bad{background:var(--red)}
+.perfm .qhint{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.45}
+
+/* ============================================================================
+   NOTHING MAY BE CRUSHED OR CUT AT THE EDGE
+
+   A register header keeps its word whole and a cell breaks between words; the
+   table then scrolls sideways inside its wrapper instead of squeezing the
+   columns to one letter per line. These declarations are deliberately
+   !important: a module stylesheet must not be able to reintroduce the crush.
+   ========================================================================= */
+.tblwrap,.tbl-wrap{
+  display:block;width:100%;max-width:100%;
+  overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+}
+.tblwrap > table,.tbl-wrap > table,table.tbl2{table-layout:auto;min-width:100%}
+table thead th{white-space:nowrap!important;word-break:keep-all;overflow-wrap:normal}
+table td{word-break:normal;overflow-wrap:break-word;hyphens:none}
+
+/* the page itself never scrolls sideways — a wide register scrolls inside its
+   own wrapper, and the sidebar can never be pushed off the left edge */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow:clip){html,body{overflow-x:hidden}}
+
+/* the sidebar can never be widened by its own labels, so it can never be
+   pushed off the left edge of the screen */
+.sidebar,.nav{overflow-x:hidden}
+.nav-item{min-width:0}
+.nav-item svg,.nav-item .pill{flex:0 0 auto}
