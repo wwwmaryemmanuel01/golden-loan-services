@@ -32,6 +32,60 @@
     return n;
   }
 
+  /* --------------------------------------------------- side bar auto-hide */
+  /* Tapping the menu button slides the side bar in; it slides back out once the
+     user stops using it. Any touch, scroll or key press inside it restarts the
+     clock, Escape closes it at once, and a tap outside closes it — so it can
+     never sit over the page and swallow clicks. The delay can be changed with
+     document.documentElement.dataset.sidebarIdle (milliseconds). */
+  function sidebarAutoHide() {
+    var bar = document.getElementById('sidebar');
+    if (!bar) return;
+
+    var timer = null;
+
+    function delay() {
+      var v = parseInt((document.documentElement.getAttribute('data-sidebar-idle') || ''), 10);
+      if (!isFinite(v) || v < 800) v = 6000;
+      return v;
+    }
+    function isOpen() { return bar.classList.contains('open'); }
+    function isPhone() {
+      try { return window.matchMedia('(max-width:860px)').matches; } catch (e) { return false; }
+    }
+    function close() {
+      clearTimeout(timer); timer = null;
+      bar.classList.remove('open');
+    }
+    function arm() {
+      clearTimeout(timer);
+      timer = null;
+      if (!isOpen() || !isPhone()) return;
+      timer = setTimeout(close, delay());
+    }
+
+    try {
+      new MutationObserver(function () { arm(); })
+        .observe(bar, {attributes: true, attributeFilter: ['class']});
+    } catch (e) {}
+
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) {
+      bar.addEventListener(ev, function () { if (isOpen()) arm(); }, {passive: true});
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && isOpen()) close();
+    });
+
+    document.addEventListener('click', function (ev) {
+      if (!isOpen()) return;
+      var t = ev.target;
+      if (bar.contains(t)) return;
+      if (t && t.closest && t.closest('#menuBtn')) return;
+      close();
+    }, true);
+  }
+
   /* ------------------------------------------------------------ build stamp */
   /* the date the browser received this copy, so "is this the latest build?"
      can be answered by looking at the page instead of guessing at a cache */
@@ -121,6 +175,7 @@
 
   /* --------------------------------------------------------------- lifecycle */
   function boot() {
+    try { sidebarAutoHide(); } catch (e) {}
     try { footer(); } catch (e) {}
     try { printHead(); } catch (e) {}
     try { wrapPrint(); } catch (e) {}

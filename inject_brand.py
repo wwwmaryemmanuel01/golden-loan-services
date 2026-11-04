@@ -40,8 +40,18 @@ JS_BLOCK = '<script ' + JS_MARK + '>\n' + JS + '\n</script>\n'
 
 BRAND_IMG = ('<img src="assets/logo-mark.png" width="44" height="44" '
              'alt="GOLDEN FINANCIAL SERVICES" loading="eager">')
-TOP_LOGO = ('<img class="gls-topbar-logo" src="assets/logo-mark.png" width="30" height="30" '
+TOP_LOGO = ('<img class="gls-topbar-logo" src="assets/logo-mark.png" width="34" height="34" '
             'alt="GOLDEN FINANCIAL SERVICES">')
+# the words themselves, large, in the header — board-facing name and the portal
+# it belongs to. Kept as text (not baked into an image) so it stays crisp and
+# readable by a screen reader.
+HEADER_BRAND = (
+    '<div class="gls-brandbar">'
+    '<div class="gls-brandbar-name">GOLDEN FINANCIAL SERVICES</div>'
+    '<div class="gls-brandbar-sub">ADMINISTRATION PORTAL</div>'
+    '</div>'
+    '<span class="gls-brandbar-sep" aria-hidden="true"></span>'
+)
 SIGNOUT = (
     '<a class="gls-signout" href="login.html" title="Sign out" aria-label="Sign out">'
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'
@@ -91,8 +101,10 @@ def strip_previous(html):
     html = re.sub(r'<script data-gls="brand-js">.*?</script>\n?', '', html, flags=re.S)
     html = re.sub(r'<link data-gls="brand-icons"[^>]*>\n?', '', html)
     html = re.sub(r'<meta data-gls="brand-icons"[^>]*>\n?', '', html)
-    # header logo
+    # header logo and the brand words next to it
     html = re.sub(r'<img class="gls-topbar-logo"[^>]*>\n?\s*', '', html)
+    html = re.sub(r'<div class="gls-brandbar">.*?</div>\s*<span class="gls-brandbar-sep"[^>]*></span>\n?\s*',
+                  '', html, flags=re.S)
     # sign-out link
     html = re.sub(r'\s*<a class="gls-signout".*?</a>', '', html, flags=re.S)
     return html
@@ -110,12 +122,13 @@ def add_header_logo(html):
     """Put the emblem before the page title, after the menu button."""
     if '<img class="gls-topbar-logo"' in html:
         return html
+    block = TOP_LOGO + '\n    ' + HEADER_BRAND + '\n    '
     m = re.search(r'<button class="menu-btn".*?</button>\s*', html, re.S)
     if m:
-        return html[:m.end()] + TOP_LOGO + '\n    ' + html[m.end():]
+        return html[:m.end()] + block + html[m.end():]
     m = re.search(r'<header class="topbar"[^>]*>\s*', html)
     if m:
-        return html[:m.end()] + TOP_LOGO + '\n    ' + html[m.end():]
+        return html[:m.end()] + block + html[m.end():]
     return html
 
 

@@ -615,9 +615,11 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
 
 `inject_brand.py` runs from `inject_backnav.py` during every build and puts the mark in:
 
-1. **Headers** — the top bar is the same dark bar as the sidebar (ink `#0F1115`, hairline
-   `#23262E`, white page title, dark search field and controls), with the emblem at its start
-   on every module page.
+1. **Headers** — a wide dark bar, the same ink as the sidebar (`#0F1115`, hairline `#23262E`),
+   96px tall on a desktop, carrying the emblem and then the words **GOLDEN FINANCIAL SERVICES**
+   in 21px extra-bold white with wide tracking, **ADMINISTRATION PORTAL** under it in spaced gold
+   (`#E4C264`), then the module name. Type steps down at 1380 / 1120 / 900 / 620px so the bar
+   never crowds the controls; the page title ellipsises rather than pushing buttons off-screen.
 2. **Sidebar** — the `GF` monogram becomes the emblem, on every page.
 3. **Footers** — a page footer with the mark, the company line, real links and the year.
 4. **Receipts** — the gold `GF` tile on a repayment receipt is the emblem (a dark tile
@@ -630,11 +632,21 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
    embedded as a data URI, so a document printed or saved later still carries the logo.
    Printed pages also get a print-only header band with the full lock-up, the branch line
    and the print time.
-7. **No loading overlay.** An earlier build covered the page with a splash while it loaded;
+7. **Side bar that closes itself.** On a phone the side bar is off-canvas: tapping the menu
+   slides it in and it slides back out once you stop using it (6 seconds idle, restarted by any
+   touch, scroll or key press inside it). `Escape` and a tap outside close it immediately, so it
+   can never sit over the page swallowing clicks. The delay is configurable with
+   `document.documentElement.dataset.sidebarIdle` in milliseconds.
+8. **No loading overlay.** An earlier build covered the page with a splash while it loaded;
    it is gone. It could hold the overlay over the sidebar when a navigation did not actually
    happen, which made the sidebar look broken (clicks swallowed). Pages now paint directly —
    nothing sits between the pointer and the page.
-8. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
+9. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
+
+**Text contrast.** Every label in the shell was checked against its background for a contrast
+ratio of at least 4.5:1: header name 19:1, gold portal line 11:1, page subtitle 11:1, sidebar
+navigation 13:1, sidebar role line 8.9:1, search placeholder 6.4:1, footer text 9.4:1 and footer
+links 10.5:1. Colour is never used to carry meaning on its own.
 
 Every insertion is idempotent: running a build twice replaces its own blocks rather than
 stacking them. `python3 inject_brand.py` alone re-brands existing pages without a rebuild.
