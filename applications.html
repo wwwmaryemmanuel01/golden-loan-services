@@ -1042,6 +1042,38 @@ html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:1
 /* the header's real height, measured at run time, feeds the sticky offsets */
 :root{--gls-topbar-h:96px}
 
+/* ---- keep every page's text off the screen edge --------------------------- */
+/* Anchored jumps (a section chip, a #sN link, a deep link) stop below the
+   sticky header instead of ending with the heading half-hidden under it. */
+html{scroll-padding-top:calc(var(--gls-topbar-h,96px) + 16px)}
+
+/* one safe gutter on every page, so no label ever starts at the screen edge */
+.content{
+  padding-left:16px;
+  padding-right:16px;
+  padding-top:18px;
+}
+/* nothing may pull itself outside that gutter */
+.sec,.card,.panel,.tblwrap{max-width:100%}
+.sec-head{margin-left:0;margin-right:0}
+.sec-head > *, .panel-head > *{min-width:0}
+
+/* pages without a .content wrapper get the same gutter, marked at run time */
+.main.gls-pad{
+  padding-left:16px;
+  padding-right:16px;
+  padding-top:18px;
+}
+/* the sticky chip bar keeps its full-width background inside that gutter */
+.main.gls-pad > .subnav{
+  margin-left:-16px;margin-right:-16px;
+  padding-left:16px;padding-right:16px;
+}
+@media (max-width:860px){
+  .content,.main.gls-pad{padding-left:15px;padding-right:15px;padding-top:14px}
+  .main.gls-pad > .subnav{margin-left:-15px;margin-right:-15px;padding-left:15px;padding-right:15px}
+}
+
 /* ---- sidebar lock-up ------------------------------------------------------ */
 .brand-mark{position:relative;overflow:hidden}
 .brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
@@ -1189,6 +1221,36 @@ html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:1
 .sidebar .sf-role{color:#ADB5C2}
 .gls-signout{color:#ADB5C2}
 
+/* ---- the stat band (fees, salaries, savings) ------------------------------ */
+/* Three modules put their headline figures in <div class="band"> with .bl
+   labels and .bv values, but the stylesheet they build from only styles
+   .modband. The strip therefore rendered as bare text above the content.
+   It now matches the module band on every other page. */
+.band{
+  background:linear-gradient(120deg,#0F1115 0%,#1B1E27 55%,#2A2411 100%);
+  color:#fff;border-radius:14px;padding:14px 16px;margin:0 0 14px;
+  display:flex;gap:22px;align-items:center;flex-wrap:wrap;
+  box-shadow:0 10px 28px rgba(16,18,24,.18);
+}
+.band .bl{
+  font-size:9px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  color:#A9B0BD;
+}
+.band .bv{
+  font-size:17px;font-weight:800;line-height:1.2;margin-top:3px;
+  font-variant-numeric:tabular-nums;color:#fff;
+}
+.band > div{min-width:0}
+.band .band-refresh{margin-left:auto}
+.band .band-refresh .btn-ghost{background:#1B1F27;border-color:#2F3541;color:#F1F3F7}
+.band .band-refresh .btn-ghost:hover{background:#242A34;border-color:var(--gold);color:#F3D67A}
+
+@media (max-width:760px){
+  .band{gap:14px 20px;padding:12px 14px}
+  .band .bv{font-size:15px}
+  .band .band-refresh{margin-left:0;width:100%}
+}
+
 /* ---- page footer: the same dark band as the header ------------------------ */
 .gls-footer{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
@@ -1289,11 +1351,15 @@ table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
    ========================================================================= */
 
 /* ---- the toggle ------------------------------------------------------------ */
+/* The heading sits INSIDE the page padding. It used to carry a negative
+   margin, which pulled the first letters of every title past the page edge on
+   a phone and clipped the chevron on the right. Padding only, never negative. */
 section.sec > .sec-head{
   cursor:pointer;
   border-radius:12px;
-  padding:6px 8px;
-  margin:-6px -8px 8px;
+  padding:8px 10px;
+  margin:0 0 8px;
+  flex-wrap:wrap;
   transition:background .15s ease,box-shadow .15s ease;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
@@ -5795,7 +5861,18 @@ boot();
     if (t && t.parentNode && t.parentNode.classList) t.parentNode.classList.add('gls-pageid');
   }
 
+  /* six pages place their sections straight inside .main with no .content
+     wrapper, so they had no gutter at all: the first letter of every heading
+     sat against the screen edge. Marking them lets the stylesheet give them
+     the same padding as the rest of the system. */
+  function markBarePages() {
+    var main = document.querySelector('.main');
+    if (!main) return;
+    if (!main.querySelector('.content')) main.classList.add('gls-pad');
+  }
+
   function boot() {
+    try { markBarePages(); } catch (e) {}
     try { markPageTitle(); } catch (e) {}
     try { syncHeaderHeight(); } catch (e) {}
     try {

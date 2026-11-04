@@ -652,6 +652,19 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
    nothing sits between the pointer and the page.
 10. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
 
+**Nothing starts at the screen edge.** Six pages place their sections straight inside `.main`
+with no `.content` wrapper, so they had **no gutter at all**; the section heading also carried a
+negative margin, which pulled it a further 8px past the edge and clipped the first letters of
+every title and the chevron on the right. Now every page has a 16px gutter (15px on a phone),
+headings use padding and never a negative margin, `scroll-padding-top` keeps a heading clear of
+the sticky header when a section chip or `#sN` link jumps to it, and the sticky chip bar keeps
+its full-width background inside that gutter.
+
+**The stat band.** Fees, salaries and savings render their headline figures in
+`<div class="band">` with `.bl` / `.bv` children, but the stylesheet they build from only styles
+`.modband` — so that strip appeared as bare text above the content. It now has the same dark band
+as every other module.
+
 **On a phone.** The header keeps the name on one line (clipped with an ellipsis, never wrapped
 onto three lines that made the bar taller than its own sticky offset) and drops the module name,
 which the page body already carries. The bar's real height is measured at run time into

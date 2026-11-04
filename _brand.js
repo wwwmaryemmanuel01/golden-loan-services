@@ -197,7 +197,18 @@
     if (t && t.parentNode && t.parentNode.classList) t.parentNode.classList.add('gls-pageid');
   }
 
+  /* six pages place their sections straight inside .main with no .content
+     wrapper, so they had no gutter at all: the first letter of every heading
+     sat against the screen edge. Marking them lets the stylesheet give them
+     the same padding as the rest of the system. */
+  function markBarePages() {
+    var main = document.querySelector('.main');
+    if (!main) return;
+    if (!main.querySelector('.content')) main.classList.add('gls-pad');
+  }
+
   function boot() {
+    try { markBarePages(); } catch (e) {}
     try { markPageTitle(); } catch (e) {}
     try { syncHeaderHeight(); } catch (e) {}
     try {
