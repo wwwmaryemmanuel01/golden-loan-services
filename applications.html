@@ -4290,7 +4290,7 @@ function renderComms(){
   el('cmStats').innerHTML = [
     ['Messages sent', String(all.length), 'across every application', ''],
     ['Delivered', String(all.filter(c=>c.status==='Delivered').length), 'SMS and email combined', 'gold'],
-    ['Failed', String(all.filter(c=>c.status!=='Delivered').length), 'retry queued', ''],
+    ['Failed', String(all.filter(c=>c.status!=='Delivered').length), 'awaiting a retry', ''],
     ['Templates', '7', 'received, docs, review, approved, rejected, correction, disbursement', 'blue']
   ].map(([l,v,s,cls])=>`<div class="kpi ${cls}"><div class="kl">${l}</div><div class="kv">${v}</div>
     <div class="ks">${s}</div></div>`).join('');

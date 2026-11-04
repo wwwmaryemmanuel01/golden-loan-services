@@ -25,7 +25,7 @@ function statusChip(n){
   if(n.archived) return '<span class="chip st-canc">Archived</span>';
   if(n.status==='Failed') return '<span class="chip st-fail">Failed</span>';
   if(n.status==='Pending') return '<span class="chip st-await">Pending</span>';
-  if(n.status==='Queued') return '<span class="chip st-proc">Queued</span>';
+  if(n.status==='Awaiting provider') return '<span class="chip st-proc">Awaiting provider</span>';
   if(n.status==='Sent') return '<span class="chip st-auth">Sent</span>';
   return n.read ? '<span class="chip st-ok">Read</span>' : '<span class="chip st-conf">Unread</span>';
 }
@@ -198,7 +198,7 @@ const seed = [
    'Receipt not matched','Receipt RCP-99388 (MK 512,000) could not be matched to a loan account.',''],
   ['Customer','Repayment Due Reminder','Chimwemwe Zulu','SMS','Pending',true,'Normal','24 Oct 08:00',
    'Instalment due in 3 days','Your instalment of MK 318,000 is due on 27 Oct 2026.',''],
-  ['Staff','Customer Support Request','Agnes Mbewe','In-App','Queued',true,'Normal','24 Oct 07:45',
+  ['Staff','Customer Support Request','Agnes Mbewe','In-App','Awaiting provider',true,'Normal','24 Oct 07:45',
    'New customer query','A customer raised a query about a missing repayment receipt.',''],
   ['Loan','Incomplete Application','Thoko Phiri','In-App','Delivered',true,'Normal','23 Oct 15:10',
    'Missing mandatory fields','Application LN-2026-1822 is missing employment details.',''],
@@ -255,7 +255,7 @@ NTF.reverse();   /* newest first */
         let status = 'Delivered', read = true, attempts = 1, provider = '';
         if((k+i) % 17 === 0){ status='Failed'; read=false; attempts=3; }
         else if((k+i) % 13 === 0){ status='Sent'; read=false; }
-        else if((k+i) % 23 === 0){ status='Queued'; read=false; }
+        else if((k+i) % 23 === 0){ status='Awaiting provider'; read=false; }
         else read = (k+i) % 5 !== 0;
         if(status==='Delivered' && channel==='SMS') provider='AM-'+(97000 + k*13 + i);
         if(status==='Delivered' && channel==='Email') provider='EM-'+(43000 + k*11 + i);

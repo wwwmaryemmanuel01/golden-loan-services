@@ -2636,7 +2636,7 @@ section.sec.open > .gls-sec-body{height:auto;visibility:visible;overflow:visible
         </div>
         <div class="card panel">
           <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
-            <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+            <div class="panel-sub">Sent, delivered, awaiting the provider and failed, by channel</div></div>
             <span class="badge b-gray" id="nfDelPill">—</span></div>
           <div class="tblwrap" style="max-height:280px"><table class="tbl2 dense"><thead id="nfDelHead"></thead><tbody id="nfDelBody"></tbody></table></div>
         </div>
@@ -4235,7 +4235,7 @@ DW_TXN.slice(0, 26).forEach((t, i) => {
   const rule = DW_NOTIFY_RULES[i % DW_NOTIFY_RULES.length];
   DW_NOTIFY_LOG.push({when: t.when, event: rule.event, channel: i % 3 === 0 ? 'Email' : 'SMS',
     to: custName(t.cust), reference: t.type === 'Deposit' ? t.id : t.id,
-    status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+    status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
     lane: 'Notifications', severity: 'Low', owner: 'STF-005', region: CUST_BY_ID[t.cust] ? CUST_BY_ID[t.cust].region : 'Lilongwe'});
 });
 
@@ -4435,7 +4435,7 @@ const DW_COLOURS = {
 function dwTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Completed|Verified|Approved|Pass|Posted|Delivered|Cleared|Connected|Active|Enabled|Resolved|Recovered|Matched|Balanced|Low|Within limit|Issued|Paid out|Valid|On|Yes|Applied|Healthy|Good)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Processing|Open|Queued|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Consent|Near limit|Waiting on the provider|Missing policy)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Processing|Open|Queued|Awaiting provider|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Consent|Near limit|Waiting on the provider|Missing policy)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Cancelled|Reversed|Blocked|Duplicate|Critical|High|Breach|Flagged|Expired|Violation|Missing|Suspended|Refused|Timed out)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }
@@ -5580,9 +5580,9 @@ function renderReversals(){
   if(el('rrReconPill')) el('rrReconPill').textContent = num(DW_REVERSALS.length) + ' checked';
   put('rrReconBox', DW_REVERSALS.map(r => kvRow(r.ref + ' · ' + r.type,
     r.status === 'Posted' ? okb('Matched') : r.status === 'Approved' ? badge('Waiting', 'b-warn') : badge('Provider not yet', 'b-gray'))).join(''));
-  put('rrNotifyBox', '<div class="minihead">Customer notices queued</div>'
-    + kvRow('SMS', okb('Queued') + ' · ' + DW_CHANNELS.sms.provider)
-    + kvRow('Email', okb('Queued') + ' · ' + DW_CHANNELS.email.provider)
+  put('rrNotifyBox', '<div class="minihead">Customer notices awaiting the provider</div>'
+    + kvRow('SMS', okb('Awaiting provider') + ' · ' + DW_CHANNELS.sms.provider)
+    + kvRow('Email', okb('Awaiting provider') + ' · ' + DW_CHANNELS.email.provider)
     + kvRow('Sent today', num(DW_NOTIFY_LOG.filter(n => dwIsos(n.when) === TODAY).length))
     + kvRow('Rule', 'Transaction reversed · customer and staff'));
 
@@ -5694,7 +5694,7 @@ function renderNotifications(){
     ['Messages logged', num(sent), 'In the current window', ''],
     ['Delivered', num(delivered), sent ? Math.round(pct(delivered, sent)) + '% of them' : 'Nothing sent', ''],
     ['Failed', num(log.filter(n => n.status === 'Failed').length), 'Number invalid or channel down', ''],
-    ['Queued', num(log.filter(n => n.status === 'Queued').length), 'Waiting on the provider', ''],
+    ['Awaiting provider', num(log.filter(n => n.status === 'Awaiting provider').length), 'The provider has not confirmed delivery', ''],
     ['SMS credit', num(DW_CHANNELS.sms.balance), DW_CHANNELS.sms.provider + ' · ' + DW_CHANNELS.sms.status, ''],
     ['Email allowance', DW_CHANNELS.email.balance + ' used', DW_CHANNELS.email.provider + ' · ' + DW_CHANNELS.email.status, ''],
     ['Notifications switched on', num(DW_NOTIFY_RULES.filter(r => r.on).length), 'Of ' + DW_NOTIFY_RULES.length + ' event types', '']
@@ -5721,13 +5721,13 @@ function renderNotifications(){
   renderTable('nfDelBody', [
     {k: 'channel', label: 'Channel'},
     {k: 'delivered', label: 'Delivered', num: true},
-    {k: 'queued', label: 'Queued', num: true},
+    {k: 'queued', label: 'Awaiting provider', num: true},
     {k: 'failed', label: 'Failed', num: true},
     {k: 'status', label: 'Channel', html: v => okb(v)}
   ], ['SMS', 'Email'].map(ch => ({
     channel: ch,
     delivered: log.filter(n => n.channel === ch && n.status === 'Delivered').length,
-    queued: log.filter(n => n.channel === ch && n.status === 'Queued').length,
+    queued: log.filter(n => n.channel === ch && n.status === 'Awaiting provider').length,
     failed: log.filter(n => n.channel === ch && n.status === 'Failed').length,
     status: ch === 'SMS' ? DW_CHANNELS.sms.status : DW_CHANNELS.email.status
   })), {pageSize: 4, onRow: false});
@@ -5747,10 +5747,10 @@ function renderNotifications(){
     chartBox({title: 'Messages by event', sub: 'Where the traffic comes from', type: 'bar', h: 190,
       cats: evs.map(e => e.event.replace(' ', '\n')),
       series: [{name: 'Messages', data: evs.map(e => e.n)}], value: num(sent)}) +
-    chartBox({title: 'Delivery by channel', sub: 'Delivered, queued and failed', type: 'stacked', h: 190,
+    chartBox({title: 'Delivery by channel', sub: 'Delivered, awaiting the provider and failed', type: 'stacked', h: 190,
       cats: ['SMS', 'Email'],
       series: [{name: 'Delivered', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Delivered').length), colour: '#0E9AA7'},
-        {name: 'Queued', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Queued').length), colour: '#C9A227'},
+        {name: 'Awaiting provider', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Awaiting provider').length), colour: '#C9A227'},
         {name: 'Failed', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Failed').length), colour: '#D93F3F'}],
       value: num(sent)}));
 }

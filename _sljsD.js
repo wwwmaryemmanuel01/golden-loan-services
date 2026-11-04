@@ -10,7 +10,7 @@
 function seTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Paid|Approved|Active|Verified|Delivered|Applied|Pass|Healthy|Within budget|Issued|Matched|Enabled|Completed|Cleared|On|Yes|Normal|Restricted|Capitalised|Capital|Sent|Reconciled)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Pending approval|Pending confirmation|Submitted|Processing|Draft|Review|Queued|Returned|At the limit|Open|Medium|Overdue$|Unpaid|Scheduled|Probation|Accrued|Prepaid)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Pending approval|Pending confirmation|Submitted|Processing|Draft|Review|Queued|Awaiting provider|Returned|At the limit|Open|Medium|Overdue$|Unpaid|Scheduled|Probation|Accrued|Prepaid)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Over budget|Critical|High|Suspended|Missing|Expired|Blocked|No|Overdue|Unverified|Left)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }

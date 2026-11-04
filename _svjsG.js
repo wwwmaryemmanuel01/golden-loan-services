@@ -211,7 +211,7 @@ function renderNotifications(){
   put('ntKpis', [
     ['Messages sent', num(log.length), 'SMS and email together', ''],
     ['Delivered', num(delivered.length), num(Math.round(pct(delivered.length, Math.max(1, log.length)))) + '% of those sent', ''],
-    ['Queued', num(log.filter(l => l.status === 'Queued').length), 'Waiting on the provider', ''],
+    ['Awaiting provider', num(log.filter(l => l.status === 'Awaiting provider').length), 'The provider has not confirmed delivery', ''],
     ['Failed', num(log.filter(l => l.status === 'Failed').length), 'The provider refused', log.some(l => l.status === 'Failed') ? 'red' : ''],
     ['SMS credit', num(SV_CHANNELS.sms.balance), 'Messages left on the account', ''],
     ['Email quota', SV_CHANNELS.email.balance, 'This month', ''],
@@ -269,7 +269,7 @@ function renderNotifications(){
     const sub = log.filter(l => l.channel === ch);
     return {channel: ch, sent: sub.length,
       delivered: sub.filter(l => l.status === 'Delivered').length,
-      queued: sub.filter(l => l.status === 'Queued').length,
+      queued: sub.filter(l => l.status === 'Awaiting provider').length,
       failed: sub.filter(l => l.status === 'Failed').length,
       rate: Math.round(pct(sub.filter(l => l.status === 'Delivered').length, Math.max(1, sub.length))) + '%'};
   });
@@ -277,7 +277,7 @@ function renderNotifications(){
     {k: 'channel', label: 'Channel'},
     {k: 'sent', label: 'Sent', num: true},
     {k: 'delivered', label: 'Delivered', num: true},
-    {k: 'queued', label: 'Queued', num: true},
+    {k: 'queued', label: 'Awaiting provider', num: true},
     {k: 'failed', label: 'Failed', num: true},
     {k: 'rate', label: 'Rate'}
   ], byChannel, {sort: 'sent', pageSize: 4});

@@ -2848,7 +2848,7 @@ section.sec.open > .gls-sec-body{height:auto;visibility:visible;overflow:visible
     <div class="g2">
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
-          <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+          <div class="panel-sub">Sent, delivered, awaiting the provider and failed, by channel</div></div>
           <span class="badge b-gray" id="ntDelPill">—</span></div>
         <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntDelHead"></thead><tbody id="ntDelBody"></tbody></table></div>
       </div>
@@ -4758,7 +4758,7 @@ const SV_NOTIFY_RULES = [
 const SV_NOTIFY_LOG = SV_TXN.slice(0, 26).map((t, i) => {
   const rule = SV_NOTIFY_RULES[i % SV_NOTIFY_RULES.length];
   return {when: t.when, event: rule.event, channel: i % 3 === 0 ? 'Email' : 'SMS', to: custName(t.cust),
-    reference: t.id, status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+    reference: t.id, status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
     lane: 'Notifications', severity: 'Low', owner: 'STF-005', region: t.region};
 });
 
@@ -5093,7 +5093,7 @@ function svStats(){
 function svTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Completed|Verified|Active|Posted|Approved|Pass|Cleared|Delivered|Connected|Enabled|Open|Paid|Generated|Issued|Healthy|Resolved|Normal|Within limit|Genuine|Available|On|Yes|Matched)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Pending verification|Pending approval|Processing|Queued|Review|Dormant|Medium|Awaiting|Slow|Restricted|Unverified|Reissued|Held|Partial|Retry queued|Returned for review)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Pending verification|Pending approval|Processing|Queued|Awaiting provider|Review|Dormant|Medium|Awaiting|Slow|Restricted|Unverified|Reissued|Held|Partial|Retry queued|Returned for review)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Cancelled|Reversed|Suspended|Critical|High|Breach|Flagged|Missing|Expired|Disabled|Violation|Blocked|No)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }
@@ -6456,7 +6456,7 @@ function renderNotifications(){
   put('ntKpis', [
     ['Messages sent', num(log.length), 'SMS and email together', ''],
     ['Delivered', num(delivered.length), num(Math.round(pct(delivered.length, Math.max(1, log.length)))) + '% of those sent', ''],
-    ['Queued', num(log.filter(l => l.status === 'Queued').length), 'Waiting on the provider', ''],
+    ['Awaiting provider', num(log.filter(l => l.status === 'Awaiting provider').length), 'The provider has not confirmed delivery', ''],
     ['Failed', num(log.filter(l => l.status === 'Failed').length), 'The provider refused', log.some(l => l.status === 'Failed') ? 'red' : ''],
     ['SMS credit', num(SV_CHANNELS.sms.balance), 'Messages left on the account', ''],
     ['Email quota', SV_CHANNELS.email.balance, 'This month', ''],
@@ -6514,7 +6514,7 @@ function renderNotifications(){
     const sub = log.filter(l => l.channel === ch);
     return {channel: ch, sent: sub.length,
       delivered: sub.filter(l => l.status === 'Delivered').length,
-      queued: sub.filter(l => l.status === 'Queued').length,
+      queued: sub.filter(l => l.status === 'Awaiting provider').length,
       failed: sub.filter(l => l.status === 'Failed').length,
       rate: Math.round(pct(sub.filter(l => l.status === 'Delivered').length, Math.max(1, sub.length))) + '%'};
   });
@@ -6522,7 +6522,7 @@ function renderNotifications(){
     {k: 'channel', label: 'Channel'},
     {k: 'sent', label: 'Sent', num: true},
     {k: 'delivered', label: 'Delivered', num: true},
-    {k: 'queued', label: 'Queued', num: true},
+    {k: 'queued', label: 'Awaiting provider', num: true},
     {k: 'failed', label: 'Failed', num: true},
     {k: 'rate', label: 'Rate'}
   ], byChannel, {sort: 'sent', pageSize: 4});

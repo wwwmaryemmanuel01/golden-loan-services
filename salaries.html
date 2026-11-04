@@ -2864,7 +2864,7 @@ section.sec.open > .gls-sec-body{height:auto;visibility:visible;overflow:visible
     <div class="g2">
       <div class="card panel">
         <div class="panel-head"><div><div class="panel-title">Delivery Status</div>
-          <div class="panel-sub">Sent, delivered, queued and failed, by channel</div></div>
+          <div class="panel-sub">Sent, delivered, awaiting the provider and failed, by channel</div></div>
           <span class="badge b-gray" id="ntDelPill">—</span></div>
         <div class="tblwrap" style="max-height:240px"><table class="tbl2 dense"><thead id="ntDelHead"></thead><tbody id="ntDelBody"></tbody></table></div>
       </div>
@@ -4742,7 +4742,7 @@ const SE_NOTIFY_LOG = SE_NOTIFY_RULES.concat(SE_NOTIFY_RULES.slice(0, 3)).map((r
   when: addDays(TODAY, -(i % 12)) + ' 0' + (7 + i % 3) + ':' + pad(10 + i, 2),
   event: r.event, channel: i % 3 === 0 ? 'SMS' : 'Email', to: r.to,
   reference: ['PRL-2610', 'SAL-1004', 'CLM-5203', 'APV-8201', 'REC-3103', 'INV-4302', 'BGT-4102', 'PAY-6411', 'STA-2610-A'][i % 9],
-  status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+  status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
   lane: 'Notifications', severity: 'Low', owner: 'STF-007', region: 'Lilongwe'
 }));
 
@@ -4979,7 +4979,7 @@ function seStats(){
 function seTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Paid|Approved|Active|Verified|Delivered|Applied|Pass|Healthy|Within budget|Issued|Matched|Enabled|Completed|Cleared|On|Yes|Normal|Restricted|Capitalised|Capital|Sent|Reconciled)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Pending approval|Pending confirmation|Submitted|Processing|Draft|Review|Queued|Returned|At the limit|Open|Medium|Overdue$|Unpaid|Scheduled|Probation|Accrued|Prepaid)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Pending approval|Pending confirmation|Submitted|Processing|Draft|Review|Queued|Awaiting provider|Returned|At the limit|Open|Medium|Overdue$|Unpaid|Scheduled|Probation|Accrued|Prepaid)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Over budget|Critical|High|Suspended|Missing|Expired|Blocked|No|Overdue|Unverified|Left)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }
@@ -7147,7 +7147,7 @@ function renderNotifications(){
     ['Rules switched on', num(SE_NOTIFY_RULES.filter(r => r.on).length), 'Off rules send nothing', ''],
     ['Messages logged', num(SE_NOTIFY_LOG.length), 'SMS and email', ''],
     ['Delivered', num(SE_NOTIFY_LOG.filter(l => l.status === 'Delivered').length), 'Accepted by the provider', ''],
-    ['Queued', num(SE_NOTIFY_LOG.filter(l => l.status === 'Queued').length), 'Waiting on the gateway', ''],
+    ['Awaiting provider', num(SE_NOTIFY_LOG.filter(l => l.status === 'Awaiting provider').length), 'The gateway has not confirmed delivery', ''],
     ['Failed', num(SE_NOTIFY_LOG.filter(l => l.status === 'Failed').length), 'Worth a retry', SE_NOTIFY_LOG.some(l => l.status === 'Failed') ? 'red' : ''],
     ['Payroll reminders', num(due.length), 'Sent before the cut-off', ''],
     ['Renewals to remind', num(s.renewalsDue), 'Inside ' + SE_SET.reminderDays + ' days', '']
@@ -7215,9 +7215,9 @@ function renderNotifications(){
       cats: ['SMS', 'Email'],
       series: [{name: 'Messages', data: ['SMS', 'Email'].map(c => SE_NOTIFY_LOG.filter(l => l.channel === c).length)}],
       value: num(SE_NOTIFY_LOG.length)}) +
-    chartBox({title: 'Delivery outcomes', sub: 'Delivered, queued and failed', type: 'bar', h: 200,
-      cats: ['Delivered', 'Queued', 'Failed'],
-      series: [{name: 'Messages', data: ['Delivered', 'Queued', 'Failed'].map(st => SE_NOTIFY_LOG.filter(l => l.status === st).length), colour: '#1E9E6A'}],
+    chartBox({title: 'Delivery outcomes', sub: 'Delivered, awaiting the provider and failed', type: 'bar', h: 200,
+      cats: ['Delivered', 'Awaiting provider', 'Failed'],
+      series: [{name: 'Messages', data: ['Delivered', 'Awaiting provider', 'Failed'].map(st => SE_NOTIFY_LOG.filter(l => l.status === st).length), colour: '#1E9E6A'}],
       value: num(SE_NOTIFY_LOG.filter(l => l.status === 'Delivered').length)}));
 }
 function seRefreshDue(){ return SE_PAYROLL.filter(p => p.status !== 'Paid'); }

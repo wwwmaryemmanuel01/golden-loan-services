@@ -6,7 +6,7 @@ function renderOverview(){
   const active = NTF.filter(n=>!n.archived);
   const unread = active.filter(n=>!n.read && ['Delivered','Sent'].includes(n.status)).length;
   const read = active.filter(n=>n.read && ['Delivered','Sent'].includes(n.status)).length;
-  const pending = active.filter(n=>['Pending','Queued'].includes(n.status)).length;
+  const pending = active.filter(n=>['Pending','Awaiting provider'].includes(n.status)).length;
   const delivered = active.filter(n=>n.status==='Delivered').length;
   const failed = active.filter(n=>n.status==='Failed').length;
   const cust = active.filter(n=>n.cat==='Customer').length;
@@ -23,7 +23,7 @@ function renderOverview(){
     ['Total Notifications', active.length, 'All channels · last 30 days', 'doc', '', 'across 6 categories'],
     ['Unread Notifications', unread, 'Awaiting recipient action', 'alert', 'a', 'unread'],
     ['Read Notifications', read, 'Opened by recipients', 'check', 'g', 'read'],
-    ['Pending Notifications', pending, 'Queued or not yet dispatched', 'card', 'p', 'in queue'],
+    ['Pending Notifications', pending, 'Awaiting the provider or not yet dispatched', 'card', 'p', 'in queue'],
     ['Successfully Delivered', delivered, `Delivery rate ${rate}%`, 'check', 'g', 'delivered'],
     ['Failed Notifications', failed, 'Provider rejections and errors', 'alert', 'r', 'needs retry'],
     ['Customer Notifications', cust, 'Borrower lifecycle messaging', 'users', 'b', 'customers'],

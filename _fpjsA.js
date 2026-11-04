@@ -559,7 +559,7 @@ function fpWhen(v){
 const fpPct = v => (Math.round(Number(v) * 100) / 100) + '%';
 const FEE_KIND_TONE = k => k === 'Penalty' ? 'b-crit' : 'b-warn';
 const FEE_STATE_TONE = s => /^(Paid|Collected|Approved|Waived|Full waiver|Balanced|Cleared|Delivered|Pass|Enabled|Active)$/i.test(s) ? 'b-ok'
-  : /^(Outstanding|Part paid|Pending|Pending approval|Partial|Queued|Review|Draft|At the cap|Above cap)$/i.test(s) ? 'b-warn'
+  : /^(Outstanding|Part paid|Pending|Pending approval|Partial|Queued|Awaiting provider|Review|Draft|At the cap|Above cap)$/i.test(s) ? 'b-warn'
   : /^(Reversed|Rejected|Failed|Blocked|Cancelled|Refunded|Duplicate|Unauthorised|Expired)$/i.test(s) ? 'b-crit' : 'b-gray';
 const fpState = s => `<span class="badge ${FEE_STATE_TONE(s)}">${esc(s)}</span>`;
 

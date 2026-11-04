@@ -37,7 +37,7 @@ function renderNotifications(){
     ['Rules switched on', num(SE_NOTIFY_RULES.filter(r => r.on).length), 'Off rules send nothing', ''],
     ['Messages logged', num(SE_NOTIFY_LOG.length), 'SMS and email', ''],
     ['Delivered', num(SE_NOTIFY_LOG.filter(l => l.status === 'Delivered').length), 'Accepted by the provider', ''],
-    ['Queued', num(SE_NOTIFY_LOG.filter(l => l.status === 'Queued').length), 'Waiting on the gateway', ''],
+    ['Awaiting provider', num(SE_NOTIFY_LOG.filter(l => l.status === 'Awaiting provider').length), 'The gateway has not confirmed delivery', ''],
     ['Failed', num(SE_NOTIFY_LOG.filter(l => l.status === 'Failed').length), 'Worth a retry', SE_NOTIFY_LOG.some(l => l.status === 'Failed') ? 'red' : ''],
     ['Payroll reminders', num(due.length), 'Sent before the cut-off', ''],
     ['Renewals to remind', num(s.renewalsDue), 'Inside ' + SE_SET.reminderDays + ' days', '']
@@ -105,9 +105,9 @@ function renderNotifications(){
       cats: ['SMS', 'Email'],
       series: [{name: 'Messages', data: ['SMS', 'Email'].map(c => SE_NOTIFY_LOG.filter(l => l.channel === c).length)}],
       value: num(SE_NOTIFY_LOG.length)}) +
-    chartBox({title: 'Delivery outcomes', sub: 'Delivered, queued and failed', type: 'bar', h: 200,
-      cats: ['Delivered', 'Queued', 'Failed'],
-      series: [{name: 'Messages', data: ['Delivered', 'Queued', 'Failed'].map(st => SE_NOTIFY_LOG.filter(l => l.status === st).length), colour: '#1E9E6A'}],
+    chartBox({title: 'Delivery outcomes', sub: 'Delivered, awaiting the provider and failed', type: 'bar', h: 200,
+      cats: ['Delivered', 'Awaiting provider', 'Failed'],
+      series: [{name: 'Messages', data: ['Delivered', 'Awaiting provider', 'Failed'].map(st => SE_NOTIFY_LOG.filter(l => l.status === st).length), colour: '#1E9E6A'}],
       value: num(SE_NOTIFY_LOG.filter(l => l.status === 'Delivered').length)}));
 }
 function seRefreshDue(){ return SE_PAYROLL.filter(p => p.status !== 'Paid'); }

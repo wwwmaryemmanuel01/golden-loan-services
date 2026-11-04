@@ -10,7 +10,7 @@
 function trTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Completed|Verified|Approved|Pass|Posted|Delivered|Cleared|Connected|Active|Enabled|Resolved|Recovered|Matched|Balanced|Low|Within limit|Issued|Valid|On|Yes|Applied|Healthy|Good|Normal|Acknowledged)$/i.test(t)) return 'b-ok';
-  if(/^(Draft|Pending|Pending verification|Pending approval|Processing|Open|Queued|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Returned for review|Retry queued|Slow)$/i.test(t)) return 'b-warn';
+  if(/^(Draft|Pending|Pending verification|Pending approval|Processing|Open|Queued|Awaiting provider|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Returned for review|Retry queued|Slow)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Cancelled|Reversed|Blocked|Duplicate|Critical|High|Breach|Flagged|Expired|Violation|Missing|Suspended|Refused|Urgent)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }

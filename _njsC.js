@@ -111,15 +111,15 @@ function renderAutomations(){
    ============================================================ */
 function renderDelivery(){
   const pending = NTF.filter(n=>n.status==='Pending');
-  const queued = NTF.filter(n=>n.status==='Queued');
+  const queued = NTF.filter(n=>n.status==='Awaiting provider');
   const sent = NTF.filter(n=>n.status==='Sent');
   const delivered = NTF.filter(n=>n.status==='Delivered');
   const failed = NTF.filter(n=>n.status==='Failed');
-  el('queueCount').textContent = (pending.length+queued.length) + ' in queue';
+  el('queueCount').textContent = (pending.length+queued.length) + ' pending';
 
   const tiles = [
     ['Pending Delivery', pending.length, 'Awaiting dispatch', '#9A6A0D', 'var(--amber-soft)', 'card'],
-    ['Queued', queued.length, 'Held by provider queue', '#5A3FCB', 'var(--purple-soft)', 'doc'],
+    ['Awaiting provider', queued.length, 'Held by the provider until it confirms delivery', '#5A3FCB', 'var(--purple-soft)', 'doc'],
     ['Sent', sent.length, 'Handed to the provider', '#2456C4', 'var(--blue-soft)', 'doc'],
     ['Delivered', delivered.length, 'Confirmed by provider', '#157A50', 'var(--green-soft)', 'check'],
     ['Failed', failed.length, 'Provider rejected', '#B32C2C', 'var(--red-soft)', 'alert']

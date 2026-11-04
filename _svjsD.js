@@ -10,7 +10,7 @@
 function svTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Completed|Verified|Active|Posted|Approved|Pass|Cleared|Delivered|Connected|Enabled|Open|Paid|Generated|Issued|Healthy|Resolved|Normal|Within limit|Genuine|Available|On|Yes|Matched)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Pending verification|Pending approval|Processing|Queued|Review|Dormant|Medium|Awaiting|Slow|Restricted|Unverified|Reissued|Held|Partial|Retry queued|Returned for review)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Pending verification|Pending approval|Processing|Queued|Awaiting provider|Review|Dormant|Medium|Awaiting|Slow|Restricted|Unverified|Reissued|Held|Partial|Retry queued|Returned for review)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Cancelled|Reversed|Suspended|Critical|High|Breach|Flagged|Missing|Expired|Disabled|Violation|Blocked|No)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }

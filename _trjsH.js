@@ -194,7 +194,7 @@ function renderNotifications(){
     ['Rules switched on', num(TR_NOTIFY_RULES.filter(r => r.on).length), 'Sending right now', ''],
     ['Messages sent', num(TR_NOTIFY_LOG.length), 'SMS and email together', ''],
     ['Delivered', num(TR_NOTIFY_LOG.filter(n => n.status === 'Delivered').length), 'Reached the handset or inbox', ''],
-    ['Queued', num(TR_NOTIFY_LOG.filter(n => n.status === 'Queued').length), 'Waiting for the provider', ''],
+    ['Awaiting provider', num(TR_NOTIFY_LOG.filter(n => n.status === 'Awaiting provider').length), 'The provider has not confirmed delivery', ''],
     ['Failed', num(TR_NOTIFY_LOG.filter(n => n.status === 'Failed').length), 'Needs a resend', ''],
     ['SMS credit', num(sms.balance), sms.provider + ' · ' + sms.sender, ''],
     ['Email allowance', email.balance, email.provider + ' · ' + email.sender, '']
@@ -222,14 +222,14 @@ function renderNotifications(){
   const byChannel = ['SMS', 'Email'].map(ch => {
     const rows = TR_NOTIFY_LOG.filter(n => n.channel === ch);
     return {channel: ch, sent: rows.length, delivered: rows.filter(n => n.status === 'Delivered').length,
-      queued: rows.filter(n => n.status === 'Queued').length, failed: rows.filter(n => n.status === 'Failed').length};
+      queued: rows.filter(n => n.status === 'Awaiting provider').length, failed: rows.filter(n => n.status === 'Failed').length};
   });
   if(el('ntDelPill')) el('ntDelPill').textContent = num(byChannel[0].sent + byChannel[1].sent) + ' sent';
   renderTable('ntDelBody', [
     {k: 'channel', label: 'Channel'},
     {k: 'sent', label: 'Sent', num: true},
     {k: 'delivered', label: 'Delivered', num: true},
-    {k: 'queued', label: 'Queued', num: true},
+    {k: 'queued', label: 'Awaiting provider', num: true},
     {k: 'failed', label: 'Failed', num: true}
   ], byChannel, {sort: 'sent', pageSize: 4});
 
@@ -249,8 +249,8 @@ function renderNotifications(){
       series: [{name: 'Messages', data: TR_NOTIFY_RULES.map(r => TR_NOTIFY_LOG.filter(n => n.event === r.event).length)}],
       value: num(TR_NOTIFY_LOG.length)}) +
     chartBox({title: 'Delivery outcome', sub: 'Every message sent', type: 'donut', h: 200,
-      cats: ['Delivered', 'Queued', 'Failed'],
-      series: [{name: 'Messages', data: ['Delivered', 'Queued', 'Failed'].map(st => TR_NOTIFY_LOG.filter(n => n.status === st).length)}],
+      cats: ['Delivered', 'Awaiting provider', 'Failed'],
+      series: [{name: 'Messages', data: ['Delivered', 'Awaiting provider', 'Failed'].map(st => TR_NOTIFY_LOG.filter(n => n.status === st).length)}],
       value: num(TR_NOTIFY_LOG.length)}));
 }
 
