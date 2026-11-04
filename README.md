@@ -890,6 +890,20 @@ tasks, resetting passwords and processing closures all update the in-page state 
 full lifecycle can be walked end to end. Nothing is sent anywhere and no credentials
 are stored or displayed.
 
+### Surface theme
+
+The canvas carries the colour: emerald light from the top-left, aqua from the
+top-right, a warm brand undertone from the bottom and two faint diagonal sheens,
+fixed to the viewport so the tint never scrolls away. Cards, tables, receipts
+and forms stay white, so legibility is never traded for decoration.
+
+Borders are deliberately bolder than a hairline: **2px** on module sections and
+receipts, **1.5px** on cards, KPI tiles, search boxes and every form control.
+Controls focus with an emerald ring; buttons and links keep the gold action
+colour. Table headers use a pale emerald band with dark green text (7:1), and
+form blocks (`.form-grid`) are framed unless they sit inside a filter group or
+a modal, which already carry their own frame.
+
 ### Clipping and crush guards
 
 Two presentation faults are now guard-railed system-wide, because both are
