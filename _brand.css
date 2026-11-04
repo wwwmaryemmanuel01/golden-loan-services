@@ -7,6 +7,16 @@
    these rules win without touching 23 generated <head> blocks.
    ========================================================================= */
 
+/* ---- text size is ours, not the browser's --------------------------------- */
+/* Mobile Chrome enlarges text it thinks is too small ("font boosting"). Inside
+   tightly sized rows that makes a label taller than its box and the top or
+   bottom of the letters is cut off. Pinning the adjustment keeps every label
+   at the size this stylesheet asks for, so nothing is clipped. */
+html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%}
+
+/* the header's real height, measured at run time, feeds the sticky offsets */
+:root{--gls-topbar-h:96px}
+
 /* ---- sidebar lock-up ------------------------------------------------------ */
 .brand-mark{position:relative;overflow:hidden}
 .brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
@@ -98,16 +108,16 @@
 .topbar .tab.on{background:#2F3641;color:#fff;box-shadow:none}
 
 /* the section bar has to clear the taller header */
-.subnav{top:96px;border-bottom:1px solid #E0E3EA}
-.sec{scroll-margin-top:150px}
+.subnav{top:var(--gls-topbar-h,96px);border-bottom:1px solid #E0E3EA}
+.sec{scroll-margin-top:calc(var(--gls-topbar-h,96px) + 54px)}
 
 @media (max-width:1380px){
   .gls-brandbar-name{font-size:18px;letter-spacing:.8px}
   .gls-brandbar-sub{font-size:9.5px;letter-spacing:2.8px}
   .topbar .page-sub{display:none}
   .topbar{min-height:88px;gap:13px;padding:9px 20px}
-  .subnav{top:88px}
-  .sec{scroll-margin-top:140px}
+  .subnav{top:var(--gls-topbar-h,88px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,88px) + 50px)}
 }
 @media (max-width:1120px){
   .gls-brandbar-sep{display:none}
@@ -115,24 +125,35 @@
   .gls-brandbar-sub{font-size:8.5px;letter-spacing:2.2px}
   .topbar .page-title{font-size:13px}
   .topbar{min-height:80px}
-  .subnav{top:80px}
-  .sec{scroll-margin-top:130px}
+  .subnav{top:var(--gls-topbar-h,80px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,80px) + 48px)}
 }
 @media (max-width:900px){
   .gls-brandbar-name{font-size:14px;letter-spacing:.3px;white-space:normal}
   .gls-brandbar-sub{font-size:8px;letter-spacing:1.8px}
   .topbar{min-height:72px;gap:10px;padding:8px 14px}
-  .subnav{top:72px}
-  .sec{scroll-margin-top:118px}
+  .subnav{top:var(--gls-topbar-h,72px)}
+  .sec{scroll-margin-top:calc(var(--gls-topbar-h,72px) + 44px)}
 }
 @media (max-width:620px){
-  .gls-topbar-logo{height:26px;width:26px}
-  .gls-brandbar-name{font-size:12.5px}
-  .gls-brandbar-sub{display:none}
-  .topbar .page-title{font-size:12px}
-  .topbar{min-height:62px}
-  .subnav{top:62px}
-  .sec{scroll-margin-top:108px}
+  .gls-topbar-logo{height:28px;width:28px}
+  /* the full name on one line, clipped with an ellipsis rather than wrapped
+     onto three lines that make the bar taller than its own offset */
+  .gls-brandbar{flex:1 1 auto;overflow:hidden}
+  .gls-brandbar-name{
+    font-size:13px;letter-spacing:.4px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .gls-brandbar-sub{font-size:7.5px;letter-spacing:1.6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .gls-brandbar-sep{display:none}
+  /* the module name is already said again in the page body: drop it here so
+     the controls keep their room (only that block, never the search or the
+     action buttons) */
+  .topbar .gls-pageid{display:none}
+  .topbar .topbar-actions{margin-left:auto}
+  .topbar .btn{padding:7px 10px;font-size:11px}
+  .topbar{min-height:60px;gap:8px;padding:7px 12px}
+  .gls-open-chip{display:none!important}
 }
 
 /* ---- readability: every label in the shell clears its background --------- */
@@ -143,25 +164,46 @@
 .sidebar .sf-role{color:#ADB5C2}
 .gls-signout{color:#ADB5C2}
 
-/* ---- page footer ---------------------------------------------------------- */
+/* ---- page footer: the same dark band as the header ------------------------ */
 .gls-footer{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  margin-top:26px;padding:16px 0 2px;border-top:1px solid var(--line);
-  font-size:11px;color:#414856;
+  margin-top:26px;padding:14px 18px;
+  background:#0F1115;border:1px solid #23262E;border-radius:12px;
+  box-shadow:0 6px 18px rgba(9,11,15,.14);
+  font-size:11px;color:#C7CBD4;
 }
 .gls-footer .gls-foot-brand{display:flex;align-items:center;gap:9px;min-width:0}
-.gls-footer .gls-foot-brand img{height:24px;width:auto;flex:0 0 auto}
-.gls-footer .gls-foot-name{font-weight:800;font-size:11.5px;color:#0F1115;letter-spacing:.3px}
-.gls-footer .gls-foot-sub{font-size:10px;letter-spacing:.9px;color:#5C6472;margin-top:2px}
+.gls-footer .gls-foot-brand img{height:26px;width:auto;flex:0 0 auto}
+.gls-footer .gls-foot-name{font-weight:800;font-size:11.5px;color:#fff;letter-spacing:.4px}
+.gls-footer .gls-foot-sub{font-size:9.5px;letter-spacing:.9px;color:#A9B0BD;margin-top:2px}
 .gls-footer .gls-foot-links{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 .gls-footer a{
-  color:#3B4250;text-decoration:none;font-weight:800;font-size:11px;
+  color:#E4C264;text-decoration:none;font-weight:800;font-size:11px;
   border-bottom:1px solid transparent;transition:.15s;
 }
-.gls-footer a:hover{color:var(--gold-dark);border-bottom-color:var(--gold)}
-.gls-footer .gls-foot-sep{width:1px;height:14px;background:var(--line)}
-.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#5C6472;letter-spacing:.2px}
+.gls-footer a:hover{color:#F3D67A;border-bottom-color:#E4C264}
+.gls-footer .gls-foot-sep{width:1px;height:14px;background:#2C313B}
+.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#A9B0BD;letter-spacing:.2px}
 .gls-footer .gls-build:empty{display:none}
+
+/* ---- tables: never one letter per line ----------------------------------- */
+/* A register in a narrow column used to break every word at any character
+   ("R E F E R E N C E" stacked vertically). A header now keeps its word whole
+   and a cell only ever breaks between words; if the register is then wider
+   than its card, the card scrolls sideways instead of crushing the columns. */
+.tblwrap,.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tblwrap table,.tbl-wrap table,table.tbl2{width:100%}
+table th,table td{word-break:normal;overflow-wrap:normal;hyphens:none}
+.tblwrap table thead th,.tbl-wrap table thead th,
+.tbl2 thead th,table thead th{white-space:nowrap}
+.tblwrap table td,.tbl-wrap table td,.tbl2 td{white-space:normal;overflow-wrap:break-word}
+.tblwrap table td.num,.tbl-wrap table td.num,
+.tbl2 td.num,.tblwrap table th.num,.tbl-wrap table th.num{white-space:nowrap}
+/* long unbroken values (references, codes) may wrap at a sensible point */
+.tblwrap table td .mono,.tblwrap table td code{overflow-wrap:anywhere}
+
+/* tight label rows stay tall enough for their text */
+.meter .mt,.hbar .hl,.hbar-l{line-height:1.45}
 
 /* ---- brand tiles ---------------------------------------------------------- */
 /* .logo-tile is the small gold "GF" tile used on receipts, applications and

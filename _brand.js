@@ -32,6 +32,23 @@
     return n;
   }
 
+  /* ------------------------------------------------------ header geometry */
+  /* The header is 96px on a desktop and taller when the name wraps on a phone.
+     Its real height is published as --gls-topbar-h so the sticky section bar
+     and the anchor offsets always line up with it — otherwise content slides
+     under the header and the first line of a section is hidden. */
+  function syncHeaderHeight() {
+    var tb = document.querySelector('.topbar');
+    if (!tb) return;
+    var h = Math.round(tb.getBoundingClientRect().height) || tb.offsetHeight || 0;
+    if (!h) {
+      /* a browser that has not laid the bar out yet: fall back to its floor */
+      var mh = parseInt(window.getComputedStyle(tb).minHeight, 10);
+      if (isFinite(mh)) h = mh;
+    }
+    if (h > 0) document.documentElement.style.setProperty('--gls-topbar-h', h + 'px');
+  }
+
   /* --------------------------------------------------- side bar auto-hide */
   /* Tapping the menu button slides the side bar in; it slides back out once the
      user stops using it. Any touch, scroll or key press inside it restarts the
@@ -174,7 +191,21 @@
   }
 
   /* --------------------------------------------------------------- lifecycle */
+  /* the block holding the module name, so a phone can drop just that one */
+  function markPageTitle() {
+    var t = document.querySelector('.topbar .page-title');
+    if (t && t.parentNode && t.parentNode.classList) t.parentNode.classList.add('gls-pageid');
+  }
+
   function boot() {
+    try { markPageTitle(); } catch (e) {}
+    try { syncHeaderHeight(); } catch (e) {}
+    try {
+      window.addEventListener('resize', syncHeaderHeight);
+      window.addEventListener('orientationchange', syncHeaderHeight);
+      setTimeout(syncHeaderHeight, 300);
+      setTimeout(syncHeaderHeight, 1200);
+    } catch (e) {}
     try { sidebarAutoHide(); } catch (e) {}
     try { footer(); } catch (e) {}
     try { printHead(); } catch (e) {}
