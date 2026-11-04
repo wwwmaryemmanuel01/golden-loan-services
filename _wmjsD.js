@@ -6,7 +6,7 @@
 
 /* ---------------- small building blocks ---------------- */
 function tone(s){
-  if(/^(Healthy|Connected|Pass|Live|Published|OK|Resolved|Applied|Success|Enabled|Set|Valid|Linked|Open|Good|Cleared|Approved)$/i.test(s)) return 'b-ok';
+  if(/^(Healthy|Connected|Pass|Live|Published|OK|Resolved|Applied|Success|Enabled|Set|Valid|Linked|Good|Cleared|Approved)$/i.test(s)) return 'b-ok';
   if(/^(Degraded|Slow|Review|Watch|Pending|Monitoring|Draft|Hidden|Superseded|Expiring|Needs work|Closed for renovation)$/i.test(s)) return 'b-warn';
   if(/^(Failing|Failed|Broken|Expired|Open|Disabled|Missing|Critical|Breaching|Rolled back|Not linked|Private)$/i.test(s)) return 'b-crit';
   return 'b-gray';
@@ -58,13 +58,16 @@ function renderOverview(){
   const connPillTone = s.openAlerts > 6 ? 'b-crit' : s.openAlerts > 2 ? 'b-warn' : 'b-ok';
   el('ovConnPill').className = 'badge ' + connPillTone;
   el('ovConnPill').textContent = integr + '/' + INTEGRATIONS.length + ' connected';
+  const sms = INTEGRATIONS.find(i => i.kind === 'SMS');
+  const payments = INTEGRATIONS.filter(i => i.kind === 'Payments');
+  const paymentDown = payments.some(i => i.status !== 'Connected');
   const cells = [
     ['Public website', WM_SITE.published ? 'Live' : 'Offline', WM_SITE.published ? '200 in 142 ms' : 'Maintenance page shown', WM_SITE.published ? 'ok' : 'crit'],
     ['Admin portal', 'Live', 'Sign-in required', 'ok'],
     ['Backend server', BACKEND.uptime + '%', BACKEND.instances + ' instances · ' + BACKEND.region, BACKEND.uptime > 99.5 ? 'ok' : 'warn'],
     ['Supabase', DB_HEALTH.some(h => h.status === 'Fail') ? 'Degraded' : 'Connected', SUPA.project + ' · ' + SUPA.engine, DB_HEALTH.some(h => h.status === 'Fail') ? 'warn' : 'ok'],
-    ['Email and SMS', INTEGRATIONS.find(i => i.kind === 'SMS').status, 'Africa’s Talking · Resend', 'warn'],
-    ['Payments', INTEGRATIONS.find(i => i.name.indexOf('TNM') === 0).status + ' · TNM Mpamba', 'Airtel Money connected', 'crit']
+    ['Email and SMS', sms.status, 'Africa’s Talking · Resend', sms.status === 'Connected' ? 'ok' : sms.status === 'Failing' ? 'crit' : 'warn'],
+    ['Payments', paymentDown ? payments.filter(i => i.status !== 'Connected').map(i => i.name.split(' ').slice(0, 2).join(' ') + ' ' + i.status.toLowerCase()).join(' · ') : 'All payment services connected', payments.map(i => i.name.split(' ').slice(0, 2).join(' ')).join(' · '), paymentDown ? 'crit' : 'ok']
   ];
   el('connGrid').innerHTML = cells.map(([n, st, sub, t]) => `<div class="scell">
       <div class="dotbg ${t}"></div>
@@ -347,12 +350,16 @@ function bodyDraft(){
 }
 function editorAction(kind){
   const item = CONTENT.find(c => c.key === EDITING) || CONTENT[0];
-  const title = (el('edTitle') || {}).value || item.title;
+  const title = ((el('edTitle') || {}).value || '').trim();
   const body = bodyDraft();
-  const words = body ? body.split(/\s+/).filter(Boolean).length : item.words;
+  const words = body ? body.split(/\s+/).filter(Boolean).length : 0;
+  if(!title){ toast('A content item needs a headline', 'warn'); return; }
   if(kind === 'save' || kind === 'review' || kind === 'publish'){
     const prev = item.status;
     item.title = title;
+    item.type = el('edType').value;
+    item.owner = el('edOwner').value;
+    ITEM_BODIES[item.key] = body;
     item.words = words;
     item.updated = TODAY;
     item.by = 'STF-009';
@@ -468,10 +475,17 @@ function openSeo(p){
     `<div class="fg"><label>Page title</label><input id="seoTitle" value="${esc(p.title)}" /></div>
      <div class="fg" style="margin-top:8px"><label>Meta description</label><textarea id="seoDesc" rows="3" style="width:100%">${esc(p.seo)}</textarea></div>`,
     [{label: 'Save', cls: 'btn-gold', act: () => {
-        p.seo = (el('seoDesc').value || '').trim() || p.seo;
+        const title = (el('seoTitle').value || '').trim();
+        const description = (el('seoDesc').value || '').trim();
+        if(!title || !description){ toast('Both the page title and meta description are required', 'warn'); return; }
+        const previous = p.title + ' — ' + p.seo;
+        p.title = title;
+        p.seo = description;
         p.updated = TODAY;
-        closeModal(); renderPages(); logChange('Pages', p.path + ' metadata', 'previous description', p.seo.slice(0, 40));
-        toast('Metadata saved');
+        p.edits += 1;
+        closeModal(); renderPages(); logChange('Pages', p.path + ' metadata', previous.slice(0, 60), (p.title + ' — ' + p.seo).slice(0, 60));
+        renderChanges();
+        toast('Page title and metadata saved');
       }}, {label: 'Close', act: 'close'}]);
 }
 </script>

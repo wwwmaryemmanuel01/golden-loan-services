@@ -328,7 +328,7 @@ function optimiseImage(name){
   if(!img) return;
   img.optimized = true;
   const mb = parseFloat(img.size);
-  if(/>\s*MB/.test(img.size)) img.size = Math.round(mb * 1024 * 0.34) + ' KB';
+  if(/MB$/i.test(img.size)) img.size = Math.max(1, Math.round(mb * 1024 * 0.34)) + ' KB';
   logChange('Storage', name, 'oversized', img.size + ' after optimisation');
   renderMedia(); renderPerformance(); renderChanges();
   toast(name + ' optimised to ' + img.size);
