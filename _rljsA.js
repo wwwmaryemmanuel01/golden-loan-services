@@ -103,6 +103,7 @@ function printTable(title, cols, rows){
     table{width:100%;border-collapse:collapse}th{background:#F4F5F8;text-align:left;font-size:9px;
     text-transform:uppercase;letter-spacing:.5px;padding:6px;border-bottom:1px solid #E6E8EE}
     td{padding:5px 6px;border-bottom:1px solid #F0F1F5}</style></head><body>
+    ${(window.glsDocBand ? window.glsDocBand('') : '')}
     <h1>${esc(title)}</h1><p>Golden Financial Services · ${esc(fmtDate(TODAY))}</p>
     <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></body></html>`;
   try {

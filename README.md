@@ -594,6 +594,56 @@ connections, reports, and settings with its audit history.
 - **Audit trail that writes itself** — every mutation lands in Configuration Change History and
   the module audit log with the area, the previous value, the updated value and the officer.
 
+## Brand: the logo across the system
+
+The GOLDEN FINANCIAL SERVICES logo from `assets/logo-master.png` is used everywhere the
+business appears, and it is added to the pages by a build step rather than by hand.
+
+`make-assets.sh` derives every size from the master file:
+
+| File | Use |
+|---|---|
+| `assets/logo.png` | full lock-up, transparent background — light surfaces and print |
+| `assets/logo-dark.png` | full lock-up on black — sidebar splash and the sign-in panel |
+| `assets/logo-mark.png` | the emblem alone ($ and arrow), transparent |
+| `assets/logo-mark-96.png` | small emblem, embedded as a data URI in printed documents |
+| `assets/favicon-32.png`, `favicon-64.png`, `favicon.ico` | browser tab and bookmarks |
+| `assets/apple-touch-icon.png` | home-screen icon on a dark rounded tile |
+
+Transparency is generated from the pixel's brightest channel, so the gold keeps its
+shading and the glow fades out instead of leaving a black rectangle behind it.
+
+`inject_brand.py` runs from `inject_backnav.py` during every build and puts the mark in:
+
+1. **Headers** — the emblem at the start of the top bar, on every module page.
+2. **Sidebar** — the `GF` monogram becomes the emblem, on every page.
+3. **Footers** — a page footer with the mark, the company line, real links and the year.
+4. **Receipts** — the gold `GF` tile on a repayment receipt is the emblem (a dark tile
+   behind it so the gold always reads), and the collection and proof-of-payment receipts
+   carry the emblem above their letterhead.
+5. **Sign-in** — `login.html`, a standalone screen: the full logo on the dark panel and the
+   emblem on the form card.
+6. **Documents** — every printed table, receipt and export goes through the modules'
+   `printTable` / `doPrint`, which now emit a branded letterhead band with the emblem
+   embedded as a data URI, so a document printed or saved later still carries the logo.
+   Printed pages also get a print-only header band with the full lock-up, the branch line
+   and the print time.
+7. **Loading animations** — a splash on first paint and on internal navigation: the logo
+   on a dark gradient with a gold progress bar, which fades out on load (and is skipped for
+   `prefers-reduced-motion`). `window.glsLoading(true|false)` shows or hides it from any module.
+8. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
+
+Every insertion is idempotent: running a build twice replaces its own blocks rather than
+stacking them. `python3 inject_brand.py` alone re-brands existing pages without a rebuild.
+
+## Sign-in screen
+
+`login.html` is the portal's entry screen — not a generated module page. It carries its own
+layout (brand panel on the left, form on the right), the logo, a show/hide password control
+and a live "Forgot?" note. It is a design preview: **no password is sent or stored**, and
+two-factor authentication is not enforced yet, which the screen states plainly instead of
+implying protection that is not there. The sidebar footer carries a sign-out link back to it.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end
@@ -647,13 +697,18 @@ Every module now behaves the same way when you open a record or pick up a phone.
 | Graphing & Tabulation | `analytics.html` | 15 · 56 charts |
 | Charts & Analytics | `charts.html` | 15 · 78 charts |
 | Compliance & Intelligence | `compliance.html` | 15 · 26 charts · 9 reports |
-| Security & Protection | `security.html` | 18 · 30 charts · 10 reports |
+| Security & Protection | `security.html` | 29 · 125 panels |
 | Website Management & Connections | `website.html` | 20 · 39 charts · 8 reports |
 | Methods of Payment Management | `payments.html` | 20 · 31 charts · 12 reports |
 | Deposits & Withdrawals Management | `deposits.html` | 18 · 21 charts · 12 reports |
 | Transfers Management | `transfers.html` | 20 · 17 charts · 12 reports |
 | Savings Management | `savings.html` | 20 · 22 charts · 12 reports |
 | Salaries, Expenses & Operating Charges | `salaries.html` | 20 · 39 charts · 14 reports |
+
+| Fees & Penalties | `fees-penalties.html` | 20 |
+| Roles & Permissions | `roles-permissions.html` | 11 |
+| Data Recovery | `data-recovery.html` | 12 |
+| Sign-in | `login.html` | standalone entry screen |
 
 Open `index.html` and use the sidebar to move between modules — every module shares
 the same shell (sidebar, topbar, design tokens) and cross-links to the others.
@@ -680,6 +735,12 @@ payments.html           Module 16 (built · 20 payment & connection sections)
 deposits.html           Module 17 (built · 18 deposit & withdrawal sections)
 transfers.html          Module 18 (built · 20 transfer sections)
 
+assets/                 logo, emblem, favicons (built by make-assets.sh)
+login.html              sign-in screen (standalone, not generated)
+_brand.css              logo placement, footer, splash, print band
+_brand.js               footer, print header, splash, document letterheads
+inject_brand.py         injects the brand into every page during a build
+make-assets.sh          rebuilds the logo sizes from assets/logo-master.png
 _module.css             shared module CSS
 _notifications.css      page CSS for Notifications
 _staff.css              page CSS for Staff Management

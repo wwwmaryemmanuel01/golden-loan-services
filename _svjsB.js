@@ -317,7 +317,7 @@ const EXPORTS = [
   {when: addDays(TODAY, -4) + ' 14:42', report: 'Interest Accrual Report', format: 'CSV', rows: 90, by: 'Chikondi Mwale', filters: '01 Sep 2026 – 30 Oct 2026'}
 ];
 function brandHtml(title, sub){
-  return `<div class="brandblock"><div class="bm">G</div>
+  return `<div class="brandblock"><img src="${window.GLS_DOC_MARK || 'assets/logo-mark-96.png'}" alt="" style="height:32px;width:auto;display:block">
     <div><div style="font-weight:800;font-size:12px">GOLDEN FINANCIAL SERVICES</div>
       <div style="font-size:9px;letter-spacing:1px;color:#8A6D0F;font-weight:700">LILONGWE · MALAWI</div></div>
     <div style="margin-left:auto;text-align:right;font-size:9px;color:#6B7280">

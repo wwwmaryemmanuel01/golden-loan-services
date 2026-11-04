@@ -1,0 +1,131 @@
+/* ============================================================================
+   BRAND — the GOLDEN FINANCIAL SERVICES logo across the system
+
+   One stylesheet for every place the mark appears: the sidebar, the header,
+   the page footer, printed pages, exported documents and the loading splash.
+   Injected into every page by inject_brand.py, after the module styles, so
+   these rules win without touching 23 generated <head> blocks.
+   ========================================================================= */
+
+/* ---- sidebar lock-up ------------------------------------------------------ */
+.brand-mark{position:relative;overflow:hidden}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-mark.has-logo{
+  background:none;box-shadow:none;border-radius:0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));
+}
+.brand{gap:12px}
+.brand:hover .brand-mark img{transform:scale(1.04)}
+.brand-mark img{transition:transform .25s ease}
+
+/* ---- header --------------------------------------------------------------- */
+.gls-topbar-logo{
+  height:30px;width:auto;flex:0 0 auto;margin-right:2px;
+  filter:drop-shadow(0 1px 2px rgba(16,18,24,.12));
+}
+@media (max-width:520px){ .gls-topbar-logo{height:24px} }
+
+/* ---- page footer ---------------------------------------------------------- */
+.gls-footer{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  margin-top:26px;padding:16px 0 2px;border-top:1px solid var(--line);
+  font-size:10.5px;color:var(--muted);
+}
+.gls-footer .gls-foot-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.gls-footer .gls-foot-brand img{height:24px;width:auto;flex:0 0 auto}
+.gls-footer .gls-foot-name{font-weight:800;font-size:11px;color:#2B303B;letter-spacing:.3px}
+.gls-footer .gls-foot-sub{font-size:9.5px;letter-spacing:.9px;color:var(--muted);margin-top:2px}
+.gls-footer .gls-foot-links{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.gls-footer a{
+  color:#5A6172;text-decoration:none;font-weight:700;font-size:10.5px;
+  border-bottom:1px solid transparent;transition:.15s;
+}
+.gls-footer a:hover{color:var(--gold-dark);border-bottom-color:var(--gold)}
+.gls-footer .gls-foot-sep{width:1px;height:14px;background:var(--line)}
+
+/* ---- sidebar sign-out ----------------------------------------------------- */
+.sidebar-foot{gap:10px}
+.gls-signout{
+  margin-left:auto;flex:0 0 auto;width:30px;height:30px;border-radius:9px;
+  display:grid;place-items:center;color:#8A90A0;border:1px solid #2C3039;
+  background:#1A1D24;text-decoration:none;transition:.16s;
+}
+.gls-signout:hover{color:var(--gold-bright);border-color:var(--gold-dark);background:#20242D}
+.gls-signout svg{width:14px;height:14px}
+
+/* ---- brand tiles ---------------------------------------------------------- */
+/* .logo-tile is the small gold "GF" tile used on receipts, applications and
+   the settings preview. The emblem replaces the monogram, on a dark tile so
+   the gold always reads. It works for tiles rendered later by JavaScript too. */
+.logo-tile{
+  background:#14161B!important;
+  background-image:url(assets/logo-mark-96.png)!important;
+  background-size:78% auto!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  box-shadow:none!important;
+}
+
+/* the emblem at the top of an on-screen receipt or proof of payment */
+.gls-docmark{height:28px;width:auto;display:block;margin:0 0 8px}
+
+/* ---- loading splash ------------------------------------------------------- */
+#gls-splash{
+  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 38%,#1C2029 0%,#0C0E12 68%);
+  opacity:1;visibility:visible;
+  transition:opacity .35s ease,visibility .35s ease;
+}
+#gls-splash.gls-out{opacity:0;visibility:hidden;pointer-events:none}
+.gls-splash-in{display:flex;flex-direction:column;align-items:center;gap:14px}
+.gls-splash-in img{
+  width:236px;max-width:58vw;height:auto;display:block;
+  animation:glsBreathe 2.4s ease-in-out infinite;
+}
+.gls-splash-txt{
+  font-size:9.5px;letter-spacing:3.2px;font-weight:800;color:#8A7841;
+  text-transform:uppercase;
+}
+.gls-splash-bar{width:190px;height:3px;border-radius:20px;background:#252A34;overflow:hidden}
+.gls-splash-bar i{
+  display:block;height:100%;width:42%;border-radius:20px;
+  background:linear-gradient(90deg,#8A6A12,#F1D278,#8A6A12);
+  animation:glsSlide 1.15s ease-in-out infinite;
+}
+@keyframes glsSlide{0%{transform:translateX(-115%)}100%{transform:translateX(345%)}}
+@keyframes glsBreathe{0%,100%{opacity:.92;transform:scale(.99)}50%{opacity:1;transform:scale(1.012)}}
+
+/* a busy control shows a small gold spinner while it works */
+.gls-busy{position:relative;pointer-events:none;opacity:.8}
+.gls-busy::after{
+  content:"";display:inline-block;width:11px;height:11px;margin-left:8px;
+  border-radius:50%;border:2px solid rgba(0,0,0,.18);border-top-color:var(--gold-dark);
+  vertical-align:-2px;animation:glsSpin .7s linear infinite;
+}
+@keyframes glsSpin{to{transform:rotate(360deg)}}
+
+/* ---- printed pages -------------------------------------------------------- */
+.gls-print-head{display:none}
+@media print{
+  #gls-splash,.gls-footer .gls-foot-links,.gls-signout{display:none!important}
+  .gls-print-head{
+    display:flex;align-items:center;gap:12px;
+    border-bottom:2px solid #C9A227;padding-bottom:8px;margin-bottom:16px;
+  }
+  .gls-print-head img{height:44px;width:auto;display:block}
+  .gls-print-head .gls-ph-txt{
+    margin-left:auto;text-align:right;font-size:8.5px;color:#6B7280;line-height:1.5;
+  }
+  .gls-print-head .gls-ph-name{
+    font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px;
+  }
+  .gls-footer{border-top:1px solid #D9DDE6;font-size:9px;padding-top:10px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .gls-splash-in img,.gls-splash-bar i,.gls-busy::after{animation:none}
+  .brand-mark img,.gls-signout{transition:none}
+}

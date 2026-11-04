@@ -376,7 +376,8 @@
       'h1{font-size:15px;margin:0 0 3px}p{font-size:10.5px;color:#6B7280;margin:0 0 12px}' +
       'table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #E6E8EE;padding:6px 4px;vertical-align:top}' +
       'td:first-child{width:38%;color:#6B7280;text-transform:uppercase;font-size:9.5px;letter-spacing:.4px}</style>' +
-      '</head><body><h1>' + esc(sheet.title) + '</h1><p>' + esc(sheet.sub || '') + '</p><table>' + rows + '</table></body></html>';
+      '</head><body>' + ((typeof window.glsDocBand === "function") ? window.glsDocBand(sheet.title) : '') +
+      '<h1>' + esc(sheet.title) + '</h1><p>' + esc(sheet.sub || '') + '</p><table>' + rows + '</table></body></html>';
     try {
       var w = window.open('', '_blank');
       if (!w) return false;
