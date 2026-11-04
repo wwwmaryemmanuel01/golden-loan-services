@@ -1,0 +1,124 @@
+  <!-- ============ 5 · CONSENT ============ -->
+  <section class="sec" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Consent, Signature and Legal Standing</h2>
+        <p>The signed deed of guarantee, the witness, the date consent was given, whether the signature is on file, and
+          whether the guarantor was advised of the consequences of default</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="cPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Deeds of Guarantee</div>
+        <div class="panel-sub">Open a row to see the signature on file and reprint the undertaking</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="cConsent" class="gcsel"></select>
+          <button class="btn btn-ghost btn-sm" id="cReprint">Reprint selected</button>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:380px">
+        <table class="tbl2 dense"><thead id="cHead"></thead><tbody id="cBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · COLLATERAL REGISTER ============ -->
+  <section class="sec" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>Collateral Register</h2>
+        <p>Every asset pledged as security: what it is, who owns it, where it is, what it was valued at, the loan it
+          secures and its present status</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="colPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Pledged Assets</div>
+        <div class="panel-sub">Filter by type, owner or status; open a row for the security file</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="colType" class="gcsel"></select>
+          <select id="colStatus" class="gcsel"></select>
+          <select id="colOwner" class="gcsel"></select>
+          <button class="btn btn-ghost btn-sm" id="colClear">Clear</button>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:440px">
+        <table class="tbl2 dense"><thead id="colHead"></thead><tbody id="colBody"></tbody></table>
+      </div>
+      <div class="qhint" id="colFoot" style="margin-top:7px"></div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Security by Type</div>
+        <div class="panel-sub">Pledged value per asset class, and how much of it is charged</div></div></div>
+      <div id="colTypeChart"></div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · VALUATION ============ -->
+  <section class="sec" id="s7">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>Valuation and Loan-to-Value</h2>
+        <p>The professional valuation, its date and valuer, the forced-sale value the lender may actually realise, and the
+          loan-to-value against the balance outstanding</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="valPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Valuations</div>
+        <div class="panel-sub">LTV above 80% is referred; a valuation older than 12 months must be refreshed</div></div>
+        <select id="valFilter" class="gcsel"></select>
+      </div>
+      <div class="tblwrap" style="max-height:400px">
+        <table class="tbl2 dense"><thead id="valHead"></thead><tbody id="valBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 · TITLE & CHARGE ============ -->
+  <section class="sec" id="s8">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>Ownership, Title and Legal Perfection</h2>
+        <p>The title deed or registration, the search at the registry, the charge or pledge in favour of Golden Financial
+          Services, and any prior encumbrance that could defeat the security</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="tPill">—</span></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Perfection Status</div>
+          <div class="panel-sub">Search, charge and stamping — all three before funds are released</div></div></div>
+        <div class="tblwrap" style="max-height:360px">
+          <table class="tbl2 dense"><thead id="tHead"></thead><tbody id="tBody"></tbody></table>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Ownership and Encumbrances</div>
+          <div class="panel-sub">Who holds title, and what else is registered against it</div></div></div>
+        <div id="tNotes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9 · INSURANCE ============ -->
+  <section class="sec" id="s9">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>Insurance and Risk Cover</h2>
+        <p>Whether pledged property and vehicles are insured, with whom, for how much, when the policy lapses, and whether
+          the lender is noted as loss payee</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="insPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Policies</div>
+        <div class="panel-sub">A policy within 45 days of expiry is put on the renewal list automatically</div></div>
+        <select id="insFilter" class="gcsel"></select>
+      </div>
+      <div class="tblwrap" style="max-height:400px">
+        <table class="tbl2 dense"><thead id="insHead"></thead><tbody id="insBody"></tbody></table>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,189 @@
+<div class="sheet">
+
+  <div class="progwrap">
+    <div class="ptop">
+      <div class="pt">Loan application · Golden Financial Services</div>
+      <div class="pc" id="progText">0 of 10 sections complete</div>
+    </div>
+    <div class="progbar"><i id="progFill"></i></div>
+    <div class="progchips" id="progChips">
+      <a href="#a1" data-sec="a1">1 · Applicant</a>
+      <a href="#a2" data-sec="a2">2 · Contact</a>
+      <a href="#a3" data-sec="a3">3 · Income</a>
+      <a href="#a4" data-sec="a4">4 · Loan</a>
+      <a href="#a5" data-sec="a5">5 · Business</a>
+      <a href="#a6" data-sec="a6">6 · Guarantor 1</a>
+      <a href="#a7" data-sec="a7">7 · Guarantor 2</a>
+      <a href="#a8" data-sec="a8">8 · Collateral</a>
+      <a href="#a9" data-sec="a9">9 · Documents</a>
+      <a href="#a10" data-sec="a10">10 · Declare &amp; sign</a>
+    </div>
+  </div>
+
+  <div class="custhero">
+    <h1>Loan application form</h1>
+    <p>Ten sections, about fifteen minutes. Everything is saved on this device as you type, so you can stop and come
+      back. Before you begin you must read and accept the <a href="agreement.html">loan agreement and terms and
+        conditions</a> — the form stays locked until you do.</p>
+    <div class="custhint" id="gateBox">
+      <span id="gateText">Checking your agreement acceptance…</span>
+      <a class="btn btn-gold btn-sm" href="agreement.html" id="gateLink">Read and accept the agreement</a>
+    </div>
+  </div>
+
+  <!-- ============ 1 · APPLICANT ============ -->
+  <section class="sec" id="a1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Applicant details</h2>
+        <p>Exactly as they appear on your national ID. These are the details your loan contract will carry.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a1">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>First name <span class="req">*</span></label><input id="f_first" data-req autocomplete="given-name" /><div class="err" data-err="f_first"></div></div>
+        <div class="fg"><label>Surname <span class="req">*</span></label><input id="f_surname" data-req autocomplete="family-name" /><div class="err" data-err="f_surname"></div></div>
+        <div class="fg"><label>Other names</label><input id="f_other" /><div class="err"></div></div>
+        <div class="fg"><label>Date of birth <span class="req">*</span></label><input id="f_dob" type="date" data-req /><div class="err" data-err="f_dob"></div></div>
+        <div class="fg"><label>Sex <span class="req">*</span></label>
+          <select id="f_sex" data-req><option value="">Choose…</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select>
+          <div class="err" data-err="f_sex"></div></div>
+        <div class="fg"><label>Marital status</label>
+          <select id="f_marital"><option value="">Choose…</option><option>Single</option><option>Married</option><option>Separated</option><option>Widowed</option></select><div class="err"></div></div>
+        <div class="fg"><label>National ID number <span class="req">*</span></label><input id="f_nid" data-req placeholder="e.g. LIL-4472-991" /><div class="err" data-err="f_nid"></div></div>
+        <div class="fg"><label>Taxpayer number (TPIN)</label><input id="f_tpin" placeholder="If you have one" /><div class="err"></div></div>
+        <div class="fg"><label>Nationality</label><input id="f_nation" value="Malawian" /><div class="err"></div></div>
+        <div class="fg"><label>Dependants in your household</label><input id="f_dep" type="number" min="0" max="30" value="0" /><div class="err"></div></div>
+        <div class="fg full"><label>Are you an existing customer of Golden Financial Services?</label>
+          <select id="f_existing"><option>No — this is my first application</option><option>Yes — I have an open loan</option><option>Yes — I have repaid a loan before</option></select>
+          <div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · CONTACT ============ -->
+  <section class="sec" id="a2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Contact and address</h2>
+        <p>How we reach you, and where you actually live — this is where a field officer will visit if one is needed.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a2">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Mobile number <span class="req">*</span></label><input id="f_phone" data-req placeholder="+265 991 000 000" autocomplete="tel" /><div class="err" data-err="f_phone"></div></div>
+        <div class="fg"><label>Alternative number</label><input id="f_phone2" placeholder="A number you can always be reached on" /><div class="err"></div></div>
+        <div class="fg"><label>Email address</label><input id="f_email" type="email" placeholder="you@example.com" autocomplete="email" /><div class="err" data-err="f_email"></div></div>
+        <div class="fg"><label>District <span class="req">*</span></label>
+          <select id="f_district" data-req>
+            <option value="">Choose…</option>
+            <option>Lilongwe</option><option>Blantyre</option><option>Mzuzu</option><option>Zomba</option>
+            <option>Kasungu</option><option>Mangochi</option><option>Salima</option><option>Dedza</option>
+            <option>Nkhotakota</option><option>Mulanje</option><option>Mzimba</option><option>Other</option>
+          </select><div class="err" data-err="f_district"></div></div>
+        <div class="fg"><label>Traditional authority / ward</label><input id="f_ta" /><div class="err"></div></div>
+        <div class="fg"><label>Village or street address <span class="req">*</span></label><input id="f_address" data-req placeholder="House number, street, village" /><div class="err" data-err="f_address"></div></div>
+        <div class="fg"><label>Nearest landmark</label><input id="f_landmark" placeholder="A school, church, market or filling station" /><div class="err"></div></div>
+        <div class="fg"><label>How long at this address</label>
+          <select id="f_years"><option value="">Choose…</option><option>Under 1 year</option><option>1–3 years</option><option>3–5 years</option><option>Over 5 years</option></select><div class="err"></div></div>
+        <div class="fg full"><label>Postal address (if any)</label><input id="f_postal" placeholder="Private bag or box number" /><div class="err"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · INCOME ============ -->
+  <section class="sec" id="a3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Employment and income</h2>
+        <p>What you earn and what you spend. A repayment above 40% of your net monthly income is not accepted.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a3">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Employment type <span class="req">*</span></label>
+          <select id="f_emp" data-req>
+            <option value="">Choose…</option>
+            <option>Salaried — private sector</option><option>Salaried — government</option>
+            <option>Self-employed / business</option><option>Farming</option><option>Contract / casual</option><option>Pensioner</option>
+          </select><div class="err" data-err="f_emp"></div></div>
+        <div class="fg"><label>Employer or business name <span class="req">*</span></label><input id="f_employer" data-req /><div class="err" data-err="f_employer"></div></div>
+        <div class="fg"><label>Job title or trade</label><input id="f_job" /><div class="err"></div></div>
+        <div class="fg"><label>Length of service / trading</label>
+          <select id="f_service"><option value="">Choose…</option><option>Under 6 months</option><option>6–12 months</option><option>1–3 years</option><option>Over 3 years</option></select><div class="err"></div></div>
+        <div class="fg"><label>Net monthly income (MK) <span class="req">*</span></label><input id="f_income" type="number" min="0" data-req data-num /><div class="err" data-err="f_income"></div></div>
+        <div class="fg"><label>Other monthly income (MK)</label><input id="f_other_income" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Monthly living expenses (MK)</label><input id="f_expenses" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Existing loan repayments per month (MK)</label><input id="f_debts" type="number" min="0" value="0" data-num /><div class="err"></div></div>
+        <div class="fg full">
+          <label>Your affordable monthly repayment, as we calculate it</label>
+          <div class="calc" id="affordBox">Enter your income to see what you can afford.</div>
+          <div class="hint">Net income minus expenses and existing repayments, capped at 40% of net income.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · LOAN ============ -->
+  <section class="sec" id="a4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>What you are asking for</h2>
+        <p>The amount, the term and the purpose. The estimate below is indicative — the offer letter is final.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a4">Not started</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Loan product <span class="req">*</span></label>
+          <select id="f_product" data-req>
+            <option value="">Choose…</option>
+            <option>Business loan</option><option>Salary loan</option><option>Asset finance</option>
+            <option>Group loan</option><option>Emergency loan</option><option>Agricultural loan</option>
+          </select><div class="err" data-err="f_product"></div></div>
+        <div class="fg"><label>Amount requested (MK) <span class="req">*</span></label><input id="f_amount" type="number" min="50000" step="10000" data-req data-num /><div class="err" data-err="f_amount"></div></div>
+        <div class="fg"><label>Term <span class="req">*</span></label>
+          <select id="f_term" data-req><option value="">Choose…</option><option value="3">3 months</option><option value="6">6 months</option><option value="9">9 months</option><option value="12">12 months</option><option value="18">18 months</option><option value="24">24 months</option></select>
+          <div class="err" data-err="f_term"></div></div>
+        <div class="fg"><label>Repayment frequency</label>
+          <select id="f_freq"><option>Monthly</option><option>Fortnightly</option><option>Weekly</option></select><div class="err"></div></div>
+        <div class="fg full"><label>Purpose of the loan <span class="req">*</span></label>
+          <textarea id="f_purpose" data-req placeholder="What the money is for, and how the loan will be repaid"></textarea>
+          <div class="err" data-err="f_purpose"></div></div>
+        <div class="fg"><label>Branch you will deal with</label>
+          <select id="f_branch"><option>Lilongwe — Area 3</option><option>Blantyre — Limbe</option><option>Mzuzu — Katoto</option><option>Zomba</option></select><div class="err"></div></div>
+        <div class="fg"><label>Preferred disbursement</label>
+          <select id="f_disb"><option>Bank transfer</option><option>Airtel Money</option><option>TNM Mpamba</option><option>Cash at the counter</option></select><div class="err"></div></div>
+        <div class="fg full">
+          <label>Indicative repayment</label>
+          <div class="calc" id="quoteBox">Enter an amount and a term to see the monthly repayment.</div>
+          <div class="hint">Illustration at 6.5% per month on the declining balance with a 3% arrangement fee. Your offer letter may differ.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · BUSINESS ============ -->
+  <section class="sec" id="a5">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>Business details</h2>
+        <p>Complete this if the loan is for a business, or if you are self-employed. Otherwise leave it and move on.</p></div>
+      <div class="sec-tools"><span class="badge b-gray" data-state="a5">Optional</span></div>
+    </div>
+    <div class="card panel">
+      <div class="form-grid two">
+        <div class="fg"><label>Business name</label><input id="f_bname" /><div class="err"></div></div>
+        <div class="fg"><label>Business registration number</label><input id="f_breg" /><div class="err"></div></div>
+        <div class="fg"><label>Sector</label>
+          <select id="f_bsector"><option value="">Choose…</option><option>Retail and wholesale</option><option>Agriculture</option><option>Transport</option><option>Manufacturing</option><option>Services</option><option>Hospitality</option></select><div class="err"></div></div>
+        <div class="fg"><label>Years trading</label><input id="f_byears" type="number" min="0" max="60" /><div class="err"></div></div>
+        <div class="fg"><label>Monthly turnover (MK)</label><input id="f_bturnover" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Monthly business costs (MK)</label><input id="f_bcosts" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Stock or equipment value (MK)</label><input id="f_bstock" type="number" min="0" data-num /><div class="err"></div></div>
+        <div class="fg"><label>Where the business operates</label><input id="f_bsite" placeholder="Market, shop, plot, route" /><div class="err"></div></div>
+        <div class="fg"><label>Business bank or mobile-money account</label><input id="f_bank" placeholder="Bank and account name" /><div class="err"></div></div>
+        <div class="fg"><label>Do you keep written records?</label>
+          <select id="f_brecords"><option>Yes — books or a ledger</option><option>Yes — mobile-money statements</option><option>No</option></select><div class="err"></div></div>
+      </div>
+    </div>
+  </section>

@@ -46,7 +46,10 @@ PAGE_FILES = {
     # no page of their own yet — they resolve to the dashboard section that covers them
     "loans": "index.html#s3",
     "collections": "index.html#s5",
-    "guarantors": "index.html#s3",
+    "guarantors": "guarantors-collateral.html",
+    "collateral": "guarantors-collateral.html",
+    "apply": "apply.html",
+    "agreement": "agreement.html",
     "transactions": "index.html#s9",
 }
 

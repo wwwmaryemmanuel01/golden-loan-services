@@ -1,0 +1,170 @@
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div>
+      <div class="page-title">Guarantors &amp; Collateral</div>
+      <div class="page-sub">Who stands behind each loan, what security is pledged, and whether it covers the exposure · <span id="topRefresh">30 Oct 2026</span></div>
+    </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0AC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input placeholder="Search a guarantor, a loan, a title or a policy…" id="globalSearch" autocomplete="off" />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="exportAll">Export register</button>
+      <button class="btn btn-ghost" id="printBtn">Print</button>
+      <button class="btn btn-gold" id="newGuarantor">Add guarantor</button>
+    </div>
+  </header>
+
+  <nav class="subnav wrap" id="subnav">
+    <a class="snav on" href="#s1">1 · Overview</a>
+    <a class="snav" href="#s2">2 · Guarantors</a>
+    <a class="snav" href="#s3">3 · KYC</a>
+    <a class="snav" href="#s4">4 · Capacity</a>
+    <a class="snav" href="#s5">5 · Consent</a>
+    <a class="snav" href="#s6">6 · Collateral</a>
+    <a class="snav" href="#s7">7 · Valuation</a>
+    <a class="snav" href="#s8">8 · Title &amp; charge</a>
+    <a class="snav" href="#s9">9 · Insurance</a>
+    <a class="snav" href="#s10">10 · Custody</a>
+    <a class="snav" href="#s11">11 · Coverage</a>
+    <a class="snav" href="#s12">12 · Release</a>
+    <a class="snav" href="#s13">13 · Flags</a>
+    <a class="snav" href="#s14">14 · Reports</a>
+  </nav>
+
+  <div class="modband">
+    <div>
+      <h1>Nobody lends alone</h1>
+      <p>Every loan on the book is backed by a person and by property. This module holds both: the guarantor
+        register with identity, capacity and signed consent, and the collateral register with valuation, title,
+        insurance, custody and charge — matched against what each borrower actually owes.</p>
+    </div>
+    <div class="band-stats" id="bandStats"></div>
+    <div class="mb-actions">
+      <a class="btn btn-ghost" href="apply.html">Customer application form</a>
+      <button class="btn btn-gold" id="coverageBtn">Check coverage</button>
+    </div>
+  </div>
+
+  <!-- ============ 1 · OVERVIEW ============ -->
+  <section class="sec" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>Guarantors, Security and the Exposure Behind Them</h2>
+        <p>How many guarantors are signed and verified, how much they stand behind, what security is pledged and what it is
+          worth, and where the book is not covered</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="ovPill">—</span></div>
+    </div>
+
+    <div class="kgrid" id="ovKpis" style="margin-bottom:11px"></div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Coverage Health</div>
+          <div class="panel-sub">Each meter is live — verify a guarantor or revalue security and the bars move</div></div>
+          <span class="qhint" id="ovStamp"></span></div>
+        <div id="ovMeters"></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Where Security Comes From</div>
+          <div class="panel-sub">Guarantee value against collateral value, per loan</div></div></div>
+        <div id="ovSplit"></div>
+        <div class="minihead" style="margin-top:10px">What the numbers say</div>
+        <div id="ovNotes"></div>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Loans Needing Attention</div>
+        <div class="panel-sub">Under-covered, unverified or expiring — the work list for this week</div></div>
+        <span class="badge b-gray" id="ovAttPill">0</span></div>
+      <div class="tblwrap" style="max-height:300px">
+        <table class="tbl2 dense"><thead id="ovAttHead"></thead><tbody id="ovAttBody"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · GUARANTOR REGISTER ============ -->
+  <section class="sec" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>Guarantor Register</h2>
+        <p>Every guarantor on the book: identity, relationship to the borrower, the loans they stand behind, the amount
+          guaranteed, their status and the officer who took the undertaking</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="gPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Guarantors</div>
+        <div class="panel-sub">Filter by status, relationship or district; open a row for the full undertaking</div></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <select id="gStatus" class="gcsel"></select>
+          <select id="gRel" class="gcsel"></select>
+          <select id="gDist" class="gcsel"></select>
+          <button class="btn btn-ghost btn-sm" id="gClear">Clear</button>
+        </div>
+      </div>
+      <div class="tblwrap" style="max-height:430px">
+        <table class="tbl2 dense"><thead id="gHead"></thead><tbody id="gBody"></tbody></table>
+      </div>
+      <div class="qhint" id="gFoot" style="margin-top:7px"></div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · KYC ============ -->
+  <section class="sec" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>Guarantor Identity and KYC</h2>
+        <p>National ID, photograph, proof of address, income evidence, credit-bureau search and the sanctions screen —
+          what is on file for each guarantor and what is missing</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="kPill">—</span></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">KYC Completion</div>
+          <div class="panel-sub">Five checks per guarantor; a guarantor is only Verified when all five are on file</div></div></div>
+        <div class="tblwrap" style="max-height:360px">
+          <table class="tbl2 dense"><thead id="kHead"></thead><tbody id="kBody"></tbody></table>
+        </div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Missing Documents</div>
+          <div class="panel-sub">Grouped by check, with the guarantors to chase</div></div></div>
+        <div id="kMissing"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · CAPACITY ============ -->
+  <section class="sec" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>Guarantor Capacity and Net Worth</h2>
+        <p>Monthly income, declared net worth, existing guarantees and the share of income the undertaking would consume —
+          the affordability test applied to the person who signs, not only the borrower</p></div>
+      <div class="sec-tools"><span class="badge b-gray" id="capPill">—</span></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Capacity Assessment</div>
+        <div class="panel-sub">A guarantor over 40% of monthly income committed is flagged for review; over 60% is not acceptable</div></div>
+        <select id="capFilter" class="gcsel"></select>
+      </div>
+      <div class="tblwrap" style="max-height:400px">
+        <table class="tbl2 dense"><thead id="capHead"></thead><tbody id="capBody"></tbody></table>
+      </div>
+    </div>
+
+    <div class="card panel" style="margin-top:11px">
+      <div class="panel-head"><div><div class="panel-title">Declared Assets and Liabilities</div>
+        <div class="panel-sub">What each guarantor declared at signing, and what was verified</div></div></div>
+      <div class="tblwrap" style="max-height:320px">
+        <table class="tbl2 dense"><thead id="nwHead"></thead><tbody id="nwBody"></tbody></table>
+      </div>
+    </div>
+  </section>
