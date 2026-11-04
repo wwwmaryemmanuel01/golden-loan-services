@@ -891,16 +891,7 @@ function initSettings(){
   on('modalClose','click', closeModal);
   el('modal').addEventListener('click', e=>{ if(e.target === el('modal')) closeModal(); });
 
-  /* nav guard for modules that are not built yet */
-  document.querySelectorAll('.nav-item').forEach(item=>{
-    item.addEventListener('click', e=>{
-      const p = item.dataset.page;
-      if(['dashboard','disbursements','notifications','staff','reports','settings'].includes(p)) return;
-      e.preventDefault();
-      toast('This module is queued for build.','info');
-      el('sidebar').classList.remove('open');
-    });
-  });
+
 
   /* section nav spy + smooth scroll */
   const secs = [...document.querySelectorAll('.sec')];

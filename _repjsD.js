@@ -836,16 +836,7 @@ function boot(){
   on('modalClose','click', closeModal);
   el('modal').addEventListener('click', e=>{ if(e.target === el('modal')) closeModal(); });
 
-  /* nav guard */
-  document.querySelectorAll('.nav-item').forEach(item=>{
-    item.addEventListener('click', e=>{
-      const p = item.dataset.page;
-      if(['dashboard','disbursements','notifications','staff','reports','settings','repayments','collections'].includes(p)) return;
-      e.preventDefault();
-      toast('This module is queued for build.','info');
-      el('sidebar').classList.remove('open');
-    });
-  });
+
 
   /* section nav */
   const secs = [...document.querySelectorAll('.sec')];

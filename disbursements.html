@@ -852,7 +852,7 @@ tr[data-rsc-hit]{cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5Z"/><path d="M9 13h6M9 17h4"/></svg>
       Loan Applications <span class="pill gold">18</span>
     </a>
-    <a class="nav-item" data-page="loans" href="#">
+    <a class="nav-item" data-page="loans" href="index.html#s3">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>
       Loan Portfolio
     </a>
@@ -860,7 +860,7 @@ tr[data-rsc-hit]{cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
       Repayments
     </a>
-    <a class="nav-item" data-page="collections" href="#">
+    <a class="nav-item" data-page="collections" href="index.html#s5">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 7.5v5c0 5 4 7.8 9 8.5 5-.7 9-3.5 9-8.5v-5L12 3Z"/><path d="M12 8.5v4.5M12 16h.01"/></svg>
       Collections &amp; Arrears <span class="pill red">142</span>
     </a>
@@ -869,7 +869,7 @@ tr[data-rsc-hit]{cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M17 5.2a3.4 3.4 0 0 1 0 6.6M18.5 20a6.2 6.2 0 0 0-3-5.3"/></svg>
       Clients (KYC)
     </a>
-    <a class="nav-item" data-page="guarantors" href="#">
+    <a class="nav-item" data-page="guarantors" href="index.html#s3">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5.2c0 4.6 3.4 7.6 8 9.3 4.6-1.7 8-4.7 8-9.3V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
       Guarantors &amp; Collateral
     </a>
@@ -878,7 +878,7 @@ tr[data-rsc-hit]{cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
       Disbursements
     </a>
-    <a class="nav-item" data-page="transactions" href="#">
+    <a class="nav-item" data-page="transactions" href="index.html#s9">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
       Transactions
     </a>
@@ -3008,15 +3008,7 @@ el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
 
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click', e=>{
-    const page = item.dataset.page;
-    if(['disbursements','dashboard','staff','notifications','reports'].includes(page)) return;   // real links
-    e.preventDefault();
-    toast('This module is queued for build.', 'info');
-    document.getElementById('sidebar').classList.remove('open');
-  });
-});
+
 
 /* scroll-spy */
 const secs = [...document.querySelectorAll('.sec')];

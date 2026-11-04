@@ -248,14 +248,7 @@ el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
 
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click', e=>{
-    const p = item.dataset.page;
-    if(['dashboard','disbursements','notifications','staff','reports','settings'].includes(p)) return;
-    e.preventDefault(); toast('This module is queued for build.','info');
-    document.getElementById('sidebar').classList.remove('open');
-  });
-});
+
 
 const secs=[...document.querySelectorAll('.sec')], chips=[...document.querySelectorAll('.snav')];
 const spy=()=>{ let cur=secs[0]; for(const s of secs) if(s.getBoundingClientRect().top<=150) cur=s;

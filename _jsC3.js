@@ -341,15 +341,7 @@ el('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 el('menuBtn').onclick = ()=> document.getElementById('sidebar').classList.toggle('open');
 
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click', e=>{
-    const page = item.dataset.page;
-    if(['disbursements','dashboard','staff','notifications','reports'].includes(page)) return;   // real links
-    e.preventDefault();
-    toast('This module is queued for build.', 'info');
-    document.getElementById('sidebar').classList.remove('open');
-  });
-});
+
 
 /* scroll-spy */
 const secs = [...document.querySelectorAll('.sec')];
