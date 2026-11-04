@@ -91,19 +91,33 @@ function runPerfReport(kind, fmt){
 
 /* ===================== 14 · CONNECTION DIAGNOSTICS ===================== */
 function diagResult(test){
+  if(test.id === 'DGN-01') return WM_SITE.published && /^https:\/\//.test(WM_SET.publicUrl) ? 'Pass' : 'Fail';
+  if(test.id === 'DGN-02') return /^https:\/\//.test(WM_SET.apiBase) && SERVER_HEALTH.every(h => h.status === 'Pass') ? 'Pass' : 'Fail';
+  if(test.id === 'DGN-03') return /^https:\/\//.test(WM_SET.supabaseUrl) && !DB_HEALTH.some(h => h.status === 'Fail' && h.check !== 'Row-level security coverage') ? 'Pass' : 'Fail';
   if(test.id === 'DGN-04') return AUTH_SERVICES.every(a => a.status === 'Healthy') && !AUTH_ERRORS.some(e => e.status === 'Open') ? 'Pass' : 'Fail';
   if(test.id === 'DGN-05') return API_ENDPOINTS.every(e => e.status !== 'Failing') ? 'Pass' : 'Fail';
+  if(test.id === 'DGN-06'){
+    const storage = INTEGRATIONS.find(i => i.kind === 'Storage');
+    return storage && storage.status === 'Connected' ? 'Pass' : 'Fail';
+  }
   if(test.id === 'DGN-07') return INTEGRATIONS.every(i => i.status === 'Connected') ? 'Pass' : 'Fail';
   if(test.id === 'DGN-08') return DNS.every(d => d.status === 'Resolved') && SSL_CERT.daysLeft > 0 ? 'Pass' : 'Fail';
-  return 'Pass';
+  return 'Fail';
 }
 function diagDetail(test, res){
+  if(test.id === 'DGN-01') return res === 'Pass' ? 'Homepage is published and the public URL uses HTTPS' : 'The website is unpublished or its public URL is invalid';
+  if(test.id === 'DGN-02') return res === 'Pass' ? BACKEND.instances + ' instances answered the health check' : SERVER_HEALTH.filter(h => h.status !== 'Pass').map(h => h.check + ': ' + h.value).join('; ') || 'The backend API URL must use HTTPS';
+  if(test.id === 'DGN-03') return res === 'Pass' ? 'SELECT 1 returned successfully from ' + SUPA.project : 'The Supabase project is unreachable or its URL is invalid';
   if(test.id === 'DGN-04') return res === 'Pass'
     ? 'send_otp and verify_staff both answered in under 300 ms'
     : AUTH_ERRORS.filter(e => e.status === 'Open').map(e => e.detail).join('; ') || 'One or more authentication services are degraded';
   if(test.id === 'DGN-05') return res === 'Pass'
     ? API_ENDPOINTS.length + ' routes answered without a failing endpoint'
     : API_ENDPOINTS.filter(e => e.status === 'Failing').map(e => e.path + ' is failing').join('; ');
+  if(test.id === 'DGN-06'){
+    const storage = INTEGRATIONS.find(i => i.kind === 'Storage');
+    return res === 'Pass' ? 'Signed upload URL issued and used' : (storage ? storage.name + ' is ' + storage.status.toLowerCase() : 'Storage integration is not configured');
+  }
   if(test.id === 'DGN-07') return res === 'Pass'
     ? 'All ' + INTEGRATIONS.length + ' services answered their test call'
     : INTEGRATIONS.filter(i => i.status !== 'Connected').map(i => i.name + ' is ' + i.status.toLowerCase() + ' (' + i.creds.toLowerCase() + ' credentials)').join('; ');
@@ -161,9 +175,17 @@ function renderDiagnostics(){
       cats: DIAG_TESTS.map(t => t.id.slice(-2)),
       series: [{name: 'ms', data: DIAG_TESTS.map(t => t.ms)}], value: 'ms'});
 }
+function syncDiagTarget(t){
+  if(t.id === 'DGN-01') t.target = WM_SET.publicUrl;
+  if(t.id === 'DGN-02') t.target = WM_SET.apiBase.replace(/\/$/, '') + '/healthz';
+  if(t.id === 'DGN-03') t.target = WM_SET.supabaseUrl;
+  if(t.id === 'DGN-05') t.target = API_ENDPOINTS.length + ' routes';
+  if(t.id === 'DGN-07') t.target = INTEGRATIONS.length + ' services';
+}
 function runDiag(id){
   const t = DIAG_TESTS.find(x => x.id === id);
   if(!t) return;
+  syncDiagTarget(t);
   const res = diagResult(t);
   t.status = res;
   t.detail = diagDetail(t, res);
@@ -176,6 +198,7 @@ function runDiag(id){
 }
 function runAllDiag(){
   DIAG_TESTS.forEach(t => {
+    syncDiagTarget(t);
     t.status = diagResult(t);
     t.detail = diagDetail(t, t.status);
     const seed = parseInt(String(t.id).replace(/\D/g, ''), 10) || String(t.id).length;
@@ -192,8 +215,11 @@ function runAllDiag(){
 function currentRelease(){ return RELEASES.find(r => r.status === 'Live') || RELEASES[0]; }
 function preDeployState(){
   return PRE_DEPLOY.map(c => {
-    if(c.check === 'Integration smoke tests') return Object.assign({}, c, {status: INTEGRATIONS.every(i => i.status === 'Connected') ? 'Pass' : 'Fail',
-      detail: INTEGRATIONS.every(i => i.status === 'Connected') ? 'Every service answered' : 'TNM Mpamba collection refused'});
+    if(c.check === 'Integration smoke tests'){
+      const unavailable = INTEGRATIONS.filter(i => i.status !== 'Connected');
+      return Object.assign({}, c, {status: unavailable.length ? 'Fail' : 'Pass',
+        detail: unavailable.length ? unavailable.map(i => i.name + ' ' + i.status.toLowerCase()).join('; ') : 'Every service answered'});
+    }
     if(c.check === 'Database migrations') return Object.assign({}, c, {status: MIGRATIONS.some(m => m.status === 'Pending') ? 'Review' : 'Pass',
       detail: MIGRATIONS.filter(m => m.status === 'Pending').length + ' pending migration(s)'});
     if(c.check === 'Environment variables') return Object.assign({}, c, {status: ENV_CHECKS.some(e => e.status === 'Fail') ? 'Review' : 'Pass'});
@@ -214,7 +240,7 @@ function renderDeployment(){
     ['Failed builds', num(failed), 'Last on DEP-2409', failed ? 'red' : ''],
     ['Rollbacks', num(ROLLBACKS.length), ROLLBACKS[0].version + ' → ' + ROLLBACKS[0].to, ''],
     ['Pending migrations', num(MIGRATIONS.filter(m => m.status === 'Pending').length), 'Applied at deploy time', ''],
-    ['Pre-deploy checks', pre.filter(c => c.status === 'Pass').length + '/' + pre.length, preOk ? 'All clear' : 'Two need attention', preOk ? '' : 'red']
+    ['Pre-deploy checks', pre.filter(c => c.status === 'Pass').length + '/' + pre.length, preOk ? 'All clear' : pre.filter(c => c.status !== 'Pass').length + ' need attention', preOk ? '' : 'red']
   ].map(([l, v, sub, k]) => kpiCard(l, v, sub, k)).join('');
 
   el('curPill').className = 'badge b-ok';
@@ -584,9 +610,13 @@ function runPack(fmt){
         rows.map(r => r.length ? r : [''])));
     logExport('Connections pack', 'Excel', rows.length);
   } else if(fmt === 'print'){
-    openModal('Print preview', 'The pack, ready for paper',
-      `<div class="note gold"><div>Printing is blocked inside this embedded preview. Open the portal in its own tab to print.</div></div>`,
-      [{label: 'Close', act: 'close'}]);
+    const preview = all.map(d => printTable(d.title,
+      d.cols.map(c => ({label: c[0], num: d.rows.length > 0 && typeof d.rows[0][c[1]] === 'number'})),
+      d.rows.map(r => d.cols.map(c => r[c[1]])))).join('<div style="height:16px"></div>');
+    openModal('Connections pack — print preview', all.length + ' reports · ' + filterLine(),
+      `<div class="tblwrap" style="max-height:480px;overflow:auto">${preview}</div>`,
+      [{label: 'Print or save as PDF', cls: 'btn-gold', act: () => doPrint('Connections pack', preview)},
+       {label: 'Close', act: 'close'}]);
     return;
   } else {
     doPrint('Connections pack', all.map(d => printTable(d.title,
@@ -601,8 +631,6 @@ function runPack(fmt){
 
 /* ===================== 19 · SYSTEM CONFIGURATION ===================== */
 function renderConfig(){
-  el('cfgState').className = 'badge b-ok';
-  el('cfgState').textContent = 'Saved';
   el('cfgKpis').innerHTML = [
     ['Public URL', WM_SET.publicUrl.replace('https://', ''), 'Primary domain', ''],
     ['API base', WM_SET.apiBase.replace('https://', ''), WM_SET.timeout + ' s timeout · ' + WM_SET.retries + ' retries', ''],
@@ -631,18 +659,29 @@ function renderConfig(){
     ].map(([k, v]) => `<tr><td style="font-weight:800">${esc(k)}</td>
       <td style="font-size:9.5px">${esc(v)}</td><td>${okBadge('Set')}</td></tr>`).join('')}</tbody></table></div>
     <div class="qhint" style="margin-top:6px">These values ship inside the browser bundle. Secrets live only in the server environment.</div>`;
-  renderConfigValidation();
+  const bad = renderConfigValidation();
+  el('cfgState').className = 'badge ' + (bad.length ? 'b-warn' : 'b-ok');
+  el('cfgState').textContent = bad.length ? 'Saved with ' + bad.length + ' warning' + (bad.length === 1 ? '' : 's') : 'Saved';
+}
+function validHttpsUrl(value){
+  try{
+    const url = new URL(value);
+    return url.protocol === 'https:' && !!url.hostname && !url.username && !url.password;
+  }catch(e){ return false; }
 }
 function renderConfigValidation(){
+  const inRangeNumber = (value, min, max) => Number.isFinite(value) && value >= min && value <= max;
   const checks = [
-    {check: 'Public website URL is reachable', value: WM_SET.publicUrl, status: /^https:\/\//.test(WM_SET.publicUrl) ? 'Pass' : 'Fail'},
-    {check: 'API base URL uses HTTPS', value: WM_SET.apiBase, status: /^https:\/\//.test(WM_SET.apiBase) ? 'Pass' : 'Fail'},
-    {check: 'Supabase URL matches the project', value: WM_SET.supabaseUrl, status: WM_SET.supabaseUrl.indexOf('glsvc-prod') >= 0 ? 'Pass' : 'Review'},
-    {check: 'Timeout inside the platform limit (60 s)', value: WM_SET.timeout + ' s', status: WM_SET.timeout <= 60 ? 'Pass' : 'Fail'},
-    {check: 'Retries within the retry budget', value: WM_SET.retries + ' retries', status: WM_SET.retries <= 4 ? 'Pass' : 'Review'},
-    {check: 'Health check interval between 1 and 60 minutes', value: WM_SET.healthInterval + ' min', status: WM_SET.healthInterval >= 1 && WM_SET.healthInterval <= 60 ? 'Pass' : 'Fail'},
-    {check: 'Cache TTL under 12 hours', value: WM_SET.cacheTtl + ' s', status: WM_SET.cacheTtl <= 43200 ? 'Pass' : 'Review'},
-    {check: 'Monitoring is configured', value: WM_SET.monitoring.split('—')[0].trim(), status: 'Pass'}
+    {check: 'Public website URL is a valid HTTPS address', value: WM_SET.publicUrl, status: validHttpsUrl(WM_SET.publicUrl) ? 'Pass' : 'Fail'},
+    {check: 'Admin portal URL is a valid HTTPS address', value: WM_SET.adminUrl, status: validHttpsUrl(WM_SET.adminUrl) ? 'Pass' : 'Fail'},
+    {check: 'API base URL uses HTTPS', value: WM_SET.apiBase, status: validHttpsUrl(WM_SET.apiBase) ? 'Pass' : 'Fail'},
+    {check: 'Supabase URL is valid and matches the project', value: WM_SET.supabaseUrl, status: !validHttpsUrl(WM_SET.supabaseUrl) ? 'Fail' : WM_SET.supabaseUrl.indexOf('glsvc-prod') >= 0 ? 'Pass' : 'Review'},
+    {check: 'Uptime target between 90% and 100%', value: WM_SET.uptimeTarget + '%', status: inRangeNumber(WM_SET.uptimeTarget, 90, 100) ? 'Pass' : 'Fail'},
+    {check: 'Timeout between 5 and 60 seconds', value: WM_SET.timeout + ' s', status: inRangeNumber(WM_SET.timeout, 5, 60) ? 'Pass' : 'Fail'},
+    {check: 'Retries between 0 and 6 (4 recommended)', value: WM_SET.retries + ' retries', status: !inRangeNumber(WM_SET.retries, 0, 6) ? 'Fail' : WM_SET.retries <= 4 ? 'Pass' : 'Review'},
+    {check: 'Health check interval between 1 and 60 minutes', value: WM_SET.healthInterval + ' min', status: inRangeNumber(WM_SET.healthInterval, 1, 60) ? 'Pass' : 'Fail'},
+    {check: 'Cache TTL between 0 and 86,400 seconds (12 hours recommended)', value: WM_SET.cacheTtl + ' s', status: !inRangeNumber(WM_SET.cacheTtl, 0, 86400) ? 'Fail' : WM_SET.cacheTtl <= 43200 ? 'Pass' : 'Review'},
+    {check: 'At least one alert channel is configured', value: [WM_SET.alertEmail ? 'Email' : '', WM_SET.alertSms ? 'SMS' : ''].filter(Boolean).join(' + ') || 'None', status: WM_SET.alertEmail || WM_SET.alertSms ? 'Pass' : 'Review'}
   ];
   const bad = checks.filter(c => c.status !== 'Pass');
   el('envValBox').innerHTML = checks.map(c => `<div class="checkrow">
@@ -655,22 +694,25 @@ function renderConfigValidation(){
 }
 function saveConfig(){
   const before = Object.assign({}, WM_SET);
+  const numberFields = ['cfgUptime', 'cfgTimeout', 'cfgRetries', 'cfgHealth', 'cfgCache'];
+  if(numberFields.some(id => !(el(id).value || '').trim() || !Number.isFinite(Number(el(id).value)))){
+    toast('Enter a valid number in every timeout, interval and monitoring field', 'err');
+    return;
+  }
   WM_SET.publicUrl = (el('cfgPublic').value || '').trim();
   WM_SET.apiBase = (el('cfgApi').value || '').trim();
   WM_SET.supabaseUrl = (el('cfgSupabase').value || '').trim();
   WM_SET.adminUrl = (el('cfgAdmin').value || '').trim();
   WM_SET.env = el('cfgEnv').value;
-  WM_SET.uptimeTarget = Number(el('cfgUptime').value) || WM_SET.uptimeTarget;
-  WM_SET.timeout = Number(el('cfgTimeout').value) || WM_SET.timeout;
+  WM_SET.uptimeTarget = Number(el('cfgUptime').value);
+  WM_SET.timeout = Number(el('cfgTimeout').value);
   WM_SET.retries = Number(el('cfgRetries').value);
-  WM_SET.healthInterval = Number(el('cfgHealth').value) || WM_SET.healthInterval;
+  WM_SET.healthInterval = Number(el('cfgHealth').value);
   WM_SET.cacheTtl = Number(el('cfgCache').value);
   const bad = renderConfigValidation();
-  el('cfgState').className = 'badge ' + (bad.length ? 'b-warn' : 'b-ok');
-  el('cfgState').textContent = bad.length ? 'Saved with ' + bad.length + ' warning' + (bad.length === 1 ? '' : 's') : 'Saved';
   logChange('Configuration', 'Connection settings', before.timeout + ' s / ' + before.apiBase, WM_SET.timeout + ' s / ' + WM_SET.apiBase);
   renderConfig(); renderOverview(); renderChanges();
-  toast(bad.length ? 'Saved — ' + bad.length + ' value needs attention' : 'Configuration saved', bad.length ? 'warn' : 'ok');
+  toast(bad.length ? 'Saved with ' + bad.length + ' configuration warning' + (bad.length === 1 ? '' : 's') : 'Configuration saved and validated', bad.length ? 'warn' : 'ok');
 }
 function resetConfig(){
   Object.keys(WM_SET_DEFAULTS).forEach(k => { WM_SET[k] = WM_SET_DEFAULTS[k]; });
@@ -1138,9 +1180,13 @@ function wireAll(){
     if(e.target.closest('#rlsFix')){
       TABLES.forEach(t => { if(t.rls === 'Disabled'){ t.rls = 'Enabled'; t.note = 'Admin-only policy applied 30 Oct'; } });
       DB_HEALTH.filter(h => h.check === 'Row-level security coverage').forEach(h => { h.status = 'Pass'; h.value = TABLES.length + ' of ' + TABLES.length + ' public tables'; });
+      MIGRATIONS.filter(m => m.status === 'Pending' && /RLS on settings/i.test(m.name)).forEach(m => {
+        m.status = 'Applied'; m.when = TODAY + ' ' + new Date().toTimeString().slice(0, 5); m.ms = 380;
+      });
+      SUPA.migrationsApplied = MIGRATIONS.filter(m => m.status === 'Applied').length;
       ALERTS.filter(a => /Supabase/.test(a.kind)).forEach(a => { if(a.status === 'Open') a.status = 'Monitoring'; });
       logChange('Database', 'RLS on settings', 'disabled', 'policy applied');
-      renderDatabase(); renderOverview(); renderAlerts(); renderChanges(); renderStats();
+      renderDatabase(); renderDeployment(); renderOverview(); renderAlerts(); renderChanges(); renderStats();
       toast('Row-level security enabled on every public table');
       return;
     }
@@ -1369,12 +1415,16 @@ function rotateCred(name){
   if(!c) return;
   const was = c.state;
   c.rotated = TODAY; c.expires = addDays(TODAY, 90); c.state = 'Valid';
+  ENV_CHECKS.filter(e => (c.service.indexOf('TNM Mpamba') === 0 && e.check === 'Payment provider credential') ||
+    (c.service.indexOf('Africa’s Talking') === 0 && e.check === 'SMS gateway credential')).forEach(e => {
+    e.status = 'Pass'; e.value = 'Valid until ' + fmtDate(c.expires);
+  });
   INTEGRATIONS.filter(i => i.name.indexOf(c.service.split(' ')[0]) === 0).forEach(i => {
     i.creds = 'Valid';
     verifyService(i.name);
   });
   logChange('Integration', 'Rotated ' + c.name, was, 'valid until ' + fmtDate(c.expires));
-  renderIntegrations(); renderChanges(); renderStats();
+  renderIntegrations(); renderDeployment(); renderChanges(); renderStats();
   toast(c.name + ' rotated — valid for 90 days');
 }
 function toggleSection(name){

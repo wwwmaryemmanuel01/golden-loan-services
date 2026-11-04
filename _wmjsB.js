@@ -279,7 +279,7 @@ function zipStore(files){
 function colName(i){ let s = ''; i++; while(i > 0){ const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; }
 function xlsxBytes(title, cols, rows){
   let body = '';
-  [cols.map(c => c.label)].concat(rows).forEach((row, ri) => {
+  [cols.map(c => typeof c === 'string' ? c : c.label)].concat(rows).forEach((row, ri) => {
     let cells = '';
     row.forEach((v, ci) => {
       const ref = colName(ci) + (ri + 1);
@@ -299,14 +299,13 @@ function xlsxBytes(title, cols, rows){
   return zipStore(files);
 }
 function printTable(title, cols, rows){
-  const html = `${brandHtml(title, filterLine())}
+  return `${brandHtml(title, filterLine())}
     <table style="width:100%;border-collapse:collapse;font-size:10px">
       <thead><tr>${cols.map(c => `<th style="text-align:${c.num ? 'right' : 'left'};border-bottom:1px solid #E6E8EE;padding:5px">${esc(c.label)}</th>`).join('')}</tr></thead>
       <tbody>${rows.slice(0, 400).map(r => `<tr>${r.map((v, i) =>
         `<td style="text-align:${cols[i].num ? 'right' : 'left'};border-bottom:1px dashed #EDEFF4;padding:4px">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody>
     </table>
     <div style="font-size:8px;color:#8A90A0;margin-top:8px">Generated ${fmtDate(TODAY)} · Golden Financial Services · ${esc(filterLine())}</div>`;
-  doPrint(title, html);
 }
 function doPrint(title, html){
   try{
