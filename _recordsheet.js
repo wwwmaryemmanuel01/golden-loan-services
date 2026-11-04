@@ -319,6 +319,27 @@
   /* ---- 2. any inert register row opens a sheet built from its headers ---- */
   function closeEnough(a, b){ return Math.abs(a - b) < 3; }
 
+  /* a cell like <div class="who"><div class="av">CZ</div><div class="nm">Chimwemwe Zulu</div></div>
+     has no spaces in its textContent ("CZChimwemwe Zulu"), so flatten it with word
+     breaks at the block boundaries and leave the decorative initials bubble out */
+  function flatText(node){
+    var out = '';
+    (function walk(n){
+      for (var i = 0; i < n.childNodes.length; i++){
+        var c = n.childNodes[i];
+        if (c.nodeType === 3){ out += c.nodeValue; continue; }
+        if (c.nodeType !== 1) continue;
+        if (c.tagName === 'BR'){ out += ' '; continue; }
+        if (/(^|\s)(av|bar|dot|spark)(\s|$)/.test(c.getAttribute('class') || '')) continue;
+        var block = /^(DIV|P|LI|UL|OL|TR|SECTION|H[1-6])$/.test(c.tagName);
+        if (block && out && !/\s$/.test(out)) out += ' ';
+        walk(c);
+        if (block && !/\s$/.test(out)) out += ' ';
+      }
+    })(node);
+    return out.replace(/\s+/g, ' ').trim();
+  }
+
   function sheetFromRow(tr){
     var table = tr.closest ? tr.closest('table') : null;
     if (!table) return null;
@@ -332,12 +353,14 @@
       var lab = h ? cleanHead(h.textContent) : '';
       if (!lab) return;
       var hasBadge = td.querySelector('.badge,.pill,.sev,.chip');
-      pairs.push({ label: lab, text: td.textContent, html: hasBadge ? td.innerHTML : null });
+      var flat = flatText(td);
+      if (!flat) return;
+      pairs.push({ label: lab, text: flat, html: hasBadge ? td.innerHTML : null });
     });
     var built = items(pairs);
     if (built.length < 2) return null;
 
-    var texts = cells.map(function(td){ return td.textContent.replace(/\s+/g, ' ').trim(); });
+    var texts = cells.map(function(td){ return flatText(td); });
     var looksDate = function(t){ return /^\d{4}-\d{2}-\d{2}/.test(t) || /^\d{1,2} [A-Z][a-z]{2}\b/.test(t); };
     var looksNum  = function(t){ return /^-?[\d,]+(\.\d+)?%?$/.test(t); };
     var title = '';

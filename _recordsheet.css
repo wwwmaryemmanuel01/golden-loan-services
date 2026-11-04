@@ -27,6 +27,36 @@
 /* every register row that carries its own sheet looks openable */
 tr[data-rsc-hit]{cursor:pointer}
 
+/* ---------- dialog fallback for pages that do not load _module.css ----------
+   :where() keeps specificity at zero, so any module rule wins. This is what
+   makes the dashboard's on-demand record sheet a real dialog instead of a
+   block of text dropped at the end of the page. */
+:where(.modal){
+  position:fixed;inset:0;z-index:100;display:none;
+  align-items:flex-start;justify-content:center;
+  padding:40px 16px;overflow:auto;
+  background:rgba(15,17,21,.5);
+}
+:where(.modal.on){display:flex}
+:where(.modal-card){
+  position:relative;background:#fff;border-radius:16px;width:100%;max-width:720px;
+  box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden;
+}
+:where(.modal-head){display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid #E7EAF0}
+:where(.modal-head h3){font-size:14.5px;font-weight:800;margin:0}
+:where(.modal-head p){font-size:11px;color:#667085;margin:2px 0 0}
+:where(.modal-body){padding:16px 18px;max-height:min(70vh,620px);overflow:auto}
+:where(.modal-foot){padding:13px 18px;border-top:1px solid #E7EAF0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;background:#FCFCFD}
+:where(.modal-head .x,.modal .x){
+  border:0;background:#F1F2F6;width:28px;height:28px;border-radius:8px;cursor:pointer;
+  font-size:14px;line-height:1;color:#41514B;flex:0 0 auto;margin-left:auto;
+}
+@media(max-width:760px){
+  :where(.modal){padding:0;align-items:stretch}
+  :where(.modal-card){max-width:none;min-height:100vh;border-radius:0}
+  :where(.modal-body){max-height:none}
+}
+
 /* ---------- long free text stays inside its cell ---------- */
 .pfield{min-width:0}
 .pfield .pv{overflow-wrap:anywhere}
