@@ -274,7 +274,7 @@ function settleModal(s){
 function settlementLetter(loanNo){
   const h = SETTLE_HIST.find(x=>x[2]===loanNo) || SETTLE_HIST[0];
   openModal('Settlement letter', h[1] + ' · ' + h[2], `
-    <div class="letterhead" style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px">
+    <div class="letterhead" style="background:#fff;border:2px solid #7FB49F;border-radius:11px;padding:14px">
       <div class="gls-doc-head">
         <img src="assets/logo-mark.png" alt="" style="height:32px;width:32px;flex:0 0 auto;display:block">
         <div class="gls-doc-title"><b style="font-size:12.5px;letter-spacing:.5px">GOLDEN FINANCIAL SERVICES</b>
