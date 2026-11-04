@@ -2,7 +2,7 @@
    BRAND — the GOLDEN FINANCIAL SERVICES logo across the system
 
    One stylesheet for every place the mark appears: the sidebar, the header,
-   the page footer, printed pages, exported documents and the loading splash.
+   the dark header, the page footer, printed pages and exported documents.
    Injected into every page by inject_brand.py, after the module styles, so
    these rules win without touching 23 generated <head> blocks.
    ========================================================================= */
@@ -24,6 +24,47 @@
   filter:drop-shadow(0 1px 2px rgba(16,18,24,.12));
 }
 @media (max-width:520px){ .gls-topbar-logo{height:24px} }
+
+/* ---- header: the same dark bar as the sidebar ----------------------------- */
+.topbar{
+  background:rgba(15,17,21,.97);
+  border-bottom:1px solid #23262E;
+  box-shadow:0 8px 22px rgba(9,11,15,.16);
+  backdrop-filter:none;
+}
+.topbar .page-title{color:#fff}
+.topbar .page-sub{color:#9AA1AF}
+
+.topbar .menu-btn{background:#1B1F27;border-color:#2A2F3A;color:#E8EAF0}
+.topbar .menu-btn svg{stroke:#E8EAF0}
+.topbar .menu-btn:hover{background:#20242D;border-color:var(--gold)}
+
+.topbar .search{background:#1B1F27;border:1px solid #262B34}
+.topbar .search:focus-within{background:#20242D;border-color:var(--gold)}
+.topbar .search input{color:#E8EAF0}
+.topbar .search input::placeholder{color:#6E7480}
+.topbar .search svg{stroke:#7C8492}
+
+.topbar .icon-btn{background:#1B1F27;border-color:#2A2F3A;color:#C7CBD4}
+.topbar .icon-btn:hover{background:#20242D;border-color:var(--gold);color:#F3D67A}
+.topbar .icon-btn svg{stroke:currentColor}
+.topbar .dot{border-color:#15171C}
+
+.topbar .btn-ghost{background:#1B1F27;border-color:#2A2F3A;color:#E8EAF0}
+.topbar .btn-ghost:hover{background:#242A34;border-color:var(--gold);color:#F3D67A}
+
+.topbar .backbtn{background:#1B1F27;border-color:#2A2F3A;color:#D7DBE3}
+.topbar .backbtn:hover:not(:disabled){background:#242A34;border-color:var(--gold);color:#F3D67A}
+.topbar .backbtn:disabled{background:#171A21;border-color:#242830;color:#666C7A}
+.topbar .backbtn:disabled:hover{background:#171A21;border-color:#242830;color:#666C7A}
+
+.topbar .tabs{background:#1B1F27}
+.topbar .tab{color:#9AA1AF}
+.topbar .tab:hover{color:#E8EAF0}
+.topbar .tab.on{background:#2A303B;color:#fff;box-shadow:none}
+
+/* the section bar sits directly under the dark header: give it the same edge */
+.subnav{border-bottom:1px solid #E0E3EA}
 
 /* ---- page footer ---------------------------------------------------------- */
 .gls-footer{
@@ -74,45 +115,10 @@
 /* the emblem at the top of an on-screen receipt or proof of payment */
 .gls-docmark{height:28px;width:auto;display:block;margin:0 0 8px}
 
-/* ---- loading splash ------------------------------------------------------- */
-#gls-splash{
-  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 38%,#1C2029 0%,#0C0E12 68%);
-  opacity:1;visibility:visible;
-  transition:opacity .35s ease,visibility .35s ease;
-}
-#gls-splash.gls-out{opacity:0;visibility:hidden;pointer-events:none}
-.gls-splash-in{display:flex;flex-direction:column;align-items:center;gap:14px}
-.gls-splash-in img{
-  width:236px;max-width:58vw;height:auto;display:block;
-  animation:glsBreathe 2.4s ease-in-out infinite;
-}
-.gls-splash-txt{
-  font-size:9.5px;letter-spacing:3.2px;font-weight:800;color:#8A7841;
-  text-transform:uppercase;
-}
-.gls-splash-bar{width:190px;height:3px;border-radius:20px;background:#252A34;overflow:hidden}
-.gls-splash-bar i{
-  display:block;height:100%;width:42%;border-radius:20px;
-  background:linear-gradient(90deg,#8A6A12,#F1D278,#8A6A12);
-  animation:glsSlide 1.15s ease-in-out infinite;
-}
-@keyframes glsSlide{0%{transform:translateX(-115%)}100%{transform:translateX(345%)}}
-@keyframes glsBreathe{0%,100%{opacity:.92;transform:scale(.99)}50%{opacity:1;transform:scale(1.012)}}
-
-/* a busy control shows a small gold spinner while it works */
-.gls-busy{position:relative;pointer-events:none;opacity:.8}
-.gls-busy::after{
-  content:"";display:inline-block;width:11px;height:11px;margin-left:8px;
-  border-radius:50%;border:2px solid rgba(0,0,0,.18);border-top-color:var(--gold-dark);
-  vertical-align:-2px;animation:glsSpin .7s linear infinite;
-}
-@keyframes glsSpin{to{transform:rotate(360deg)}}
-
 /* ---- printed pages -------------------------------------------------------- */
 .gls-print-head{display:none}
 @media print{
-  #gls-splash,.gls-footer .gls-foot-links,.gls-signout{display:none!important}
+  .gls-footer .gls-foot-links,.gls-signout{display:none!important}
   .gls-print-head{
     display:flex;align-items:center;gap:12px;
     border-bottom:2px solid #C9A227;padding-bottom:8px;margin-bottom:16px;
@@ -128,6 +134,5 @@
 }
 
 @media (prefers-reduced-motion: reduce){
-  .gls-splash-in img,.gls-splash-bar i,.gls-busy::after{animation:none}
   .brand-mark img,.gls-signout{transition:none}
 }

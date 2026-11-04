@@ -615,7 +615,9 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
 
 `inject_brand.py` runs from `inject_backnav.py` during every build and puts the mark in:
 
-1. **Headers** — the emblem at the start of the top bar, on every module page.
+1. **Headers** — the top bar is the same dark bar as the sidebar (ink `#0F1115`, hairline
+   `#23262E`, white page title, dark search field and controls), with the emblem at its start
+   on every module page.
 2. **Sidebar** — the `GF` monogram becomes the emblem, on every page.
 3. **Footers** — a page footer with the mark, the company line, real links and the year.
 4. **Receipts** — the gold `GF` tile on a repayment receipt is the emblem (a dark tile
@@ -628,9 +630,10 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
    embedded as a data URI, so a document printed or saved later still carries the logo.
    Printed pages also get a print-only header band with the full lock-up, the branch line
    and the print time.
-7. **Loading animations** — a splash on first paint and on internal navigation: the logo
-   on a dark gradient with a gold progress bar, which fades out on load (and is skipped for
-   `prefers-reduced-motion`). `window.glsLoading(true|false)` shows or hides it from any module.
+7. **No loading overlay.** An earlier build covered the page with a splash while it loaded;
+   it is gone. It could hold the overlay over the sidebar when a navigation did not actually
+   happen, which made the sidebar look broken (clicks swallowed). Pages now paint directly —
+   nothing sits between the pointer and the page.
 8. **Favicon and app icons** — set on all 24 pages, plus `theme-color`.
 
 Every insertion is idempotent: running a build twice replaces its own blocks rather than
