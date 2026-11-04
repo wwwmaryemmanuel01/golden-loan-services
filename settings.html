@@ -1699,6 +1699,140 @@ html,body{max-width:100%;overflow-x:clip}
 /* one quiet hover for interactive tiles */
 .gcard,.risk,.checkrow,.li{transition:background .15s ease,border-color .15s ease}
 
+/* ============================================================================
+   EMERALD LIQUID-CRYSTAL THEME
+
+   The canvas carries the colour: soft emerald light from the top-left, a
+   cooler aqua from the top-right and a warm brand undertone from the bottom,
+   with two faint diagonal sheens so the surface reads like glass rather than
+   a flat fill. Everything that holds data stays white, so contrast is never
+   traded for decoration.
+
+   Fields, cards, sections, forms and receipts take bolder edges than the
+   previous hairlines — 1.5px on controls and cards, 2px on sections and
+   receipts — so structure is obvious at a glance on a phone in sunlight.
+   ========================================================================= */
+:root{
+  --emerald-deep:#064E3B;
+  --emerald-700:#047857;
+  --emerald-600:#059669;
+  --emerald-500:#0E9F6E;
+  --emerald-100:#D9F2E8;
+  --gls-edge:#BFD6CB;        /* card, tile and section edge */
+  --gls-edge-2:#A6C6B8;      /* control edge */
+  --gls-edge-hover:#8CBCA7;
+}
+
+/* ---- the canvas ----------------------------------------------------------- */
+body{
+  background-color:#EDF6F1;
+  background-image:
+    radial-gradient(1100px 720px at 6% -14%,rgba(14,159,110,.22),rgba(14,159,110,0) 62%),
+    radial-gradient(900px 620px at 104% -8%,rgba(45,212,191,.20),rgba(45,212,191,0) 58%),
+    radial-gradient(820px 660px at 82% 112%,rgba(6,148,162,.14),rgba(6,148,162,0) 60%),
+    radial-gradient(720px 520px at 18% 106%,rgba(201,162,39,.12),rgba(201,162,39,0) 62%),
+    repeating-linear-gradient(128deg,rgba(255,255,255,.38) 0 1px,rgba(255,255,255,0) 1px 120px),
+    repeating-linear-gradient(52deg,rgba(255,255,255,.26) 0 1px,rgba(255,255,255,0) 1px 170px),
+    linear-gradient(168deg,#F5FCF8 0%,#E9F5EF 44%,#EFF6FA 100%);
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+@supports not (background-attachment:fixed){body{background-attachment:scroll}}
+
+/* ---- sections: bolder edge, same quiet card -------------------------------- */
+section.sec{
+  border:2px solid var(--gls-edge);
+  box-shadow:0 1px 2px rgba(6,78,59,.05),0 14px 34px -26px rgba(6,78,59,.45);
+}
+section.sec::before{background:linear-gradient(90deg,#0E9F6E 0%,#2DD4BF 42%,rgba(45,212,191,0) 100%)}
+
+/* ---- cards and panels ------------------------------------------------------ */
+.card,.panel,.chartcard,.repcard{
+  border:1.5px solid var(--gls-edge);
+  border-left:1.5px solid var(--gls-edge);
+  box-shadow:0 1px 2px rgba(6,78,59,.05),0 10px 26px -22px rgba(6,78,59,.40);
+}
+.card:hover,.panel:hover,.chartcard:hover,.repcard:hover{
+  border-color:var(--gls-edge-hover);border-left-color:var(--gls-edge-hover);
+  box-shadow:0 2px 4px rgba(6,78,59,.06),0 16px 34px -22px rgba(6,78,59,.45);
+}
+.card .card,.card .panel,.panel .card,.panel .panel{
+  border-width:1px;border-color:#D5E6DE;box-shadow:none;
+}
+/* the gold title rule becomes an emerald-to-gold marker so the theme reads */
+.panel-title::before{background:linear-gradient(180deg,#0E9F6E,#C9A227)}
+
+/* ---- KPI tiles ------------------------------------------------------------- */
+.kpi{border:1.5px solid var(--gls-edge);border-top-width:3px}
+.kpi.gold,.kpi.amber,.kpi.green,.kpi.blue,.kpi.red{border-left-color:var(--gls-edge);border-right-color:var(--gls-edge);border-bottom-color:var(--gls-edge)}
+
+/* ---- fields, selects, textareas ------------------------------------------- */
+.fg input,.fg select,.fg textarea{
+  border:1.5px solid var(--gls-edge-2);
+  background:#fff;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.fg input:hover,.fg select:hover,.fg textarea:hover{border-color:var(--gls-edge-hover)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:var(--emerald-600);
+  box-shadow:0 0 0 3px rgba(5,150,105,.16);
+}
+.fg label{font-weight:800;color:#3F4A57}
+.fg input[readonly]{background:#F3F7F5;border-style:dashed;color:#4A5160}
+
+/* search and filter boxes */
+.fld{border:1.5px solid var(--gls-edge-2);background:#fff;transition:border-color .15s ease,box-shadow .15s ease}
+.fld:hover{border-color:var(--gls-edge-hover)}
+.fld:focus-within{border-color:var(--emerald-600);box-shadow:0 0 0 3px rgba(5,150,105,.16)}
+
+/* form blocks get a defined frame of their own */
+.form-grid{
+  padding:14px 14px 4px;
+  border:1.5px solid #D2E4DB;
+  border-radius:12px;
+  background:#FCFEFD;
+}
+.form-actions{
+  border-top:1.5px dashed #CFE2D9;
+  padding-top:12px;margin-top:12px;
+}
+/* a filter group and a modal already carry their own frame — no nested boxing */
+.fgroup .form-grid,.modal-body .form-grid,.modal .form-grid,.drawer .form-grid{
+  padding:0;border:0;background:none;
+}
+
+/* ---- receipts and record sheets ------------------------------------------- */
+.receipt,.receiptdoc,.slip{
+  border:2px solid var(--gls-edge);
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 1px 2px rgba(6,78,59,.06),inset 0 0 0 1px #fff,0 12px 28px -24px rgba(6,78,59,.5);
+}
+.receipt .rh{border-bottom:1.5px solid var(--emerald-100)}
+.receipt .rrow{border-bottom:1px dashed #DCEBE4}
+.recsheet{border-color:var(--gls-edge)}
+.gls-docmark{filter:none}
+
+/* ---- tables tie into the theme without losing legibility ------------------ */
+table thead th{background:#F1F8F4;color:#3F5B50;border-bottom:1.5px solid #CFE2D9}
+table tbody tr + tr td{border-top:1px solid #E7F1EC}
+table tbody tr:hover td{background:#F7FCF9}
+.tblwrap table thead th:first-child,.tbl-wrap table thead th:first-child{background:#F1F8F4}
+.tblwrap::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb{background:#C4DACE}
+
+/* ---- the sticky chip bar sits on the glass, so give it the same tint ------ */
+.subnav{background:rgba(237,246,241,.92);border-bottom:1px solid #CFE2D9}
+@supports not (backdrop-filter:blur(8px)){.subnav{background:#EDF6F1}}
+
+/* ---- print stays ink-cheap ------------------------------------------------- */
+@media print{
+  body{background:#fff;background-image:none}
+  section.sec,.card,.panel,.receipt,.receiptdoc,.slip,.form-grid,.kpi{
+    border:1px solid #C9CDD2!important;box-shadow:none!important;
+  }
+  table thead th{background:none;color:#333;border-bottom:1px solid #C9CDD2}
+}
+
 </style>
 </head>
 <body>
