@@ -2576,7 +2576,9 @@ function addEvidence(){
     <div><b>${f}</b><span>Attached · 1.2 MB · sample file</span></div>
     <button class="btn btn-ghost btn-sm" data-rm="${i}" style="margin-left:auto">Remove</button></div>`).join('');
   el('rcEvidenceList').querySelectorAll('[data-rm]').forEach(b=>{
-    b.onclick = ()=>{ RC.evidence.splice(Number(b.dataset.rm),1); addEvidenceRefresh(); };
+    b.onclick = ()=>{ const i = Number(b.dataset.rm);
+      if (!(i >= 0 && i < RC.evidence.length)) return;  /* stale button from an earlier render */
+      RC.evidence.splice(i,1); addEvidenceRefresh(); };
   });
   el('rcEvidence').textContent = 'Attach another file (PDF, JPG, PNG · max 5 MB)';
 }
@@ -2592,7 +2594,9 @@ function addEvidenceRefresh(){
     <button class="btn btn-ghost btn-sm" data-rm="${i}" style="margin-left:auto">Remove</button></div>`).join('');
   el('rcEvidenceList').innerHTML = list;
   el('rcEvidenceList').querySelectorAll('[data-rm]').forEach(b=>{
-    b.onclick = ()=>{ RC.evidence.splice(Number(b.dataset.rm),1); addEvidenceRefresh(); };
+    b.onclick = ()=>{ const i = Number(b.dataset.rm);
+      if (!(i >= 0 && i < RC.evidence.length)) return;  /* stale button from an earlier render */
+      RC.evidence.splice(i,1); addEvidenceRefresh(); };
   });
 }
 function submitRepayment(verifyNow){
@@ -3973,7 +3977,9 @@ function renderRecon(){
       <button class="btn btn-ghost btn-sm" data-disc="${i}">Clear</button></div></div>`).join('');
   el('reconDisc').querySelectorAll('[data-disc]').forEach(b=>{
     b.onclick = ()=>{
-      const d = DISC.splice(Number(b.dataset.disc),1)[0];
+      const i = Number(b.dataset.disc);
+      if (!(i >= 0 && i < DISC.length)) return;      /* stale button from an earlier render */
+      const d = DISC.splice(i,1)[0];
       ADJUSTMENTS.push({type:'Investigated', desc:d.t, amount:d.amt, note:'Cleared during reconciliation'});
       renderRecon();
       toast(`Discrepancy cleared · ${d.t}.`,'info');

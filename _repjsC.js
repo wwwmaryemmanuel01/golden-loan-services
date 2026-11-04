@@ -562,7 +562,9 @@ function renderRecon(){
       <button class="btn btn-ghost btn-sm" data-disc="${i}">Clear</button></div></div>`).join('');
   el('reconDisc').querySelectorAll('[data-disc]').forEach(b=>{
     b.onclick = ()=>{
-      const d = DISC.splice(Number(b.dataset.disc),1)[0];
+      const i = Number(b.dataset.disc);
+      if (!(i >= 0 && i < DISC.length)) return;      /* stale button from an earlier render */
+      const d = DISC.splice(i,1)[0];
       ADJUSTMENTS.push({type:'Investigated', desc:d.t, amount:d.amt, note:'Cleared during reconciliation'});
       renderRecon();
       toast(`Discrepancy cleared · ${d.t}.`,'info');
