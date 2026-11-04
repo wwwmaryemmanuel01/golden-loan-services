@@ -40,7 +40,7 @@ const FP_SEGMENTS = [
   ['all',     'All customers'],
   ['salary',  'Salaried employees'],
   ['business','Business owners'],
-  ['group',   'Group lending members'],
+  ['group',   'Personal Loans customers'],
   ['civil',   'Civil servants'],
   ['women',   'Women-led enterprises'],
   ['first',   'First-time borrowers'],
@@ -508,7 +508,7 @@ const FEE_MIGRATIONS = [
   {id: '20260101_02', name: 'fee_ledger with a balance constraint', when: '2026-01-01', status: 'Applied'},
   {id: '20260301_01', name: 'fee_waivers with evidence', when: '2026-03-01', status: 'Applied'},
   {id: '20260401_01', name: 'failed payment charge and the duplicate guard', when: '2026-04-01', status: 'Applied'},
-  {id: '20260501_01', name: 'early settlement fee on asset finance', when: '2026-05-01', status: 'Applied'},
+  {id: '20260501_01', name: 'early settlement fee on Collateral Loans', when: '2026-05-01', status: 'Applied'},
   {id: '20260601_01', name: 'repeated late penalty (paused)', when: '2026-06-01', status: 'Applied'},
   {id: '20261020_01', name: 'penalty cap as a percentage of the overdue amount', when: '2026-10-20', status: 'Applied'}
 ];

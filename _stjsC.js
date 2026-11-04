@@ -80,7 +80,7 @@ function renderPortalPreview(){
     '<span style="color:#8A90A0">No self-service actions enabled</span>';
   el('pvBal').textContent = CFG.portalOn && CFG.portalDashBal ? 'MK 486,250.00' : '•••';
   el('pvGreet').textContent = on ? 'Hi, Chisomo' : 'Portal closed';
-  el('pvLoan').textContent = on ? 'Business Boost · LN-2026-0481' : CFG.portalMaintMsg.slice(0,44) + '…';
+  el('pvLoan').textContent = on ? 'Business Loans · LN-2026-0481' : CFG.portalMaintMsg.slice(0,44) + '…';
 }
 
 /* ===================== 11 · DATA & BACKUP ===================== */
@@ -261,7 +261,7 @@ const SEED_AUDIT = [
   ['07:12','API','GET /v2/loans · 200 · 182 ms','api.loans','integration.n8n','Success'],
   ['06:58','Error','Timeout calling SMS gateway','integration.sms','system','Failed'],
   ['06:40','Financial','Repayment reversed · RCP-000912','repayment.912','Memory Phiri','Success'],
-  ['06:12','Config','Loan product updated: Business Boost','product.BB-01','Thandiwe Kamanga','Success'],
+  ['06:12','Config','Loan product updated: Business Loans','product.BL-02','Thandiwe Kamanga','Success'],
   ['05:44','Permission','Permission revoked: System settings on Auditor','role.Auditor','Chikondi Mwale','Success'],
   ['05:20','Customer','Bulk customer export requested (4,812 rows)','export.customers','Agnes Chikopa','Success'],
   ['04:58','Failed','Failed sign-in attempt · unknown account','auth.login','unknown','Blocked'],

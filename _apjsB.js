@@ -127,7 +127,7 @@ function facilitiesOf(custId){
   const amount = Math.round((c.income||200000) * (1.6 + (seed%5)/10));
   const dpd = [0,0,12,34][seed % 4];
   return [{
-    no:'LN-2025-' + (300 + seed % 90), product:seed%2?'Business Boost':'Salary Advance',
+    no:'LN-2025-' + (300 + seed % 90), product:seed%2?'Business Loans':'Salary Advance Loans',
     amount, outstanding: Math.round(amount*(0.35 + (seed%4)/10)), inst: Math.round(amount/12),
     dpd, status: dpd===0?'Current':dpd<30?'1–30 days':'31–60 days',
     paidOnTime: dpd===0, arrears: dpd*Math.round(amount/1200)

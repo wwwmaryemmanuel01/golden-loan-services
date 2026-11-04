@@ -8,12 +8,16 @@
 
 /* ---- every major product on the book ---- */
 const LC_PRODUCTS = [
-  {name:'Business Boost', code:'BB-01', min:100000,  max:5000000,  rate:3.5, fee:2.5, method:'reducing', terms:[6,9,12,18,24]},
-  {name:'Salary Advance', code:'SA-05', min:50000,   max:800000,   rate:2.5, fee:1.5, method:'flat',     terms:[3,6,9,12]},
-  {name:'Emergency Cash', code:'EC-02', min:30000,   max:400000,   rate:4.0, fee:2.0, method:'flat',     terms:[1,3,6]},
-  {name:'Agri Season',    code:'AG-04', min:100000,  max:1500000,  rate:3.0, fee:2.0, method:'flat',     terms:[6,9,12]},
-  {name:'Group Lending',  code:'GL-07', min:40000,   max:500000,   rate:2.8, fee:1.0, method:'reducing', terms:[6,9,12]},
-  {name:'Asset Finance',  code:'AF-06', min:500000,  max:10000000, rate:3.2, fee:3.0, method:'reducing', terms:[12,18,24,36]}
+  {name:'Personal Loans',       code:'PL-01', min:50000,   max:1000000,  rate:3.0, fee:2.0, method:'flat',     terms:[1,3,6,12],
+   desc:'Individual financial needs and emergencies.'},
+  {name:'Business Loans',       code:'BL-02', min:100000,  max:10000000, rate:3.5, fee:2.5, method:'reducing', terms:[6,9,12,18,24,36],
+   desc:'Business operations, expansion and stock purchases.'},
+  {name:'Agricultural Loans',   code:'AL-03', min:40000,   max:1500000,  rate:3.0, fee:2.0, method:'flat',     terms:[3,6,9,12],
+   desc:'Farming, livestock and agricultural equipment.'},
+  {name:'Salary Advance Loans', code:'SA-04', min:50000,   max:800000,   rate:2.5, fee:1.5, method:'flat',     terms:[1,3,6],
+   desc:'Short-term loans for employed customers.'},
+  {name:'Collateral Loans',     code:'CL-05', min:500000,  max:10000000, rate:2.8, fee:2.0, method:'reducing', terms:[12,18,24,36],
+   desc:'Loans secured by approved assets.'}
 ];
 
 /* the defaults the page opens on, and the reset target */

@@ -2808,15 +2808,15 @@ el('staffActivity').innerHTML = [
    ========================================================== */
 const activityData = {
   apps: [
-    ['09:38','LN-2026-1842','Application submitted — Business Growth','Thokozani Banda','MK 2,500,000','Pending','b-pend'],
-    ['09:26','LN-2026-1843','Application submitted — Salary Advance','Memory Nkhoma','MK 450,000','Pending','b-pend'],
+    ['09:38','LN-2026-1842','Application submitted — Business Loans','Thokozani Banda','MK 2,500,000','Pending','b-pend'],
+    ['09:26','LN-2026-1843','Application submitted — Salary Advance Loans','Memory Nkhoma','MK 450,000','Pending','b-pend'],
     ['09:04','LN-2026-1840','Moved to assessment stage','Yamikani Gondwe','MK 1,200,000','Under review','b-rev'],
     ['08:47','LN-2026-1841','Documents verified','Grace Mvula','MK 800,000','Assessed','b-act'],
-    ['08:15','LN-2026-1838','Application submitted — Asset Finance','Peter Kachale','MK 4,800,000','Pending','b-pend']
+    ['08:15','LN-2026-1838','Application submitted — Collateral Loans','Peter Kachale','MK 4,800,000','Pending','b-pend']
   ],
   appr: [
     ['09:42','LN-2026-1842','Approved by credit committee (3/3)','T. Phiri','MK 2,500,000','Approved','b-appr'],
-    ['09:12','LN-2026-1839','Approved — group loan','A. Mbewe','MK 800,000','Approved','b-appr'],
+    ['09:12','LN-2026-1839','Approved — Personal Loans','A. Mbewe','MK 800,000','Approved','b-appr'],
     ['08:58','LN-2026-1834','Rejected — debt-to-income above limit','L. Chirwa','MK 1,500,000','Rejected','b-rev'],
     ['08:33','LN-2026-1831','Approved with conditions','S. Zimba','MK 3,200,000','Approved','b-appr']
   ],
@@ -2846,7 +2846,7 @@ const activityData = {
   ],
   admin: [
     ['09:45','SYS-2210','Daily reconciliation completed','System','—','Success','b-appr'],
-    ['09:12','ADM-0771','Interest rate updated — Business Growth to 4.2%','C. Mwale','—','Applied','b-act'],
+    ['09:12','ADM-0771','Interest rate updated — Business Loans to 4.2%','C. Mwale','—','Applied','b-act'],
     ['08:40','ADM-0770','New loan officer account created','C. Mwale','—','Created','b-appr'],
     ['08:05','ADM-0769','Collection target adjusted for October','C. Mwale','—','Applied','b-act']
   ]
@@ -3027,7 +3027,7 @@ el('errors').innerHTML = [
 
 el('sysNotices').innerHTML = [
   {t:'Month-end close scheduled for 31 Oct, 18:00', s:'System will be read-only for 30 minutes'},
-  {t:'New interest rate effective 1 Nov 2026', s:'Business Growth: 4.0% → 4.2% per month'},
+  {t:'New interest rate effective 1 Nov 2026', s:'Business Loans: 4.0% → 4.2% per month'},
   {t:'Mandatory password reset for all staff', s:'Complete before 5 Nov 2026'}
 ].map(n=>`
   <div class="li"><div class="av" style="background:var(--gold-soft);color:var(--gold-dark)">i</div>

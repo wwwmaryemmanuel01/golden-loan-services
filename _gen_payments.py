@@ -684,7 +684,7 @@ def section8():
     s.append(sub("8.10", "Transaction Details", kv([
         ("Payment", "PAY-2026-88410"),
         ("Customer", "Chifundo Mponda · +265 999 441 220"),
-        ("Loan", "SL-2026-0418 · salary loan · 7 of 12 instalments paid"),
+        ("Loan", "SL-2026-0418 · Salary Advance Loans · 7 of 12 instalments paid"),
         ("Amount", money(48_000) + " · fee " + money(720) + " · net " + money(47_280)),
         ("Method", "Airtel Money · provider ref AM-77120934"),
         ("Allocated", "Principal " + money(31_400) + " · interest " + money(15_880) + " · fees " + money(720)),
@@ -785,10 +785,10 @@ def section10():
     ])))
     s.append(sub("10.2", "Match Payments to Active Loans", table(
         ["Loan", "Customer", "Product", "Instalments", "Open balance"],
-        [("SL-2026-0418", "Chifundo Mponda", "Salary loan", "7 of 12", money(240_000)),
-         ("BB-2026-0233", "Ruth Phiri", "Business boost", "4 of 18", money(1_680_000)),
-         ("AF-2026-0104", "Patrick Zulu", "Asset finance", "9 of 24", money(2_250_000)),
-         ("GL-2026-0071", "Thoko Phiri", "Group lending", "2 of 6", money(75_000))], csv_name="loans"), wide=True))
+        [("SL-2026-0418", "Chifundo Mponda", "Salary Advance Loans", "7 of 12", money(240_000)),
+         ("BB-2026-0233", "Ruth Phiri", "Business Loans", "4 of 18", money(1_680_000)),
+         ("AF-2026-0104", "Patrick Zulu", "Collateral Loans", "9 of 24", money(2_250_000)),
+         ("GL-2026-0071", "Thoko Phiri", "Personal Loans", "2 of 6", money(75_000))], csv_name="loans"), wide=True))
     s.append(sub("10.3", "Allocate Payments to Repayments", table(
         ["Payment", "Amount", "Allocated", "Rule"],
         [("PAY-2026-88410", money(48_000), "1 instalment + fee", "Oldest unpaid first"),

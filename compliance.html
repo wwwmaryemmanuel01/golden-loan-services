@@ -3193,11 +3193,11 @@ function pick(a){ return a[Math.floor(rnd()*a.length)]; }
 
 /* ---------------- reference data ---------------- */
 const PRODUCTS = [
-  {id:'SL', name:'Salary Loan',     rate:0.032, min:150000, max:3000000, terms:[6,9,12,18], colour:'#C9A227'},
-  {id:'BB', name:'Business Boost',  rate:0.038, min:300000, max:5000000, terms:[12,18,24],  colour:'#1E9E6A'},
-  {id:'EL', name:'Emergency Loan',  rate:0.045, min:50000,  max:500000,  terms:[3,6],       colour:'#D93F3F'},
-  {id:'AF', name:'Asset Finance',   rate:0.028, min:800000, max:8000000, terms:[12,24,36],  colour:'#2F6FED'},
-  {id:'GL', name:'Group Lending',   rate:0.035, min:100000, max:1500000, terms:[6,12],      colour:'#7C5CF0'}
+  {id:'PL', name:'Personal Loans',       rate:0.030, min:50000,  max:1000000,  terms:[1,3,6,12],        colour:'#C9A227'},
+  {id:'BL', name:'Business Loans',       rate:0.035, min:100000, max:10000000, terms:[6,9,12,18,24,36], colour:'#1E9E6A'},
+  {id:'AL', name:'Agricultural Loans',   rate:0.030, min:40000,  max:1500000,  terms:[3,6,9,12],        colour:'#7C5CF0'},
+  {id:'SA', name:'Salary Advance Loans', rate:0.025, min:50000,  max:800000,   terms:[1,3,6],           colour:'#2F6FED'},
+  {id:'CL', name:'Collateral Loans',     rate:0.028, min:500000, max:10000000, terms:[12,18,24,36],     colour:'#D93F3F'}
 ];
 const REGIONS = ['Lilongwe','Blantyre','Mzuzu','Zomba'];
 const METHODS = ['Airtel Money','TNM Mpamba','Bank transfer','Cash'];
@@ -4066,7 +4066,7 @@ for(let i = 0; i < CUSTOMERS.length && DUPLICATE_GROUPS.length < 4; i++){
 /* ---------------- 3 · loan policy tests ---------------- */
 const AUTHORITY = {'Loan Officer':2500000, 'Credit Analyst':1500000, 'Head of Credit':8000000,
   'Collections Officer':0, 'Cashier':0, 'Customer Care':0};
-const TERMS = {SL:[6,9,12,18], BB:[12,18,24], EL:[3,6], AF:[12,24,36], GL:[6,12]};
+const TERMS = {PL:[1,3,6,12], BL:[6,9,12,18,24,36], AL:[3,6,9,12], SA:[1,3,6], CL:[12,18,24,36]};
 
 const LOAN_CHECKS = LOANS.map((l, i) => {
   const prod = PROD_BY_ID[l.product];
@@ -4326,7 +4326,7 @@ const COMPLIANCE_TASKS = [
   ['Close the two open audit findings', 'Audit', 'STF-003', 9, 'Open', 'High'],
   ['Review privileged-access list', 'Access', 'STF-009', 4, 'In progress', 'High'],
   ['Credit bureau submission for October', 'Regulatory', 'STF-004', 3, 'Open', 'High'],
-  ['Chase the missing logbook for asset finance', 'Collateral', 'STF-001', -2, 'Overdue', 'Medium'],
+  ['Chase the missing logbook for Collateral Loans', 'Collateral', 'STF-001', -2, 'Overdue', 'Medium'],
   ['Re-paper the consent wording', 'Data protection', 'STF-008', -5, 'Overdue', 'High'],
   ['Evidence the daily reconciliation', 'Reconciliation', 'STF-006', 7, 'Open', 'Medium'],
   ['Minute the interest recalculation', 'Credit', 'STF-003', 15, 'Open', 'Low'],
@@ -6119,7 +6119,7 @@ function renderRules(){
     ['Proof of address above MK 1,000,000', 'Facilities', 'Enforced'],
     ['Two approvals above MK 2,000,000', 'Facilities', 'Enforced'],
     ['KYC refresh within ' + RULES.kycRenewal + ' months', 'Every customer', 'Enforced'],
-    ['Guarantor identity checked', 'Group lending', 'Advisory']
+    ['Guarantor identity checked', 'Personal Loans', 'Advisory']
   ].map(([rule, who, state]) => `<tr><td>${esc(rule)}</td><td>${esc(who)}</td>
       <td>${badge(state, state === 'Enforced' ? 'b-ok' : 'b-warn')}</td></tr>`).join('');
 

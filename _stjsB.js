@@ -151,12 +151,11 @@ function renderLogins(){
 
 /* ===================== 5 · LOAN PRODUCTS ===================== */
 const PRODUCTS = [
-  {n:'Business Boost', c:'BB-01', min:100000, max:5000000, rate:4.5, m:'Reducing balance', f:'Monthly', terms:'6, 12, 18, 24', st:'Active', apps:184},
-  {n:'Emergency Cash', c:'EC-02', min:20000, max:400000, rate:6, m:'Flat', f:'Monthly', terms:'1, 3, 6', st:'Active', apps:312},
-  {n:'Agri Season Loan', c:'AG-04', min:150000, max:3000000, rate:3.8, m:'Simple daily', f:'Fortnightly', terms:'6, 9, 12', st:'Active', apps:96},
-  {n:'Salary Advance', c:'SA-05', min:25000, max:600000, rate:5.2, m:'Flat', f:'Monthly', terms:'1, 2, 3', st:'Active', apps:241},
-  {n:'Asset Finance', c:'AF-06', min:1000000, max:25000000, rate:2.9, m:'Declining balance', f:'Monthly', terms:'12, 24, 36, 48', st:'Paused', apps:18},
-  {n:'Group Lending', c:'GL-07', min:50000, max:1500000, rate:4.1, m:'Reducing balance', f:'Weekly', terms:'12, 24', st:'Retired', apps:6}
+  {n:'Personal Loans', c:'PL-01', min:50000, max:1000000, rate:3, m:'Flat', f:'Monthly', terms:'1, 3, 6, 12', st:'Active', apps:312},
+  {n:'Business Loans', c:'BL-02', min:100000, max:10000000, rate:3.5, m:'Reducing balance', f:'Monthly', terms:'6, 9, 12, 18, 24, 36', st:'Active', apps:214},
+  {n:'Agricultural Loans', c:'AL-03', min:40000, max:1500000, rate:3, m:'Flat', f:'Fortnightly', terms:'3, 6, 9, 12', st:'Active', apps:128},
+  {n:'Salary Advance Loans', c:'SA-04', min:50000, max:800000, rate:2.5, m:'Flat', f:'Monthly', terms:'1, 3, 6', st:'Active', apps:184},
+  {n:'Collateral Loans', c:'CL-05', min:500000, max:10000000, rate:2.8, m:'Reducing balance', f:'Monthly', terms:'12, 18, 24, 36', st:'Active', apps:19}
 ];
 const PROD_ST = {Active:'st-ok', Paused:'st-await', Retired:'st-canc'};
 function renderProducts(){

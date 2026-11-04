@@ -3787,11 +3787,11 @@ function pick(a){ return a[Math.floor(rnd()*a.length)]; }
 
 /* ---------------- reference data ---------------- */
 const PRODUCTS = [
-  {id:'SL', name:'Salary Loan',     rate:0.032, min:150000, max:3000000, terms:[6,9,12,18], colour:'#C9A227'},
-  {id:'BB', name:'Business Boost',  rate:0.038, min:300000, max:5000000, terms:[12,18,24],  colour:'#1E9E6A'},
-  {id:'EL', name:'Emergency Loan',  rate:0.045, min:50000,  max:500000,  terms:[3,6],       colour:'#D93F3F'},
-  {id:'AF', name:'Asset Finance',   rate:0.028, min:800000, max:8000000, terms:[12,24,36],  colour:'#2F6FED'},
-  {id:'GL', name:'Group Lending',   rate:0.035, min:100000, max:1500000, terms:[6,12],      colour:'#7C5CF0'}
+  {id:'PL', name:'Personal Loans',       rate:0.030, min:50000,  max:1000000,  terms:[1,3,6,12],        colour:'#C9A227'},
+  {id:'BL', name:'Business Loans',       rate:0.035, min:100000, max:10000000, terms:[6,9,12,18,24,36], colour:'#1E9E6A'},
+  {id:'AL', name:'Agricultural Loans',   rate:0.030, min:40000,  max:1500000,  terms:[3,6,9,12],        colour:'#7C5CF0'},
+  {id:'SA', name:'Salary Advance Loans', rate:0.025, min:50000,  max:800000,   terms:[1,3,6],           colour:'#2F6FED'},
+  {id:'CL', name:'Collateral Loans',     rate:0.028, min:500000, max:10000000, terms:[12,18,24,36],     colour:'#D93F3F'}
 ];
 const REGIONS = ['Lilongwe','Blantyre','Mzuzu','Zomba'];
 const METHODS = ['Airtel Money','TNM Mpamba','Bank transfer','Cash'];
@@ -4724,7 +4724,7 @@ const FP_SEGMENTS = [
   ['all',     'All customers'],
   ['salary',  'Salaried employees'],
   ['business','Business owners'],
-  ['group',   'Group lending members'],
+  ['group',   'Personal Loans customers'],
   ['civil',   'Civil servants'],
   ['women',   'Women-led enterprises'],
   ['first',   'First-time borrowers'],
@@ -5192,7 +5192,7 @@ const FEE_MIGRATIONS = [
   {id: '20260101_02', name: 'fee_ledger with a balance constraint', when: '2026-01-01', status: 'Applied'},
   {id: '20260301_01', name: 'fee_waivers with evidence', when: '2026-03-01', status: 'Applied'},
   {id: '20260401_01', name: 'failed payment charge and the duplicate guard', when: '2026-04-01', status: 'Applied'},
-  {id: '20260501_01', name: 'early settlement fee on asset finance', when: '2026-05-01', status: 'Applied'},
+  {id: '20260501_01', name: 'early settlement fee on Collateral Loans', when: '2026-05-01', status: 'Applied'},
   {id: '20260601_01', name: 'repeated late penalty (paused)', when: '2026-06-01', status: 'Applied'},
   {id: '20261020_01', name: 'penalty cap as a percentage of the overdue amount', when: '2026-10-20', status: 'Applied'}
 ];
@@ -5624,7 +5624,7 @@ function renderAdminCharges(){
     FPC: 'Only where a debit order bounces or a rail times out, and never twice for one attempt',
     RSF: 'Only after the rescheduling is approved in writing',
     CAF: 'Only where the amount, the term or the security changes after signing',
-    ESF: 'Only where the product permits an early payoff (asset finance and business boost)',
+    ESF: 'Only where the product permits an early payoff (Collateral Loans and Business Loans)',
     OSC: 'Only where the tariff lists the service and the customer has been told the amount first'
   };
   put('ocEligBox', FEE_CHARGE_TYPES.filter(t => t.group === 'Administrative').map(t =>
@@ -5678,8 +5678,8 @@ function renderProducts(){
     ['Fee assignments', num(FEE_TYPES.reduce((s, t) => s + (t.products || []).length, 0)), 'Fee types across products', ''],
     ['Charges on products', num(totalCharges), 'Assessed against a product', ''],
     ['Penalties enabled', num(FEE_PENALTY_TYPES.filter(t => t.enabled).length), 'Of ' + num(FEE_PENALTY_TYPES.length) + ' defined', ''],
-    ['Lowest minimum loan', fpM(Math.min.apply(null, PRODUCTS.map(p => p.min))), 'Emergency loan', ''],
-    ['Highest maximum loan', fpM(Math.max.apply(null, PRODUCTS.map(p => p.max))), 'Asset finance', ''],
+    ['Lowest minimum loan', fpM(Math.min.apply(null, PRODUCTS.map(p => p.min))), 'Agricultural Loans', ''],
+    ['Highest maximum loan', fpM(Math.max.apply(null, PRODUCTS.map(p => p.max))), 'Collateral Loans', ''],
     ['Shortest grace', num(Math.min.apply(null, FEE_PENALTY_TYPES.map(t => t.graceDays))) + ' days', 'Across the penalty types', ''],
     ['Tightest cap', fpM(Math.min.apply(null, FEE_PENALTY_TYPES.map(t => t.max))), 'Per single charge', '']
   ].map(([l, v, s, k]) => kpiCard(l, v, s, k)).join(''));
@@ -5721,7 +5721,7 @@ function renderProducts(){
     ['Share of the overdue', fpPct(FEE_RULES.capPercentOfOverdue)],
     ['Emergency and group', 'Flat ' + fpM(FEE_TYPE_BY_CODE.ODC.fixed) + ' per overdue instalment'],
     ['Repeated late', 'Paused at ' + fpPct(FEE_TYPE_BY_CODE.RLP.pct)],
-    ['Early settlement', 'Only asset finance and business boost']
+    ['Early settlement', 'Only Collateral Loans and Business Loans']
   ].map(([k, v]) => kvRow(k, v)).join(''));
 
   fpFillSel('ppPreviewProduct', fpProdOptions(), FP_SEL.product || 'SL');

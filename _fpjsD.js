@@ -300,7 +300,7 @@ function renderAdminCharges(){
     FPC: 'Only where a debit order bounces or a rail times out, and never twice for one attempt',
     RSF: 'Only after the rescheduling is approved in writing',
     CAF: 'Only where the amount, the term or the security changes after signing',
-    ESF: 'Only where the product permits an early payoff (asset finance and business boost)',
+    ESF: 'Only where the product permits an early payoff (Collateral Loans and Business Loans)',
     OSC: 'Only where the tariff lists the service and the customer has been told the amount first'
   };
   put('ocEligBox', FEE_CHARGE_TYPES.filter(t => t.group === 'Administrative').map(t =>
@@ -354,8 +354,8 @@ function renderProducts(){
     ['Fee assignments', num(FEE_TYPES.reduce((s, t) => s + (t.products || []).length, 0)), 'Fee types across products', ''],
     ['Charges on products', num(totalCharges), 'Assessed against a product', ''],
     ['Penalties enabled', num(FEE_PENALTY_TYPES.filter(t => t.enabled).length), 'Of ' + num(FEE_PENALTY_TYPES.length) + ' defined', ''],
-    ['Lowest minimum loan', fpM(Math.min.apply(null, PRODUCTS.map(p => p.min))), 'Emergency loan', ''],
-    ['Highest maximum loan', fpM(Math.max.apply(null, PRODUCTS.map(p => p.max))), 'Asset finance', ''],
+    ['Lowest minimum loan', fpM(Math.min.apply(null, PRODUCTS.map(p => p.min))), 'Agricultural Loans', ''],
+    ['Highest maximum loan', fpM(Math.max.apply(null, PRODUCTS.map(p => p.max))), 'Collateral Loans', ''],
     ['Shortest grace', num(Math.min.apply(null, FEE_PENALTY_TYPES.map(t => t.graceDays))) + ' days', 'Across the penalty types', ''],
     ['Tightest cap', fpM(Math.min.apply(null, FEE_PENALTY_TYPES.map(t => t.max))), 'Per single charge', '']
   ].map(([l, v, s, k]) => kpiCard(l, v, s, k)).join(''));
@@ -397,7 +397,7 @@ function renderProducts(){
     ['Share of the overdue', fpPct(FEE_RULES.capPercentOfOverdue)],
     ['Emergency and group', 'Flat ' + fpM(FEE_TYPE_BY_CODE.ODC.fixed) + ' per overdue instalment'],
     ['Repeated late', 'Paused at ' + fpPct(FEE_TYPE_BY_CODE.RLP.pct)],
-    ['Early settlement', 'Only asset finance and business boost']
+    ['Early settlement', 'Only Collateral Loans and Business Loans']
   ].map(([k, v]) => kvRow(k, v)).join(''));
 
   fpFillSel('ppPreviewProduct', fpProdOptions(), FP_SEL.product || 'SL');

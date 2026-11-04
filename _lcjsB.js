@@ -117,6 +117,8 @@
     var c;
     try { c = JSON.parse(raw); } catch (e) { return false; }
     if (!c || typeof c !== 'object') return false;
+    /* a product saved under an older catalogue no longer exists — fall back */
+    if (c.product != null && c.product !== 'custom' && !prodBy(c.product)) c.product = LC_DEFAULTS.product;
     ['product','method','durUnit','freq','redStyle'].forEach(function(k){
       if (c[k] != null) setVal(k === 'product' ? 'lcProduct' : k === 'method' ? 'lcMethod' : k === 'durUnit' ? 'lcDurUnit' : k === 'freq' ? 'lcFreq' : 'lcRedStyle', c[k]);
     });
@@ -173,6 +175,7 @@
           '<div><div class="pn">' + lcEsc(p.name) + '</div><div class="pc">' + lcEsc(p.code) + '</div></div>' +
           '<span class="badge ' + tone + '" style="margin-left:auto">' + lcEsc(out) + '</span>' +
         '</div>' +
+        (p.desc ? '<div class="qhint" style="margin:3px 0 7px">' + lcEsc(p.desc) + '</div>' : '') +
         '<div class="pgrid">' +
           '<div><div class="pk">Range</div><div class="pv">' + fmt(p.min) + ' – ' + fmt(p.max) + '</div></div>' +
           '<div><div class="pk">Rate</div><div class="pv">' + lcPct(p.rate) + ' a month</div></div>' +

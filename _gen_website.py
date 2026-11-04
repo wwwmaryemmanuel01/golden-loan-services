@@ -450,10 +450,11 @@ def section3():
                  note("The published tariff is generated from the Fees &amp; Penalties module, so the website can "
                       "never quote a rate the ledger does not charge.", "gold") +
                  table(["Product", "Monthly rate", "Fee", "Published"],
-                       [("Salary loan", "3.2%", "1.5% processing", "Yes"),
-                        ("Business boost", "3.8%", "1.5% + 1.0% arrangement", "Yes"),
-                        ("Emergency loan", "4.5%", "1.5% processing", "Yes"),
-                        ("Asset finance", "3.4%", "1.5% + 0.5% disbursement", "Yes")], csv_name="rates"), wide=True))
+                       [("Personal Loans", "3.0%", "2.0% processing", "Yes"),
+                        ("Business Loans", "3.5%", "2.5% processing", "Yes"),
+                        ("Agricultural Loans", "3.0%", "2.0% processing", "Yes"),
+                        ("Salary Advance Loans", "2.5%", "1.5% processing", "Yes"),
+                        ("Collateral Loans", "2.8%", "2.0% processing", "Yes")], csv_name="rates"), wide=True))
     s.append(sub("3.5", "Frequently Asked Questions", kv([
         ("Questions published", "24"),
         ("Categories", "Applying · Repaying · Fees · Documents"),
