@@ -1370,76 +1370,143 @@ body > .main, .main { min-width: 0; }
 }
 @media (max-width:520px){ .gls-topbar-logo{height:24px} }
 
-/* ---- header: the same dark bar as the sidebar ----------------------------- */
+/* ---- header: a wide dark bar carrying the name in large print ------------ */
 .topbar{
-  background:rgba(15,17,21,.97);
+  background:rgba(15,17,21,.98);
   border-bottom:1px solid #23262E;
   box-shadow:0 8px 22px rgba(9,11,15,.16);
   backdrop-filter:none;
+  height:auto;
+  min-height:96px;
+  padding:10px 26px;
+  gap:16px;
+  flex-wrap:nowrap;
 }
-.topbar .page-title{color:#fff}
-.topbar .page-sub{color:#9AA1AF}
+
+/* the name, large; the portal it belongs to, spaced underneath */
+.gls-brandbar{
+  display:flex;flex-direction:column;justify-content:center;gap:4px;
+  flex:0 1 auto;min-width:0;
+}
+.gls-brandbar-name{
+  font-size:21px;font-weight:800;line-height:1.05;
+  letter-spacing:1.1px;color:#fff;
+  white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.35);
+}
+.gls-brandbar-sub{
+  font-size:10.5px;font-weight:800;line-height:1;
+  letter-spacing:3.6px;color:#E4C264;text-transform:uppercase;
+  white-space:nowrap;
+}
+.gls-brandbar-sep{
+  flex:0 0 1px;width:1px;height:44px;background:#2C313B;
+  margin:0 2px;
+}
+
+/* the module name sits after the name, smaller, so both stay readable */
+.topbar > div{min-width:0}
+.topbar .search{flex:0 1 260px}
+.topbar .topbar-actions{flex:0 0 auto}
+.topbar .page-title{
+  font-size:14.5px;font-weight:700;color:#fff;letter-spacing:-.1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar .page-sub{font-size:10.5px;color:#B9C1CF;max-width:520px}
+.topbar > div:first-of-type{min-width:0;flex:0 1 auto}
 
 .topbar .menu-btn{background:#1B1F27;border-color:#2A2F3A;color:#E8EAF0}
 .topbar .menu-btn svg{stroke:#E8EAF0}
 .topbar .menu-btn:hover{background:#20242D;border-color:var(--gold)}
 
-.topbar .search{background:#1B1F27;border:1px solid #262B34}
+.topbar .search{background:#1B1F27;border:1px solid #2F3541}
 .topbar .search:focus-within{background:#20242D;border-color:var(--gold)}
-.topbar .search input{color:#E8EAF0}
-.topbar .search input::placeholder{color:#6E7480}
-.topbar .search svg{stroke:#7C8492}
+.topbar .search input{color:#F1F3F7}
+.topbar .search input::placeholder{color:#9AA3B4}
+.topbar .search svg{stroke:#9AA3B4}
 
-.topbar .icon-btn{background:#1B1F27;border-color:#2A2F3A;color:#C7CBD4}
+.topbar .icon-btn{background:#1B1F27;border-color:#2F3541;color:#D5DAE3}
 .topbar .icon-btn:hover{background:#20242D;border-color:var(--gold);color:#F3D67A}
 .topbar .icon-btn svg{stroke:currentColor}
 .topbar .dot{border-color:#15171C}
 
-.topbar .btn-ghost{background:#1B1F27;border-color:#2A2F3A;color:#E8EAF0}
+.topbar .btn-ghost{background:#1B1F27;border-color:#2F3541;color:#F1F3F7}
 .topbar .btn-ghost:hover{background:#242A34;border-color:var(--gold);color:#F3D67A}
 
-.topbar .backbtn{background:#1B1F27;border-color:#2A2F3A;color:#D7DBE3}
+.topbar .backbtn{background:#1B1F27;border-color:#2F3541;color:#E4E8EF}
 .topbar .backbtn:hover:not(:disabled){background:#242A34;border-color:var(--gold);color:#F3D67A}
-.topbar .backbtn:disabled{background:#171A21;border-color:#242830;color:#666C7A}
-.topbar .backbtn:disabled:hover{background:#171A21;border-color:#242830;color:#666C7A}
+.topbar .backbtn:disabled{background:#171A21;border-color:#2A2F39;color:#79808D}
+.topbar .backbtn:disabled:hover{background:#171A21;border-color:#2A2F39;color:#79808D}
 
 .topbar .tabs{background:#1B1F27}
-.topbar .tab{color:#9AA1AF}
-.topbar .tab:hover{color:#E8EAF0}
-.topbar .tab.on{background:#2A303B;color:#fff;box-shadow:none}
+.topbar .tab{color:#B4BCCA}
+.topbar .tab:hover{color:#fff}
+.topbar .tab.on{background:#2F3641;color:#fff;box-shadow:none}
 
-/* the section bar sits directly under the dark header: give it the same edge */
-.subnav{border-bottom:1px solid #E0E3EA}
+/* the section bar has to clear the taller header */
+.subnav{top:96px;border-bottom:1px solid #E0E3EA}
+.sec{scroll-margin-top:150px}
+
+@media (max-width:1380px){
+  .gls-brandbar-name{font-size:18px;letter-spacing:.8px}
+  .gls-brandbar-sub{font-size:9.5px;letter-spacing:2.8px}
+  .topbar .page-sub{display:none}
+  .topbar{min-height:88px;gap:13px;padding:9px 20px}
+  .subnav{top:88px}
+  .sec{scroll-margin-top:140px}
+}
+@media (max-width:1120px){
+  .gls-brandbar-sep{display:none}
+  .gls-brandbar-name{font-size:16px;letter-spacing:.5px}
+  .gls-brandbar-sub{font-size:8.5px;letter-spacing:2.2px}
+  .topbar .page-title{font-size:13px}
+  .topbar{min-height:80px}
+  .subnav{top:80px}
+  .sec{scroll-margin-top:130px}
+}
+@media (max-width:900px){
+  .gls-brandbar-name{font-size:14px;letter-spacing:.3px;white-space:normal}
+  .gls-brandbar-sub{font-size:8px;letter-spacing:1.8px}
+  .topbar{min-height:72px;gap:10px;padding:8px 14px}
+  .subnav{top:72px}
+  .sec{scroll-margin-top:118px}
+}
+@media (max-width:620px){
+  .gls-topbar-logo{height:26px;width:26px}
+  .gls-brandbar-name{font-size:12.5px}
+  .gls-brandbar-sub{display:none}
+  .topbar .page-title{font-size:12px}
+  .topbar{min-height:62px}
+  .subnav{top:62px}
+  .sec{scroll-margin-top:108px}
+}
+
+/* ---- readability: every label in the shell clears its background --------- */
+.sidebar .nav-label{color:#9CA4B2}
+.sidebar .nav-item{color:#CFD5DF}
+.sidebar .nav-item:hover{color:#fff}
+.sidebar .sf-name{color:#fff}
+.sidebar .sf-role{color:#ADB5C2}
+.gls-signout{color:#ADB5C2}
 
 /* ---- page footer ---------------------------------------------------------- */
 .gls-footer{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
   margin-top:26px;padding:16px 0 2px;border-top:1px solid var(--line);
-  font-size:10.5px;color:var(--muted);
+  font-size:11px;color:#414856;
 }
 .gls-footer .gls-foot-brand{display:flex;align-items:center;gap:9px;min-width:0}
 .gls-footer .gls-foot-brand img{height:24px;width:auto;flex:0 0 auto}
-.gls-footer .gls-foot-name{font-weight:800;font-size:11px;color:#2B303B;letter-spacing:.3px}
-.gls-footer .gls-foot-sub{font-size:9.5px;letter-spacing:.9px;color:var(--muted);margin-top:2px}
+.gls-footer .gls-foot-name{font-weight:800;font-size:11.5px;color:#0F1115;letter-spacing:.3px}
+.gls-footer .gls-foot-sub{font-size:10px;letter-spacing:.9px;color:#5C6472;margin-top:2px}
 .gls-footer .gls-foot-links{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 .gls-footer a{
-  color:#5A6172;text-decoration:none;font-weight:700;font-size:10.5px;
+  color:#3B4250;text-decoration:none;font-weight:800;font-size:11px;
   border-bottom:1px solid transparent;transition:.15s;
 }
 .gls-footer a:hover{color:var(--gold-dark);border-bottom-color:var(--gold)}
 .gls-footer .gls-foot-sep{width:1px;height:14px;background:var(--line)}
-.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#9AA0AC;letter-spacing:.2px}
+.gls-footer .gls-build{font-variant-numeric:tabular-nums;color:#5C6472;letter-spacing:.2px}
 .gls-footer .gls-build:empty{display:none}
-
-/* ---- sidebar sign-out ----------------------------------------------------- */
-.sidebar-foot{gap:10px}
-.gls-signout{
-  margin-left:auto;flex:0 0 auto;width:30px;height:30px;border-radius:9px;
-  display:grid;place-items:center;color:#8A90A0;border:1px solid #2C3039;
-  background:#1A1D24;text-decoration:none;transition:.16s;
-}
-.gls-signout:hover{color:var(--gold-bright);border-color:var(--gold-dark);background:#20242D}
-.gls-signout svg{width:14px;height:14px}
 
 /* ---- brand tiles ---------------------------------------------------------- */
 /* .logo-tile is the small gold "GF" tile used on receipts, applications and
@@ -1475,7 +1542,7 @@ body > .main, .main { min-width: 0; }
   .gls-print-head .gls-ph-name{
     font-size:10.5px;font-weight:800;color:#0F1115;letter-spacing:.4px;
   }
-  .gls-footer{border-top:1px solid #D9DDE6;font-size:9px;padding-top:10px}
+  .gls-footer{border-top:1px solid #D9DDE6;font-size:9.5px;padding-top:10px;color:#3B4250}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1626,7 +1693,8 @@ body > .main, .main { min-width: 0; }
     <button class="menu-btn" id="menuBtn">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-    <img class="gls-topbar-logo" src="assets/logo-mark.png" width="30" height="30" alt="GOLDEN FINANCIAL SERVICES">
+    <img class="gls-topbar-logo" src="assets/logo-mark.png" width="34" height="34" alt="GOLDEN FINANCIAL SERVICES">
+    <div class="gls-brandbar"><div class="gls-brandbar-name">GOLDEN FINANCIAL SERVICES</div><div class="gls-brandbar-sub">ADMINISTRATION PORTAL</div></div><span class="gls-brandbar-sep" aria-hidden="true"></span>
     <div>
       <div class="page-title">Data Recovery, Backup &amp; Factory Reset</div>
       <div class="page-sub">Backups, verified recovery points, safe reset modes and the audit trail behind them · <span id="topRefresh">30 Oct 2026</span></div>
@@ -5801,6 +5869,60 @@ else boot();
     return n;
   }
 
+  /* --------------------------------------------------- side bar auto-hide */
+  /* Tapping the menu button slides the side bar in; it slides back out once the
+     user stops using it. Any touch, scroll or key press inside it restarts the
+     clock, Escape closes it at once, and a tap outside closes it — so it can
+     never sit over the page and swallow clicks. The delay can be changed with
+     document.documentElement.dataset.sidebarIdle (milliseconds). */
+  function sidebarAutoHide() {
+    var bar = document.getElementById('sidebar');
+    if (!bar) return;
+
+    var timer = null;
+
+    function delay() {
+      var v = parseInt((document.documentElement.getAttribute('data-sidebar-idle') || ''), 10);
+      if (!isFinite(v) || v < 800) v = 6000;
+      return v;
+    }
+    function isOpen() { return bar.classList.contains('open'); }
+    function isPhone() {
+      try { return window.matchMedia('(max-width:860px)').matches; } catch (e) { return false; }
+    }
+    function close() {
+      clearTimeout(timer); timer = null;
+      bar.classList.remove('open');
+    }
+    function arm() {
+      clearTimeout(timer);
+      timer = null;
+      if (!isOpen() || !isPhone()) return;
+      timer = setTimeout(close, delay());
+    }
+
+    try {
+      new MutationObserver(function () { arm(); })
+        .observe(bar, {attributes: true, attributeFilter: ['class']});
+    } catch (e) {}
+
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) {
+      bar.addEventListener(ev, function () { if (isOpen()) arm(); }, {passive: true});
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && isOpen()) close();
+    });
+
+    document.addEventListener('click', function (ev) {
+      if (!isOpen()) return;
+      var t = ev.target;
+      if (bar.contains(t)) return;
+      if (t && t.closest && t.closest('#menuBtn')) return;
+      close();
+    }, true);
+  }
+
   /* ------------------------------------------------------------ build stamp */
   /* the date the browser received this copy, so "is this the latest build?"
      can be answered by looking at the page instead of guessing at a cache */
@@ -5890,6 +6012,7 @@ else boot();
 
   /* --------------------------------------------------------------- lifecycle */
   function boot() {
+    try { sidebarAutoHide(); } catch (e) {}
     try { footer(); } catch (e) {}
     try { printHead(); } catch (e) {}
     try { wrapPrint(); } catch (e) {}
