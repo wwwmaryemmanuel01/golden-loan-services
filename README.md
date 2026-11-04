@@ -890,6 +890,16 @@ tasks, resetting passwords and processing closures all update the in-page state 
 full lifecycle can be walked end to end. Nothing is sent anywhere and no credentials
 are stored or displayed.
 
+### Header layout
+
+The top bar is a wrapping flex row: back button, emblem, the name in large
+print, the module name, search and the action buttons. Every text block clips
+with an ellipsis instead of spilling into its neighbour, the module name gives
+way first (and is dropped below 1120px, since it is repeated in the page body),
+buttons keep their intrinsic width, and from 760px the search field drops to a
+second row. The log-out control in the sidebar footer has its own fixed slot, so
+it can never sit on top of the name and role.
+
 ### Surface theme
 
 The canvas carries the colour: emerald light from the top-left, aqua from the
@@ -897,8 +907,9 @@ top-right, a warm brand undertone from the bottom and two faint diagonal sheens,
 fixed to the viewport so the tint never scrolls away. Cards, tables, receipts
 and forms stay white, so legibility is never traded for decoration.
 
-Borders are deliberately bolder than a hairline: **2px** on module sections and
-receipts, **1.5px** on cards, KPI tiles, search boxes and every form control.
+Borders are deliberately clear rather than faint: **2px** on module sections and
+receipts, **1.5px** on cards, KPI tiles, search boxes and every form control, in
+`#7FB49F` (structures) and `#6FA292` (controls) — no pale wash hairlines.
 Controls focus with an emerald ring; buttons and links keep the gold action
 colour. Table headers use a pale emerald band with dark green text (7:1), and
 form blocks (`.form-grid`) are framed unless they sit inside a filter group or
