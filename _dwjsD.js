@@ -11,7 +11,7 @@
 function dwTone(s){
   const t = String(s == null ? '' : s);
   if(/^(Completed|Verified|Approved|Pass|Posted|Delivered|Cleared|Connected|Active|Enabled|Resolved|Recovered|Matched|Balanced|Low|Within limit|Issued|Paid out|Valid|On|Yes|Applied|Healthy|Good)$/i.test(t)) return 'b-ok';
-  if(/^(Pending|Processing|Open|Queued|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Consent|Near limit|Waiting on the provider|Missing policy)$/i.test(t)) return 'b-warn';
+  if(/^(Pending|Processing|Open|Queued|Awaiting provider|Medium|Review|Awaiting|Unverified|Investigating|Sent|Reissued|Automatic|Held|Adjustment|Consent|Near limit|Waiting on the provider|Missing policy)$/i.test(t)) return 'b-warn';
   if(/^(Failed|Rejected|Cancelled|Reversed|Blocked|Duplicate|Critical|High|Breach|Flagged|Expired|Violation|Missing|Suspended|Refused|Timed out)$/i.test(t)) return 'b-crit';
   return 'b-gray';
 }

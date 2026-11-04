@@ -409,7 +409,7 @@ const TR_NOTIFY_RULES = [
 const TR_NOTIFY_LOG = TR_TXN.slice(0, 26).map((t, i) => {
   const rule = TR_NOTIFY_RULES[i % TR_NOTIFY_RULES.length];
   return {when: t.when, event: rule.event, channel: i % 3 === 0 ? 'Email' : 'SMS', to: custName(t.cust),
-    reference: t.id, status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+    reference: t.id, status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
     lane: 'Notifications', severity: 'Low', owner: 'STF-005', region: t.region};
 });
 

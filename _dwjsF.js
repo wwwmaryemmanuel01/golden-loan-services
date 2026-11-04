@@ -244,9 +244,9 @@ function renderReversals(){
   if(el('rrReconPill')) el('rrReconPill').textContent = num(DW_REVERSALS.length) + ' checked';
   put('rrReconBox', DW_REVERSALS.map(r => kvRow(r.ref + ' · ' + r.type,
     r.status === 'Posted' ? okb('Matched') : r.status === 'Approved' ? badge('Waiting', 'b-warn') : badge('Provider not yet', 'b-gray'))).join(''));
-  put('rrNotifyBox', '<div class="minihead">Customer notices queued</div>'
-    + kvRow('SMS', okb('Queued') + ' · ' + DW_CHANNELS.sms.provider)
-    + kvRow('Email', okb('Queued') + ' · ' + DW_CHANNELS.email.provider)
+  put('rrNotifyBox', '<div class="minihead">Customer notices awaiting the provider</div>'
+    + kvRow('SMS', okb('Awaiting provider') + ' · ' + DW_CHANNELS.sms.provider)
+    + kvRow('Email', okb('Awaiting provider') + ' · ' + DW_CHANNELS.email.provider)
     + kvRow('Sent today', num(DW_NOTIFY_LOG.filter(n => dwIsos(n.when) === TODAY).length))
     + kvRow('Rule', 'Transaction reversed · customer and staff'));
 

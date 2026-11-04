@@ -582,7 +582,7 @@ const DELIVERY = [
   ['10:15','+265 881 442 019','Repayment reminder','SMS','Delivered'],
   ['09:40','grace@goldenfinancial.mw','Password reset','Email','Delivered'],
   ['08:55','+265 995 118 200','Application received','SMS','Delivered'],
-  ['08:12','+265 888 770 040','Repayment reminder','SMS','Queued']
+  ['08:12','+265 888 770 040','Repayment reminder','SMS','Awaiting provider']
 ];
 function renderSec9(){
   el('emailCfg').innerHTML = [

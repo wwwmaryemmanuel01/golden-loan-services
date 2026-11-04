@@ -81,9 +81,9 @@ function renderNotices(){
     chartBox({title: 'Messages by channel', sub: 'SMS against email', type: 'donut', h: 210,
       cats: ['SMS', 'Email'], value: num(log.length),
       series: [{name: 'Messages', data: ['SMS', 'Email'].map(ch => log.filter(l => l.channel === ch).length)}]}) +
-    chartBox({title: 'Delivery outcomes', sub: 'Delivered, queued and failed', type: 'bar', h: 210,
-      cats: ['Delivered', 'Queued', 'Failed'], value: num(delivered),
-      series: [{name: 'Messages', colour: '#1E9E6A', data: ['Delivered', 'Queued', 'Failed'].map(s => log.filter(l => l.status === s).length)}]}));
+    chartBox({title: 'Delivery outcomes', sub: 'Delivered, awaiting the provider and failed', type: 'bar', h: 210,
+      cats: ['Delivered', 'Awaiting provider', 'Failed'], value: num(delivered),
+      series: [{name: 'Messages', colour: '#1E9E6A', data: ['Delivered', 'Awaiting provider', 'Failed'].map(s => log.filter(l => l.status === s).length)}]}));
 }
 function fpNotifyToggle(i){
   const r = FEE_NOTIFY_RULES[i];

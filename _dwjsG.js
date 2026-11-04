@@ -21,7 +21,7 @@ function renderNotifications(){
     ['Messages logged', num(sent), 'In the current window', ''],
     ['Delivered', num(delivered), sent ? Math.round(pct(delivered, sent)) + '% of them' : 'Nothing sent', ''],
     ['Failed', num(log.filter(n => n.status === 'Failed').length), 'Number invalid or channel down', ''],
-    ['Queued', num(log.filter(n => n.status === 'Queued').length), 'Waiting on the provider', ''],
+    ['Awaiting provider', num(log.filter(n => n.status === 'Awaiting provider').length), 'The provider has not confirmed delivery', ''],
     ['SMS credit', num(DW_CHANNELS.sms.balance), DW_CHANNELS.sms.provider + ' · ' + DW_CHANNELS.sms.status, ''],
     ['Email allowance', DW_CHANNELS.email.balance + ' used', DW_CHANNELS.email.provider + ' · ' + DW_CHANNELS.email.status, ''],
     ['Notifications switched on', num(DW_NOTIFY_RULES.filter(r => r.on).length), 'Of ' + DW_NOTIFY_RULES.length + ' event types', '']
@@ -48,13 +48,13 @@ function renderNotifications(){
   renderTable('nfDelBody', [
     {k: 'channel', label: 'Channel'},
     {k: 'delivered', label: 'Delivered', num: true},
-    {k: 'queued', label: 'Queued', num: true},
+    {k: 'queued', label: 'Awaiting provider', num: true},
     {k: 'failed', label: 'Failed', num: true},
     {k: 'status', label: 'Channel', html: v => okb(v)}
   ], ['SMS', 'Email'].map(ch => ({
     channel: ch,
     delivered: log.filter(n => n.channel === ch && n.status === 'Delivered').length,
-    queued: log.filter(n => n.channel === ch && n.status === 'Queued').length,
+    queued: log.filter(n => n.channel === ch && n.status === 'Awaiting provider').length,
     failed: log.filter(n => n.channel === ch && n.status === 'Failed').length,
     status: ch === 'SMS' ? DW_CHANNELS.sms.status : DW_CHANNELS.email.status
   })), {pageSize: 4, onRow: false});
@@ -74,10 +74,10 @@ function renderNotifications(){
     chartBox({title: 'Messages by event', sub: 'Where the traffic comes from', type: 'bar', h: 190,
       cats: evs.map(e => e.event.replace(' ', '\n')),
       series: [{name: 'Messages', data: evs.map(e => e.n)}], value: num(sent)}) +
-    chartBox({title: 'Delivery by channel', sub: 'Delivered, queued and failed', type: 'stacked', h: 190,
+    chartBox({title: 'Delivery by channel', sub: 'Delivered, awaiting the provider and failed', type: 'stacked', h: 190,
       cats: ['SMS', 'Email'],
       series: [{name: 'Delivered', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Delivered').length), colour: '#0E9AA7'},
-        {name: 'Queued', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Queued').length), colour: '#C9A227'},
+        {name: 'Awaiting provider', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Awaiting provider').length), colour: '#C9A227'},
         {name: 'Failed', data: ['SMS', 'Email'].map(c => log.filter(n => n.channel === c && n.status === 'Failed').length), colour: '#D93F3F'}],
       value: num(sent)}));
 }

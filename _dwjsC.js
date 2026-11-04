@@ -343,7 +343,7 @@ DW_TXN.slice(0, 26).forEach((t, i) => {
   const rule = DW_NOTIFY_RULES[i % DW_NOTIFY_RULES.length];
   DW_NOTIFY_LOG.push({when: t.when, event: rule.event, channel: i % 3 === 0 ? 'Email' : 'SMS',
     to: custName(t.cust), reference: t.type === 'Deposit' ? t.id : t.id,
-    status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+    status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
     lane: 'Notifications', severity: 'Low', owner: 'STF-005', region: CUST_BY_ID[t.cust] ? CUST_BY_ID[t.cust].region : 'Lilongwe'});
 });
 

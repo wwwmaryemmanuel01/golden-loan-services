@@ -438,7 +438,7 @@ for(let i = 0; i < 130; i++){
     when: addDays(TODAY, -ri(0, 45)) + ' ' + pad(7 + (i % 12), 2) + ':' + pad((i * 11) % 60, 2),
     event: rule.event, channel: rule.channel, to: rule.channel === 'SMS'
       ? (CUST_BY_ID[c.cust] || {}).phone || '+265 991 000 000' : (CUST_BY_ID[c.cust] || {}).name || 'customer',
-    reference: c.id, template: rule.template, status: failed ? 'Failed' : (rnd() < 0.12 ? 'Queued' : 'Delivered'),
+    reference: c.id, template: rule.template, status: failed ? 'Failed' : (rnd() < 0.12 ? 'Awaiting provider' : 'Delivered'),
     lane: 'Notifications', severity: 'Low', owner: 'STF-008', region: c.region
   });
 }

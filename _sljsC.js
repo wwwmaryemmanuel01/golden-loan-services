@@ -668,7 +668,7 @@ const SE_NOTIFY_LOG = SE_NOTIFY_RULES.concat(SE_NOTIFY_RULES.slice(0, 3)).map((r
   when: addDays(TODAY, -(i % 12)) + ' 0' + (7 + i % 3) + ':' + pad(10 + i, 2),
   event: r.event, channel: i % 3 === 0 ? 'SMS' : 'Email', to: r.to,
   reference: ['PRL-2610', 'SAL-1004', 'CLM-5203', 'APV-8201', 'REC-3103', 'INV-4302', 'BGT-4102', 'PAY-6411', 'STA-2610-A'][i % 9],
-  status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Queued' : 'Delivered',
+  status: i % 11 === 0 ? 'Failed' : i % 7 === 0 ? 'Awaiting provider' : 'Delivered',
   lane: 'Notifications', severity: 'Low', owner: 'STF-007', region: 'Lilongwe'
 }));
 

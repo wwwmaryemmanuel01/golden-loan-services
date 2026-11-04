@@ -892,6 +892,17 @@ tasks, resetting passwords and processing closures all update the in-page state 
 full lifecycle can be walked end to end. Nothing is sent anywhere and no credentials
 are stored or displayed.
 
+### Delivery-status wording
+
+SMS, email and in-app delivery logs use three states: **Delivered**, **Awaiting provider**
+and **Failed**. "Awaiting provider" means the gateway has accepted the message but has not
+yet confirmed it — it is not a build or job queue, so the word "Queued" is not used for
+delivery anywhere in the interface (KPI tiles, charts, registers, filters, settings panels,
+table badges and chart captions all say "Awaiting provider", rendered in the amber/warn
+tone). The only remaining "Queued" wording in the portal describes other concepts
+(audit-event queueing, pending disbursement releases, rail-side settlement hints, deploy
+counts) and is intentionally left as-is.
+
 ## Deploying to GitHub Pages
 
 Target repository: `https://github.com/wwwmaryemmanuel01/golden-loan-services`
