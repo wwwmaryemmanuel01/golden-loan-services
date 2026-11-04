@@ -61,6 +61,65 @@
       <div class="form-actions"><button class="btn btn-ghost" id="pyReconBtn">Reconcile the payments</button></div>
     </div>
 
+    <div class="card panel">
+      <div class="panel-head"><div><div class="panel-title">Link a VISA Card — Card Linking Code</div>
+        <div class="panel-sub">Generate the linking code, enter it with the card details, and the card is connected to the payments of system operating charges, other expenses and income</div></div>
+        <span class="badge b-ok" id="vcPill">—</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Card linking code</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><input id="vcCode" readonly style="font-family:ui-monospace,monospace;letter-spacing:1.5px;font-weight:800" /><button class="btn btn-ghost btn-sm" id="vcGenCode">Generate a new code</button></div></div>
+        <div class="fg"><label>Cardholder (as printed on the card)</label><input id="vcHolder" placeholder="CHIKONDI MWALE" autocomplete="off" /></div>
+        <div class="fg"><label>Card number (VISA — starts with 4)</label><input id="vcNumber" placeholder="#### #### #### ####" autocomplete="off" inputmode="numeric" /></div>
+        <div class="fg"><label>Expiry (MM/YY)</label><input id="vcExpiry" placeholder="09/28" autocomplete="off" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" id="vcLinkBtn">Link the card</button>
+        <button class="btn btn-ghost" id="vcClearBtn">Clear</button>
+      </div>
+      <div class="qhint" id="vcMsg" style="margin-top:6px">The linking code pairs this platform with the VISA card: enter the code with the card details and the card is connected. Only the last four digits are stored — the full number and the CVV are never kept.</div>
+      <div class="kgrid" id="vcKpis" style="margin-top:10px"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Linked Cards</div>
+          <div class="panel-sub">The default card pays the system charges and the expenses</div></div>
+          <span class="badge b-gray" id="vcCount">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="vcHead"></thead><tbody id="vcBody"></tbody></table></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Card Activity — Charges, Expenses &amp; Income</div>
+          <div class="panel-sub">Everything the linked card has paid and everything received on it</div></div>
+          <span class="badge b-gray" id="vcActPill">—</span></div>
+        <div class="tblwrap" style="max-height:260px"><table class="tbl2 dense"><thead id="vcActHead"></thead><tbody id="vcActBody"></tbody></table></div>
+        <div id="vcReceiptBox" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pay a System Charge with the Card</div>
+          <div class="panel-sub">Uses the charge picked in section 9</div></div></div>
+        <div id="vcChargeBox"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="vcPayCharge">Pay with the VISA card</button></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Pay an Expense with the Card</div>
+          <div class="panel-sub">Uses the expense picked in section 8 — it must be approved first</div></div></div>
+        <div id="vcExpenseBox"></div>
+        <div class="form-actions"><button class="btn btn-gold" id="vcPayExpense">Pay with the VISA card</button></div>
+      </div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="panel-title">Income on the Card</div>
+          <div class="panel-sub">Provider refunds, rebates and other income received on the linked card</div></div></div>
+        <div class="form-grid">
+          <div class="fg"><label>Income source</label><select id="vcIncSource"><option>Provider refund</option><option>Interest</option><option>Commission</option><option>Other income</option></select></div>
+          <div class="fg"><label>Amount (MWK)</label><input id="vcIncAmount" type="number" step="500" value="150000" /></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-gold" id="vcIncomeBtn">Record the income</button></div>
+      </div>
+    </div>
+
     <div class="chartgrid" id="pyGrid"></div>
   </section>
 
