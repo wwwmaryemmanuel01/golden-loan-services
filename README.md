@@ -753,6 +753,36 @@ and a live "Forgot?" note. It is a design preview: **no password is sent or stor
 two-factor authentication is not enforced yet, which the screen states plainly instead of
 implying protection that is not there. The sidebar footer carries a sign-out link back to it.
 
+## Shared control layer
+
+Every built page carries `_controls.css` and `_controls.js` (injected by
+`inject_backnav.py` with the record-sheet and layout-guard blocks). It runs **after** the
+module's own scripts and only fills gaps, so nothing a module already wires is touched.
+
+- **Contents menu.** A **Sections** button in the sub-nav opens a filtered list of every
+  section on the page and every sub-section inside it (`[data-sub]` blocks where the module
+  uses them, `.panel-title` cards where it does not). Any line jumps straight to that point,
+  updates the URL hash and flashes the block. Deep links such as `security.html#s24-3`
+  open at that exact sub-section.
+- **Sortable tables.** `th[data-sort]` sorts its table on click (numeric-aware, ascending
+  then descending, `aria-sort` and a ▲/▼ marker) on any page whose own script does not
+  already sort.
+- **CSV export.** A `[data-csv]` button exports the table in its block where the module has
+  no export of its own; a module export always wins.
+- **Orphan actions.** A save/create/add/send/request/verify button that no module script
+  mentions now responds instead of doing nothing: it marks the block **changed** and says
+  what it did. The layer waits 90 ms before acting and stays silent if the module already
+  responded, so nothing ever fires twice.
+- **Dropdowns.** A `<select>` that no module reads reports its new value and marks the
+  block as changed, so every dropdown is visibly attached to the field and section it
+  belongs to.
+- **Keyboard.** Chip-style controls become focusable and fire on Enter or Space.
+- **Sidebar toggle.** The hamburger is bound here on any page whose module does not bind it.
+- **No silent clicks.** If a press produces no change at all, the layer says why in a toast —
+  "select a record in the register first", "nothing is selected to open", or that the
+  register is sample data — instead of a button that appears to do nothing. It waits 240 ms
+  first, so a module that does respond is never talked over.
+
 ## Back navigation
 
 Every page carries a shared back control in the topbar (`_backnav.html`, injected at the end

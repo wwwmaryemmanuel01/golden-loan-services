@@ -22,18 +22,24 @@ rs_css = (root / '_recordsheet.css').read_text()
 rs_js = (root / '_recordsheet.js').read_text()
 lg_css = (root / '_layout-guard.css').read_text()
 lg_js = (root / '_layout-guard.js').read_text()
+ct_css = (root / '_controls.css').read_text()
+ct_js = (root / '_controls.js').read_text()
 
 BACK_MARK = 'window.__glsBack'
 CSS_MARK = 'data-gls="records-css"'
 JS_MARK = 'data-gls="records-js"'
 LG_CSS_MARK = 'data-gls="layout-css"'
 LG_JS_MARK = 'data-gls="layout-js"'
+CT_CSS_MARK = 'data-gls="controls-css"'
+CT_JS_MARK = 'data-gls="controls-js"'
 BACK_BANNER = '<!-- ==================== SHARED BACK NAVIGATION ==================== -->'
 
 CSS_BLOCK = '<style ' + CSS_MARK + '>\n' + rs_css + '\n</style>\n'
 JS_BLOCK = '<script ' + JS_MARK + '>\n' + rs_js + '\n</script>\n'
 LG_CSS_BLOCK = '<style ' + LG_CSS_MARK + '>\n' + lg_css + '\n</style>\n'
 LG_JS_BLOCK = '<script ' + LG_JS_MARK + '>\n' + lg_js + '\n</script>\n'
+CT_CSS_BLOCK = '<style ' + CT_CSS_MARK + '>\n' + ct_css + '\n</style>\n'
+CT_JS_BLOCK = '<script ' + CT_JS_MARK + '>\n' + ct_js + '\n</script>\n'
 
 
 def script_spans(html):
@@ -59,6 +65,8 @@ def strip_blocks(html):
     html = re.sub(r'<script data-gls="records-js">.*?</script>\n?', '', html, flags=re.S)
     html = re.sub(r'<style data-gls="layout-css">.*?</style>\n?', '', html, flags=re.S)
     html = re.sub(r'<script data-gls="layout-js">.*?</script>\n?', '', html, flags=re.S)
+    html = re.sub(r'<style data-gls="controls-css">.*?</style>\n?', '', html, flags=re.S)
+    html = re.sub(r'<script data-gls="controls-js">.*?</script>\n?', '', html, flags=re.S)
     html = re.sub(re.escape(BACK_BANNER) + r'\s*<script>.*?</script>\n?', '', html, flags=re.S)
     return html
 
@@ -97,15 +105,15 @@ for name in sys.argv[1:]:
     if i_head < 0:
         print('no </head> in', name)
     else:
-        s = s[:i_head] + CSS_BLOCK + LG_CSS_BLOCK + s[i_head:]
+        s = s[:i_head] + CSS_BLOCK + LG_CSS_BLOCK + CT_CSS_BLOCK + s[i_head:]
         notes.append('css')
 
     i_body = body_at(s)
     if i_body < 0:
         print('no </body> in', name)
     else:
-        s = s[:i_body] + backnav + JS_BLOCK + LG_JS_BLOCK + s[i_body:]
-        notes.append('back nav + sheet js + layout guard')
+        s = s[:i_body] + backnav + JS_BLOCK + LG_JS_BLOCK + CT_JS_BLOCK + s[i_body:]
+        notes.append('back nav + sheet js + layout guard + controls')
 
     s = inject_brand.transform(s)
 

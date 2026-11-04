@@ -1,0 +1,118 @@
+/* ============================================================================
+   SHARED CONTROL LAYER — injected into every built page
+   The contents navigator (sections + sub-sections), the "staged" marker and
+   the fallbacks that keep a control from doing nothing. See _controls.js.
+   ========================================================================= */
+
+/* ---------- contents navigator ---------- */
+.gls-toc{position:relative;flex:0 0 auto;margin-right:6px}
+.gls-toc-btn{
+  display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;
+  border-radius:9px;border:1.5px solid #6FA292;background:#fff;color:#0F1115;
+  font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;
+}
+.gls-toc-btn:hover{border-color:#1B6E52;color:#116B49}
+.gls-toc-btn[aria-expanded="true"]{background:#0F1115;border-color:#0F1115;color:#fff}
+.gls-toc-btn svg{flex:0 0 auto}
+.gls-toc-count{
+  font-size:9.5px;font-weight:800;background:#EAF7F1;color:#116B49;
+  border-radius:20px;padding:1px 6px;
+}
+.gls-toc-btn[aria-expanded="true"] .gls-toc-count{background:#C9A227;color:#241C00}
+
+.gls-toc-panel{
+  position:absolute;top:calc(100% + 7px);left:0;z-index:120;width:min(430px,calc(100vw - 30px));
+  max-height:min(72vh,560px);overflow:auto;background:#fff;
+  border:2px solid #7FB49F;border-radius:13px;
+  box-shadow:0 22px 50px -22px rgba(6,78,59,.55);padding:9px;
+}
+.gls-toc-panel[hidden]{display:none}
+.gls-toc-head{display:flex;gap:7px;align-items:center;padding:2px 2px 8px;border-bottom:1px solid #DCEAE3}
+.gls-toc-head input{
+  flex:1 1 auto;min-width:0;font-size:11.5px;padding:6px 9px;border-radius:8px;
+  border:1.5px solid #A9CDBD;background:#fff;color:#1D2430;
+}
+.gls-toc-head input:focus{outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.15)}
+.gls-toc-close{
+  flex:0 0 auto;width:26px;height:26px;border-radius:7px;border:1.5px solid #A9CDBD;background:#fff;
+  color:#41514B;font-size:13px;line-height:1;cursor:pointer;
+}
+.gls-toc-close:hover{border-color:#D93F3F;color:#A62424}
+.gls-toc-list{list-style:none;margin:0;padding:4px 0 0}
+.gls-toc-row{margin:0}
+.gls-toc-link{
+  display:flex;align-items:baseline;gap:8px;padding:6px 7px;border-radius:8px;
+  font-size:11.5px;font-weight:700;color:#1D2430;text-decoration:none;line-height:1.35;
+}
+.gls-toc-link:hover{background:#F2FBF6;color:#116B49}
+.gls-toc-link .n{
+  flex:0 0 auto;min-width:20px;font-size:10px;font-weight:800;color:#116B49;
+  background:#EAF7F1;border-radius:5px;padding:0 5px;text-align:center;
+}
+.gls-toc-link .t{flex:1 1 auto;min-width:0}
+.gls-toc-link .c{
+  flex:0 0 auto;font-size:9.5px;font-weight:800;color:#41514B;background:#EDF6F1;
+  border-radius:20px;padding:1px 6px;
+}
+.gls-toc-sub{list-style:none;margin:0 0 3px 26px;padding:0;border-left:2px solid #DCEAE3}
+.gls-toc-sub li a{
+  display:block;padding:4px 8px;font-size:10.5px;line-height:1.4;color:#41514B;text-decoration:none;
+  border-radius:6px;
+}
+.gls-toc-sub li a:hover{background:#F2FBF6;color:#0F6A48}
+.gls-toc-sub li a .sn{font-weight:800;color:#1B6E52;margin-right:5px;font-variant-numeric:tabular-nums}
+.gls-toc-empty{padding:10px 8px;font-size:11px;color:#667085}
+.gls-toc-foot{
+  border-top:1px solid #DCEAE3;margin-top:6px;padding:7px 4px 2px;font-size:10px;color:#667085;line-height:1.5;
+}
+
+/* ---------- jump highlight ---------- */
+.gls-flash{animation:glsFlash 1.5s ease}
+@keyframes glsFlash{
+  0%,100%{box-shadow:none}
+  15%,55%{box-shadow:0 0 0 3px rgba(201,162,39,.55)}
+}
+.gls-flash-sub{animation:glsFlashSub 1.5s ease}
+@keyframes glsFlashSub{
+  0%,100%{background:transparent}
+  15%,55%{background:#FFF9E8}
+}
+
+/* ---------- staged marker on an edited block ---------- */
+.gls-staged{
+  display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;
+  color:#8A5B08;background:#FFF5E3;border:1px solid #F3DFB6;border-radius:20px;
+  padding:1px 7px;margin-left:7px;vertical-align:middle;white-space:nowrap;
+}
+.gls-staged::before{content:"";width:5px;height:5px;border-radius:50%;background:#C9A227}
+
+/* ---------- sortable header fallback ---------- */
+th[data-sort]{cursor:pointer;user-select:none;position:relative}
+th[data-sort]:hover{color:#116B49}
+th[data-sort] .gls-sort-ind{margin-left:5px;font-size:9px;color:#9AA0AC}
+th.gls-asc .gls-sort-ind,th.gls-desc .gls-sort-ind{color:#116B49}
+
+/* ---------- keyboard focus for chip-style controls ---------- */
+.fchip:focus-visible,.chip:focus-visible,[role="button"]:focus-visible{
+  outline:2px solid #059669;outline-offset:2px;
+}
+
+/* ---------- shared toast host ---------- */
+.gls-toasts{position:fixed;right:18px;bottom:18px;z-index:300;display:flex;flex-direction:column;gap:8px;max-width:calc(100vw - 36px)}
+.gls-toast{
+  background:#0F1115;color:#fff;border-radius:11px;padding:10px 13px;font-size:11.5px;line-height:1.5;
+  box-shadow:0 12px 30px rgba(0,0,0,.3);display:flex;gap:9px;align-items:flex-start;max-width:340px;
+  border-left:3px solid #1E9E6A;
+}
+.gls-toast.err{border-left-color:#D93F3F;background:#3A1010}
+.gls-toast.info{border-left-color:#C9A227}
+.gls-toast span{flex:0 0 auto;font-weight:800;color:#E9C766}
+.gls-toast.err span{color:#FF9E9E}
+
+@media (max-width:760px){
+  .gls-toc{margin-right:0}
+  .gls-toc-panel{left:auto;right:0;width:min(360px,calc(100vw - 20px))}
+}
+@media print{
+  .gls-toc,.gls-toasts{display:none !important}
+}
