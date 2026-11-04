@@ -566,10 +566,10 @@ const DIAG_TESTS = [
   {id: 'DGN-02', name: 'Backend connectivity', target: WM_SET.apiBase + '/healthz', kind: 'Backend', status: 'Pass', lastRun: TODAY + ' 08:16', ms: 61, detail: 'Three instances answered the health check'},
   {id: 'DGN-03', name: 'Supabase connectivity', target: WM_SET.supabaseUrl, kind: 'Supabase', status: 'Pass', lastRun: TODAY + ' 08:16', ms: 88, detail: 'SELECT 1 returned in 12 ms'},
   {id: 'DGN-04', name: 'Authentication functions', target: 'verify_staff · send_otp', kind: 'Auth', status: 'Fail', lastRun: TODAY + ' 08:15', ms: 1840, detail: 'send_otp returned 503 from the SMS gateway'},
-  {id: 'DGN-05', name: 'API endpoints', target: '14 routes', kind: 'API', status: 'Pass', lastRun: TODAY + ' 08:15', ms: 940, detail: '13 healthy or degraded, 1 failing (mobile-money callback)'},
+  {id: 'DGN-05', name: 'API endpoints', target: '14 routes', kind: 'API', status: 'Fail', lastRun: TODAY + ' 08:15', ms: 940, detail: '13 healthy or degraded, 1 failing (mobile-money callback)'},
   {id: 'DGN-06', name: 'Storage access', target: 'bucket customers', kind: 'Storage', status: 'Pass', lastRun: TODAY + ' 08:14', ms: 128, detail: 'Signed upload URL issued and used'},
   {id: 'DGN-07', name: 'External integrations', target: '10 services', kind: 'Integrations', status: 'Fail', lastRun: TODAY + ' 08:14', ms: 2260, detail: 'TNM Mpamba credential expired — collections refused'},
-  {id: 'DGN-08', name: 'DNS and certificate', target: DOMAIN.name, kind: 'Website', status: 'Pass', lastRun: TODAY + ' 08:13', ms: 320, detail: '5 of 6 records resolved, certificate valid for 66 days'}
+  {id: 'DGN-08', name: 'DNS and certificate', target: DOMAIN.name, kind: 'Website', status: 'Fail', lastRun: TODAY + ' 08:13', ms: 320, detail: '5 of 6 records resolved, certificate valid for 66 days'}
 ];
 const TROUBLESHOOT = [
   {applies: 'DGN-04', step: 'Rotate the Africa’s Talking key, then re-run send_otp', owner: 'STF-005'},

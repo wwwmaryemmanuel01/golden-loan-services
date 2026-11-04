@@ -92,14 +92,28 @@ function runPerfReport(kind, fmt){
 /* ===================== 14 · CONNECTION DIAGNOSTICS ===================== */
 function diagResult(test){
   if(test.id === 'DGN-04') return AUTH_SERVICES.every(a => a.status === 'Healthy') && !AUTH_ERRORS.some(e => e.status === 'Open') ? 'Pass' : 'Fail';
+  if(test.id === 'DGN-05') return API_ENDPOINTS.every(e => e.status !== 'Failing') ? 'Pass' : 'Fail';
   if(test.id === 'DGN-07') return INTEGRATIONS.every(i => i.status === 'Connected') ? 'Pass' : 'Fail';
-  if(test.id === 'DGN-05') return API_ENDPOINTS.some(e => e.status === 'Failing') ? 'Pass' : 'Pass';
-  if(test.id === 'DGN-08') return DNS.every(d => d.status === 'Resolved') ? 'Pass' : 'Pass';
+  if(test.id === 'DGN-08') return DNS.every(d => d.status === 'Resolved') && SSL_CERT.daysLeft > 0 ? 'Pass' : 'Fail';
   return 'Pass';
 }
 function diagDetail(test, res){
-  if(test.id === 'DGN-04') return res === 'Pass' ? 'send_otp and verify_staff both answered in under 300 ms' : 'send_otp returned 503 from the SMS gateway';
-  if(test.id === 'DGN-07') return res === 'Pass' ? 'All ten services answered their test call' : 'TNM Mpamba credential expired — collections refused';
+  if(test.id === 'DGN-04') return res === 'Pass'
+    ? 'send_otp and verify_staff both answered in under 300 ms'
+    : AUTH_ERRORS.filter(e => e.status === 'Open').map(e => e.detail).join('; ') || 'One or more authentication services are degraded';
+  if(test.id === 'DGN-05') return res === 'Pass'
+    ? API_ENDPOINTS.length + ' routes answered without a failing endpoint'
+    : API_ENDPOINTS.filter(e => e.status === 'Failing').map(e => e.path + ' is failing').join('; ');
+  if(test.id === 'DGN-07') return res === 'Pass'
+    ? 'All ' + INTEGRATIONS.length + ' services answered their test call'
+    : INTEGRATIONS.filter(i => i.status !== 'Connected').map(i => i.name + ' is ' + i.status.toLowerCase() + ' (' + i.creds.toLowerCase() + ' credentials)').join('; ');
+  if(test.id === 'DGN-08'){
+    const unresolved = DNS.filter(d => d.status !== 'Resolved');
+    if(SSL_CERT.daysLeft <= 0) return 'The SSL certificate has expired';
+    return res === 'Pass'
+      ? DNS.length + ' of ' + DNS.length + ' records resolved, certificate valid for ' + SSL_CERT.daysLeft + ' days'
+      : (DNS.length - unresolved.length) + ' of ' + DNS.length + ' records resolved (' + unresolved.map(d => d.record).join(', ') + ' pending), certificate valid for ' + SSL_CERT.daysLeft + ' days';
+  }
   return test.detail;
 }
 function renderDiagnostics(){
@@ -113,7 +127,7 @@ function renderDiagnostics(){
     ['Average latency', Math.round(sum(DIAG_TESTS, t => t.ms) / DIAG_TESTS.length) + ' ms', 'Across eight probes', ''],
     ['Slowest probe', 'External integrations', '2.26 s', ''],
     ['Targets covered', '8', 'Website to storage', ''],
-    ['Failing probes', num(fail), fail ? TROUBLESHOOT.filter(t => t.applies === 'DGN-07' || t.applies === 'DGN-04').length + ' fixes recommended' : 'Nothing to fix', fail ? 'red' : '']
+    ['Failing probes', num(fail), fail ? TROUBLESHOOT.filter(t => t.applies === 'All' || DIAG_TESTS.some(d => d.id === t.applies && d.status === 'Fail')).length + ' fixes recommended' : 'Nothing to fix', fail ? 'red' : '']
   ].map(([l, v, sub, k]) => kpiCard(l, v, sub, k)).join('');
 
   el('diagList').innerHTML = DIAG_TESTS.map(t => `<div class="checkrow">
@@ -1132,31 +1146,9 @@ function wireAll(){
     }
 
     const verify = e.target.closest('[data-verify]');
-    if(verify){
-      const i = INTEGRATIONS.find(x => x.name === verify.dataset.verify);
-      if(i){
-        const bad = i.status === 'Failing';
-        i.lastCheck = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
-        toast(bad ? i.name + ' still failing — credential expired' : i.name + ' verified in ' + i.latency + ' ms', bad ? 'warn' : 'ok');
-        logChange('Integration', 'Verified ' + i.name, 'unchecked', bad ? 'still failing' : 'connected');
-        renderIntegrations(); renderChanges();
-      }
-      return;
-    }
+    if(verify){ verifyService(verify.dataset.verify); return; }
     const cred = e.target.closest('[data-cred]');
-    if(cred){
-      const c = API_CREDS.find(x => x.name === cred.dataset.cred);
-      if(c){
-        const was = c.state;
-        c.rotated = TODAY; c.expires = addDays(TODAY, 90); c.state = 'Valid';
-        INTEGRATIONS.filter(i => i.name.indexOf(c.service.split(' ')[0]) === 0).forEach(i => { if(i.status === 'Failing') i.status = 'Connected'; i.creds = 'Valid'; });
-        INTEGRATION_TESTS.filter(t => c.service.indexOf(t.service.split(' ')[0]) === 0).forEach(t => { t.result = 'Pass'; t.ms = 120; });
-        logChange('Integration', 'Rotated ' + c.name, was, 'valid until ' + fmtDate(c.expires));
-        renderIntegrations(); renderOverview(); renderChanges(); renderStats();
-        toast(c.name + ' rotated — valid for 90 days');
-      }
-      return;
-    }
+    if(cred){ rotateCred(cred.dataset.cred); return; }
     if(e.target.closest('#runIntTests')){
       INTEGRATION_TESTS.forEach(t => {
         const svc = INTEGRATIONS.find(i => i.name.indexOf(t.service.split(' ')[0]) === 0);
@@ -1351,18 +1343,39 @@ window.WEBSITE_APP = {
 function verifyService(name){
   const i = INTEGRATIONS.find(x => x.name === name);
   if(!i) return;
-  i.lastCheck = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
-  renderIntegrations();
-  toast(i.name + (i.status === 'Failing' ? ' still failing' : ' verified in ' + i.latency + ' ms'), i.status === 'Failing' ? 'warn' : 'ok');
+  const now = TODAY + ' ' + new Date().toTimeString().slice(0, 5);
+  const previous = i.status;
+  const credentialsValid = i.creds === 'Valid';
+  i.lastCheck = now;
+  if(credentialsValid){
+    i.status = 'Connected';
+    if(!i.latency) i.latency = 120;
+    INTEGRATION_TESTS.filter(t => i.name.indexOf(t.service) === 0 || t.service.indexOf(i.provider) === 0).forEach(t => {
+      t.result = 'Pass'; t.ms = i.latency; t.when = now;
+    });
+    if(i.name === 'TNM Mpamba collections'){
+      API_ENDPOINTS.filter(e => e.path === '/integrations/mobile-money/callback').forEach(e => { e.status = 'Healthy'; });
+      SERVER_ERRORS.filter(e => e.endpoint === '/integrations/mobile-money/callback').forEach(e => { e.status = 'Resolved'; });
+      FAILED_REQUESTS.filter(e => e.path === '/api/payments/callback').forEach(e => { e.status = 'Resolved'; });
+    }
+  }
+  const recovered = previous !== 'Connected' && i.status === 'Connected';
+  logChange('Integration', 'Verified ' + i.name, previous, i.status === 'Connected' ? 'connected' : 'credential renewal required');
+  renderIntegrations(); renderBackend(); renderFrontend(); renderOverview(); renderChanges();
+  toast(i.name + (i.status === 'Connected' ? (recovered ? ' reconnected' : ' verified') + ' in ' + i.latency + ' ms' : ' still failing — renew its credentials'), i.status === 'Connected' ? 'ok' : 'warn');
 }
 function rotateCred(name){
   const c = API_CREDS.find(x => x.name === name);
   if(!c) return;
   const was = c.state;
   c.rotated = TODAY; c.expires = addDays(TODAY, 90); c.state = 'Valid';
+  INTEGRATIONS.filter(i => i.name.indexOf(c.service.split(' ')[0]) === 0).forEach(i => {
+    i.creds = 'Valid';
+    verifyService(i.name);
+  });
   logChange('Integration', 'Rotated ' + c.name, was, 'valid until ' + fmtDate(c.expires));
-  renderIntegrations(); renderChanges();
-  toast(c.name + ' rotated');
+  renderIntegrations(); renderChanges(); renderStats();
+  toast(c.name + ' rotated — valid for 90 days');
 }
 function toggleSection(name){
   const s = WM_SECTIONS.find(x => x.name === name);
