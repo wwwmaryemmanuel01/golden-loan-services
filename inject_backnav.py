@@ -4,6 +4,8 @@ Injects three shared snippets so every module behaves the same way:
   * _backnav.html     — the Back control (window.__glsBack)
   * _recordsheet.css  — record-sheet styles and the small-screen layout rules
   * _recordsheet.js   — labelled record sheets for any modal or register row
+  * _layout-guard.css  — keeps wide tables out of narrow grid columns
+  * _layout-guard.js   — widens those cards and wraps wide tables for scrolling
 
 Placement matters. Module scripts legitimately contain the strings `</head>`
 and `</body>` inside print templates, so the injector finds the real closing
@@ -16,14 +18,20 @@ root = pathlib.Path(__file__).parent
 backnav = (root / '_backnav.html').read_text()
 rs_css = (root / '_recordsheet.css').read_text()
 rs_js = (root / '_recordsheet.js').read_text()
+lg_css = (root / '_layout-guard.css').read_text()
+lg_js = (root / '_layout-guard.js').read_text()
 
 BACK_MARK = 'window.__glsBack'
 CSS_MARK = 'data-gls="records-css"'
 JS_MARK = 'data-gls="records-js"'
+LG_CSS_MARK = 'data-gls="layout-css"'
+LG_JS_MARK = 'data-gls="layout-js"'
 BACK_BANNER = '<!-- ==================== SHARED BACK NAVIGATION ==================== -->'
 
 CSS_BLOCK = '<style ' + CSS_MARK + '>\n' + rs_css + '\n</style>\n'
 JS_BLOCK = '<script ' + JS_MARK + '>\n' + rs_js + '\n</script>\n'
+LG_CSS_BLOCK = '<style ' + LG_CSS_MARK + '>\n' + lg_css + '\n</style>\n'
+LG_JS_BLOCK = '<script ' + LG_JS_MARK + '>\n' + lg_js + '\n</script>\n'
 
 
 def script_spans(html):
@@ -47,6 +55,8 @@ def strip_blocks(html):
     """Remove every previously injected copy, wherever it ended up."""
     html = re.sub(r'<style data-gls="records-css">.*?</style>\n?', '', html, flags=re.S)
     html = re.sub(r'<script data-gls="records-js">.*?</script>\n?', '', html, flags=re.S)
+    html = re.sub(r'<style data-gls="layout-css">.*?</style>\n?', '', html, flags=re.S)
+    html = re.sub(r'<script data-gls="layout-js">.*?</script>\n?', '', html, flags=re.S)
     html = re.sub(re.escape(BACK_BANNER) + r'\s*<script>.*?</script>\n?', '', html, flags=re.S)
     return html
 
@@ -85,15 +95,15 @@ for name in sys.argv[1:]:
     if i_head < 0:
         print('no </head> in', name)
     else:
-        s = s[:i_head] + CSS_BLOCK + s[i_head:]
+        s = s[:i_head] + CSS_BLOCK + LG_CSS_BLOCK + s[i_head:]
         notes.append('css')
 
     i_body = body_at(s)
     if i_body < 0:
         print('no </body> in', name)
     else:
-        s = s[:i_body] + backnav + JS_BLOCK + s[i_body:]
-        notes.append('back nav + sheet js')
+        s = s[:i_body] + backnav + JS_BLOCK + LG_JS_BLOCK + s[i_body:]
+        notes.append('back nav + sheet js + layout guard')
 
     if s != original:
         p.write_text(s)
