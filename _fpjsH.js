@@ -743,6 +743,7 @@ function wireAll(){
       if(!c || !c.receipt){ toast('Nothing has been collected on that charge yet', 'err'); return; }
       openModal('Receipt ' + c.receipt, c.id + ' · ' + custName(c.cust),
         `<div class="receiptdoc">
+          <img class="gls-docmark" src="assets/logo-mark-96.png" alt="GOLDEN FINANCIAL SERVICES">
           <div class="sliphead">GOLDEN FINANCIAL SERVICES</div>
           <div class="qhint">Lilongwe · Malawi · receipt ${esc(c.receipt)}</div>
           ${kvRow('Charge', esc(c.id))}${kvRow('Type', esc(c.typeName))}

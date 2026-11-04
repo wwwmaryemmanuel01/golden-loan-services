@@ -14,6 +14,8 @@ that a previous run left in the wrong place. Every insertion is idempotent.
 """
 import pathlib, re, sys
 
+import inject_brand
+
 root = pathlib.Path(__file__).parent
 backnav = (root / '_backnav.html').read_text()
 rs_css = (root / '_recordsheet.css').read_text()
@@ -104,6 +106,8 @@ for name in sys.argv[1:]:
     else:
         s = s[:i_body] + backnav + JS_BLOCK + LG_JS_BLOCK + s[i_body:]
         notes.append('back nav + sheet js + layout guard')
+
+    s = inject_brand.transform(s)
 
     if s != original:
         p.write_text(s)

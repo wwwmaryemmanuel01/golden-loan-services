@@ -158,6 +158,7 @@ function sePaymentAction(act){
   } else if(act === 'receipt'){
     if(!p.receipt){ toast('A receipt exists only once the payment is settled', 'err'); return; }
     put('pyReceiptBox', `<div class="receiptdoc">
+      <img class="gls-docmark" src="assets/logo-mark-96.png" alt="GOLDEN FINANCIAL SERVICES">
       <div class="sliphead"><div><b>GOLDEN FINANCIAL SERVICES</b><div class="qhint">Proof of payment</div></div>
         <div style="text-align:right"><b>${esc(p.receipt)}</b><div class="qhint">${esc(fmtDate(p.when))}</div></div></div>
       <div class="pfields">${field('Payee', esc(p.payee))}${field('Amount', esc(seM(p.amount)))}
