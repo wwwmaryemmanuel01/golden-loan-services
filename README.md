@@ -632,15 +632,13 @@ shading and the glow fades out instead of leaving a black rectangle behind it.
    embedded as a data URI, so a document printed or saved later still carries the logo.
    Printed pages also get a print-only header band with the full lock-up, the branch line
    and the print time.
-7. **Every section starts closed.** A module carries 11–29 sections; laying them all open put a
-   phone user in front of a wall of figures, and every section's private detail at once. Each
-   section now starts closed, and opening one closes the one before it, so a single section is on
-   screen at a time. The open section is named in three places — a state chip on its heading
-   (*Open* / *Closed*), a dark bar above the content, and a chip in the header (*Section 5 open*)
-   — plus a **Close section** button on that bar. Tapping a chip in the section bar, or following
-   a `#sN` link, opens that section. Collapsing uses `height:0` with `visibility:hidden` rather
-   than `display:none`, so the module's own scripts still measure a real width and charts stay
-   correct; printing expands every section, so a printed page is complete.
+7. **Every section is spread open.** Modules are laid out flat, as designed: each section's
+   heading and its full content are shown one under the other, down the page, with nothing to
+   tap to reveal it. An earlier build folded the sections into a one-at-a-time accordion
+   (closed bodies, state chips, a "Close section" bar, a header chip); that layer has been
+   removed and no page carries it any more — `inject_brand.py` strips any leftover blocks and
+   `_sections.css` / `_sections.js` are gone. The section headings keep the gutter fix: they
+   carry no negative margin, so titles start inside the page padding and never clip.
 8. **Side bar that closes itself.** On a phone the side bar is off-canvas: tapping the menu
    slides it in and it slides back out once you stop using it (6 seconds idle, restarted by any
    touch, scroll or key press inside it). `Escape` and a tap outside close it immediately, so it
