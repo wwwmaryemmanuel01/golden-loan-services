@@ -51,7 +51,7 @@ PAGE_FILES = {
     "collateral": "guarantors-collateral.html",
     "apply": "apply.html",
     "agreement": "agreement.html",
-    "transactions": "index.html#s9",
+    "transactions": "transactions.html",
 }
 
 

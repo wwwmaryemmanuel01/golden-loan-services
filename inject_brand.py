@@ -48,6 +48,7 @@ JS_BLOCK = '<script ' + JS_MARK + '>\n' + JS + '\n</script>\n'
 # — never the system header, which stays the house black on every page.
 MODULE_ACCENTS = {
     'index':                '#0F1115',   # dashboard — the house black
+    'transactions':         '#1E1B4B',   # deep midnight indigo
     'applications':         '#1E3A8A',   # deep blue
     'clients':              '#115E59',   # deep teal
     'repayments':           '#14532D',   # forest green
