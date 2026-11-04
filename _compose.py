@@ -44,6 +44,7 @@ PAGE_FILES = {
     "recovery": "data-recovery.html",
     "settings": "settings.html",
     # no page of their own yet — they resolve to the dashboard section that covers them
+    "calculator": "loan-calculator.html",
     "loans": "index.html#s3",
     "collections": "index.html#s5",
     "guarantors": "guarantors-collateral.html",
