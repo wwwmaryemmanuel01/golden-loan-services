@@ -511,12 +511,12 @@ function pieSvg(items, donut, H){
     a0 = a1;
   });
   const centre = donut ? `<text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="15" font-weight="800" fill="#0F1115">${num(total)}</text>
-    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#6B7280">TOTAL</text>` : '';
+    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#1F2430">TOTAL</text>` : '';
   const rows = items.map((it,i)=>`
     <g>
       <rect x="236" y="${16+i*20}" width="9" height="9" rx="2" fill="${it.colour}"></rect>
       <text x="251" y="${24+i*20}" font-size="10" fill="#2B303B">${esc(String(it.label).slice(0,22))}</text>
-      <text x="366" y="${24+i*20}" font-size="10" text-anchor="end" fill="#6B7280">${(it.value/total*100).toFixed(1)}%</text>
+      <text x="366" y="${24+i*20}" font-size="10" text-anchor="end" fill="#1F2430">${(it.value/total*100).toFixed(1)}%</text>
     </g>`).join('');
   return `<div class="chartsvg"><svg viewBox="0 0 ${W} ${h}" role="img" aria-label="${esc(o_label||'chart')}">${out}${centre}${rows}</svg></div>`;
 }
@@ -546,14 +546,14 @@ function cartesian(o){
     const v = bot + (top-bot)*i/ticks;
     const yy = y(v);
     g += `<line x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}" stroke="#EDEFF4" stroke-width="1" ${SET.showGrid?'':'opacity="0"'}/>`;
-    g += `<text x="${padL-7}" y="${(yy+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#8A90A0">${axisFmt(v)}</text>`;
+    g += `<text x="${padL-7}" y="${(yy+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#1F2430">${axisFmt(v)}</text>`;
   }
   /* x labels */
   cats.forEach((c,i)=>{
     const x = padL + stepX*i + stepX/2;
     const label = String(c);
     if(cats.length > 9 && i % 2) return;
-    g += `<text x="${x.toFixed(1)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#8A90A0">${esc(label)}</text>`;
+    g += `<text x="${x.toFixed(1)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#1F2430">${esc(label)}</text>`;
   });
   if(type === 'bar' || type === 'stacked'){
     const bw = stacked ? Math.min(38, stepX*0.62) : Math.min(22, stepX*0.7/series.length);
@@ -574,7 +574,7 @@ function cartesian(o){
           const hgt = Math.abs(y(v) - y(0));
           g += `<rect x="${x.toFixed(1)}" y="${(v>=0?y(v):y(0)).toFixed(1)}" width="${Math.max(2,bw-1).toFixed(1)}" height="${Math.max(0,hgt).toFixed(1)}" fill="${colour}" rx="1.5"><title>${esc(s.name)} · ${esc(String(c))}: ${num(v)}</title></rect>`;
           if(SET.showValues && v && cats.length <= 14)
-            g += `<text x="${(x+bw/2).toFixed(1)}" y="${(y(v)-3).toFixed(1)}" font-size="8" text-anchor="middle" fill="#6B7280">${shortNum(v)}</text>`;
+            g += `<text x="${(x+bw/2).toFixed(1)}" y="${(y(v)-3).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1F2430">${shortNum(v)}</text>`;
         }
       });
     });
@@ -591,7 +591,7 @@ function cartesian(o){
       pts.forEach((p,i)=>{
         g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#fff" stroke="${colour}" stroke-width="2"><title>${esc(s.name)} · ${esc(String(cats[i]))}: ${num(s.data[i])}</title></circle>`;
         if(SET.showValues && cats.length <= 14)
-          g += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8" text-anchor="middle" fill="#6B7280">${shortNum(Number(s.data[i])||0)}</text>`;
+          g += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1F2430">${shortNum(Number(s.data[i])||0)}</text>`;
       });
     });
   }
