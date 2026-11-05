@@ -1142,7 +1142,7 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
       <label class="lg-label" for="username">Username</label>
       <div class="lg-field">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-        <input id="username" name="username" type="text" placeholder="Your username" autocomplete="username" required>
+        <input id="username" name="username" type="text" placeholder="Temporary username: admin" autocomplete="username" required>
       </div>
 
       <label class="lg-label" for="password">Password
@@ -1165,9 +1165,9 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
         <button type="button" class="lg-aid" id="aidRecover">Account recovery</button>
       </div>
 
-      <div class="lg-meta">Signing in now <b>connects you to the portal</b>: the session is kept in this browser
-        (it ends when the browser closes) and the dashboard opens. The authentication service is not yet connected,
-        so no password is checked against a server in this prototype — connect it when the service is ready.</div>
+      <div class="lg-meta">Sign in with the <b>temporary details</b> — username <b>admin</b>, password
+        <b>Golden@2026</b> — and the portal opens: the session is kept in this browser (it ends when the browser
+        closes). This is the preview gate, not server authentication; the real service replaces it when connected.</div>
     </form>
 
     <form id="recoverForm" class="lg-recover" novalidate hidden>
@@ -1314,12 +1314,16 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
         recSend.disabled = false;
         recSend.textContent = m.send;
         recNote.innerHTML = m.ok(esc(who)) +
-          ' <span class="lg-rec-hint">Design preview: the mail service is not connected yet, so nothing was actually sent.</span>';
+          ' <span class="lg-rec-hint">Design preview: the mail service is not connected yet, so nothing was actually sent — meanwhile, sign in with the temporary password you were given.</span>';
       }, 550);
     });
   }
 
   if (form){
+    /* Temporary sign-in details for the preview — replaced when the real
+       authentication service is connected. Not a server check. */
+    var TEMP_USER = 'admin';
+    var TEMP_PASS = 'Golden@2026';
     form.addEventListener('submit', function(ev){
       ev.preventDefault();
       var user = (document.getElementById('username') || {}).value || '';
@@ -1327,6 +1331,11 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
       note.className = 'lg-note on';
       if (!user.trim() || !pass.trim()){
         note.innerHTML = 'Enter your username and password to continue.';
+        return;
+      }
+      if (user.trim().toLowerCase() !== TEMP_USER || pass !== TEMP_PASS){
+        note.innerHTML = 'Incorrect username or password. Sign in with the temporary details you were given' +
+          ' (username <b>' + TEMP_USER + '</b> and its password).';
         return;
       }
       btn.disabled = true;
