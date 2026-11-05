@@ -1111,9 +1111,9 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
       <div class="page-title" id="lgPageTitle">Sign in</div>
       <div class="page-sub">Staff and customer access to the administration portal</div>
     </div>
-    <a class="lg-signout" href="index.html" title="Open the dashboard without signing in">
+    <a class="lg-signout" href="index.html" title="Enter the portal without signing in">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 8l-4 4 4 4M6 12h9"/></svg>
-      Open the dashboard
+      Enter without signing in
     </a>
   </header>
 
@@ -1165,8 +1165,9 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
         <button type="button" class="lg-aid" id="aidRecover">Account recovery</button>
       </div>
 
-      <div class="lg-meta">This is a design preview: no password is sent or stored anywhere, and two-factor
-        authentication is not yet enforced. Sign-in is switched on once the authentication service is connected.</div>
+      <div class="lg-meta">Signing in now <b>connects you to the portal</b>: the session is kept in this browser
+        (it ends when the browser closes) and the dashboard opens. The authentication service is not yet connected,
+        so no password is checked against a server in this prototype — connect it when the service is ready.</div>
     </form>
 
     <form id="recoverForm" class="lg-recover" novalidate hidden>
@@ -1329,12 +1330,16 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
         return;
       }
       btn.disabled = true;
-      btn.textContent = 'Checking…';
+      btn.textContent = 'Signing in…';
       setTimeout(function(){
-        btn.disabled = false;
-        btn.textContent = 'Sign in';
-        note.innerHTML = 'No authentication service is connected to this prototype, so the password was not ' +
-          'sent anywhere. Use <a href="index.html">Open the dashboard</a> to explore the portal.';
+        try{
+          sessionStorage.setItem('gls_session', JSON.stringify({
+            user: user.trim(), at: new Date().toISOString(), screen: 'login'
+          }));
+        }catch(e){}
+        btn.textContent = 'Opening the portal…';
+        note.innerHTML = 'Signed in as <b>' + esc(user.trim()) + '</b> — opening the dashboard…';
+        setTimeout(function(){ window.location.href = 'index.html'; }, 500);
       }, 550);
     });
   }
