@@ -484,12 +484,12 @@ function barSvg(groups, opts={}){
       bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${width.toFixed(1)}" height="${bh.toFixed(1)}" rx="2" fill="${g.colors[vi]}"></rect>`;
       acc += bh;
     });
-    bars += `<text x="${(pad.l + gi*bw + bw/2).toFixed(1)}" y="${h-7}" font-size="8.5" fill="#8A90A0" text-anchor="middle">${g.label}</text>`;
+    bars += `<text x="${(pad.l + gi*bw + bw/2).toFixed(1)}" y="${h-7}" font-size="8.5" fill="#1F2430" text-anchor="middle">${g.label}</text>`;
   });
   const gridLines = [0,.25,.5,.75,1].map(f=>{
     const y = pad.t + innerH*(1-f);
     return `<line x1="${pad.l}" y1="${y.toFixed(1)}" x2="${w-pad.r}" y2="${y.toFixed(1)}" stroke="#F0F1F5"></line>
-      <text x="${pad.l-4}" y="${(y+3).toFixed(1)}" font-size="7.5" fill="#A6ACB9" text-anchor="end">${Math.round(max*f)}</text>`;
+      <text x="${pad.l-4}" y="${(y+3).toFixed(1)}" font-size="7.5" fill="#1F2430" text-anchor="end">${Math.round(max*f)}</text>`;
   }).join('');
   return `<svg viewBox="0 0 ${w} ${h}" role="img">${gridLines}${bars}</svg>`;
 }

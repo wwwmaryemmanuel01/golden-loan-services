@@ -36,11 +36,11 @@ function mkChart(host,o){
     const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
     g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
     const t=Number.isInteger(v)?v:v.toFixed(1);
-    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}${o.suffix||''}</text>`;
+    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#1F2430" font-family="inherit">${t}${o.suffix||''}</text>`;
   }
   labels.forEach((lb,i)=>{
     if(labels.length>12 && i%2) return;
-    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#1F2430" font-weight="600" font-family="inherit">${lb}</text>`;
   });
   if(type==='bar'){
     const n=series.length, groupW=step*0.6, bw=Math.max(3,groupW/n-(n>1?2:0));
@@ -91,7 +91,7 @@ function mkDonut(host, data, opt={}){
   host.innerHTML=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
     <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
     <text x="${c}" y="${c-1}" text-anchor="middle" font-size="${(size*0.122).toFixed(1)}" font-weight="800" fill="#0F1115" font-family="inherit">${opt.center||nf(total)}</text>
-    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.056).toFixed(1)}" font-weight="700" fill="#8A90A0" letter-spacing=".8" font-family="inherit">${opt.caption||'TOTAL'}</text></svg>`;
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="${(size*0.056).toFixed(1)}" font-weight="700" fill="#1F2430" letter-spacing=".8" font-family="inherit">${opt.caption||'TOTAL'}</text></svg>`;
 }
 
 /* ============================================================

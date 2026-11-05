@@ -614,7 +614,7 @@
   .meter.red i{background:#D93F3F}
   .meter.blue i{background:#2F6FED}
 
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--muted);margin-top:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:#2B303B;margin-top:8px}
   .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
   .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
 
@@ -677,15 +677,16 @@
   .chartcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
   .chartcard .ch{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px}
   .chartcard .ct{font-size:12px;font-weight:800}
-  .chartcard .cs{font-size:10px;color:var(--muted);margin-top:2px}
+  .chartcard .cs{font-size:10px;color:#2B303B;margin-top:2px}
   .chartcard .cv{font-size:17px;font-weight:800;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
-  .chartcard .cv small{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.2px}
+  .chartcard .cv small{font-size:9px;font-weight:700;color:#2B303B;letter-spacing:.2px}
   .chartcard.drillable{cursor:pointer;transition:.15s}
   .chartcard.drillable:hover{border-color:#E0D4A8;box-shadow:0 4px 14px rgba(16,18,24,.05)}
   .chartcard .drillhint{font-size:9px;color:var(--gold-dark);font-weight:800;letter-spacing:.3px;margin-top:5px}
+  .chartsvg .qhint{color:#2B303B}
   .chartsvg{width:100%;overflow:hidden;margin-top:6px}
   .chartsvg svg{width:100%;height:auto;display:block}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:9.5px;color:var(--muted);margin-top:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:9.5px;color:#2B303B;margin-top:8px}
   .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
   .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
 
@@ -3564,12 +3565,12 @@ function pieSvg(items, donut, H){
     a0 = a1;
   });
   const centre = donut ? `<text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="15" font-weight="800" fill="#0F1115">${num(total)}</text>
-    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#6B7280">TOTAL</text>` : '';
+    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#1F2430">TOTAL</text>` : '';
   const rows = items.map((it,i)=>`
     <g>
       <rect x="236" y="${16+i*20}" width="9" height="9" rx="2" fill="${it.colour}"></rect>
       <text x="251" y="${24+i*20}" font-size="10" fill="#2B303B">${esc(String(it.label).slice(0,22))}</text>
-      <text x="366" y="${24+i*20}" font-size="10" text-anchor="end" fill="#6B7280">${(it.value/total*100).toFixed(1)}%</text>
+      <text x="366" y="${24+i*20}" font-size="10" text-anchor="end" fill="#1F2430">${(it.value/total*100).toFixed(1)}%</text>
     </g>`).join('');
   return `<div class="chartsvg"><svg viewBox="0 0 ${W} ${h}" role="img" aria-label="${esc(o_label||'chart')}">${out}${centre}${rows}</svg></div>`;
 }
@@ -3599,14 +3600,14 @@ function cartesian(o){
     const v = bot + (top-bot)*i/ticks;
     const yy = y(v);
     g += `<line x1="${padL}" y1="${yy.toFixed(1)}" x2="${W-padR}" y2="${yy.toFixed(1)}" stroke="#EDEFF4" stroke-width="1" ${SET.showGrid?'':'opacity="0"'}/>`;
-    g += `<text x="${padL-7}" y="${(yy+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#8A90A0">${axisFmt(v)}</text>`;
+    g += `<text x="${padL-7}" y="${(yy+3).toFixed(1)}" font-size="9" text-anchor="end" fill="#1F2430">${axisFmt(v)}</text>`;
   }
   /* x labels */
   cats.forEach((c,i)=>{
     const x = padL + stepX*i + stepX/2;
     const label = String(c);
     if(cats.length > 9 && i % 2) return;
-    g += `<text x="${x.toFixed(1)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#8A90A0">${esc(label)}</text>`;
+    g += `<text x="${x.toFixed(1)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#1F2430">${esc(label)}</text>`;
   });
   if(type === 'bar' || type === 'stacked'){
     const bw = stacked ? Math.min(38, stepX*0.62) : Math.min(22, stepX*0.7/series.length);
@@ -3627,7 +3628,7 @@ function cartesian(o){
           const hgt = Math.abs(y(v) - y(0));
           g += `<rect x="${x.toFixed(1)}" y="${(v>=0?y(v):y(0)).toFixed(1)}" width="${Math.max(2,bw-1).toFixed(1)}" height="${Math.max(0,hgt).toFixed(1)}" fill="${colour}" rx="1.5"><title>${esc(s.name)} · ${esc(String(c))}: ${num(v)}</title></rect>`;
           if(SET.showValues && v && cats.length <= 14)
-            g += `<text x="${(x+bw/2).toFixed(1)}" y="${(y(v)-3).toFixed(1)}" font-size="8" text-anchor="middle" fill="#6B7280">${shortNum(v)}</text>`;
+            g += `<text x="${(x+bw/2).toFixed(1)}" y="${(y(v)-3).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1F2430">${shortNum(v)}</text>`;
         }
       });
     });
@@ -3644,7 +3645,7 @@ function cartesian(o){
       pts.forEach((p,i)=>{
         g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#fff" stroke="${colour}" stroke-width="2"><title>${esc(s.name)} · ${esc(String(cats[i]))}: ${num(s.data[i])}</title></circle>`;
         if(SET.showValues && cats.length <= 14)
-          g += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8" text-anchor="middle" fill="#6B7280">${shortNum(Number(s.data[i])||0)}</text>`;
+          g += `<text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1F2430">${shortNum(Number(s.data[i])||0)}</text>`;
       });
     });
   }

@@ -614,7 +614,7 @@
   .meter.red i{background:#D93F3F}
   .meter.blue i{background:#2F6FED}
 
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--muted);margin-top:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:#2B303B;margin-top:8px}
   .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
   .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
 
@@ -697,11 +697,12 @@
   .chartcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
   .chartcard .ch{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:2px}
   .chartcard .ct{font-size:12px;font-weight:800}
-  .chartcard .cs{font-size:10px;color:var(--muted);margin-top:2px}
+  .chartcard .cs{font-size:10px;color:#2B303B;margin-top:2px}
   .chartcard .cv{font-size:17px;font-weight:800;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
+  .chartsvg .qhint{color:#2B303B}
   .chartsvg{width:100%;overflow:hidden;margin-top:6px}
   .chartsvg svg{width:100%;height:auto;display:block}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:9.5px;color:var(--muted);margin-top:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:9.5px;color:#2B303B;margin-top:8px}
   .legend b{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:#2B303B}
   .legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
 
@@ -2963,7 +2964,7 @@ function barsSvg(series, cats, H, stacked){
   for(let i = 0; i <= 4; i++){
     const y = padT + plotH - (plotH * i / 4);
     grid += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="#EDEFF4"/>` +
-      `<text x="${padL - 5}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-size="8" fill="#8A90A0">${axisFmt(max * i / 4)}</text>`;
+      `<text x="${padL - 5}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-size="8" fill="#1F2430">${axisFmt(max * i / 4)}</text>`;
   }
   let bars = '';
   const group = series.length;
@@ -2977,7 +2978,7 @@ function barsSvg(series, cats, H, stacked){
       bars += `<rect x="${x.toFixed(1)}" y="${(padT + plotH - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0, h).toFixed(1)}"
         rx="2" fill="${s.colour || PALETTE[si % PALETTE.length]}"><title>${esc(cats[i] || '')}: ${num(v)}</title></rect>`;
     });
-    if(n <= 16) bars += `<text x="${cx.toFixed(1)}" y="${H - 6}" text-anchor="middle" font-size="8" fill="#8A90A0">${esc(String(cats[i] || '').slice(0, 9))}</text>`;
+    if(n <= 16) bars += `<text x="${cx.toFixed(1)}" y="${H - 6}" text-anchor="middle" font-size="8" fill="#1F2430">${esc(String(cats[i] || '').slice(0, 9))}</text>`;
   });
   const legendHtml = series.length > 1
     ? `<div class="legend">${series.map((s, i) => `<b><i style="background:${s.colour || PALETTE[i % PALETTE.length]}"></i>${esc(s.name || '')}</b>`).join('')}</div>`
@@ -3010,11 +3011,11 @@ function pieSvg(data, cats, donut, H, colours){
     a0 = a1;
   });
   const centre = donut ? `<text x="${cx}" y="${cy - 1}" text-anchor="middle" font-size="16" font-weight="800" fill="#0F1115">${num(total)}</text>
-    <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-size="8" fill="#6B7280">TOTAL</text>` : '';
+    <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-size="8" fill="#1F2430">TOTAL</text>` : '';
   const rows = items.slice(0, 8).map((it, i) =>
     `<g><rect x="196" y="${12 + i * 19}" width="9" height="9" rx="2" fill="${it.colour}"></rect>
      <text x="210" y="${20 + i * 19}" font-size="9" fill="#2B303B">${esc(String(it.label).slice(0, 26))}</text>
-     <text x="392" y="${20 + i * 19}" font-size="9" text-anchor="end" fill="#6B7280">${num(it.value)}</text></g>`).join('');
+     <text x="392" y="${20 + i * 19}" font-size="9" text-anchor="end" fill="#1F2430">${num(it.value)}</text></g>`).join('');
   return `<div class="chartsvg"><svg viewBox="0 0 ${W} ${h}">${out}${centre}${rows}</svg></div>`;
 }
 function chartCard(o){

@@ -172,9 +172,9 @@ function mkBars(host, labels, series, opt={}){
   for(let i=0;i<=4;i++){
     const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
     g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
-    g+=`<text x="${L-7}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="8.5" fill="#9AA0AC" font-family="inherit">${(v/1000000).toFixed(1)}m</text>`;
+    g+=`<text x="${L-7}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="8.5" fill="#1F2430" font-family="inherit">${(v/1000000).toFixed(1)}m</text>`;
   }
-  labels.forEach((lb,i)=>g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`);
+  labels.forEach((lb,i)=>g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#1F2430" font-weight="600" font-family="inherit">${lb}</text>`);
   const bw = Math.min(15,(step-10)/series.length);
   labels.forEach((lb,i)=>{
     const gx = L + step*i + step/2;
@@ -201,7 +201,7 @@ function mkDonut(host, data, center){
   });
   host.innerHTML = `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#F1F2F6" stroke-width="${sw}"/>${arcs}
     <text x="${c}" y="${c-2}" text-anchor="middle" font-size="17" font-weight="800" fill="#0F1115" font-family="inherit">${center}</text>
-    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="8" font-weight="700" fill="#8A90A0" font-family="inherit">TOTAL</text>`;
+    <text x="${c}" y="${c+13}" text-anchor="middle" font-size="8" font-weight="700" fill="#1F2430" font-family="inherit">TOTAL</text>`;
 }
 function progressRows(host, rows){
   if(!host) return;

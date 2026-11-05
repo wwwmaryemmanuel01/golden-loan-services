@@ -93,7 +93,7 @@ def svg_bars(labels, values, colour="#C9A227", height=120, unit=""):
         y = height - 16 - h
         parts.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bar:.2f}" height="{h:.2f}" rx="1.2" fill="{colour}"/>')
     axis = "".join(
-        f'<text x="{i*w + w/2:.2f}" y="{height-4}" font-size="4.2" text-anchor="middle" fill="#8A90A0">{esc(l)}</text>'
+        f'<text x="{i*w + w/2:.2f}" y="{height-4}" font-size="4.4" font-weight="600" text-anchor="middle" fill="#1F2430">{esc(l)}</text>'
         for i, l in enumerate(labels))
     return (f'<div class="chartsvg"><svg viewBox="0 0 100 {height}" preserveAspectRatio="none" '
             f'style="height:{height}px;width:100%">{axis}{"".join(parts)}</svg></div>'

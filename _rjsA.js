@@ -37,11 +37,11 @@ function mkChart(host,o){
     const v=yMax/4*i, y=T+ih-(v/yMax)*ih;
     g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#EEF0F4"/>`;
     const t=Number.isInteger(v)?v:v.toFixed(1);
-    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#9AA0AC" font-family="inherit">${t}${o.suffix||''}</text>`;
+    g+=`<text x="${L-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end" font-size="9" fill="#1F2430" font-family="inherit">${t}${o.suffix||''}</text>`;
   }
   labels.forEach((lb,i)=>{
     if(labels.length>12 && i%2) return;
-    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#8A90A0" font-weight="600" font-family="inherit">${lb}</text>`;
+    g+=`<text x="${(L+step*i+step/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#1F2430" font-weight="600" font-family="inherit">${lb}</text>`;
   });
   if(type==='bar'){
     const n=series.length, groupW=step*0.6, bw=Math.max(3,groupW/n-(n>1?2:0));
