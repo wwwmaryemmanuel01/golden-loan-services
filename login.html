@@ -22,7 +22,7 @@
     font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-size:14px;-webkit-font-smoothing:antialiased;
   }
-  .lg-wrap{display:grid;grid-template-columns:1.05fr .95fr;min-height:calc(100vh - 96px)}
+  .lg-wrap{display:grid;grid-template-columns:1.05fr .95fr;min-height:calc(100vh - 152px)}
 
   /* ---- left: the brand panel ---- */
   .lg-hero{
@@ -72,7 +72,7 @@
     padding:40px 28px;position:relative;
   }
   .lg-card{
-    width:100%;max-width:404px;background:#fff;border:2px solid #7FB49F;
+    width:100%;max-width:404px;background:#fff;border:2.5px solid #7FB49F;
     border-radius:18px;padding:30px 30px 26px;box-shadow:0 18px 50px rgba(16,18,24,.09);
   }
   .lg-signout{margin-left:auto;display:inline-flex;align-items:center;gap:7px;
@@ -81,22 +81,11 @@
   .lg-signout:hover{color:#F3D67A;border-color:#E4C264}
   .lg-signout svg{width:15px;height:15px}
   .lg-footband{padding:0 26px 26px;background:transparent}
-  /* the card's own header — a black band in the system header colour,
-     sitting edge-to-edge inside the green border the way the portal bar looks */
-  .lg-card-head{
-    display:flex;align-items:center;gap:12px;
-    margin:-30px -30px 22px;padding:16px 30px 14px;
-    background:rgba(15,17,21,.98);border-bottom:1px solid #23262E;
-    border-radius:16px 16px 0 0;
-    -webkit-print-color-adjust:exact;print-color-adjust:exact;
-  }
-  .lg-mark{width:40px;height:40px;object-fit:contain;flex:0 0 40px}
-  .lg-title{font-size:18px;font-weight:800;letter-spacing:-.2px;color:#FFFFFF}
-  .lg-sub{font-size:10px;color:#A9B0BD;margin-top:3px;letter-spacing:.8px;text-transform:uppercase}
   .lg-label{display:flex;align-items:center;font-size:11px;font-weight:800;color:#3A3F4A;
     letter-spacing:.3px;text-transform:uppercase;margin:0 0 6px}
   .lg-label .lg-forgot{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:0;
-    text-transform:none;color:var(--gold-dark);text-decoration:none}
+    text-transform:none;color:var(--gold-dark);text-decoration:none;border:0;background:transparent;
+    padding:0;cursor:pointer}
   .lg-label .lg-forgot:hover{text-decoration:underline}
   .lg-field{
     display:flex;align-items:center;gap:9px;background:#F7F8FA;border:2px solid #7FB49F;
@@ -138,6 +127,15 @@
   .lg-note.on{display:block}
   .lg-note a{color:var(--gold-dark);font-weight:800}
   .lg-meta{margin-top:16px;font-size:10.5px;line-height:1.6;color:var(--muted-2);text-align:center}
+  .lg-aids{display:flex;align-items:center;justify-content:center;gap:12px;margin:2px 0 14px}
+  .lg-aid{border:0;background:transparent;padding:0;cursor:pointer;font-weight:800;font-size:11.5px;
+    color:#3A3F4A;text-decoration:underline;text-underline-offset:3px}
+  .lg-aid:hover{color:var(--gold-dark)}
+  .lg-aid-sep{width:1px;height:12px;background:var(--line)}
+  .lg-recover[hidden]{display:none}
+  .lg-rec-title{font-size:17px;font-weight:800;letter-spacing:-.2px;margin-bottom:6px}
+  .lg-rec-sub{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:16px}
+  .lg-rec-hint{display:block;margin-top:6px;font-weight:600;color:var(--muted)}
   .lg-foot{
     display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;
     margin-top:22px;font-size:10.5px;color:var(--muted-2);
@@ -148,7 +146,6 @@
 
   @media (max-width:980px){
     .lg-wrap{grid-template-columns:1fr}
-    .lg-card-head{margin:-24px -20px 20px;padding:14px 20px 12px}
     .lg-hero{padding:32px 26px 30px;order:2}
     .lg-hero h1{font-size:23px;margin-top:24px}
     .lg-hero-logo{width:230px}
@@ -1124,15 +1121,8 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
   </aside>
 
   <main class="lg-panel">
-    <form class="lg-card" id="loginForm" novalidate>
-      <div class="lg-card-head">
-        <img class="lg-mark" src="assets/logo-mark.png" alt="">
-        <div>
-          <div class="lg-title">Sign in</div>
-          <div class="lg-sub">GOLDEN FINANCIAL SERVICES · Admin portal</div>
-        </div>
-      </div>
-
+    <div class="lg-card">
+    <form id="loginForm" novalidate>
       <label class="lg-label" for="username">Username</label>
       <div class="lg-field">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
@@ -1140,22 +1130,44 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
       </div>
 
       <label class="lg-label" for="password">Password
-        <a class="lg-forgot" href="mailto:admin@goldenfinancial.mw" id="forgotLink">Forgot?</a>
+        <button type="button" class="lg-forgot" id="forgotLink">Forgot?</button>
       </label>
       <div class="lg-field">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
         <input id="password" name="password" type="password" placeholder="Your password" autocomplete="current-password" required>
         <button class="lg-eye" type="button" id="eyeBtn" aria-label="Show password" aria-pressed="false">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/><line id="eyeSlash" x1="4.5" y1="3.5" x2="19.5" y2="20.5" stroke-linecap="round" style="display:none"/></svg>
         </button>
       </div>
 
       <button class="lg-btn" type="submit" id="signInBtn">Sign in</button>
       <div class="lg-note" id="loginNote" role="status"></div>
 
+      <div class="lg-aids">
+        <button type="button" class="lg-aid" id="aidForgot">Forgot password?</button>
+        <span class="lg-aid-sep" aria-hidden="true"></span>
+        <button type="button" class="lg-aid" id="aidRecover">Account recovery</button>
+      </div>
+
       <div class="lg-meta">This is a design preview: no password is sent or stored anywhere, and two-factor
         authentication is not yet enforced. Sign-in is switched on once the authentication service is connected.</div>
     </form>
+
+    <form id="recoverForm" class="lg-recover" novalidate hidden>
+      <div class="lg-rec-title" id="recTitle">Password recovery</div>
+      <div class="lg-rec-sub" id="recSub"></div>
+      <label class="lg-label" for="recWho" id="recLabel">Username or work email</label>
+      <div class="lg-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+        <input id="recWho" name="recwho" type="text" placeholder="Username or work email" autocomplete="username">
+      </div>
+      <button class="lg-btn" type="submit" id="recSendBtn">Send the reset link</button>
+      <div class="lg-note" id="recNote" role="status"></div>
+      <div class="lg-aids">
+        <button type="button" class="lg-aid" id="recBack">&larr; Back to sign in</button>
+      </div>
+    </form>
+    </div>
 
   </main>
 </div>
@@ -1181,28 +1193,110 @@ body[data-gls-module="statements"]           {--gls-accent:#365314}
   var form = document.getElementById('loginForm');
   var pw = document.getElementById('password');
   var eye = document.getElementById('eyeBtn');
+  var slash = document.getElementById('eyeSlash');
   var note = document.getElementById('loginNote');
   var btn = document.getElementById('signInBtn');
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  /* ---- the eye: open shows the password, the slashed eye hides it again ---- */
   if (eye && pw){
     eye.addEventListener('click', function(){
       var show = pw.type === 'password';
       pw.type = show ? 'text' : 'password';
+      if (slash) slash.style.display = show ? '' : 'none';
       eye.setAttribute('aria-pressed', show ? 'true' : 'false');
       eye.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
       try { pw.focus(); } catch(e){}
     });
   }
 
+  /* ---- forgot password & account recovery ---- */
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+  var MODES = {
+    reset: {
+      title: 'Password recovery',
+      sub: 'Enter your username or work email and we will send a reset link to the address on file. The link works once and expires in 30 minutes.',
+      label: 'Username or work email',
+      ph: 'Username or work email',
+      send: 'Send the reset link',
+      ask: 'Enter your username or work email to continue.',
+      ok: function(who){
+        return 'If <b>' + who + '</b> is on file, a reset link is on its way to the registered email. It expires in 30 minutes.';
+      }
+    },
+    recover: {
+      title: 'Account recovery',
+      sub: 'Locked out, or lost your username? Enter the work email on the account and we will send the recovery steps. The administrator can also help: admin@goldenfinancial.mw.',
+      label: 'Work email on the account',
+      ph: 'name@goldenfinancial.mw',
+      send: 'Send the recovery steps',
+      ask: 'Enter the work email on the account to continue.',
+      ok: function(who){
+        return 'If <b>' + who + '</b> is on file, the recovery steps are on their way to that address.';
+      }
+    }
+  };
+  var recForm = document.getElementById('recoverForm');
+  var recTitle = document.getElementById('recTitle');
+  var recSub = document.getElementById('recSub');
+  var recLabel = document.getElementById('recLabel');
+  var recWho = document.getElementById('recWho');
+  var recNote = document.getElementById('recNote');
+  var recSend = document.getElementById('recSendBtn');
+  var recMode = 'reset';
+
+  function showRecover(mode){
+    recMode = (mode === 'recover') ? 'recover' : 'reset';
+    var m = MODES[recMode];
+    if (recTitle) recTitle.textContent = m.title;
+    if (recSub) recSub.textContent = m.sub;
+    if (recLabel) recLabel.textContent = m.label;
+    if (recWho){ recWho.placeholder = m.ph; recWho.value = ''; }
+    if (recSend) recSend.textContent = m.send;
+    if (recNote){ recNote.className = 'lg-note'; recNote.innerHTML = ''; }
+    if (form) form.hidden = true;
+    if (recForm) recForm.hidden = false;
+    try { if (recWho) recWho.focus(); } catch(e){}
+  }
+  function backToSignIn(){
+    if (recForm) recForm.hidden = true;
+    if (form) form.hidden = false;
+    if (recNote){ recNote.className = 'lg-note'; recNote.innerHTML = ''; }
+    if (note) note.className = 'lg-note';
+    try { var u = document.getElementById('username'); if (u) u.focus(); } catch(e){}
+  }
   var forgot = document.getElementById('forgotLink');
-  if (forgot){
-    forgot.addEventListener('click', function(ev){
+  if (forgot) forgot.addEventListener('click', function(){ showRecover('reset'); });
+  var aidForgot = document.getElementById('aidForgot');
+  if (aidForgot) aidForgot.addEventListener('click', function(){ showRecover('reset'); });
+  var aidRecover = document.getElementById('aidRecover');
+  if (aidRecover) aidRecover.addEventListener('click', function(){ showRecover('recover'); });
+  var recBack = document.getElementById('recBack');
+  if (recBack) recBack.addEventListener('click', backToSignIn);
+
+  if (recForm){
+    recForm.addEventListener('submit', function(ev){
       ev.preventDefault();
-      note.className = 'lg-note on';
-      note.innerHTML = 'Password resets go through the system administrator: <b>admin@goldenfinancial.mw</b>. ' +
-        'The reset link that this screen will send is not connected yet.';
+      var m = MODES[recMode];
+      var who = recWho ? recWho.value.trim() : '';
+      recNote.className = 'lg-note on';
+      if (!who){
+        recNote.innerHTML = m.ask;
+        return;
+      }
+      recSend.disabled = true;
+      recSend.textContent = 'Sending…';
+      setTimeout(function(){
+        recSend.disabled = false;
+        recSend.textContent = m.send;
+        recNote.innerHTML = m.ok(esc(who)) +
+          ' <span class="lg-rec-hint">Design preview: the mail service is not connected yet, so nothing was actually sent.</span>';
+      }, 550);
     });
   }
 
