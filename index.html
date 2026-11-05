@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+/* PORTAL GATE — the dashboard opens only after signing in on login.html.
+   Design-preview gate: it checks the browser session in this tab, not a server. */
+(function(){
+  var ok = false;
+  try{ var sess = JSON.parse(sessionStorage.getItem('gls_session') || 'null'); ok = !!(sess && sess.user); }catch(e){}
+  if(!ok){ try{ location.replace('login.html'); }catch(e){} }
+})();
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C9A227'/%3E%3Ctext x='16' y='22' font-size='14' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23241C00'%3EG%3C/text%3E%3C/svg%3E" />
