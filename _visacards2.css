@@ -1,0 +1,67 @@
+
+/* ---------- sub-item panels ---------- */
+.subgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.subgrid>.sub.wide{grid-column:1/-1}
+.sub{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;min-width:0}
+.subhead{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.subnum{flex:0 0 auto;font-size:10px;font-weight:800;letter-spacing:.3px;color:#7A5E10;
+  background:var(--gold-soft,#FBF3D6);border:1px solid #E8D488;border-radius:6px;padding:2px 6px;
+  font-variant-numeric:tabular-nums}
+.subhead h3{font-size:12.5px;font-weight:800;letter-spacing:-.15px;margin:0;flex:1 1 auto;min-width:0}
+.subpill{font-size:9px;font-weight:800;color:var(--muted);background:#F1F2F6;border-radius:20px;padding:2px 7px}
+.subbody{min-width:0}
+.sub .tblwrap{max-height:300px}
+.sub .kvlist{margin-top:2px}
+.sub .form-grid{margin-top:6px}
+.sub .strip{margin-bottom:8px}
+.sub .form-actions{margin-top:8px;flex-wrap:wrap;gap:6px}
+.sub .note{margin:0 0 8px}
+.sub + .sub{margin-top:10px}
+.sub + .sub.wide{margin-top:10px}
+@media(max-width:1100px){ .subgrid{grid-template-columns:1fr} }
+
+/* ---------- small pieces used by the generated panels ---------- */
+.plainlist{margin:0;padding-left:16px;font-size:11px;line-height:1.7;color:#3A3F4A}
+.plainlist li{margin-bottom:2px}
+.muted{color:var(--muted)}
+.kvlist .kvrow b{max-width:58%;text-align:right;overflow-wrap:anywhere}
+.checkrow .cl b{font-weight:700}
+.hbar{display:grid;grid-template-columns:minmax(0,1fr) 92px 62px;align-items:center;gap:8px;margin-bottom:6px}
+.hbar-l{font-size:10.5px;font-weight:600;color:#3A3F4A;overflow-wrap:anywhere}
+.hbar-t{height:8px;background:#EEF0F4;border-radius:20px;overflow:hidden}
+.hbar-t i{display:block;height:100%;border-radius:20px}
+.hbar-v{font-size:10px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.swatch{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:middle;
+  border:1px solid rgba(0,0,0,.12)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:9px}
+.thumb{border:1px solid var(--line-2);border-radius:9px;padding:7px;background:#FCFDFF;min-width:0}
+.thumb-img{height:44px;border-radius:6px;background:linear-gradient(135deg,#EDEFF4,#DDE1EA);
+  display:grid;place-items:center;color:#9AA0AC;font-size:16px}
+.thumb-n{font-size:9.5px;font-weight:800;margin-top:5px;overflow-wrap:anywhere}
+.thumb-m{font-size:9px;color:var(--muted);margin-top:1px}
+.logogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:9px}
+.logotile{background:#0F1115;color:#E8C860;border-radius:10px;padding:12px 10px;text-align:center;font-size:9.5px}
+.logotile.light{background:var(--gold-soft,#FBF3D6);color:#0F1115}
+.logomark{font-size:20px;font-weight:800;margin-bottom:6px}
+.preview{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+.preview-bar{background:#0F1115;color:#C7CBD4;font-size:9px;padding:4px 9px}
+.preview-body{padding:11px}
+.preview-hero{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.pv-mark{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-weight:800;
+  background:linear-gradient(145deg,#E8C860,#B58C1B);color:#2A2100}
+.preview-nav{font-size:9px;color:var(--muted);border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2);padding:5px 0;margin-bottom:8px}
+.preview-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.preview-cards div{height:38px;border-radius:6px;background:#F4F5F8;border:1px solid var(--line-2)}
+.filterpanel{margin-bottom:13px}
+.filterpanel .form-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.snav{white-space:nowrap}
+.sub.hide{display:none}
+.sec.hide{display:none}
+
+/* ---------- visa-cards-specific extras ---------- */
+.filterpanel{margin-bottom:13px}
+.sub .hbar:last-child{margin-bottom:0}
+.strip .sv{overflow-wrap:anywhere}
+.vcflag{font-size:9px;font-weight:800;letter-spacing:.3px;color:#7A5E10;
+  background:var(--gold-soft,#FBF3D6);border:1px solid #E8D488;border-radius:6px;padding:1px 6px}
