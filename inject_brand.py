@@ -50,6 +50,8 @@ MODULE_ACCENTS = {
     'index':                '#0F1115',   # dashboard — the house black
     'transactions':         '#1E1B4B',   # deep midnight indigo
     'visacards':            '#1A1F71',   # VISA deep navy
+    'statistics':           '#0C4A6E',   # deep marine
+    'statements':           '#365314',   # deep moss
     'applications':         '#1E3A8A',   # deep blue
     'clients':              '#115E59',   # deep teal
     'repayments':           '#14532D',   # forest green
