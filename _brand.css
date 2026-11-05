@@ -902,6 +902,8 @@ body[data-gls-module="data-recovery"]        {--gls-accent:#422006}
 body[data-gls-module="website"]              {--gls-accent:#264653}
 body[data-gls-module="transactions"]         {--gls-accent:#1E1B4B}
 body[data-gls-module="visacards"]            {--gls-accent:#1A1F71}
+body[data-gls-module="statistics"]           {--gls-accent:#0C4A6E}
+body[data-gls-module="statements"]           {--gls-accent:#365314}
 
 /* the module title band picks up the same accent (base rule lives in the
    module stylesheet, which loads before this one) */
