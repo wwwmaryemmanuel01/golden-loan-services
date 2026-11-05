@@ -81,10 +81,18 @@
   .lg-signout:hover{color:#F3D67A;border-color:#E4C264}
   .lg-signout svg{width:15px;height:15px}
   .lg-footband{padding:0 26px 26px;background:transparent}
-  .lg-card-head{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-  .lg-mark{width:46px;height:46px;object-fit:contain;flex:0 0 46px}
-  .lg-title{font-size:19px;font-weight:800;letter-spacing:-.3px}
-  .lg-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  /* the card's own header — a black band in the system header colour,
+     sitting edge-to-edge inside the green border the way the portal bar looks */
+  .lg-card-head{
+    display:flex;align-items:center;gap:12px;
+    margin:-30px -30px 22px;padding:16px 30px 14px;
+    background:rgba(15,17,21,.98);border-bottom:1px solid #23262E;
+    border-radius:16px 16px 0 0;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .lg-mark{width:40px;height:40px;object-fit:contain;flex:0 0 40px}
+  .lg-title{font-size:18px;font-weight:800;letter-spacing:-.2px;color:#FFFFFF}
+  .lg-sub{font-size:10px;color:#A9B0BD;margin-top:3px;letter-spacing:.8px;text-transform:uppercase}
   .lg-label{display:flex;align-items:center;font-size:11px;font-weight:800;color:#3A3F4A;
     letter-spacing:.3px;text-transform:uppercase;margin:0 0 6px}
   .lg-label .lg-forgot{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:0;
@@ -139,6 +147,7 @@
 
   @media (max-width:980px){
     .lg-wrap{grid-template-columns:1fr}
+    .lg-card-head{margin:-24px -20px 20px;padding:14px 20px 12px}
     .lg-hero{padding:32px 26px 30px;order:2}
     .lg-hero h1{font-size:23px;margin-top:24px}
     .lg-hero-logo{width:230px}
