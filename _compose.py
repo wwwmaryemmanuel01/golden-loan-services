@@ -52,6 +52,7 @@ PAGE_FILES = {
     "apply": "apply.html",
     "agreement": "agreement.html",
     "transactions": "transactions.html",
+    "visacards": "visacards.html",
 }
 
 
